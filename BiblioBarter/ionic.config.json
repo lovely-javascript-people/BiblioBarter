@@ -1,7 +1,0 @@
-{
-  "name": "BiblioBarter",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}
