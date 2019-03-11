@@ -1,0 +1,218 @@
+[
+  {
+      "web_pages": [
+          "http://www.fkcc.edu"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "fkcc.edu"
+      ],
+      "name": "Florida Keys Community College"
+  },
+  {
+      "web_pages": [
+          "https://floridapoly.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "floridapoly.edu"
+      ],
+      "name": "Florida Polytechnic University"
+  },
+  {
+      "web_pages": [
+          "http://www.fgcu.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "fgcu.edu"
+      ],
+      "name": "Florida Gulf Coast University"
+  },
+  {
+      "web_pages": [
+          "http://www.fsu.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "fsu.edu"
+      ],
+      "name": "Florida State University"
+  },
+  {
+      "web_pages": [
+          "https://www.fscj.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "fscj.edu"
+      ],
+      "name": "Florida State College at Jacksonville"
+  },
+  {
+      "web_pages": [
+          "http://www.fau.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "fau.edu"
+      ],
+      "name": "Florida Atlantic University"
+  },
+  {
+      "web_pages": [
+          "http://www.famu.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "famu.edu"
+      ],
+      "name": "Florida Agricultural and Mechanical University"
+  },
+  {
+      "web_pages": [
+          "http://www.fit.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "fit.edu"
+      ],
+      "name": "Florida Institute of Technology"
+  },
+  {
+      "web_pages": [
+          "http://www.fiu.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "fiu.edu"
+      ],
+      "name": "Florida International University"
+  },
+  {
+      "web_pages": [
+          "http://www.nfcc.edu"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "nfcc.edu"
+      ],
+      "name": "North Florida Community College"
+  },
+  {
+      "web_pages": [
+          "http://www.ncf.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "ncf.edu"
+      ],
+      "name": "New College of Florida"
+  },
+  {
+      "web_pages": [
+          "http://www.nwfsc.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "nwfsc.edu"
+      ],
+      "name": "Northwest Florida State College"
+  },
+  {
+      "web_pages": [
+          "http://www.easternflorida.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "easternflorida.edu"
+      ],
+      "name": "Eastern Florida State College"
+  },
+  {
+      "web_pages": [
+          "http://www.uwf.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "uwf.edu"
+      ],
+      "name": "University of West Florida"
+  },
+  {
+      "web_pages": [
+          "http://www.usf.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "usf.edu"
+      ],
+      "name": "University of South Florida"
+  },
+  {
+      "web_pages": [
+          "http://www.unf.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "unf.edu"
+      ],
+      "name": "University of North Florida"
+  },
+  {
+      "web_pages": [
+          "http://www.ucf.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "ucf.edu"
+      ],
+      "name": "University of Central Florida"
+  },
+  {
+      "web_pages": [
+          "http://www.ufl.edu/"
+      ],
+      "alpha_two_code": "US",
+      "state-province": null,
+      "country": "United States",
+      "domains": [
+          "ufl.edu"
+      ],
+      "name": "University of Florida"
+  }
+]
