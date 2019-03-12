@@ -1,0 +1,12 @@
+FROM node:alpine AS builder
+
+WORKDIR /root
+
+COPY . .
+
+RUN npm install && \
+    npm run build
+
+FROM nginx:alpine
+
+COPY --from=builder /node_modules/dist/* /usr/share/nginx/html/ 
