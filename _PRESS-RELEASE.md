@@ -18,27 +18,37 @@ Once the project moves into development, the press release can be used as a touc
  
 ## Heading ##
   > Name the product in a way the reader (i.e. your target customers) will understand.
+  Biblio Barter
 
 ## Sub-Heading ##
   > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  Collegiate book bartering app to get the books you need and want. 
+  Browse biblio bartering because bank be barren.
 
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  Going to find a bulletin board with the books you’re looking for and wanting can be daunting. Let us bring the board to you and match you up with other users that are looking for something you have, or maybe you want. Quick and easy, just input your textbook name or isbn number and let us do the connecting for you. 
 
 ## Problem ##
   > Describe the problem your product solves.
+  Have books that you need to get rid of after class is over, but the bookstore doesn’t pay you much? Or maybe going all the way back to that bulletin board just to post your book for sale. You just want a good deal on the book you bought for so much. 
 
 ## Solution ##
   > Describe how your product elegantly solves the problem.
+  Post all your textbooks that you want and need in one place. Let the app help you find other people that have the books your need and want and make that trade. Make an offer easily with a click of a button and meet up for your trades at school. 
 
 ## Quote from You ##
   > A quote from a spokesperson in your company.
+  “Never get less for your books again! Make a fair trade” 
 
 ## How to Get Started ##
   > Describe how easy it is to get started.
+  Just open the app, create an account and set up your school. Input the books you're searching for or have and send offers to other users. 
 
 ## Customer Quote ##
   > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  “It’s great being able to sell or trade books so easily with other students on campus. I can save so much money and get rid of my books by using this app.”
 
 ## Closing and Call to Action ##
   > Wrap it up and give pointers where the reader should go next.
+  Sign up and barter away. 
