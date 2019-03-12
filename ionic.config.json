@@ -1,6 +1,8 @@
 {
   "name": "BiblioB",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "948a9f73"
 }
