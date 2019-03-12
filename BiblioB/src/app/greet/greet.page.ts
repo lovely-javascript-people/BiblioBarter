@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GreetPage implements OnInit {
 
+  bool: true
+
   constructor() { }
 
   ngOnInit() {
