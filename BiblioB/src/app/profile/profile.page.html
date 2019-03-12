@@ -1,12 +1,21 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title style="display:-ms-inline-flexbox;">
-      <a routerLink="/Profile">Profile</a><br /> <a routerLink="/Matches">Matches</a> <a routerLink="/Greet">Logout</a>
+      <ion-title>
+      <a style="color:blueviolet;width:50%" routerLink="/Profile">Profile</a> <a style="width:50%" routerLink="/Matches">Matches</a> 
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding fullscreen="true">
   The world is your oyster.
+  {{url}}
   <p>Welcome to your profile</p>
 </ion-content>
+
+<ion-footer mode="ios">
+    <ion-toolbar>
+      <ion-title>
+          <a routerLink="/Greet">Logout</a>
+      </ion-title>
+    </ion-toolbar>
+  </ion-footer>
