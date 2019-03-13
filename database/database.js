@@ -1,6 +1,8 @@
+
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('database', 'username', 'password', {
-  host: 'localhost',
+require('dotenv').config();
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+  host: process.env.DB_HOST,
   dialect: 'postgres',
   operatorsAliases: false,
 
@@ -16,7 +18,7 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 });
 
 // Or you can simply use a connection uri
-const sequelize = new Sequelize('postgres://user:pass@example.com:5432/dbname');
+// const sequelize = new Sequelize('postgres://user:pass@example.com:5432/dbname');
 
 
 sequelize
@@ -27,3 +29,5 @@ sequelize
   .catch(err => {
     console.error('Unable to connect to the database:', err);
   });
+
+module.exports.sequelize = sequelize;
