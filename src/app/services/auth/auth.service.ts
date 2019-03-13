@@ -13,7 +13,7 @@ export class AuthService {
     clientID: 'ivIuyoWYphC-Rxf2AWNO6cl9HRID0X9x',
     domain: 'bibliobarter.auth0.com',
     responseType: 'token id_token',
-    audience: 'https://YOUR_AUTH_DOMAIN/userinfo',
+    audience: 'https://bibliobarter.auth0.com/userinfo',
     redirectUri: 'http://localhost:8100/callback',
     scope: 'openid'
   });
