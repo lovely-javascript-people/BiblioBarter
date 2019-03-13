@@ -9,7 +9,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
     getMatches(): any {
-      this.http.get('http://localhost:3000/matches', { headers: { 'Content-Type': 'text/html' }}).subscribe((response) => {
+      this.http.get(':3000/matches').subscribe((response) => {
       console.log(response);
   });
     }
