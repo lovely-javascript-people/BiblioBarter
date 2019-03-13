@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-greet',
@@ -9,9 +10,14 @@ export class GreetPage implements OnInit {
 
   bool: true
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
+
+  getMatches(): void {
+    this.apiService.getMatches();
+  }
 
   ngOnInit() {
+    this.getMatches();
   }
 
 }
