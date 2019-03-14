@@ -19,6 +19,11 @@ export class GreetPage implements OnInit {
     this.authService.login();
   }
 
+  onSignUpClick(): void {
+    console.log('sign me up!');
+    this.authService.login();
+  }
+
   getMatches(): void {
     this.apiService.getMatches();
   }
