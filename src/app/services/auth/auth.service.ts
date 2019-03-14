@@ -59,8 +59,6 @@ export class AuthService {
         this.isLoggedIn$.next(loggedIn);
         this.router.navigate(['/Matches']);
         console.log(localStorage);
-<<<<<<< HEAD
-=======
         // http req here to /userinfo to grab user prof from Auth0
         this.http.get('https://bibliobarter.auth0.com/userinfo', { 
           headers: {
@@ -70,7 +68,6 @@ export class AuthService {
         console.log(userInfo);
       })
 
->>>>>>> ce261f6f2492c6781f9d2fc25b23f3e8eca76d36
       } else if (err) {
 
         const loggedIn = this.isLoggedIn = false;
