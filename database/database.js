@@ -1,16 +1,22 @@
+/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/indent */
 
 const Sequelize = require('sequelize');
 require('dotenv').config();
 
+// eslint-disable-next-line max-len
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
   dialect: 'postgres',
-  operatorsAliases: false,
-  pool: {
+  operatorsAliases: false, // may not possibly need
+  define: {
+    timestamps: false, // will not create createdAt and updatedAt column for each table
+  },
+  pool: { // currently not sure if needed
     max: 5,
     min: 0,
     acquire: 30000,
-    idle: 10000
+    idle: 10000,
   },
 });
 
@@ -18,10 +24,10 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, pr
 sequelize
   .authenticate()
   .then(() => {
-    console.log('Database connection established successfully.');
+      console.log('Database connection established successfully.');
   })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
+  .catch((err) => {
+      console.error('Unable to connect to the database:', err);
   });
 
 
@@ -33,8 +39,8 @@ const School = sequelize.define('school', {
     autoIncrement: true,
   },
   name_school: Sequelize.TEXT,
-  geo_latitude: Sequelize.INTEGER,
-  geo_longitude: Sequelize.INTEGER
+  geo_latitude: Sequelize.DECIMAL,
+  geo_longitude: Sequelize.DECIMAL,
 });
 
 // user table, holds data for each user
@@ -53,12 +59,12 @@ const User = sequelize.define('user', {
     references: {
       model: School,
       key: 'id_school',
-      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
-    }
+      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+    },
   },
   address: Sequelize.TEXT,
   email: Sequelize.TEXT,
-  phone_number: Sequelize.INTEGER,
+  phone_number: Sequelize.TEXT,
   name_first: Sequelize.TEXT,
   name_last: Sequelize.TEXT,
   link_image: Sequelize.TEXT,
@@ -78,11 +84,11 @@ const Want = sequelize.define('want', {
     references: {
       model: User,
       key: 'id_user',
-      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
-    }
+      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+    },
   },
-  isbn: Sequelize.INTEGER,
-  condition: Sequelize.TEXT
+  isbn: Sequelize.BIGINT,
+  condition: Sequelize.TEXT,
 });
 // User.hasMany(Want);
 // Want.belongsTo(User);
@@ -94,9 +100,9 @@ const Book = sequelize.define('book', {
     primaryKey: true,
     autoIncrement: true,
   },
-  isbn: Sequelize.INTEGER,
+  isbn: Sequelize.BIGINT,
   title: Sequelize.TEXT,
-  condition: Sequelize.TEXT
+  condition: Sequelize.TEXT,
 });
 
 // LISTING table is the books the user has to offer
@@ -111,27 +117,19 @@ const Listing = sequelize.define('listing', {
     references: {
       model: User,
       key: 'id_user',
-      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
-    }
+      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+    },
   },
   id_book: {
     type: Sequelize.INTEGER,
     references: {
       model: Book,
       key: 'id_book',
-      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
-    }
+      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+    },
   },
-  date_created: Sequelize.DATE
+  date_created: Sequelize.DATE,
 });
-// User.hasMany(Listing);
-// Listing.belongsTo(User);
-
-
-
-// User.hasMany(Book);
-// Book.belongsTo(User);
-
 
 // OFFER table holds information on offer made between two people, negative money equals money out of listing owner
 const Offer = sequelize.define('offer', {
@@ -146,12 +144,12 @@ const Offer = sequelize.define('offer', {
   money_exchange: {
     type: Sequelize.INTEGER,
     allowNull: true,
-    defaultValue: null
+    defaultValue: null,
   },
   accepted: {
     type: Sequelize.BOOLEAN,
     allowNull: true,
-    defaultValue: null
+    defaultValue: null,
   },
 });
 
@@ -167,20 +165,68 @@ const Offer_Listing = sequelize.define('offer_listing', {
     references: {
       model: Offer,
       key: 'id_offer',
-      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
-    }
+      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+    },
   },
   id_listing: {
     type: Sequelize.INTEGER,
     references: {
       model: Listing,
       key: 'id_listing',
-      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
-    }
+      deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+    },
   },
 });
 
+// create a user for testing
+// force: true will drop the table if it already exists
+// User.create({
+//   user_name: 'Magic Sprinkles',
+//   id_school: 'U of Uni',
+//   address: '123 Rainbow Rd',
+//   email: 'sprinkles@gmail.com',
+//   phone_number: 8884581234,
+//   name_first: 'Charlie',
+//   name_last: 'Springfield',
+//   link_image: 'www.imglink.com',
+//   search_radius: 20,
+// }).then(()=> {
+//   console.log('user saved');
+// }).catch((err) => {
+//   console.log(`$err, there was`);
+// })
+// User.sync({ force: true }).then(() => {
+//   // Table created
+//   return User.create({
+//     user_name: 'Magic Sprinkles',
+//     id_school: 'U of Uni',
+//     address: '123 Rainbow Rd',
+//     email: 'sprinkles@gmail.com',
+//     phone_number: 8884581234,
+//     name_first: 'Charlie',
+//     name_last: 'Springfield',
+//     link_image: 'www.imglink.com',
+//     search_radius: 20,
+//   });
+// }).catch((err) => {
+//   console.log(err, 'where is charlie');
+// });
+
+// /////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////
 
 // comment out if no longer need to rebuild the tables!
 // uncomment to rebuild
 // sequelize.sync({ force: true });
+
+module.exports = {
+  School,
+  User,
+  Want,
+  Book,
+  Listing,
+  Offer,
+  Offer_Listing,
+};

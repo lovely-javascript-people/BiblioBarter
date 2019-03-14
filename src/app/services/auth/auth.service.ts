@@ -1,12 +1,29 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import * as auth0 from 'auth0-js';
 
 (window as any).global = window;
 
 @Injectable()
 export class AuthService {
+
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/json',
+  //     'Authorization': `Bearer ${localStorage.access_token}`,
+  //   })
+  // };
+
+  // httpOptions = {
+  //   headers: {
+  //     'Content-Type':  'application/json',
+  //     'Authorization': `Bearer ${localStorage.access_token}`,
+  //   }
+  // };
+
   isLoggedIn$ = new Subject();
   isLoggedIn: Boolean = false;
   auth0 = new auth0.WebAuth({
@@ -15,19 +32,23 @@ export class AuthService {
     responseType: 'token id_token',
     audience: 'https://bibliobarter.auth0.com/userinfo',
     redirectUri: 'http://localhost:8100/callback',
-    scope: 'openid'
+    scope: 'openid profile',
   });
 
-  constructor(public router: Router) {
+  constructor(public router: Router, public http: HttpClient) {
     // Check if user is logged In when Initializing
     const loggedIn = this.isLoggedIn = this.isAuthenticated();
     this.isLoggedIn$.next(loggedIn);
   }
 
-  // attach to login button
+  /** 
+   * @function login
+   * logs user in via auth0 when login button clicked
+   */
   public login(): void {
     this.auth0.authorize();
   }
+
 
   public handleAuthentication(): void {
     this.auth0.parseHash((err, authResult) => {
@@ -38,7 +59,20 @@ export class AuthService {
         this.isLoggedIn$.next(loggedIn);
         this.router.navigate(['/Matches']);
         console.log(localStorage);
+<<<<<<< HEAD
+=======
+        // http req here to /userinfo to grab user prof from Auth0
+        this.http.get('https://bibliobarter.auth0.com/userinfo', { 
+          headers: {
+            'Content-Type':  'application/json',
+            'Authorization': `Bearer ${localStorage.access_token}`,}, 
+      }).subscribe((userInfo) => {
+        console.log(userInfo);
+      })
+
+>>>>>>> ce261f6f2492c6781f9d2fc25b23f3e8eca76d36
       } else if (err) {
+
         const loggedIn = this.isLoggedIn = false;
         this.isLoggedIn$.next(loggedIn);
         this.router.navigate(['/Greet']);
@@ -55,7 +89,11 @@ export class AuthService {
     localStorage.setItem('expires_at', expiresAt);
   }
 
-  // connect to logout button
+  // need to connect to logout button
+    /** 
+   * @function logout
+   * logs user out via auth0 when login button clicked
+   */
   public logout(): void {
     // Remove tokens and expiry time from localStorage
     localStorage.removeItem('access_token');
@@ -65,6 +103,7 @@ export class AuthService {
     const loggedIn = this.isLoggedIn = false;
     this.isLoggedIn$.next(loggedIn);
   }
+
 //  This method checks if the user is authenticated or not by checking the token expiration 
 //  date from local storage.
   public isAuthenticated(): boolean {
