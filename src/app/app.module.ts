@@ -10,17 +10,19 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import {AuthService} from './services/auth/auth.service';
+import { HomePageModule } from './home/home.module';
+import { FooterModule } from './footer/footer.module';
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,HomePageModule, FooterModule],
   providers: [
     StatusBar,
     SplashScreen,
     AuthService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
