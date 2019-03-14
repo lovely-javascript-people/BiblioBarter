@@ -9,8 +9,8 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
     getMatches(): any {
-      this.http.get(':3000/matches').subscribe((response) => {
+      this.http.get('ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/matches').subscribe((response) => {
       console.log(response);
-  });
+      });
     }
 }
