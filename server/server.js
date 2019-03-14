@@ -15,4 +15,10 @@ app.get('/matches', (req, res) => res.send(JSON.stringify('Hello World!')))
 app.listen(port, () => console.log(`Biblio server listening on port ${port}!`))
 
 // need a catch for /callback from auth0
+app.post('/login/callback', (req, res) => {
+  console.log(res);
+})
 
+app.get('/login/callback', (req, res) => {
+  console.log(res);
+})
