@@ -14,10 +14,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-axios.get('https://isbnsearch.org/isbn/978-0-471-51166-3', (data) => {
-  console.log(Parser(data));
-})
-
 app.get('/matches', (req, res) => res.send(JSON.stringify('Hello World!')))
 
 app.listen(port, () => console.log(`Biblio server listening on port ${port}!`))
