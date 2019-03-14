@@ -76,3 +76,5 @@ app.post('/listing', (req, res) => {
 
 // PATCH / offer
 // Final transaction made by two users boolean changed
+
+app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
