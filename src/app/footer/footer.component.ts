@@ -30,6 +30,9 @@ export class FooterComponent implements OnInit {
 
     return await modalPage.present();
   }
+  async closeModal() {
+    this.modal.dismiss();
+  }
   ngOnInit() {}
 
 }

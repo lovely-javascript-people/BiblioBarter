@@ -7,8 +7,32 @@ import { HttpClient } from '@angular/common/http';
 export class ApiService {
   
   constructor(private http: HttpClient) {
-
+    this.http.get('/callback').subscribe(data => {
+      console.log(data);
+    })
+    
+    this.http.get('/login/callback').subscribe(data => {
+      console.log(data);
+    })
+    
+    // post for signup
+    // this.http.post('/callback', (req: any, res: any) => {
+    //   console.log('SIGNUP');
+    // })
+    
+    // this.http.post('/login/callback', (req: any, res: any) => {
+    //   console.log('SIGNUP');
+    // })
   }
+
+    userSignup({nickname, name}) {
+      this.http.post('ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/signup', {
+        nickname,
+        name
+      }).subscribe((response) => {
+        console.log(response);
+        });
+    }
 
     getMatches(): any {
       // const DNS = process.env.DEVELOPMENT === 'development' ? '/matches' : 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/matches';

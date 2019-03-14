@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-modals',
@@ -7,13 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public modal: ModalController) { }
 
-  closeModal()
-  {
-
-
-    //TODO: Implement Close Modal this.viewCtrl.dismiss();
+  async closeModal() {
+    this.modal.dismiss();
   }
 
   ngOnInit() {}

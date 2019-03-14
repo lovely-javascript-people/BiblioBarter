@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { ApiService } from '../../api.service';
 import * as auth0 from 'auth0-js';
 
 (window as any).global = window;
@@ -23,7 +24,7 @@ export class AuthService {
     scope: 'openid profile',
   });
 
-  constructor(public router: Router, public http: HttpClient) {
+  constructor(public router: Router, public http: HttpClient, private apiService: ApiService) {
     // Check if user is logged In when Initializing
     const loggedIn = this.isLoggedIn = this.isAuthenticated();
     this.isLoggedIn$.next(loggedIn);
@@ -54,14 +55,7 @@ export class AuthService {
             'Content-Type':  'application/json',
             'Authorization': `Bearer ${localStorage.access_token}`,}, 
       }).subscribe((userInfo: any) => {
-        console.log(userInfo);
-        // set val of username
-        this.username = userInfo.nickname;
-        // get req here to send nickname to server
-          // amazon web address 
-          //this.http.get('').subscribe()
-        // server gets profile from db
-        // profile rendered 
+        this.apiService.userSignup(userInfo);
       })
 
       } else if (err) {

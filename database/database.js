@@ -219,7 +219,7 @@ const Offer_Listing = sequelize.define('offer_listing', {
 
 // comment out if no longer need to rebuild the tables!
 // uncomment to rebuild
-sequelize.sync({ force: true });
+// sequelize.sync({ force: true });
 
 module.exports = {
   School,
