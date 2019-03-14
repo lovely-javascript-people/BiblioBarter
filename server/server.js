@@ -1,64 +1,47 @@
+/* eslint-disable @typescript-eslint/indent */
 const express = require('express');
 const bodyParser = require('body-parser');
 // const cors = require('cors');
-const sequelize = require('../database/database.js').sequelize;
+const { sequelize } = require('../database/database.js');
 const db = require('../database/database.js');
+const helpers = require('./apiHelpers.js');
+
 const app = express();
 
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 // app.use(cors());
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
 /**
- * GET request to /matches currently grabs all the users from the db and 
- * returns them in an array with each user's information
+ * GET request to /matches currently grabs all the users from the db and
+ * returns them in an array with each user's information.
+ * Please change alter findAll() to grab specific matches.
  */
 app.get('/matches', (req, res) => {
   db.User.findAll().then((data) => {
-    // give an array of object, each object is a user
-    let matches = [];
-    data.forEach(user => {
-      matches.push(user.dataValues)
+  // give an array of object, each object is a user
+    const matches = [];
+    data.forEach((user) => {
+      matches.push(user.dataValues);
     });
     res.status(200).send(matches);
-  })
-})
-
-app.listen(port, () => console.log(`Biblio server listening on port ${port}!`))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-/////// start end points here to not interfere with Laura
-
-// example to test db and server connection 
-app.get('/health', (req, res) => {
-  db.User.findAll().then((data)=> {
-    console.log(data);
-  })
+  });
 });
+
+app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
+
+
+// /////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////
+// ///// start end points here to not interfere with Laura
+
 // POST / signup
 // User sign up, makes call to map api for geolocation
 app.post('/signup', (req, res) => {
@@ -68,7 +51,11 @@ app.post('/signup', (req, res) => {
 // POST / listing
 // User creates a listing
 app.post('/listing', (req, res) => {
-
+  const userId = req.body.params.id_user;
+  const cond = req.body.params.condition;
+  const bookNameOrIsbn = req.body.params.book;
+  const date = new Date();
+  
 });
 
 // POST / want
@@ -88,4 +75,4 @@ app.post('/listing', (req, res) => {
 
 
 // PATCH / offer
-// Final transaction made by two users boolean changed 
+// Final transaction made by two users boolean changed
