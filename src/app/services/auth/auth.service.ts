@@ -10,20 +10,8 @@ import * as auth0 from 'auth0-js';
 
 @Injectable()
 export class AuthService {
-
-  // httpOptions = {
-  //   headers: new HttpHeaders({
-  //     'Content-Type':  'application/json',
-  //     'Authorization': `Bearer ${localStorage.access_token}`,
-  //   })
-  // };
-
-  // httpOptions = {
-  //   headers: {
-  //     'Content-Type':  'application/json',
-  //     'Authorization': `Bearer ${localStorage.access_token}`,
-  //   }
-  // };
+// props
+  username = '';
 
   isLoggedIn$ = new Subject();
   isLoggedIn: Boolean = false;
@@ -50,7 +38,8 @@ export class AuthService {
     this.auth0.authorize();
   }
 
-
+// when user is authenticated, access token is saved to local storage
+// send get req to auth0 w that access token and recieve user info back
   public handleAuthentication(): void {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {

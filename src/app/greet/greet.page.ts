@@ -30,6 +30,7 @@ export class GreetPage implements OnInit {
 
   ngOnInit() {
     this.getMatches();
+    console.log(this.authService.username);
   }
 
 }
