@@ -15,7 +15,7 @@ export class AuthService {
     responseType: 'token id_token',
     audience: 'https://bibliobarter.auth0.com/userinfo',
     redirectUri: 'http://localhost:8100/callback',
-    scope: 'openid'
+    scope: 'openid profile',
   });
 
   constructor(public router: Router) {
@@ -71,7 +71,7 @@ export class AuthService {
     const loggedIn = this.isLoggedIn = false;
     this.isLoggedIn$.next(loggedIn);
   }
-  
+
 //  This method checks if the user is authenticated or not by checking the token expiration 
 //  date from local storage.
   public isAuthenticated(): boolean {
