@@ -6,6 +6,7 @@ const routes: Routes = [
   { path: 'Matches', loadChildren: './home/home.module#HomePageModule' },
   { path: 'Profile', loadChildren: './profile/profile.module#ProfileModule' },
   { path: 'Greet', loadChildren: './greet/greet.module#GreetPageModule' },
+  { path: 'callback', redirectTo: '/Matches', pathMatch: 'full'}
 ];
 
 @NgModule({

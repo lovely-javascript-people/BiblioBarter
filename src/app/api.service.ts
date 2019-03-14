@@ -7,25 +7,22 @@ import { HttpClient } from '@angular/common/http';
 export class ApiService {
   
   constructor(private http: HttpClient) {
-
-    // need a catch for /callback from auth0
-  // get for login
-  this.http.get('/callback', (req: any, res: any) => {
-    console.log('LOGIN');
-  })
-  
-  this.http.get('/login/callback', (req: any, res: any) => {
-    console.log('LOGIN');
-  })
-
+    this.http.get('/callback').subscribe(data => {
+      console.log(data);
+    })
+    
+    this.http.get('/login/callback').subscribe(data => {
+      console.log(data);
+    })
+    
     // post for signup
-    this.http.post('/callback', (req: any, res: any) => {
-      console.log('SIGNUP');
-    })
-
-    this.http.post('/login/callback', (req: any, res: any) => {
-      console.log('SIGNUP');
-    })
+    // this.http.post('/callback', (req: any, res: any) => {
+    //   console.log('SIGNUP');
+    // })
+    
+    // this.http.post('/login/callback', (req: any, res: any) => {
+    //   console.log('SIGNUP');
+    // })
   }
 
     getMatches(): any {
