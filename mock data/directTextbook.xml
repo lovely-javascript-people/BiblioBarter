@@ -1,0 +1,387 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<books>
+    <apiversion>2.0</apiversion>
+    <searchurl>https://www.directtextbook.com/search.php?query=florida</searchurl>
+    <query>florida</query>
+    <results>37</results>
+    <results>
+        <book>
+            <title>The History of Florida</title>
+            <author>Gannon, Michael</author>
+            <publisher>University Press of Florida</publisher>
+            <publicationdate>2013</publicationdate>
+            <ean>9780813044644</ean>
+            <format>Hardcover</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA4MTMwNDQ2NDQ=</url>
+            <imageurl>https://www.directtextbook.com/large/9780813044644.jpg</imageurl>
+        </book>
+        <book>
+            <title>Palms of South Florida</title>
+            <author>Stevenson, George B.</author>
+            <publisher>University Press of Florida</publisher>
+            <publicationdate>1995</publicationdate>
+            <ean>9780813014418</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA4MTMwMTQ0MTg=</url>
+            <imageurl>https://www.directtextbook.com/large/9780813014418.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida Dissolution of Marriage</title>
+            <author>The Florida Bar Staff</author>
+            <publisher>LEXIS Publishing</publisher>
+            <publicationdate>2012</publicationdate>
+            <ean>9780769859385</ean>
+            <edition>11</edition>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA3Njk4NTkzODU=</url>
+            <imageurl>https://www.directtextbook.com/large/9780769859385.jpg</imageurl>
+        </book>
+        <book>
+            <title>Intermediate Algebra Math for College Readiness Florida Edition</title>
+            <author>State Of Florida</author>
+            <publisher>Pearson</publisher>
+            <publicationdate>2013</publicationdate>
+            <ean>9781256718994</ean>
+            <format>Hardcover</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODEyNTY3MTg5OTQ=</url>
+            <imageurl>https://www.directtextbook.com/large/9781256718994.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida Juvenile Law and Practice, 13th Edition</title>
+            <author>Education, The Florida Bar Continuing Legal</author>
+            <publisher> 2014</publisher>
+            <publicationdate>2014</publicationdate>
+            <ean>9780769883267</ean>
+            <format>Hardcover</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA3Njk4ODMyNjc=</url>
+            <imageurl>https://www.directtextbook.com/large/9780769883267.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida's Golden Age of Souvenirs, 1890-1930</title>
+            <author>Roberts, Larry</author>
+            <publisher>University Press of Florida</publisher>
+            <publicationdate>2001</publicationdate>
+            <ean>9780813024240</ean>
+            <format>Hardcover</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA4MTMwMjQyNDA=</url>
+            <imageurl>https://www.directtextbook.com/large/9780813024240.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida : A Short History</title>
+            <author>Gannon, Michael</author>
+            <publisher>University Press of Florida</publisher>
+            <publicationdate>2003</publicationdate>
+            <ean>9780813026800</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA4MTMwMjY4MDA=</url>
+            <imageurl>https://www.directtextbook.com/large/9780813026800.jpg</imageurl>
+        </book>
+        <book>
+            <title>Archeology of the Florida Gulf Coast</title>
+            <author>Willey, Gordon R.</author>
+            <publisher>University Press of Florida</publisher>
+            <publicationdate>1998</publicationdate>
+            <ean>9780813016030</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA4MTMwMTYwMzA=</url>
+            <imageurl>https://www.directtextbook.com/large/9780813016030.jpg</imageurl>
+        </book>
+        <book>
+            <title>Miami Spice : The New Florida Cuisine</title>
+            <author>Raichlen, Steven;Zingone, Robin</author>
+            <publisher>Workman Publishing Company</publisher>
+            <publicationdate>1993</publicationdate>
+            <ean>9781563053467</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODE1NjMwNTM0Njc=</url>
+            <imageurl>https://www.directtextbook.com/large/9781563053467.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida Firearms -- Law, Use and Ownership, 2006</title>
+            <author>Gutmacher, Jon H.</author>
+            <publisher>Warlord Publishing</publisher>
+            <publicationdate>2005</publicationdate>
+            <ean>9780964195844</ean>
+            <edition>6</edition>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA5NjQxOTU4NDQ=</url>
+            <imageurl>https://www.directtextbook.com/large/9780964195844.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida's Fabulous Mammals</title>
+            <author>Gingerich, Jerry</author>
+            <publisher>World Publications</publisher>
+            <publicationdate>1995</publicationdate>
+            <ean>9780911977134</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA5MTE5NzcxMzQ=</url>
+            <imageurl>https://www.directtextbook.com/large/9780911977134.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida Firearms : Seventh Edition</title>
+            <author>Gutmacher, Jon</author>
+            <publisher>Warlord Publishing</publisher>
+            <publicationdate>2013</publicationdate>
+            <ean>9780964195851</ean>
+            <edition>7</edition>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA5NjQxOTU4NTE=</url>
+            <imageurl>https://www.directtextbook.com/large/9780964195851.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida</title>
+            <author>Grant, Kim;Chilcoat, Loretta;Greenfield, Beth;Le Nevez, Catherine</author>
+            <publisher>Lonely Planet Publications</publisher>
+            <publicationdate>2006</publicationdate>
+            <ean>9781740599863</ean>
+            <edition>4</edition>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODE3NDA1OTk4NjM=</url>
+            <imageurl>https://www.directtextbook.com/large/9781740599863.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida Travel Guide</title>
+            <author>Globetrotter Staff</author>
+            <publisher>Globe Pequot Press, The</publisher>
+            <publicationdate>1997</publicationdate>
+            <ean>9781853684326</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODE4NTM2ODQzMjY=</url>
+            <imageurl>https://www.directtextbook.com/large/9781853684326.jpg</imageurl>
+        </book>
+        <book>
+            <title>Mini Day Trips : 150 Day Trips Southeast Florida</title>
+            <author>Scalpone, Joan L.</author>
+            <publisher>Mini DayTrip Books</publisher>
+            <publicationdate>1988</publicationdate>
+            <ean>9780929198064</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA5MjkxOTgwNjQ=</url>
+            <imageurl>https://www.directtextbook.com/large/9780929198064.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida Fever</title>
+            <author>Oldfield, Elizabeth</author>
+            <publisher>Harlequin Mills &amp; Boon</publisher>
+            <publicationdate>1983</publicationdate>
+            <ean>9780263743142</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODAyNjM3NDMxNDI=</url>
+            <imageurl>https://www.directtextbook.com/large/9780263743142.jpg</imageurl>
+        </book>
+        <book>
+            <title>June Keith's Key West and the Florida Keys : A Guide to the Coral Islands</title>
+            <author>Keith, June</author>
+            <publisher>Palm Island Press</publisher>
+            <publicationdate>2014</publicationdate>
+            <ean>9780974352497</ean>
+            <edition>5</edition>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA5NzQzNTI0OTc=</url>
+            <imageurl>https://www.directtextbook.com/large/9780974352497.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida</title>
+            <author>Heinrichs, Ann</author>
+            <publisher>Scholastic Library Publishing</publisher>
+            <publicationdate>1998</publicationdate>
+            <ean>9780516206325</ean>
+            <edition>2</edition>
+            <format>Hardcover</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA1MTYyMDYzMjU=</url>
+            <imageurl>https://www.directtextbook.com/large/9780516206325.jpg</imageurl>
+        </book>
+        <book>
+            <title>The Twelve Days of Christmas in Florida</title>
+            <author>Remkiewicz, Frank</author>
+            <publisher>Sterling Publishing Co., Inc.</publisher>
+            <publicationdate>2008</publicationdate>
+            <ean>9781402738173</ean>
+            <format>Hardcover</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODE0MDI3MzgxNzM=</url>
+            <imageurl>https://www.directtextbook.com/large/9781402738173.jpg</imageurl>
+        </book>
+        <book>
+            <title>Yesterday's Florida Keys</title>
+            <author>Windhorn, Stan;Langley, Wright</author>
+            <publisher>Langley Press</publisher>
+            <publicationdate>1985</publicationdate>
+            <ean>9780911607000</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA5MTE2MDcwMDA=</url>
+            <imageurl>https://www.directtextbook.com/large/9780911607000.jpg</imageurl>
+        </book>
+        <book>
+            <title>FLORIDA PROBATE RULES - FLORIDA RULES OF JUDICIAL ADMINISTRATION 2015 FLA. BAR</title>
+            <author>Bar, Florida</author>
+            <publisher> 2015</publisher>
+            <publicationdate>2015</publicationdate>
+            <ean>9781632820389</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODE2MzI4MjAzODk=</url>
+            <imageurl>https://www.directtextbook.com/large/9781632820389.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida Cowboys : Keepers of the Last Frontier</title>
+            <author>Ward, Carlton, Jr.</author>
+            <publisher>University Press of Florida</publisher>
+            <publicationdate>2009</publicationdate>
+            <ean>9780813034089</ean>
+            <format>Hardcover</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA4MTMwMzQwODk=</url>
+            <imageurl>https://www.directtextbook.com/large/9780813034089.jpg</imageurl>
+        </book>
+        <book>
+            <title>New Histories of Pre-Columbian Florida</title>
+            <author>Wallis, Neill J.;Randall, Asa R.</author>
+            <publisher>University Press of Florida</publisher>
+            <publicationdate>2016</publicationdate>
+            <ean>9780813062099</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA4MTMwNjIwOTk=</url>
+            <imageurl>https://www.directtextbook.com/large/9780813062099.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida Rules of Civil Procedure 2014 Florida Evidence Code 2014</title>
+            <author>Legislature, Florida</author>
+            <publisher>CreateSpace Independent Publishing Platform</publisher>
+            <publicationdate>2014</publicationdate>
+            <ean>9781496087812</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODE0OTYwODc4MTI=</url>
+            <imageurl>https://www.directtextbook.com/large/9781496087812.jpg</imageurl>
+        </book>
+        <book>
+            <title>Daily Messages from Heaven - Book 1 : From the Florida Apparition Site</title>
+            <author>Ring, Rita</author>
+            <publisher>Shepherds of Christ Ministries Incorporated</publisher>
+            <publicationdate>1999</publicationdate>
+            <ean>9781934222034</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODE5MzQyMjIwMzQ=</url>
+            <imageurl>https://www.directtextbook.com/large/9781934222034.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida's Megatrends : Critical Issues in Florida</title>
+            <author>Colburn, David R.;DeHaven-Smith, Lance</author>
+            <publisher>University Press of Florida</publisher>
+            <publicationdate>2010</publicationdate>
+            <ean>9780813035192</ean>
+            <edition>2</edition>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA4MTMwMzUxOTI=</url>
+            <imageurl>https://www.directtextbook.com/large/9780813035192.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida Construction Law and Practice</title>
+            <author>Florida Bar, Continuing Legal Education Staff</author>
+            <publisher>Florida Bar Continuing Legal Education Publications, The</publisher>
+            <publicationdate>2006</publicationdate>
+            <ean>9780820579160</ean>
+            <edition>5</edition>
+            <format>Hardcover</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA4MjA1NzkxNjA=</url>
+            <imageurl>https://www.directtextbook.com/large/9780820579160.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida Life, Health, &amp; Variable Annuity Study Manual, 28/E</title>
+            <author>Services, Florida Department Of Financial</author>
+            <publisher>Florida Association of Insurance and Financial Advisors</publisher>
+            <ean>9781475420210</ean>
+            <format>Book</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODE0NzU0MjAyMTA=</url>
+            <imageurl>https://www.directtextbook.com/large/9781475420210.jpg</imageurl>
+        </book>
+        <book>
+            <title>Beyond Disney : The Unofficial Guide to Universal Orlando, Seaworld and the Best of Central Florida</title>
+            <author>Sehlinger, Bob;Jenkins, Robert N.;Kubersky, Seth</author>
+            <publisher>AdventureKEEN</publisher>
+            <publicationdate>2013</publicationdate>
+            <ean>9781628090109</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODE2MjgwOTAxMDk=</url>
+            <imageurl>https://www.directtextbook.com/large/9781628090109.jpg</imageurl>
+        </book>
+        <book>
+            <title>Recasting : Gone with the Wind in American Culture</title>
+            <author>Pyron, Darden A.</author>
+            <publisher>University Press of Florida</publisher>
+            <publicationdate>1983</publicationdate>
+            <ean>9780813007472</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA4MTMwMDc0NzI=</url>
+            <imageurl>https://www.directtextbook.com/large/9780813007472.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida's Minority Trailblazers : The Men and Women Who Changed the Face of Florida Government</title>
+            <author>MacManus, Susan;Myers, Tyler;Kay, Lauren</author>
+            <publisher>University Press of Florida</publisher>
+            <publicationdate>2016</publicationdate>
+            <ean>9780813062938</ean>
+            <format>Hardcover</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA4MTMwNjI5Mzg=</url>
+            <imageurl>https://www.directtextbook.com/large/9780813062938.jpg</imageurl>
+        </book>
+        <book>
+            <title>Blast Off! On Florida Reading: Helping the Schoolhouse Meet the Standards of the Statehouse (Grade 4 Student Workbook) (FCAT 4)</title>
+            <author>Knebel, Doria;Zollo, Rick</author>
+            <publisher>Buckle Down Publishing</publisher>
+            <publicationdate>2003</publicationdate>
+            <ean>9780783628103</ean>
+            <edition>2</edition>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODA3ODM2MjgxMDM=</url>
+            <imageurl>https://www.directtextbook.com/large/9780783628103.jpg</imageurl>
+        </book>
+        <book>
+            <title>Walt Disney World, Universal Orlando, and Central Florida 2006</title>
+            <author>Fodor's Travel Publications, Inc. Staff</author>
+            <publisher>Fodor's Travel Publications</publisher>
+            <publicationdate>2005</publicationdate>
+            <ean>9781400015573</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODE0MDAwMTU1NzM=</url>
+            <imageurl>https://www.directtextbook.com/large/9781400015573.jpg</imageurl>
+        </book>
+        <book>
+            <title>FLORIDA TEST PREP English Language Arts Reading Workbook Grade 7 : Preparation for the Florida Standards Assessments (FSA)</title>
+            <author>Test Master Press Florida, Test Master</author>
+            <publisher>CreateSpace Independent Publishing Platform</publisher>
+            <publicationdate>2014</publicationdate>
+            <ean>9781500973117</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODE1MDA5NzMxMTc=</url>
+            <imageurl>https://www.directtextbook.com/large/9781500973117.jpg</imageurl>
+        </book>
+        <book>
+            <title>FLORIDA TEST PREP English Language Arts Reading Workbook Grade 6 : Preparation for the Florida Standards Assessments (FSA)</title>
+            <author>Test Master Press Florida, Test Master</author>
+            <publisher>CreateSpace Independent Publishing Platform</publisher>
+            <publicationdate>2014</publicationdate>
+            <ean>9781500973100</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODE1MDA5NzMxMDA=</url>
+            <imageurl>https://www.directtextbook.com/large/9781500973100.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida Geometry Eoc Success Strategies Study Guide : Florida EOC Test Review for the Florida End-Of-Course Exams</title>
+            <author>Florida Eoc Exam Secrets Test Prep Staff</author>
+            <publisher>Mometrix Media LLC</publisher>
+            <publicationdate>2015</publicationdate>
+            <ean>9781630946227</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODE2MzA5NDYyMjc=</url>
+            <imageurl>https://www.directtextbook.com/large/9781630946227.jpg</imageurl>
+        </book>
+        <book>
+            <title>Florida Algebra I Eoc Success Strategies Study Guide : Florida EOC Test Review for the Florida End-Of-Course Exams</title>
+            <author>Florida Eoc Exam Secrets Test Prep Staff</author>
+            <publisher>Mometrix Media LLC</publisher>
+            <publicationdate>2015</publicationdate>
+            <ean>9781630946203</ean>
+            <format>Paperback</format>
+            <url>https://www.directtextbook.com/xml.php?key=4abea8aaff6a53f7849eac4d2741e050&amp;ap=YWg9ZjljYjExMGNkY2RjODg1OTczNzdmNTFhZDU2ZGU0MzQmZWFuPTk3ODE2MzA5NDYyMDM=</url>
+            <imageurl>https://www.directtextbook.com/large/9781630946203.jpg</imageurl>
+        </book>
+    </results>
+</books>
