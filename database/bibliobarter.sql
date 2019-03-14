@@ -6,7 +6,7 @@ CREATE DATABASE bibliobarter;
 -- command to get into our db 
 -- -U postgres part is where we are specifying that we want to connect with the postgres role.
 -- psql -U postgres -d bibliobarter
--- 
+-- get into psql db for bibliobarter
 USE bibliobarter;
 
 -- USER table to hold user's information
