@@ -13,7 +13,8 @@ export class GreetPage implements OnInit {
 
   constructor(private apiService: ApiService, public authService: AuthService) { }
 
-  onClick(): void {
+
+  onLoginClick(): void {
     console.log('log me in!');
     this.authService.login();
   }

@@ -24,7 +24,10 @@ export class AuthService {
     this.isLoggedIn$.next(loggedIn);
   }
 
-  // attach to login button
+  /** 
+   * @function login
+   * logs user in via auth0 when login button clicked
+   */
   public login(): void {
     this.auth0.authorize();
   }
@@ -54,7 +57,11 @@ export class AuthService {
     localStorage.setItem('expires_at', expiresAt);
   }
 
-  // connect to logout button
+  // need to connect to logout button
+    /** 
+   * @function logout
+   * logs user out via auth0 when login button clicked
+   */
   public logout(): void {
     // Remove tokens and expiry time from localStorage
     localStorage.removeItem('access_token');
@@ -64,6 +71,7 @@ export class AuthService {
     const loggedIn = this.isLoggedIn = false;
     this.isLoggedIn$.next(loggedIn);
   }
+  
 //  This method checks if the user is authenticated or not by checking the token expiration 
 //  date from local storage.
   public isAuthenticated(): boolean {
