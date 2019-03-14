@@ -9,6 +9,13 @@ export class ModalsComponent implements OnInit {
 
   constructor() { }
 
+  closeModal()
+  {
+
+
+    //TODO: Implement Close Modal this.viewCtrl.dismiss();
+  }
+
   ngOnInit() {}
 
 }
