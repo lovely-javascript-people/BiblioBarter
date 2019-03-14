@@ -9,6 +9,8 @@ import * as auth0 from 'auth0-js';
 
 @Injectable()
 export class AuthService {
+// props
+  username = '';
 
   isLoggedIn$ = new Subject();
   isLoggedIn: Boolean = false;
@@ -53,6 +55,13 @@ export class AuthService {
             'Authorization': `Bearer ${localStorage.access_token}`,}, 
       }).subscribe((userInfo) => {
         console.log(userInfo);
+        // set val of username
+        this.username = userInfo.nickname;
+        // get req here to send nickname to server
+          // amazon web address 
+          //this.http.get('').subscribe()
+        // server gets profile from db
+        // profile rendered 
       })
 
       } else if (err) {
