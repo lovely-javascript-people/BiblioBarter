@@ -1,16 +1,91 @@
-const express = require('express')
-const app = express()
-const port = process.env.PORT || 3000
+const express = require('express');
 const bodyParser = require('body-parser');
+// const cors = require('cors');
 const sequelize = require('../database/database.js').sequelize;
-app.use(bodyParser.json())
+const db = require('../database/database.js');
+const app = express();
+
+const port = process.env.PORT || 3000;
+
+app.use(bodyParser.json());
+// app.use(cors());
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
-app.get('/matches', (req, res) => res.send(JSON.stringify('Hello World!')))
+/**
+ * GET request to /matches currently grabs all the users from the db and 
+ * returns them in an array with each user's information
+ */
+app.get('/matches', (req, res) => {
+  db.User.findAll().then((data) => {
+    // give an array of object, each object is a user
+    let matches = [];
+    data.forEach(user => {
+      matches.push(user.dataValues)
+    });
+    res.status(200).send(matches);
+  })
+})
 
 app.listen(port, () => console.log(`Biblio server listening on port ${port}!`))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+/////// start end points here to not interfere with Laura
+
+// example to test db and server connection 
+app.get('/health', (req, res) => {
+  db.User.findAll().then((data)=> {
+    console.log(data);
+  })
+});
+// POST / signup
+// User sign up, makes call to map api for geolocation
+app.post('/signup', (req, res) => {
+
+});
+
+// POST / listing
+// User creates a listing
+app.post('/listing', (req, res) => {
+
+});
+
+// POST / want
+// User add a want book
+
+
+// GET / listing
+// Search for listing(other’s offers)
+
+
+// GET / want
+// Search for want(people who want your book)
+
+
+// POST / offer
+// Make an offer and counter offer
+
+
+// PATCH / offer
+// Final transaction made by two users boolean changed 

@@ -5,8 +5,11 @@ require('dotenv').config();
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
   dialect: 'postgres',
-  operatorsAliases: false,
-  pool: {
+  operatorsAliases: false, // may not possibly need
+  define: {
+    timestamps: false // will not create createdAt and updatedAt column for each table
+  },
+  pool: { // currently not sure if needed
     max: 5,
     min: 0,
     acquire: 30000,
@@ -58,7 +61,7 @@ const User = sequelize.define('user', {
   },
   address: Sequelize.TEXT,
   email: Sequelize.TEXT,
-  phone_number: Sequelize.INTEGER,
+  phone_number: Sequelize.TEXT,
   name_first: Sequelize.TEXT,
   name_last: Sequelize.TEXT,
   link_image: Sequelize.TEXT,
@@ -124,14 +127,6 @@ const Listing = sequelize.define('listing', {
   },
   date_created: Sequelize.DATE
 });
-// User.hasMany(Listing);
-// Listing.belongsTo(User);
-
-
-
-// User.hasMany(Book);
-// Book.belongsTo(User);
-
 
 // OFFER table holds information on offer made between two people, negative money equals money out of listing owner
 const Offer = sequelize.define('offer', {
@@ -180,7 +175,57 @@ const Offer_Listing = sequelize.define('offer_listing', {
   },
 });
 
+// create a user for testing
+// force: true will drop the table if it already exists
+// User.create({
+//   user_name: 'Magic Sprinkles',
+//   id_school: 'U of Uni',
+//   address: '123 Rainbow Rd',
+//   email: 'sprinkles@gmail.com',
+//   phone_number: 8884581234,
+//   name_first: 'Charlie',
+//   name_last: 'Springfield',
+//   link_image: 'www.imglink.com',
+//   search_radius: 20,
+// }).then(()=> {
+//   console.log('user saved');
+// }).catch((err) => {
+//   console.log(`$err, there was`);
+// })
+// User.sync({ force: true }).then(() => {
+//   // Table created
+//   return User.create({
+//     user_name: 'Magic Sprinkles',
+//     id_school: 'U of Uni',
+//     address: '123 Rainbow Rd',
+//     email: 'sprinkles@gmail.com',
+//     phone_number: 8884581234,
+//     name_first: 'Charlie',
+//     name_last: 'Springfield',
+//     link_image: 'www.imglink.com',
+//     search_radius: 20,
+//   });
+// }).catch((err) => {
+//   console.log(err, 'where is charlie');
+// });
+
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
 // comment out if no longer need to rebuild the tables!
 // uncomment to rebuild
 // sequelize.sync({ force: true });
+
+
+
+module.exports = {
+  School,
+  User,
+  Want, 
+  Book,
+  Listing,
+  Offer,
+  Offer_Listing
+}
