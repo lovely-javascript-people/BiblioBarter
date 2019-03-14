@@ -1,13 +1,28 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import * as auth0 from 'auth0-js';
 
 (window as any).global = window;
 
 @Injectable()
 export class AuthService {
-  // userAccessToken: any = localStorage.access_token;
+
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/json',
+  //     'Authorization': `Bearer ${localStorage.access_token}`,
+  //   })
+  // };
+
+  // httpOptions = {
+  //   headers: {
+  //     'Content-Type':  'application/json',
+  //     'Authorization': `Bearer ${localStorage.access_token}`,
+  //   }
+  // };
 
   isLoggedIn$ = new Subject();
   isLoggedIn: Boolean = false;
@@ -20,7 +35,7 @@ export class AuthService {
     scope: 'openid profile',
   });
 
-  constructor(public router: Router) {
+  constructor(public router: Router, public http: HttpClient) {
     // Check if user is logged In when Initializing
     const loggedIn = this.isLoggedIn = this.isAuthenticated();
     this.isLoggedIn$.next(loggedIn);
@@ -34,6 +49,7 @@ export class AuthService {
     this.auth0.authorize();
   }
 
+
   public handleAuthentication(): void {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
@@ -42,10 +58,18 @@ export class AuthService {
         const loggedIn = this.isLoggedIn = true;
         this.isLoggedIn$.next(loggedIn);
         this.router.navigate(['/Matches']);
-      } else if (err) {
         console.log(localStorage);
-        // http req here 
-        
+        // http req here to /userinfo to grab user prof from Auth0
+        this.http.get('https://bibliobarter.auth0.com/userinfo', { 
+          headers: {
+            'Content-Type':  'application/json',
+            'Authorization': `Bearer ${localStorage.access_token}`,}, 
+      }).subscribe((userInfo) => {
+        console.log(userInfo);
+      })
+
+      } else if (err) {
+
         const loggedIn = this.isLoggedIn = false;
         this.isLoggedIn$.next(loggedIn);
         this.router.navigate(['/Greet']);
