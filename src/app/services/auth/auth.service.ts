@@ -7,6 +7,8 @@ import * as auth0 from 'auth0-js';
 
 @Injectable()
 export class AuthService {
+  // userAccessToken: any = localStorage.access_token;
+
   isLoggedIn$ = new Subject();
   isLoggedIn: Boolean = false;
   auth0 = new auth0.WebAuth({
@@ -41,6 +43,9 @@ export class AuthService {
         this.isLoggedIn$.next(loggedIn);
         this.router.navigate(['/Matches']);
       } else if (err) {
+        console.log(localStorage);
+        // http req here 
+        
         const loggedIn = this.isLoggedIn = false;
         this.isLoggedIn$.next(loggedIn);
         this.router.navigate(['/Greet']);
