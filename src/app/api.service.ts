@@ -8,6 +8,8 @@ export class ApiService {
   
   constructor(private http: HttpClient) {
 
+    //NOT YET WORKING --> 
+      // ERROR IN CONSOLE
     // need a catch for /callback from auth0
   // get for login
   this.http.get('/callback', (req: any, res: any) => {
