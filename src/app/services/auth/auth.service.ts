@@ -53,7 +53,7 @@ export class AuthService {
           headers: {
             'Content-Type':  'application/json',
             'Authorization': `Bearer ${localStorage.access_token}`,}, 
-      }).subscribe((userInfo) => {
+      }).subscribe((userInfo: any) => {
         console.log(userInfo);
         // set val of username
         this.username = userInfo.nickname;
