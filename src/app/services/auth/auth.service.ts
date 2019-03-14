@@ -37,6 +37,7 @@ export class AuthService {
         const loggedIn = this.isLoggedIn = true;
         this.isLoggedIn$.next(loggedIn);
         this.router.navigate(['/Matches']);
+        console.log(localStorage);
       } else if (err) {
         const loggedIn = this.isLoggedIn = false;
         this.isLoggedIn$.next(loggedIn);
