@@ -11,6 +11,7 @@ import {IonicModule} from '@ionic/angular';
   ],
   entryComponents: [
     ModalsComponent
-  ]
+  ],
+  exports: [ModalsComponent]
 })
 export class ModalsModule { }
