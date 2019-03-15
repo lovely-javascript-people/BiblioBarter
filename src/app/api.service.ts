@@ -10,9 +10,11 @@ export class ApiService {
     
   }
 
-  getProfile(username) {
+  getProfile(username, callback) {
     this.http.get('http://localhost:3000/profile', { params: { username } })
-    .subscribe(data => console.log(data));
+    .subscribe(data => {
+      callback(data);
+    });
   }
 
   // helper function to send user info
