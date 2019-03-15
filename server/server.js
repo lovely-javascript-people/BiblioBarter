@@ -34,7 +34,7 @@ app.get('/matches', (req, res) => {
   });
 });
 
-app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
+app.listen(port, () => console.log(`Biblio server listening on port ${port}!${db.User.create}`));
 
 
 // /////////////////////////////////////////////////////////////
@@ -50,12 +50,12 @@ app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
  */
 app.post('/signup', (req, res) => {
   const { nickname, family_name, given_name, picture } = req.body.params;
-  console.log(req, 'REQ');
-  helpers.insertNewUser(nickname, given_name, family_name, picture)
+  console.log(req.body.params, 'REQ');
+  db.User.create({ user_name: nickname, name_first: given_name, name_last: family_name, link_image: picture }, {fields: ['user_name', 'name_first', 'name_last', 'link_image']})
   .then(() => {
     console.log('new user success');
   }).catch((err) => {
-    console.log(`there was an problem: ${err}`);
+    res.send(`there was an problem: ${err}`);
   })
 });
 
@@ -68,6 +68,11 @@ app.post('/listing', (req, res) => {
   const date = new Date();
   
 });
+
+app.get('/profile', (req, res) => {
+  console.log(req);
+  res.send(JSON.stringify(req.query));
+})
 
 // POST / want
 // User add a want book

@@ -7,26 +7,26 @@ import { HttpClient } from '@angular/common/http';
 export class ApiService {
   
   constructor(private http: HttpClient) {
-    this.http.get('/callback').subscribe(data => {
-      console.log(data);
-    })
     
-    this.http.get('/login/callback').subscribe(data => {
-      console.log(data);
-    })
-    
+  }
+
+  getProfile(username, callback) {
+    this.http.get('http://localhost:3000/profile', { params: { username } })
+    .subscribe(data => {
+      callback(data);
+    });
   }
 
   // helper function to send user info
     userSignup({nickname, family_name, given_name, picture}) {
-      // this.http.post('http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/signup', {
-      // this.http.post('http://bibliobarter.com/signup', {
-      this.http.post('http://localhost:3000/signup', {
+      // // this.http.post('http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/signup', {
+      // // this.http.post('http://bibliobarter.com/signup', {
+      this.http.post('http://localhost:3000/signup', { params :{
         nickname,
         family_name,
         given_name,
         picture,
-      }).subscribe((response) => {
+      }}).subscribe((response) => {
         console.log(response);
         });
     }
