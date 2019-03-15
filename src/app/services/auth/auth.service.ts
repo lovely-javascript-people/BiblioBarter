@@ -55,7 +55,7 @@ export class AuthService {
             'Content-Type':  'application/json',
             'Authorization': `Bearer ${localStorage.access_token}`,}, 
       }).subscribe((userInfo: any) => {
-        console.log(userInfo, 'USER INFO');
+        console.log(userInfo, 'USER');
         this.apiService.userSignup(userInfo);
       })
 

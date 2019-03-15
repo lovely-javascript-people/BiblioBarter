@@ -20,7 +20,7 @@ export class ApiService {
   // helper function to send user info
     userSignup({nickname, family_name, given_name, picture}) {
       // this.http.post('ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/signup', {
-        this.http.post('localhost:3000/signup', {
+        this.http.post('https://localhost:3000/signup', {
         nickname,
         family_name,
         given_name,
