@@ -44,8 +44,18 @@ app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
 
 // POST / signup
 // User sign up, makes call to map api for geolocation
+/**
+ * POST to signup
+ * nickname is from auth0, this is the user's username
+ */
 app.post('/signup', (req, res) => {
-
+  const { nickname, family_name, given_name, picture } = req.body.params;
+  helpers.insertNewUser(nickname, given_name, family_name, picture)
+  .then(() => {
+    console.log('new user success');
+  }).catch((err) => {
+    console.log(`there was an problem: ${err}`);
+  })
 });
 
 // POST / listing
@@ -77,4 +87,4 @@ app.post('/listing', (req, res) => {
 // PATCH / offer
 // Final transaction made by two users boolean changed
 
-app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
+// app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
