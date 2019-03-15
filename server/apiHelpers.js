@@ -11,8 +11,16 @@ const findBookISBN = () => {
 };
 
 /**
- * function insert new user
- * @params {string} username
+ * function insertNewUser inserts a new user into the database
+ * @param {string} username - user's username
+ * @param {string} first - user's first name
+ * @param {string} last - user's last name
+ * @param {string} link - user's url link for picture
+ * @param {number} school - school id
+ * @param {string} add - user address
+ * @param {string} email - user email address
+ * @param {string} number - user phone number
+ * @param {number} radius - user set search radius
  */
 const insertNewUser = (username, first, last, link, school, add, email, number, radius) => {
   db.User.create({
@@ -32,8 +40,57 @@ const insertNewUser = (username, first, last, link, school, add, email, number, 
   });
 };
 
+/**
+ * function newListing creates a new listing for a user, and also inputs the values into
+ * book table. Must first create a new book in table, then create listing.
+ * @param {number} userId - user's id
+ * @param {number} isbn - book isbn number
+ * @param {string} condition - condition of book
+ * @param {string} title - book title
+ */
+const newListing = (userId, isbn, condition, title) => {
+  let bookId;
+  db.Book.create({
+    isbn,
+    title,
+    condition,
+  });
+  // still having trouble with which one to save first to grab the foreign key
+  // db.Book.findOne({
+  //   where: {
 
+  //   }
+  // })
+
+  // model.findOne({
+  //   where: {
+  //     key: key,
+  //   },
+  //   order: [['createdAt', 'DESC']],
+  // });
+  db.Listing.create({
+    id_user: userId,
+    id_book: bookId,
+    date_created: new Date(),
+  });
+};
+
+/**
+ * function createWant creates a row in the want table for the book this user is looking for.
+ * @param {number} userId - user's id
+ * @param {number} isbn - book isbn number
+ * @param {string} condition - condition of book
+ */
+const createWant = (userId, isbn, condition) => {
+  db.Want.create({
+    id_user: userId,
+    isbn,
+    condition,
+  });
+};
 
 module.exports = {
   insertNewUser,
+  newListing,
+  createWant,
 };
