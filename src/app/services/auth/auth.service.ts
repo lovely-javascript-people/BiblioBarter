@@ -77,6 +77,7 @@ export class AuthService {
             'Authorization': `Bearer ${localStorage.access_token}`,}, 
       }).subscribe((userInfo: any) => {
         console.log(userInfo, 'USER');
+        localStorage.setItem('username', userInfo.nickname);
         this.apiService.userSignup(userInfo);
       })
 

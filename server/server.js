@@ -71,7 +71,7 @@ app.post('/listing', (req, res) => {
 
 app.get('/profile', (req, res) => {
   console.log(req);
-  res.send('hi');
+  res.send(JSON.stringify(req.query));
 })
 
 // POST / want

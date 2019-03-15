@@ -15,7 +15,7 @@ export class ProfilePage implements OnInit{
 
   ngOnInit() {
     this.url = document.URL
-    this.apiService.getProfile('jeff');
+    this.apiService.getProfile(localStorage.getItem('username'));
   }
 
 }
