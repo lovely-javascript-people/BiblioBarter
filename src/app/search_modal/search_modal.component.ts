@@ -22,7 +22,8 @@ export class SearchModal implements OnInit {
     // returns all listings of book
   searchBooks() {
     console.log(this.isbnQuery)
-    this.http.get(`http://localhost:3000/search/listing/isbn?${this.isbnQuery}`).subscribe((searchedListings: any) => {
+    this.http.get(`http://localhost:3000/search/listing/isbn?${this.isbnQuery}`)
+    .subscribe((searchedListings: any) => {
       console.log(searchedListings, 'BOOKS USER HAS SEARCHED FOR');
     })
   }

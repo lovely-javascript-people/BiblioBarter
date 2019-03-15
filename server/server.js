@@ -73,9 +73,12 @@ app.post('/listing', (req, res) => {
 // User add a want book
 
 
-// GET / listing
+// GET /search/listing/isbn
 // Search for listing(other’s offers)
-
+app.get('/search/listing/isbn', (req, res) => {
+  // db helper function getBookByIsbn
+  console.log(req.query, 'THIS SHOULD BE THE ISBN NUMBER');
+});
 
 // GET / want
 // Search for want(people who want your book)
