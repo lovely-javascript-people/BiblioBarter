@@ -8,6 +8,7 @@ import { ModalController } from '@ionic/angular';
 })
 
 export class SearchModal implements OnInit {
+  query: string = '';
 
   constructor(public modal: ModalController) { }
 
@@ -17,9 +18,9 @@ export class SearchModal implements OnInit {
 
   // function that takes in isbn number from input field
   // and sends get req to api server /search/listing/isbn
-  searchBooks(isbn) {
+  searchBooks() {
     console.log('search');
-    console.log(isbn)
+    console.log(this.query)
   }
 
 
