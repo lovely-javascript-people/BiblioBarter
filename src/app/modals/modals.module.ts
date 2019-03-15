@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalsComponent } from './modals.component';
+import { SettingsModal } from './modals.component';
 import {IonicModule} from '@ionic/angular';
 
 @NgModule({
-  declarations: [ModalsComponent],
+  declarations: [SettingsModal],
   imports: [
     IonicModule,
     CommonModule
   ],
   entryComponents: [
-    ModalsComponent
+    SettingsModal
   ],
-  exports: [ModalsComponent]
+  exports: [SettingsModal]
 })
 export class ModalsModule { }

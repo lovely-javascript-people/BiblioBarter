@@ -83,9 +83,13 @@ app.get('/search/listing/isbn', (req, res) => {
 // User add a want book
 
 
-// GET / listing
+// GET /search/listing/isbn
 // Search for listing(other’s offers)
-
+app.get('/search/listing/isbn', (req, res) => {
+  // db helper function getBookByIsbn
+    // send back res from helper
+  console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
+});
 
 // GET / want
 // Search for want(people who want your book)
