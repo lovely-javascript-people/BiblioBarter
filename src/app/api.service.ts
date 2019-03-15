@@ -21,7 +21,7 @@ export class ApiService {
     userSignup({nickname, family_name, given_name, picture}) {
       // this.http.post('http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/signup', {
       // this.http.post('http://bibliobarter.com/signup', {
-      this.http.post('https://localhost:3000/signup', {
+      this.http.post('http://localhost:3000/signup', {
         nickname,
         family_name,
         given_name,

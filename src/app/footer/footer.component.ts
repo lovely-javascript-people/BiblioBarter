@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router'
-import { ModalsComponent } from '../modals/modals.component';
+import { SettingsModal } from '../modals/modals.component';
 
 @Component({
   selector: 'app-footer',
@@ -33,7 +33,7 @@ export class FooterComponent implements OnInit {
     var data = { message : 'hello world' };
 
     const modalPage = await this.modal.create({
-      component: ModalsComponent, 
+      component: SettingsModal, 
       componentProps:{values: data}
     });
 
