@@ -13,11 +13,20 @@ export class FooterComponent implements OnInit {
 
   constructor(public authService: AuthService, private router: Router, public modal: ModalController) { }
   
-  onClick(): void {
+  logoutButton(): void {
     console.log('log me out!');
     this.authService.logout();
     this.router.navigate(['/Greet']);
   }
+
+  onSearch(): void {
+    console.log('Search clicked');
+  }
+
+  logoClick(): void {
+    console.log('logo clicked');
+  }
+
   async openModal()
   {
 
