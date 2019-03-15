@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  auth0: {
+    domain: 'bibliobarter.auth0.com',
+    clientId: 'ivIuyoWYphC-Rxf2AWNO6cl9HRID0X9x',
+    callbackURL: 'http://localhost:8100/callback'
+  }
 };
 
 /*
