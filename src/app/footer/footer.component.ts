@@ -3,6 +3,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router'
 import { SettingsModal } from '../modals/modals.component';
+import { SearchModal } from '../search_modal/search_modal.component';
 
 @Component({
   selector: 'app-footer',
@@ -27,21 +28,31 @@ export class FooterComponent implements OnInit {
     console.log('logo clicked');
   }
 
-  async openModal()
+  async openSettingsModal()
   {
-
     var data = { message : 'hello world' };
-
     const modalPage = await this.modal.create({
       component: SettingsModal, 
       componentProps:{values: data}
     });
-
     return await modalPage.present();
   }
+
+  async openSearchModal()
+  {
+    var data = { message : 'hello world' };
+    const modalPage = await this.modal.create({
+      component: SearchModal, 
+      componentProps:{values: data}
+    });
+    return await modalPage.present();
+  }
+
   async closeModal() {
     this.modal.dismiss();
   }
+
   ngOnInit() {}
+
 
 }
