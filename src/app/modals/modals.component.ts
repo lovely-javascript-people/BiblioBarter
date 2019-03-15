@@ -6,7 +6,8 @@ import { ModalController } from '@ionic/angular';
   templateUrl: './modals.component.html',
   styleUrls: ['./modals.component.scss'],
 })
-export class ModalsComponent implements OnInit {
+
+export class SettingsModal implements OnInit {
 
   constructor(public modal: ModalController) { }
 

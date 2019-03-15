@@ -13,10 +13,11 @@ import {AuthService} from './services/auth/auth.service';
 import { HomePageModule } from './home/home.module';
 import { FooterModule } from './footer/footer.module';
 import { ModalsModule } from './modals/modals.module';
+import { SearchModalsModule } from './search_modal/search_modal.module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,HomePageModule, FooterModule, ModalsModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,HomePageModule, FooterModule, ModalsModule, SearchModalsModule],
   providers: [
     StatusBar,
     SplashScreen,
