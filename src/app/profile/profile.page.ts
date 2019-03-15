@@ -7,19 +7,22 @@ import { ApiService } from '../api.service';
   styleUrls: ['profile.page.scss'],
 })
 export class ProfilePage implements OnInit{
-  url: any;
-  username: any;
+  img: any;
+  user: any;
+  school: any;
   wants: any[]
 
   constructor(private apiService: ApiService) {}
 
-  setUser({ username }) {
-    this.username = username;
+  setUser(data) {
+    console.log(data);
+    this.user = data[0].user_name;
+    this.school = data[1][0].name_school;
+    this.img = data[0].link_image;
   }
   
   ngOnInit() {
     this.setUser = this.setUser.bind(this);
-    this.url = document.URL
     this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
   }
 
