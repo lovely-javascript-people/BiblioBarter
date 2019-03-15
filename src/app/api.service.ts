@@ -15,20 +15,17 @@ export class ApiService {
       console.log(data);
     })
     
-    // post for signup
-    // this.http.post('/callback', (req: any, res: any) => {
-    //   console.log('SIGNUP');
-    // })
-    
-    // this.http.post('/login/callback', (req: any, res: any) => {
-    //   console.log('SIGNUP');
-    // })
   }
 
-    userSignup({nickname, name}) {
-      this.http.post('ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/signup', {
+  // helper function to send user info
+    userSignup({nickname, family_name, given_name, picture}) {
+      // this.http.post('http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/signup', {
+      // this.http.post('http://bibliobarter.com/signup', {
+      this.http.post('https://localhost:3000/signup', {
         nickname,
-        name
+        family_name,
+        given_name,
+        picture,
       }).subscribe((response) => {
         console.log(response);
         });
