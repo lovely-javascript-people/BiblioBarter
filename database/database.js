@@ -74,7 +74,6 @@ const User = sequelize.define('user', {
   search_radius: Sequelize.INTEGER,
 });
 
-
 // WANT table is the books the user would like / need
 const Want = sequelize.define('want', {
   id_want: {
@@ -219,10 +218,12 @@ const Offer_Listing = sequelize.define('offer_listing', {
 // /////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////
-
+// User.hasOne(School);
+// User.hasMany(Book);
 // comment out if no longer need to rebuild the tables!
 // uncomment to rebuild
 // sequelize.sync({ force: true });
+sequelize.sync();
 
 module.exports = {
   School,
@@ -233,3 +234,44 @@ module.exports = {
   Offer,
   Offer_Listing,
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const db = {};
+// const models = [
+//   School,
+//   User,
+//   Want,
+//   Book,
+//   Listing,
+//   Offer,
+//   Offer_Listing,
+// ];
+
+// models.forEach((model) => {
+//   db[model] = `${model}`;
+// });
+
+// models.forEach((modelName) => {
+//   if (db[modelName].associate) {
+//     db[modelName].associate(db);
+//   }
+// });
+
+// db.sequelize = sequelize;
+// db.Sequelize = Sequelize;
+
+// module.exports = db;
