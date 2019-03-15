@@ -38,7 +38,10 @@ const School = sequelize.define('school', {
     primaryKey: true,
     autoIncrement: true,
   },
-  name_school: Sequelize.TEXT,
+  name_school: {
+    type: Sequelize.TEXT,
+    unique: true,
+  },
   geo_latitude: Sequelize.DECIMAL,
   geo_longitude: Sequelize.DECIMAL,
 });
