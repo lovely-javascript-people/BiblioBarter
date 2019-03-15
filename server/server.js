@@ -34,7 +34,7 @@ app.get('/matches', (req, res) => {
   });
 });
 
-app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
+app.listen(port, () => console.log(`Biblio server listening on port ${port}!${db.User.create}`));
 
 
 // /////////////////////////////////////////////////////////////
@@ -51,7 +51,7 @@ app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
 app.post('/signup', (req, res) => {
   const { nickname, family_name, given_name, picture } = req.body.params;
   console.log(req.body.params, 'REQ');
-  helpers.insertNewUser(nickname, given_name, family_name, picture)
+  db.User.create({ user_name: nickname, name_first: given_name, name_last: family_name, link_image: picture }, {fields: ['user_name', 'name_first', 'name_last', 'link_image']})
   .then(() => {
     console.log('new user success');
   }).catch((err) => {
