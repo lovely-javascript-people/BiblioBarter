@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SampleUsers } from '../../../mock data/authExampleData';
 
 @Component({
   selector: 'app-home',
@@ -9,9 +8,14 @@ import { SampleUsers } from '../../../mock data/authExampleData';
 export class HomePage implements OnInit{
 
   url: any;
-  users: any = [{ 
+
+  // SAMPLE DATA //
+  // the listings prop should be set to the array of listings sent back from the DB on search
+  listings: any = [{ 
     family_name: "Theriot",
     gender: "female",
+    isbn: 1234345234,
+    title: "This is my English book",
     given_name: "Laura",
     locale: "en",
     name: "Laura Theriot",
@@ -23,6 +27,8 @@ export class HomePage implements OnInit{
     { 
       family_name: "Landry",
       gender: "female",
+      isbn: 12345454,
+      title: "This is my Science book",
       given_name: "Olivia",
       locale: "en",
       name: "Olivia Landry",
@@ -35,6 +41,8 @@ export class HomePage implements OnInit{
         family_name: "Parker",
         gender: "female",
         given_name: "Rhett",
+        isbn: 12398234734,
+        title: "This is my Architecture book",
         locale: "en",
         name: "Rhett Parker",
         nickname: "GoRhettro",
