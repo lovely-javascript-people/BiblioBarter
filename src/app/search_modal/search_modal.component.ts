@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-modals',
@@ -8,9 +9,9 @@ import { ModalController } from '@ionic/angular';
 })
 
 export class SearchModal implements OnInit {
-  query: string = '';
+  isbnQuery: string = '';
 
-  constructor(public modal: ModalController) { }
+  constructor(public modal: ModalController, private http: HttpClient) { }
 
   async closeModal() {
     this.modal.dismiss();
@@ -18,9 +19,12 @@ export class SearchModal implements OnInit {
 
   // function that takes in isbn number from input field
   // and sends get req to api server /search/listing/isbn
+    // returns all listings of book
   searchBooks() {
-    console.log('search');
-    console.log(this.query)
+    console.log(this.isbnQuery)
+    this.http.get(`http://localhost:3000/search/listing/isbn?${this.isbnQuery}`).subscribe((searchedListings: any) => {
+      console.log(searchedListings, 'BOOKS USER HAS SEARCHED FOR');
+    })
   }
 
 
