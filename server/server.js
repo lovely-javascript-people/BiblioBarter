@@ -55,7 +55,7 @@ app.post('/signup', (req, res) => {
   .then(() => {
     console.log('new user success');
   }).catch((err) => {
-    console.log(`there was an problem: ${err}`);
+    console.log(`there was a problem: ${err}`);
   })
 });
 
@@ -74,6 +74,11 @@ app.get('/profile', (req, res) => {
   res.send(JSON.stringify(req.query));
 })
 
+// GET /search/listing/isbn
+// gets all the listings with this isbn number
+app.get('/search/listing/isbn', (req, res) => {
+  console.log('get request to search listing with isbn');
+});
 // POST / want
 // User add a want book
 

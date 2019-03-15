@@ -1,6 +1,5 @@
 /* eslint-disable */
 const db = require('../database/database.js');
-
 /**
  * function findBookISBN takes in book title and calls on api to grab isbn number for return
  * @param {string} : isbnVal of book title, need to change to number for query
@@ -28,8 +27,9 @@ const findBookByIsbn = (isbnVal) => {
  * @param {string} number - user phone number
  * @param {number} radius - user set search radius
  */
-const insertNewUser = (username, first, last, link, school, add, email, number, radius) => {
-  console.log(username);
+const insertNewUser = async (username, first, last, link, school, add, email, number, radius) => {
+  console.log(User, 'USER');
+  console.log(db.User, 'DDDBBB');
   db.User.create({
     user_name: username,
     // id_school: school,
