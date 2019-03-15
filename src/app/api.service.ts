@@ -7,22 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class ApiService {
   
   constructor(private http: HttpClient) {
-    this.http.get('/callback').subscribe(data => {
-      console.log(data);
-    })
     
-    this.http.get('/login/callback').subscribe(data => {
-      console.log(data);
-    })
-    
-    // post for signup
-    // this.http.post('/callback', (req: any, res: any) => {
-    //   console.log('SIGNUP');
-    // })
-    
-    // this.http.post('/login/callback', (req: any, res: any) => {
-    //   console.log('SIGNUP');
-    // })
   }
 
     userSignup({nickname, name}) {

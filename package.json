@@ -25,6 +25,7 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.1.0",
     "auth0-js": "^9.10.0",
+    "auth0-lock": "^11.14.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cordova": "^8.1.2",

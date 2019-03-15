@@ -17,7 +17,7 @@ export class AppComponent {
     private authService: AuthService,
   ) {
     this.initializeApp();
-    this.authService.handleAuthentication();
+    // this.authService.handleAuthentication();
   }
 
   initializeApp() {

@@ -4,9 +4,12 @@ import {Subject} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { ApiService } from '../../api.service';
+import { environment } from '../../../environments/environment';
+import Auth0Lock from 'auth0-lock';
 import * as auth0 from 'auth0-js';
 
-(window as any).global = window;
+
+
 
 @Injectable()
 export class AuthService {
@@ -15,58 +18,92 @@ export class AuthService {
 
   isLoggedIn$ = new Subject();
   isLoggedIn: Boolean = false;
-  auth0 = new auth0.WebAuth({
-    clientID: 'ivIuyoWYphC-Rxf2AWNO6cl9HRID0X9x',
-    domain: 'bibliobarter.auth0.com',
-    responseType: 'token id_token',
-    audience: 'https://bibliobarter.auth0.com/userinfo',
-    redirectUri: 'http://localhost:8100/callback',
-    scope: 'openid profile',
-  });
+  // auth0 = new auth0.WebAuth({
+  //   clientID: 'ivIuyoWYphC-Rxf2AWNO6cl9HRID0X9x',
+  //   domain: 'bibliobarter.auth0.com',
+  //   responseType: 'token id_token',
+  //   audience: 'https://bibliobarter.auth0.com/userinfo',
+  //   redirectUri: 'http://localhost:8100/callback',
+  //   scope: 'openid profile',
+  // });
+
+  lock = new Auth0Lock(
+    environment.auth0.clientId,
+    environment.auth0.domain,
+    {
+      
+      responseType: 'token id_token',
+      audience: 'https://bibliobarter.auth0.com/userinfo',
+      redirectUri: 'http://localhost:8100/callback',
+      scope: 'openid profile',
+    }
+  );
 
   constructor(public router: Router, public http: HttpClient, private apiService: ApiService) {
-    // Check if user is logged In when Initializing
-    const loggedIn = this.isLoggedIn = this.isAuthenticated();
-    this.isLoggedIn$.next(loggedIn);
+    this.lock.on('authenticated', (authResult: any) => {
+      console.log(authResult);
+      this.router.navigate(['/Matches']); // go to the home route
+      this.http.get('https://bibliobarter.auth0.com/userinfo', { 
+          headers: {
+            'Content-Type':  'application/json',
+            'Authorization': `Bearer ${authResult.accessToken}`,}, 
+      }).subscribe((userInfo: any) => {
+        console.log(userInfo);
+      })
+    });
+
+    this.lock.on('authorization_error', error => {
+      console.log('something went wrong', error);
+    });
   }
+
+  login() {
+    this.lock.show();
+  }
+
+  // constructor(public router: Router, public http: HttpClient, private apiService: ApiService) {
+  //   // Check if user is logged In when Initializing
+  //   const loggedIn = this.isLoggedIn = this.isAuthenticated();
+  //   this.isLoggedIn$.next(loggedIn);
+  // }
 
   /** 
    * @function login
    * logs user in via auth0 when login button clicked
    */
-  public login(): void {
-    this.auth0.authorize();
-  }
+  // public login(): void {
+  //   this.auth0.authorize();
+  // }
 
 // when user is authenticated, access token is saved to local storage
 // send get req to auth0 w that access token and recieve user info back
-  public handleAuthentication(): void {
-    this.auth0.parseHash((err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        window.location.hash = '';
-        this.setSession(authResult);
-        const loggedIn = this.isLoggedIn = true;
-        this.isLoggedIn$.next(loggedIn);
-        this.router.navigate(['/Matches']);
-        console.log(localStorage);
-        // http req here to /userinfo to grab user prof from Auth0
-        this.http.get('https://bibliobarter.auth0.com/userinfo', { 
-          headers: {
-            'Content-Type':  'application/json',
-            'Authorization': `Bearer ${localStorage.access_token}`,}, 
-      }).subscribe((userInfo: any) => {
-        this.apiService.userSignup(userInfo);
-      })
+  // public handleAuthentication(): void {
+  //   this.lock.parseHash((err, authResult) => {
+  //     if (authResult && authResult.accessToken && authResult.idToken) {
+  //       window.location.hash = '';
+  //       this.setSession(authResult);
+  //       const loggedIn = this.isLoggedIn = true;
+  //       this.isLoggedIn$.next(loggedIn);
+  //       this.router.navigate(['/Matches']);
+  //       console.log(localStorage);
+  //       // http req here to /userinfo to grab user prof from lock
+  //       this.http.get('https://bibliobarter.auth0.com/userinfo', { 
+  //         headers: {
+  //           'Content-Type':  'application/json',
+  //           'Authorization': `Bearer ${localStorage.access_token}`,}, 
+  //     }).subscribe((userInfo: any) => {
+  //       this.apiService.userSignup(userInfo);
+  //     })
 
-      } else if (err) {
+  //     } else if (err) {
 
-        const loggedIn = this.isLoggedIn = false;
-        this.isLoggedIn$.next(loggedIn);
-        this.router.navigate(['/Greet']);
-      }
-      console.log(this.isLoggedIn);
-    });
-  }
+  //       const loggedIn = this.isLoggedIn = false;
+  //       this.isLoggedIn$.next(loggedIn);
+  //       this.router.navigate(['/Greet']);
+  //     }
+  //     console.log(this.isLoggedIn);
+  //   });
+  // }
 
   private setSession(authResult): void {
     // Set the time that the Access Token will expire at
