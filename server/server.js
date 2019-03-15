@@ -50,12 +50,12 @@ app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
  */
 app.post('/signup', (req, res) => {
   const { nickname, family_name, given_name, picture } = req.body.params;
-  console.log(req, 'REQ');
+  console.log(req.body.params, 'REQ');
   helpers.insertNewUser(nickname, given_name, family_name, picture)
   .then(() => {
     console.log('new user success');
   }).catch((err) => {
-    console.log(`there was an problem: ${err}`);
+    res.send(`there was an problem: ${err}`);
   })
 });
 

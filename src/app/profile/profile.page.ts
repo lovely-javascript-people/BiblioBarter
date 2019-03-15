@@ -13,9 +13,14 @@ export class ProfilePage implements OnInit{
 
   constructor(private apiService: ApiService) {}
 
+  setUser({ username }) {
+    this.username = username;
+  }
+  
   ngOnInit() {
+    this.setUser = this.setUser.bind(this);
     this.url = document.URL
-    this.apiService.getProfile(localStorage.getItem('username'));
+    this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
   }
 
 }
