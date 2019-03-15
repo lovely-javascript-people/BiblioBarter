@@ -77,7 +77,8 @@ app.post('/listing', (req, res) => {
 // Search for listing(other’s offers)
 app.get('/search/listing/isbn', (req, res) => {
   // db helper function getBookByIsbn
-  console.log(req.query, 'THIS SHOULD BE THE ISBN NUMBER');
+    // send back res from helper
+  console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
 });
 
 // GET / want

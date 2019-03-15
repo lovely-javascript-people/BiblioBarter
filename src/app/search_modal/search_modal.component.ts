@@ -26,6 +26,7 @@ export class SearchModal implements OnInit {
     .subscribe((searchedListings: any) => {
       console.log(searchedListings, 'BOOKS USER HAS SEARCHED FOR');
     })
+
   }
 
 

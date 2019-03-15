@@ -1,2 +1,2 @@
 <ion-icon style="width: 40px;height: 40px;" name="close" (click)="closeModal()"></ion-icon>
-<div>Search For A Book <input [(ngModel)]="isbnQuery" #ctrl="ngModel" placeholder="#isbn" /><button (click)="searchBooks()">Search</button></div>
+<div>Search For A Book <input [(ngModel)]="isbnQuery" #ctrl="ngModel" placeholder="#isbn" /><button (click)="searchBooks()" routerLink="/Matches">Search</button></div>
