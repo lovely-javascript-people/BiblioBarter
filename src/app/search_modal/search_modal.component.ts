@@ -15,6 +15,14 @@ export class SearchModal implements OnInit {
     this.modal.dismiss();
   }
 
+  // function that takes in isbn number from input field
+  // and sends get req to api server /search/listing/isbn
+  searchBooks(isbn) {
+    console.log('search');
+    console.log(isbn)
+  }
+
+
   ngOnInit() {}
 
 }
