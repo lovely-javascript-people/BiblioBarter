@@ -8,13 +8,11 @@ export class ApiService {
   
   constructor(private http: HttpClient) {
     
-<<<<<<< HEAD
-=======
-    this.http.get('/login/callback').subscribe(data => {
-      console.log(data);
-    })
-    
->>>>>>> c8a125cda4d3452abd01dc0bfeea6a30fa08a6ff
+  }
+
+  getProfile(username) {
+    this.http.get('http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/signup', { headers: { HttpParams: username } })
+    .subscribe(data => console.log(data));
   }
 
   // helper function to send user info

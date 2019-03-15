@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePage implements OnInit{
   url: any;
+  username: any;
+  wants: any[]
+  
 
   ngOnInit() {
     this.url = document.URL

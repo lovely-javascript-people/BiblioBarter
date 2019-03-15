@@ -24,6 +24,27 @@ export class AuthService {
     scope: 'openid profile',
   });
 
+//   client = new Auth0Cordova({
+//     domain: 'YOUR_DOMAIN',
+//     clientId: 'YOUR_CLIENT_ID',
+//     packageIdentifier: 'YOUR_PACKAGE_ID' // found in config.xml
+//   });
+
+//   var options = {
+//     scope: 'openid profile',
+//     audience: 'https://YOUR_DOMAIN/userinfo'
+//   };
+//   var self = this;
+//   client.authorize(options, function(err, authResult) {
+//     if (err) {
+//       console.log(err);
+//       return (e.target.disabled = false);
+//     }
+//     localStorage.setItem('access_token', authResult.accessToken);
+//     self.resumeApp();
+//   });
+// };
+
   constructor(public router: Router, public http: HttpClient, private apiService: ApiService) {
     // Check if user is logged In when Initializing
     const loggedIn = this.isLoggedIn = this.isAuthenticated();
