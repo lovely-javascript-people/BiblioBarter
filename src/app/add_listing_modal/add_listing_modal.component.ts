@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-modals',
@@ -9,7 +10,9 @@ import { ModalController } from '@ionic/angular';
 
 export class AddListingModal implements OnInit {
 
-  constructor(public modal: ModalController) { }
+  isbnVal: string = '';
+
+  constructor(public modal: ModalController, private http: HttpClient) { }
 
   async closeModal() {
     this.modal.dismiss();
@@ -17,10 +20,10 @@ export class AddListingModal implements OnInit {
 
   addBook() {
     console.log('add a book to my list');
-    // this.http.get(`http://localhost:3000/search/listing/isbn?${this.isbnQuery}`)
-    // .subscribe((searchedListings: any) => {
-    //   console.log(searchedListings, 'BOOKS USER HAS SEARCHED FOR');
-    // })
+    this.http.post(`http://localhost:3000//user/listing`, { params: this.isbnVal })
+    .subscribe((allListings: any) => {
+      console.log(allListings, 'ALL LISTINGS + NEW ONE');
+    })
     this.closeModal();
   }
 
