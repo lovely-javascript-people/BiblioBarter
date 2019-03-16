@@ -74,11 +74,7 @@ app.get('/profile', (req, res) => {
   res.send(JSON.stringify(req.query));
 })
 
-// GET /search/listing/isbn
-// gets all the listings with this isbn number
-app.get('/search/listing/isbn', (req, res) => {
-  console.log('get request to search listing with isbn');
-});
+
 // POST / want
 // User add a want book
 
@@ -89,6 +85,37 @@ app.get('/search/listing/isbn', (req, res) => {
   // db helper function getBookByIsbn
     // send back res from helper
   console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
+  let isbnNum = Number(Object.keys(req.query)[0]);
+  db.Book.findAll({
+    where: {
+      isbn: isbnNum
+    }, 
+    include: [db.Listing]
+  }).then((allBooksWithIsbn) => {
+    console.log(allBooksWithIsbn);
+    let listingResults = [];
+    // allBooksWithIsbn.forEach((book) => {
+    //   const books = {};
+    //   books.id = book.id_book;
+    //   books.isbn = book.isbn;
+    //   books.title = book.title;
+    //   books.condition = book.condition;
+    //   db.Book.findOne({
+    //     where: {
+    //       id_book: book.id_book
+    //     }
+    //   }).then((listing) => {
+    //     books.user = listing.id_user;
+    //   }).catch((err) => {
+    //     console.log(`there's an error getting book's owner: ${err}`);
+    //   })
+    //   listingResults.push(book.dataValues);
+    // });
+    res.send(listingResults);
+  }).catch((err) => {
+    console.log(`there was an error: ${err}`);
+  });
+
 });
 
 // GET / want
