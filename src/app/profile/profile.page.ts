@@ -92,11 +92,21 @@ export class ProfilePage implements OnInit{
   this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
     .subscribe((wantListArray) => {
       console.log(wantListArray, 'ARRAY OF WANT LIST');
+      this.wants = wantListArray;
+    })
+  }
+
+  renderListingsList() {
+  this.http.get(`http://localhost:3000/user/listing?${localStorage.userid}`)
+    .subscribe((listingListArray) => {
+      console.log(listingListArray, 'ARRAY OF WANT LIST');
+      this.listings = listingListArray;
     })
   }
 
   ngOnInit() {
     this.renderWantList();
+    this.renderListingsList();
     this.setUser = this.setUser.bind(this);
     this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
   }

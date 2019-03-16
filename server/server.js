@@ -207,9 +207,7 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
 // GET /user/listing
 // should get all users want listing
 app.get('/user/listing', (req, res) => {
-  console.log('HEY');
   console.log(Object.keys(req.query)[0]);
-  console.log(req.query);
   return db.Listing.findAll({
     where: {
       id_user: Object.keys(req.query)[0],
