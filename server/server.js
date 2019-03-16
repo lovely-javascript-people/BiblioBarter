@@ -77,7 +77,7 @@ app.get('/profile', (req, res) => {
 
 // POST / want
 // User add a want book, should also return all the user's want books
-app.get('/user/want', (req, res) => {
+app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new for functionality
   console.log(req.body.isbn);
   db.Want.create({
     isbn: 123444446, // go back and input params
@@ -100,8 +100,8 @@ app.get('/user/want', (req, res) => {
 });
 
 // POST /user/listing
-// user adds a listing 
-app.get('/user/listing', (req, res) => {
+// user adds a listing, returns all users listings
+app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new for functionality
   let count = 0;
   console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
   // needs user id, 
