@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
+      unique: true,
     },
     // id_user: {
     //   type: DataTypes.INTEGER,
@@ -30,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Listing.associate = (models) => {
     // Listing.belongsTo(models.User, { foreignKey: 'id_listing' });
-    Listing.hasOne(models.Book, { foreignKey: 'id_book' });
+    Listing.hasOne(models.Book, { foreignKey: 'id_book', targetKey: 'id_book' });
   };
   return Listing;
 };

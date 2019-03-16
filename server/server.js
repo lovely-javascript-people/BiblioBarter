@@ -122,15 +122,30 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
     console.log(`listing creation err: ${err}`)
   }).then((createdListing) => {
     listing = createdListing;
+    console.log(listing, 'FROM LISTING');
     return db.Book.create({
       isbn: isbnNum,
-      title: 'Cla',
-      condition: 'chuf',
+      title: 'Sugar Cain',
+      condition: 'Sweet',
     })
   }).catch((err) => {
     console.log(`creation of book err: ${err}`);
   }).then((book) => {
-    // listing.setBook(book);
+    // console.log(listing.setBook(book), 'LALA');
+    listing.setBook(book);
+    // listing.addBook(book);
+
+    db.Book.findAll({
+      limit: 1,
+      where: {
+        isbn: isbnNum
+      },
+      order: [['id_book', 'DESC']]
+    })
+    console.log('listing set book');
+  }).then((bookEntry) => {
+    console.log(bookEntry, 'BOOK ENTRY');
+  }).then(() => {
     res.status(200).send(JSON.stringify('worked'));
   }).catch((err) => {
     console.log(`there was a user listing err: ${err}`);
