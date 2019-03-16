@@ -152,6 +152,7 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
         id_user: 1, // change to user id
       },
       include: [db.Book]
+      
     })
   }).catch((err) => {
     console.log(`an error in acquiring all listings for user: ${err}`);
