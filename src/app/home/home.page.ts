@@ -15,6 +15,7 @@ export class HomePage implements OnInit{
     family_name: "Theriot",
     gender: "female",
     isbn: 1234345234,
+    userid: 4523,
     title: "This is my English book",
     given_name: "Laura",
     locale: "en",
@@ -28,6 +29,7 @@ export class HomePage implements OnInit{
       family_name: "Landry",
       gender: "female",
       isbn: 12345454,
+      userid: 4524,
       title: "This is my Science book",
       given_name: "Olivia",
       locale: "en",
@@ -42,6 +44,7 @@ export class HomePage implements OnInit{
         gender: "female",
         given_name: "Rhett",
         isbn: 12398234734,
+        userid: 4525,
         title: "This is my Architecture book",
         locale: "en",
         name: "Rhett Parker",
@@ -51,8 +54,8 @@ export class HomePage implements OnInit{
         updated_at: "2019-03-14T23:55:43.269Z"
         }];
 
-  profileButtonClick() {
-    console.log('Take me to their profile');
+  profileButtonClick(userid) {
+    console.log(userid);
   }
 
   ngOnInit() {

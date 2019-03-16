@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class WantListModal implements OnInit {
   isbnVal: string = '';
+  userid: number = localStorage.userid;
 
   constructor(public modal: ModalController, private http: HttpClient) { }
 
@@ -23,7 +24,9 @@ export class WantListModal implements OnInit {
   addBookToWant() {
     console.log(this.isbnVal);
     const isbnVal = this.isbnVal;
-    this.http.post('http://localhost:3000/user/want', { params: isbnVal })
+    const userid = this.userid;
+    console.log(userid, 'USER ID');
+    this.http.post('http://localhost:3000/user/want', { params: isbnVal, userid })
     .subscribe((allWants: any) => {
       console.log(allWants, 'ALL WANTS + NEW ONE');
     })
