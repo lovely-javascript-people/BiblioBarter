@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     //   },
     // },
     isbn: DataTypes.BIGINT,
+    title: DataTypes.TEXT,
     condition: DataTypes.TEXT,
   });
 

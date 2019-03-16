@@ -22,7 +22,8 @@ export class WantListModal implements OnInit {
     // returns all listings of book
   addBookToWant() {
     console.log(this.isbnVal);
-    this.http.post('http://localhost:3000/user/want', { params: this.isbnVal })
+    const isbnVal = this.isbnVal;
+    this.http.post('http://localhost:3000/user/want', { params: isbnVal })
     .subscribe((allWants: any) => {
       console.log(allWants, 'ALL WANTS + NEW ONE');
     })
