@@ -12,7 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     condition: DataTypes.TEXT,
   });
   Book.associate = (models) => {
-    Book.belongsToMany(models.User);
+    // Book.belongsToMany(models.User);
+    Book.hasOne(models.Listing);
   };
   return Book;
 };
+

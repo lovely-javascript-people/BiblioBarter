@@ -23,8 +23,9 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  // Offer_Listing.associate = (models) => {
-  //   Offer_Listing.belongsToMany(models.User);
-  // };
+  Offer_Listing.associate = (models) => {
+    Offer_Listing.hasMany(models.Offer);
+  };
   return Offer_Listing;
 };
+

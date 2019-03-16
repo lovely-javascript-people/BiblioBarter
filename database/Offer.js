@@ -4,27 +4,27 @@ module.exports = (sequelize, DataTypes) => {
 
   const Offer = sequelize.define('offer', {
     id_offer: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    id_listing_recipient: Sequelize.INTEGER,
-    id_offer_prev: Sequelize.INTEGER,
-    id_listing_sending: Sequelize.INTEGER,
+    id_listing_recipient: DataTypes.INTEGER,
+    id_offer_prev: DataTypes.INTEGER,
+    id_listing_sending: DataTypes.INTEGER,
     money_exchange: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: null,
     },
     accepted: {
-      type: Sequelize.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: null,
     },
   });
 
-  // Offer.associate = (models) => {
-  //   Offer.belongsToMany(models.User);
-  // };
+  Offer.associate = (models) => {
+    Offer.belongsTo(models.Offer);
+  };
   return Offer;
 };

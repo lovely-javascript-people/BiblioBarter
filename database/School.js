@@ -3,16 +3,16 @@
 module.export = (sequelize, DataTypes) => {
   const School = sequelize.define('school', {
     id_school: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
     name_school: {
-      type: Sequelize.TEXT,
+      type: DataTypes.TEXT,
       unique: true,
     },
-    geo_latitude: Sequelize.DECIMAL,
-    geo_longitude: Sequelize.DECIMAL,
+    geo_latitude: DataTypes.DECIMAL,
+    geo_longitude: DataTypes.DECIMAL,
   });
   School.associate = (models) => {
     School.belongsToMany(models.User);
