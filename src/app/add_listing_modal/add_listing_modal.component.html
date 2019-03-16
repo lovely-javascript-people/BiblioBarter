@@ -1,3 +1,2 @@
 <ion-icon style="width: 40px;height: 40px;" name="close" (click)="closeModal()"></ion-icon>
-<div>Add a Book to Your Listings<input placeholder="#isbn" /><button (click)="addBook()">ADD</button></div>
->
+<div>Add a Book to Your Listings<input [(ngModel)]="isbnVal" #ctrl="ngModel" placeholder="#isbn" /><button (click)="addBook()">ADD</button></div>
