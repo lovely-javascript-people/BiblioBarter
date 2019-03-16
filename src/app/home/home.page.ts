@@ -51,6 +51,10 @@ export class HomePage implements OnInit{
         updated_at: "2019-03-14T23:55:43.269Z"
         }];
 
+  profileButtonClick() {
+    console.log('Take me to their profile');
+  }
+
   ngOnInit() {
     this.url = document.URL;
   }
