@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
   Offer_Listing.associate = (models) => {
     // Offer_Listing.hasMany(models.Offer);
     Offer_Listing.hasOne(models.Offer, { foreignKey: 'id_offer' });
+    // Offer_Listing.belongsTo(models.Offer, { foreignKey: 'id_offer' });
     Offer_Listing.belongsTo(models.Listing, { foreignKey: 'id_listing' });
   };
   return Offer_Listing;

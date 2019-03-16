@@ -141,7 +141,7 @@ app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new f
 app.get('/user/want', (req, res) => {
   return db.Want.findAll({
     where: {
-      id_user: req.body.userid,
+      id_user: req.query.userid,
     }
   }).then((allWantBooks) => {
     res.status(200).send(allWantBooks);
@@ -249,6 +249,10 @@ app.get('/search/listing/isbn', (req, res) => {
 
 // POST / offer
 // Make an offer and counter offer
+app.post('/offerlisting', (req, res) => {
+  console.log(req);
+  res.send(JSON.stringify('HI'));
+})
 
 
 // PATCH / offer
