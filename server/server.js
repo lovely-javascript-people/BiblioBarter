@@ -105,7 +105,7 @@ app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new f
   }).catch((err) => {
     console.log(`there's a findAll want err: ${err}`);
   }).then((allUserWantBooks) => {
-    console.log(allUserWantBooks, 'ALL WANT');
+    // console.log(allUserWantBooks, 'ALL WANT');
     res.status(200).send(allUserWantBooks);
   }).catch((err) => {
     console.log(`unfortunate error with wants: ${err}`);
@@ -167,42 +167,6 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
   }).catch((err) => {
     console.log(`there was a user listing err: ${err}`);
   });
-  // db.Listing.create({
-  //   id_book: listingBookCount += 1,
-  //   date_created: new Date(),
-  //   id_user: 1
-  // }).catch((err) => {
-  //   console.log(`there was a listing creation error for listing: ${err}`);
-  // }).then((data) => {
-  //   console.log(data, 'DATA FROM LISTING');
-  //   console.log(data.dataValues.id_book, 'DATA BALUE IN LISTING');
-  //   return db.Book.create({
-  //     id_book: data.dataValues.id_book,
-  //     isbn: isbnNum, // put isbnNum here
-  //     title: 'NEW',
-  //     condition: 'NEWWW'
-  //   })
-  // }).catch((err) => {
-  //   console.log(`error in book creation: ${err}`);
-  // }).then(() => {
-  //   console.log('book saved successfully');
-  //   // console.log(book, 'BOOK SAVED DATA');
-  //   return db.Listing.findAll({
-  //     where: {
-  //       id_user: 1, // change to user id
-  //     },
-  //     include: [db.Book]
-  //   })
-  // }).catch((err) => {
-  //   console.log(`an error in acquiring all listings for user: ${err}`);
-  // }).then((usersListings) => {
-  //   // console.log(`these are the user's listings: ${usersListings}`);
-  //   let allListings = [];
-
-  //   res.status(200).send(usersListings);
-  // }).catch((err) => {
-  //   console.log(`oh no, it's an err in listings: ${err}`);
-  // });
 })
 
 // GET /search/listing/isbn
