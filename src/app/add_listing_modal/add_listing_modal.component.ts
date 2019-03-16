@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class AddListingModal implements OnInit {
 
   isbnVal: string = '';
+  bookCondition: string = '';
 
   constructor(public modal: ModalController, private http: HttpClient) { }
 
@@ -20,7 +21,9 @@ export class AddListingModal implements OnInit {
 
   addBook() {
     console.log(this.isbnVal);
-    this.http.post('http://localhost:3000/user/listing', { params: this.isbnVal })
+    const bookCondition = this.bookCondition;
+    console.log(bookCondition);
+    this.http.post('http://localhost:3000/user/listing', { params: this.isbnVal, bookCondition })
     .subscribe((allListings: any) => {
       console.log(allListings, 'ALL LISTINGS + NEW ONE');
     })
