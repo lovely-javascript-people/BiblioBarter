@@ -25,8 +25,8 @@ export class SettingsService {
   }
 
   changeSchool(school) {
-    // this.http.patch('http://localhost:3000/school', { 'school': school })
     console.log(school);
+    this.http.patch('http://localhost:3000/school', { 'school': school }).subscribe(data => console.log(data));
   }
 
   deleteAccount(username) {

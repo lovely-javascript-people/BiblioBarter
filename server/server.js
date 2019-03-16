@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', '*');
   next();
 });
 
@@ -86,6 +87,15 @@ app.get('/profile', (req, res) => {
   .then(() => res.send(data));
 });
 
+app.patch('/school', (req, res) => {
+  db.School.findOrCreate({
+    where: {
+      name_school: req.body.school
+      //geolocal needed
+    }
+  })
+  .then(data => console.log(data)).catch(err => console.log(err))
+});
 
 // POST / want 
 // User add a want book, should also return all the user's want books

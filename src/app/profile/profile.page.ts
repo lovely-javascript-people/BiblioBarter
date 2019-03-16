@@ -39,14 +39,12 @@ export class ProfilePage implements OnInit{
 
   setUser(data) {
     console.log(data);
-    if (data[0].length) {
     this.user = data[0].user_name;
+    if (data[1].length) {
     this.school = data[1][0].name_school;
-    this.img = data[0].link_image;
-    } else {
-      this.user = localStorage.username;
     }
-  }
+    this.img = data[0].link_image;
+    }
 
   async openWantListModal()
   {
