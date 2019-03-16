@@ -19,19 +19,19 @@
         Offered by: <br />{{offer.offerer}}
       </ion-item>
   </ion-list><br /><br /><br />
-  Looking for: <ion-icon (click)="addWant()" name="add-circle-outline"></ion-icon>Add a book!<br />
+  Looking for: <ion-icon (click)="openWantListModal()" name="add-circle-outline"></ion-icon>Add a book!<br />
   <ion-list>
     <ion-item *ngFor="let want of wants">
       Title: {{want.title}}<br />
       ISBN: {{want.ISBN}}
     </ion-item>
   </ion-list><br /><br /><br />
-  Offering:<ion-icon (click)="addBook()" name="add-circle-outline"></ion-icon>Add a book!<br />
+  Offering:<ion-icon (click)="openAddListingModal()" name="add-circle-outline"></ion-icon>Add a book!<br />
   <ion-list>
       <ion-item *ngFor="let listing of listings">
         Title: {{listing.title}}<br />
         Condition: {{listing.condition}}<br />
-        Value: {{listing.value}}
+        <!-- Value: {{listing.value}} -->
       </ion-item>
     </ion-list>
 </ion-content>
