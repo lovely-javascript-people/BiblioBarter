@@ -17,6 +17,7 @@ import { SearchModalsModule } from './search_modal/search_modal.module';
 import { AddListingModule } from './add_listing_modal/add_listing_modal.module';
 import { WantListModule } from './want_list_modal/want_list_modal.module';
 import { SettingsService } from './services/settings/settings.service';
+import { AutoCompleteService } from './services/autoComplete/auto-complete.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { SettingsService } from './services/settings/settings.service';
     SplashScreen,
     AuthService,
     SettingsService,
+    AutoCompleteService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [],
