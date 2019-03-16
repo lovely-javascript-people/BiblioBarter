@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     //     deferrable: DataTypes.Deferrable.INITIALLY_IMMEDIATE,
     //   },
     // },
+    id_school: DataTypes.INTEGER,
     address: DataTypes.TEXT,
     email: DataTypes.TEXT,
     phone_number: DataTypes.TEXT,

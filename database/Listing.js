@@ -24,12 +24,13 @@ module.exports = (sequelize, DataTypes) => {
     //     deferrable: DataTypes.Deferrable.INITIALLY_IMMEDIATE,
     //   },
     // },
+    id_book: DataTypes.INTEGER,
     date_created: DataTypes.DATE,
   });
 
   Listing.associate = (models) => {
     // Listing.belongsTo(models.User, { foreignKey: 'id_listing' });
-    Listing.hasOne(models.Book, { foreignKey: 'id_listing' });
+    Listing.hasOne(models.Book, { foreignKey: 'id_book' });
   };
   return Listing;
 };
