@@ -12,6 +12,10 @@ export class ProfilePage implements OnInit{
   img: any;
   user: any;
   school: any;
+  offers: any = [
+    {title1: 'My name jeff', title2: 'Your name jeff', offerer: 'Jim Pickens'},
+    {title1: 'How to argue with "round earthers"', title2: "Trump's toupee: A feat of modern engineering", offerer: 'Jeff Sessions'}
+  ];
   wants: any[];
   listings: any = [
     {
