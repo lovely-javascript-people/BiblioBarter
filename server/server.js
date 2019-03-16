@@ -115,14 +115,14 @@ app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new f
 
 // POST /user/listing (addBook)
 // user adds a listing, returns all users listings
-let listingBookCount = 11;
 app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new for functionality
   // let count = 10;
   // console.log(req, 'REUEST');
   // console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
+  // isbnVal, bookCondition, title, userid
   console.log(req.body.params, 'PARAMS, ISBN???');
   console.log(req.body, 'BODY, any params? ');
-  
+  let listingUserId = req.body.params.userid;
   // needs user id, 
   // book isbn number, 
   // title, and 
@@ -130,8 +130,8 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
   let isbnNum = Number(req.body.params);
   db.Book.create({
     isbn: isbnNum,
-    title: 'Juju',
-    condition: 'Jum',
+    title: req.body.title,
+    condition: req.body.bookCondition,
   }).catch((err) => {
     console.log(`book creation err: ${err}`)
   }).then(() => {
@@ -148,18 +148,20 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
   }).then((book) => {
     // console.log(listing.setBook(book), 'LALA');
     console.log(book, 'BOOOK ID!!!!');
-    console.log(book[0].dataValues.id_book, 'DATAVALUES');
+    // console.log(book[0].dataValues.id_book, 'DATAVALUES');
+    console.log(req.body.userid, 'ELEVEN', listingUserId);
     let idOfBook = book[0].dataValues.id_book;
     return db.Listing.create({
       date_created: new Date(),
-      id_user: 1,
+      id_user: req.body.userid,
       id_book: idOfBook,
     })
     // console.log('listing set book');
   }).then(() => {
+    console.log(req.body.userid);
     return db.Listing.findAll({
       where: {
-        id_user: 1, // change to user id
+        id_user: req.body.userid, // change to user id
       },
       include: [db.Book]
       
