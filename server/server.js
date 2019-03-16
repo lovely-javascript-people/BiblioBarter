@@ -95,7 +95,18 @@ app.patch('/school', (req, res) => {
       //geolocal needed
     }
   })
-  .then(data => console.log(data)).catch(err => console.log(err))
+  .then(data => {
+    db.User.update(
+      { id_school: data[0].dataValues.id_school },
+      { where: { id_user: req.body.userId } }
+    )
+      .then(result =>
+        res.send(result)
+      )
+      .catch(err =>
+        res.send(err)
+      )
+}).catch(err => console.log(err))
 });
 
 // POST / want 
