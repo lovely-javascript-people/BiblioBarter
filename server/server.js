@@ -201,7 +201,20 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
   }).catch((err) => {
     console.log(`there was a user listing err: ${err}`);
   });
-})
+});
+
+// GET /user/listing
+// should get all users want listing
+app.get('/user/listing', (req, res) => {
+  return db.Listing.findAll({
+    where: {
+      id_user: req.body.userid,
+    },
+    include: [db.Book],
+  }).then((allListingBooks) => {
+    res.status(200).send(allListingBooks);
+  })
+});
 
 // GET /search/listing/isbn
 // Search for listing(other’s offers)
