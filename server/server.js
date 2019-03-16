@@ -155,10 +155,15 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
       id_book: idOfBook,
     })
     // console.log('listing set book');
-  }).then((bookEntry) => {
-    console.log(bookEntry, 'BOOK ENTRY');
   }).then(() => {
-    res.status(200).send(JSON.stringify('worked'));
+    return db.Listing.findAll({
+      where: {
+        id_user: 1, // change to user id
+      },
+      include: [db.Book]
+    })
+  }).then((allListings) => {
+    res.status(200).send(allListings);
   }).catch((err) => {
     console.log(`there was a user listing err: ${err}`);
   });
