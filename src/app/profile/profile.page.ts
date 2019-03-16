@@ -3,6 +3,7 @@ import { ApiService } from '../api.service';
 import { conditionallyCreateMapObjectLiteral } from '@angular/compiler/src/render3/view/util';
 import { PopoverController } from '@ionic/angular';
 
+
 @Component({
   selector: 'app-profile',
   templateUrl: 'profile.page.html',
@@ -31,6 +32,14 @@ export class ProfilePage implements OnInit{
   ];
 
   constructor(private apiService: ApiService) {}
+
+  addWant(object) {
+    console.log('added');
+  }
+
+  addBook(object) {
+    console.log('How dare you add a book in a condition such as this!')
+  }
 
   setUser(data) {
     console.log(data);
