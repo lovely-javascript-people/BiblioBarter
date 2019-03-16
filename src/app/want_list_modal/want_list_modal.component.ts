@@ -43,7 +43,7 @@ export class WantListModal implements OnInit {
     .subscribe((allWants: any) => {
       console.log(allWants, 'ALL WANTS + NEW ONE');
     })
-    
+
     this.closeModal();
     }));
 
