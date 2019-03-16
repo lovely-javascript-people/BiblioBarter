@@ -109,6 +109,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('username');
     // Go back to the home route
     const loggedIn = this.isLoggedIn = false;
     this.isLoggedIn$.next(loggedIn);
