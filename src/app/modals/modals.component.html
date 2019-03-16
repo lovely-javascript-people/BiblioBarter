@@ -1,4 +1,5 @@
 <ion-icon style="width: 40px;height: 40px;" name="close" (click)="closeModal()"></ion-icon>
-<div>School: example university <input placeholder="new school" /><button>Submit</button></div>
+<div>Set search radius: <input [(ngModel)]="radius" #ctrl="ngModel" placeholder="Search Radius" /><button (click)="searchRadius()">Submit</button></div>
+<div>School: example university <input [(ngModel)]="school" #ctrl="ngModel" placeholder="New School" /><button (click)="setSchool()">Submit</button></div>
 <div>Currently logged in as: example user<button (click)="switchAccount()">Switch Accounts</button></div>
-<div style="color: crimson">DANGER ZONE!!!<br />Delete Your Account <button>Please don't press me!!!<ion-icon name="sad"></ion-icon></button></div>
+<div style="color: crimson">DANGER ZONE!!!<br />Delete Your Account <button (click)="deleteProfile()">Please don't press me!!!<ion-icon name="sad"></ion-icon></button></div>
