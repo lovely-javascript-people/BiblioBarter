@@ -83,6 +83,7 @@ app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new f
     isbn: 123444446, // go back and input params
     condition: null, // set to NULL for now
     id_user: 1, // need to grab user id
+    // title: 'some title' // needs to be in req and inside DB!!!!!
   }).then(() => {
     return db.Want.findAll({
       where: {
@@ -107,6 +108,8 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
   // console.log(req, 'REUEST');
   // console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
   console.log(req.body.params, 'PARAMS, ISBN???');
+  console.log(req.body, 'BODY, any params? ');
+  
   // needs user id, 
   // book isbn number, 
   // title, and 
@@ -121,7 +124,7 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
   }).then((data) => {
     console.log(data, 'DATA FROM LISTING');
     console.log(data.dataValues.id_book, 'DATA BALUE IN LISTING');
-    db.Book.create({
+    return db.Book.create({
       id_book: data.dataValues.id_book,
       isbn: isbnNum, // put isbnNum here
       title: 'NEW',
@@ -141,7 +144,9 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
   }).catch((err) => {
     console.log(`an error in acquiring all listings for user: ${err}`);
   }).then((usersListings) => {
-    console.log(`these are the user's listings: ${usersListings}`);
+    // console.log(`these are the user's listings: ${usersListings}`);
+    let allListings = [];
+
     res.status(200).send(usersListings);
   }).catch((err) => {
     console.log(`oh no, it's an err in listings: ${err}`);
