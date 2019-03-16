@@ -70,21 +70,9 @@ app.post('/listing', (req, res) => {
 });
 
 app.get('/profile', (req, res) => {
-  let data;
-  db.User.findAll({
-    where: {
-      user_name: 'jeff'
-    }
-  }).then(data1 => {
-    data = data1;
-  }).then(() => db.School.findAll({
-    where: {
-      id_school: 1
-    }
-  }
-  )).then(data2 => data.push(data2))
-  .then(() => res.send(data));
-});
+  console.log(req);
+  res.send(JSON.stringify(req.query));
+})
 
 
 // POST / want
@@ -119,7 +107,7 @@ app.get('/addlisting', (req, res) => {
 app.get('/search/listing/isbn', (req, res) => {
   // db helper function getBookByIsbn
     // send back res from helper
-    console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
+    // console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
   let isbnNum = Number(Object.keys(req.query)[0]);
   db.Book.findAll({
     where: {
