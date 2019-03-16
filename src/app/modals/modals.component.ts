@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { SettingsService } from '../services/settings/settings.service';
 import { AuthService } from '../services/auth/auth.service';
+import { AutoCompleteService } from '../services/autoComplete/auto-complete.service';
 
 @Component({
   selector: 'app-modals',
@@ -13,8 +14,27 @@ export class SettingsModal implements OnInit {
 
   school: string = '';
   radius: any = '';
+  universities: any[] = [];
 
-  constructor(public modal: ModalController, public settings: SettingsService, private auth: AuthService) { }
+  constructor(
+    public modal: ModalController, 
+    public settings: SettingsService, 
+    private auth: AuthService,
+    private auto: AutoCompleteService
+    ) { }
+
+    autoComplete(data) {
+      this.universities = data.collegeList;
+    }
+
+    selectUni(event) {
+      this.school = event.target.textContent;
+      this.universities = [];
+    }
+
+    onChange() {
+      this.auto.findUniversity(this.school, this.autoComplete);
+    }
 
   switchAccount() {
     this.settings.switchAccount();
@@ -37,6 +57,8 @@ export class SettingsModal implements OnInit {
     this.modal.dismiss();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.autoComplete = this.autoComplete.bind(this);
+  }
 
 }
