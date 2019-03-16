@@ -37,9 +37,9 @@ export class AddListingModal implements OnInit {
         this.title = bookInfo[Object.keys(bookInfo)[0]].info_url
         .split('/')[bookInfo[Object.keys(bookInfo)[0]].info_url.split('/').length - 1]
         .split('_').join(' ');
-      }));
 
-    const title = this.title; // so that sending will not yield undefined
+        //commment
+        const title = this.title; // so that sending will not yield undefined
 
     // make sure userid is saved to loacal storage
     // send userid from localstorage.userid
@@ -51,6 +51,8 @@ export class AddListingModal implements OnInit {
       console.log(allListings, 'ALL LISTINGS + NEW ONE');
     })
     this.closeModal();
+      }));
+
   }
 
   ngOnInit() {}
