@@ -14,6 +14,7 @@ import { HomePageModule } from './home/home.module';
 import { FooterModule } from './footer/footer.module';
 import { ModalsModule } from './modals/modals.module';
 import { SearchModalsModule } from './search_modal/search_modal.module';
+import { SettingsService } from './services/settings/settings.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { SearchModalsModule } from './search_modal/search_modal.module';
     StatusBar,
     SplashScreen,
     AuthService,
+    SettingsService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [],

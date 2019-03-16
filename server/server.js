@@ -70,9 +70,21 @@ app.post('/listing', (req, res) => {
 });
 
 app.get('/profile', (req, res) => {
-  console.log(req);
-  res.send(JSON.stringify(req.query));
-})
+  let data;
+  db.User.findAll({
+    where: {
+      user_name: 'jeff'
+    }
+  }).then(data1 => {
+    data = data1;
+  }).then(() => db.School.findAll({
+    where: {
+      id_school: 1
+    }
+  }
+  )).then(data2 => data.push(data2))
+  .then(() => res.send(data));
+});
 
 // POST / want
 // User add a want book
