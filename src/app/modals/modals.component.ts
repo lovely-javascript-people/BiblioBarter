@@ -11,13 +11,26 @@ import { AuthService } from '../services/auth/auth.service';
 
 export class SettingsModal implements OnInit {
 
+  school: string = '';
+  radius: any = '';
+
   constructor(public modal: ModalController, public settings: SettingsService, private auth: AuthService) { }
 
   switchAccount() {
-    let that = this;
+    this.settings.switchAccount();
+  }
+
+  deleteProfile() {
+    this.settings.deleteAccount(localStorage.getItem('username'));
     this.auth.logout();
-    
-    setTimeout(() => that.auth.login(), 1500);
+  }
+
+  setSchool() {
+    this.settings.changeSchool(this.school)
+  }
+
+  searchRadius() {
+    this.settings.defineSearchRadius(this.radius)
   }
 
   async closeModal() {

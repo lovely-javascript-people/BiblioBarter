@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-modals',
   templateUrl: './want_list_modal.component.html',
-  styleUrls: ['./want_list_modal.scss'], // breaks with word component.scss
+  styleUrls: ['./want_list_modal.scss'],
 })
 
 export class WantListModal implements OnInit {

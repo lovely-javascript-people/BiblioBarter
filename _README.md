@@ -1,4 +1,4 @@
-# Project Name
+# BiblioBarter
 
 > Pithy project description
 
@@ -6,7 +6,7 @@
 
   - __Product Owner__: teamMember
   - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Development Team Members__: Laura Theriot, Jon Mohon, Phuoc Nguyen
 
 ## Table of Contents
 
