@@ -76,6 +76,7 @@ app.get('/profile', (req, res) => {
       user_name: req.query.username
     }
   }).then(data1 => {
+    console.log(data1, 'DATA1');
     data = data1;
   }).then(() => db.School.findAll({
     where: {
