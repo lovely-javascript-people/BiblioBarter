@@ -82,7 +82,8 @@ app.get('/profile', (req, res) => {
       id_school: 1
     }
   }
-  )).then(data2 => data.push(data2)).then(() => res.send(data));
+  )).then(data2 => data.push(data2))
+  .then(() => res.send(data));
 });
 
 // POST / want

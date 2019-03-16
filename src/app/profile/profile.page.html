@@ -11,6 +11,21 @@
   {{img}}<br />
   {{school}}
   <p>Welcome to your profile, {{user}}</p>
+  Looking for:<br />
+  <ion-list>
+    <ion-item *ngFor="let want of wants">
+      Title: {{want.title}}<br />
+      ISBN: {{want.ISBN}}
+    </ion-item>
+  </ion-list>
+  Offering:<br />
+  <ion-list>
+      <ion-item *ngFor="let listing of listings">
+        Title: {{listing.title}}<br />
+        Condition: {{listing.condition}}<br />
+        Value: {{listing.value}}
+      </ion-item>
+    </ion-list>
 </ion-content>
 
 
