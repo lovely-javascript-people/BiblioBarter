@@ -13,6 +13,7 @@ export class AddListingModal implements OnInit {
   isbnVal: string = '';
   bookCondition: string = '';
   title: string = '';
+  userid: number = localStorage.userid;
 
   constructor(public modal: ModalController, private http: HttpClient) { }
 
@@ -29,7 +30,7 @@ export class AddListingModal implements OnInit {
     // get req to Open Library Books API for book title from isbn
     this.http.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbnVal}&format=json`)
       .subscribe(((bookInfo: any) => {
-        console.log(localStorage, 'LOCAL STORAGE');
+        // console.log(localStorage, 'LOCAL STORAGE');
         console.log(bookInfo);
         // sends obj w url key where the end of the url is the book title separated by _
         // grab just the title out of the url and switch _ to ' '
@@ -42,7 +43,10 @@ export class AddListingModal implements OnInit {
 
     // make sure userid is saved to loacal storage
     // send userid from localstorage.userid
-    this.http.post('http://localhost:3000/user/listing', { params: this.isbnVal, bookCondition, title }) // add userid
+    const userid = this.userid;
+    console.log(userid, 'USER ID');
+
+    this.http.post('http://localhost:3000/user/listing', { params: this.isbnVal, bookCondition, title, userid }) // add userid
     .subscribe((allListings: any) => {
       console.log(allListings, 'ALL LISTINGS + NEW ONE');
     })
