@@ -20,7 +20,7 @@ export class AddListingModal implements OnInit {
 
   addBook() {
     console.log('add a book to my list');
-    this.http.post(`http://localhost:3000//user/listing`, { params: this.isbnVal })
+    this.http.post('http://localhost:3000/user/listing', { params: this.isbnVal })
     .subscribe((allListings: any) => {
       console.log(allListings, 'ALL LISTINGS + NEW ONE');
     })

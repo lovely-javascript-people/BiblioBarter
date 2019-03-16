@@ -22,10 +22,10 @@ export class WantListModal implements OnInit {
     // returns all listings of book
   addBookToWant() {
     console.log(this.isbnVal);
-    // this.http.get(`http://localhost:3000/search/listing/isbn?${this.isbnQuery}`)
-    // .subscribe((searchedListings: any) => {
-    //   console.log(searchedListings, 'BOOKS USER HAS SEARCHED FOR');
-    // })
+    this.http.post('http://localhost:3000/user/want', { params: this.isbnVal })
+    .subscribe((allWants: any) => {
+      console.log(allWants, 'ALL WANTS + NEW ONE');
+    })
     this.closeModal();
   }
 

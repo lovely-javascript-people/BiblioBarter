@@ -25,4 +25,4 @@ const routes: Routes = [
   ],
   exports: [WantListModal]
 })
-export class WantListModalModule { }
+export class WantListModule { }

@@ -15,12 +15,12 @@ import { FooterModule } from './footer/footer.module';
 import { ModalsModule } from './modals/modals.module';
 import { SearchModalsModule } from './search_modal/search_modal.module';
 import { AddListingModule } from './add_listing_modal/add_listing_modal.module';
-// import { WantListModalModule } from './want_list_modal/want_list_modal.module';
+import { WantListModule } from './want_list_modal/want_list_modal.module';
 import { SettingsService } from './services/settings/settings.service';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, HomePageModule, FooterModule, ModalsModule, SearchModalsModule, AddListingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, HomePageModule, FooterModule, ModalsModule, SearchModalsModule, AddListingModule, WantListModule],
   providers: [
     StatusBar,
     SplashScreen,
