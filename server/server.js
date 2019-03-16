@@ -76,7 +76,13 @@ app.get('/profile', (req, res) => {
 
 
 // POST / want
-// User add a want book
+// User add a want book, should also return all the user's want books
+app.get('/user/want', (req, res) => {
+  console.log(req.body.isbn);
+  // db.Want.create({
+
+  // })
+})
 
 // POST /listing
 // user adds a listing 
