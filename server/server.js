@@ -92,15 +92,17 @@ app.get('/profile', (req, res) => {
 // User add a want book, should also return all the user's want books
 app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new for functionality
   console.log(req.body.isbn);
+  // isbnVal, userid, title 
+  console.log(req.body, 'BODY');
   db.Want.create({
-    isbn: 123444446, // go back and input params
+    isbn: req.body.params,
     condition: null, // set to NULL for now
-    id_user: 1, // need to grab user id
-    // title: 'some title' // needs to be in req and inside DB!!!!!
+    id_user: req.body.userid,
+    title: req.body.title,
   }).then(() => {
     return db.Want.findAll({
       where: {
-        id_user: 1, // need to replace with user id
+        id_user: req.body.userid, // need to replace with user id
       }
     });
   }).catch((err) => {
@@ -117,8 +119,6 @@ app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new f
 // user adds a listing, returns all users listings
 app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new for functionality
   // let count = 10;
-  // console.log(req, 'REUEST');
-  // console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
   // isbnVal, bookCondition, title, userid
   console.log(req.body.params, 'PARAMS, ISBN???');
   console.log(req.body, 'BODY, any params? ');
@@ -146,10 +146,8 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
   }).catch((err) => {
     console.log(`listing of book err: ${err}`);
   }).then((book) => {
-    // console.log(listing.setBook(book), 'LALA');
-    console.log(book, 'BOOOK ID!!!!');
     // console.log(book[0].dataValues.id_book, 'DATAVALUES');
-    console.log(req.body.userid, 'ELEVEN', listingUserId);
+    // console.log(req.body.userid, 'ELEVEN', listingUserId);
     let idOfBook = book[0].dataValues.id_book;
     return db.Listing.create({
       date_created: new Date(),
@@ -164,7 +162,6 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
         id_user: req.body.userid, // change to user id
       },
       include: [db.Book]
-      
     })
   }).then((allListings) => {
     res.status(200).send(allListings);
