@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
+      unique: true,
     },
     id_listing_recipient: DataTypes.INTEGER,
     id_offer_prev: DataTypes.INTEGER,

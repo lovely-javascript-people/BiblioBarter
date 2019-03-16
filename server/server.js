@@ -113,21 +113,23 @@ app.patch('/school', (req, res) => {
 // User add a want book, should also return all the user's want books
 app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new for functionality
   console.log(req.body.isbn);
+  // isbnVal, userid, title 
+  console.log(req.body, 'BODY');
   db.Want.create({
-    isbn: 123444446, // go back and input params
+    isbn: req.body.params,
     condition: null, // set to NULL for now
-    id_user: 1, // need to grab user id
-    // title: 'some title' // needs to be in req and inside DB!!!!!
+    id_user: req.body.userid,
+    title: req.body.title,
   }).then(() => {
     return db.Want.findAll({
       where: {
-        id_user: 1, // need to replace with user id
+        id_user: req.body.userid, // need to replace with user id
       }
     });
   }).catch((err) => {
     console.log(`there's a findAll want err: ${err}`);
   }).then((allUserWantBooks) => {
-    console.log(allUserWantBooks, 'ALL WANT');
+    // console.log(allUserWantBooks, 'ALL WANT');
     res.status(200).send(allUserWantBooks);
   }).catch((err) => {
     console.log(`unfortunate error with wants: ${err}`);
@@ -136,55 +138,56 @@ app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new f
 
 // POST /user/listing (addBook)
 // user adds a listing, returns all users listings
-let listingBookCount = 11;
 app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new for functionality
   // let count = 10;
-  // console.log(req, 'REUEST');
-  // console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
+  // isbnVal, bookCondition, title, userid
   console.log(req.body.params, 'PARAMS, ISBN???');
   console.log(req.body, 'BODY, any params? ');
-  
+  let listingUserId = req.body.params.userid;
   // needs user id, 
   // book isbn number, 
   // title, and 
   // condition, may need helper function to call api for title
   let isbnNum = Number(req.body.params);
-  db.Listing.create({
-    id_book: listingBookCount += 1,
-    date_created: new Date(),
-    id_user: 1
+  db.Book.create({
+    isbn: isbnNum,
+    title: req.body.title,
+    condition: req.body.bookCondition,
   }).catch((err) => {
-    console.log(`there was a listing creation error for listing: ${err}`);
-  }).then((data) => {
-    console.log(data, 'DATA FROM LISTING');
-    console.log(data.dataValues.id_book, 'DATA BALUE IN LISTING');
-    return db.Book.create({
-      id_book: data.dataValues.id_book,
-      isbn: isbnNum, // put isbnNum here
-      title: 'NEW',
-      condition: 'NEWWW'
-    })
-  }).catch((err) => {
-    console.log(`error in book creation: ${err}`);
+    console.log(`book creation err: ${err}`)
   }).then(() => {
-    console.log('book saved successfully');
-    // console.log(book, 'BOOK SAVED DATA');
+    return db.Book.findAll({
+      limit: 1,
+      where: {
+        isbn: isbnNum
+      },
+      order: [['id_book', 'DESC']]
+    })
+    // console.log(listing, 'FROM LISTING');
+  }).catch((err) => {
+    console.log(`listing of book err: ${err}`);
+  }).then((book) => {
+    // console.log(book[0].dataValues.id_book, 'DATAVALUES');
+    // console.log(req.body.userid, 'ELEVEN', listingUserId);
+    let idOfBook = book[0].dataValues.id_book;
+    return db.Listing.create({
+      date_created: new Date(),
+      id_user: req.body.userid,
+      id_book: idOfBook,
+    })
+    // console.log('listing set book');
+  }).then(() => {
+    console.log(req.body.userid);
     return db.Listing.findAll({
       where: {
-        id_user: 1, // change to user id
+        id_user: req.body.userid, // change to user id
       },
       include: [db.Book]
-      
     })
+  }).then((allListings) => {
+    res.status(200).send(allListings);
   }).catch((err) => {
-    console.log(`an error in acquiring all listings for user: ${err}`);
-  }).then((usersListings) => {
-    // console.log(`these are the user's listings: ${usersListings}`);
-    let allListings = [];
-
-    res.status(200).send(usersListings);
-  }).catch((err) => {
-    console.log(`oh no, it's an err in listings: ${err}`);
+    console.log(`there was a user listing err: ${err}`);
   });
 })
 
