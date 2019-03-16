@@ -109,7 +109,7 @@ app.patch('/school', (req, res) => {
 }).catch(err => console.log(err))
 });
 
-// POST / want 
+// POST /user/want 
 // User add a want book, should also return all the user's want books
 app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new for functionality
   console.log(req.body.isbn);
@@ -123,7 +123,7 @@ app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new f
   }).then(() => {
     return db.Want.findAll({
       where: {
-        id_user: req.body.userid, // need to replace with user id
+        id_user: req.body.userid,
       }
     });
   }).catch((err) => {
@@ -134,6 +134,18 @@ app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new f
   }).catch((err) => {
     console.log(`unfortunate error with wants: ${err}`);
   });
+});
+
+// GET /user/want
+// should get all users want listing
+app.get('/user/want', (req, res) => {
+  return db.Want.findAll({
+    where: {
+      id_user: req.body.userid,
+    }
+  }).then((allWantBooks) => {
+    res.status(200).send(allWantBooks);
+  })
 });
 
 // POST /user/listing (addBook)
@@ -189,7 +201,20 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
   }).catch((err) => {
     console.log(`there was a user listing err: ${err}`);
   });
-})
+});
+
+// GET /user/listing
+// should get all users want listing
+app.get('/user/listing', (req, res) => {
+  return db.Listing.findAll({
+    where: {
+      id_user: req.body.userid,
+    },
+    include: [db.Book],
+  }).then((allListingBooks) => {
+    res.status(200).send(allListingBooks);
+  })
+});
 
 // GET /search/listing/isbn
 // Search for listing(other’s offers)
