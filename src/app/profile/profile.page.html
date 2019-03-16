@@ -23,14 +23,14 @@
   <ion-list>
     <ion-item *ngFor="let want of wants">
       Title: {{want.title}}<br />
-      ISBN: {{want.ISBN}}
+      ISBN: {{want.isbn}}
     </ion-item>
   </ion-list><br /><br /><br />
   Offering:<ion-icon (click)="openAddListingModal()" name="add-circle-outline"></ion-icon>Add a book!<br />
   <ion-list>
       <ion-item *ngFor="let listing of listings">
-        Title: {{listing.title}}<br />
-        Condition: {{listing.condition}}<br />
+        Title: {{listing.book.title}}<br />
+        Condition: {{listing.book.condition}}<br />
         <!-- Value: {{listing.value}} -->
       </ion-item>
     </ion-list>

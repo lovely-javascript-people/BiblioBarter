@@ -99,7 +99,7 @@ export class ProfilePage implements OnInit{
   renderListingsList() {
   this.http.get(`http://localhost:3000/user/listing?${localStorage.userid}`)
     .subscribe((listingListArray) => {
-      console.log(listingListArray, 'ARRAY OF WANT LIST');
+      console.log(listingListArray, 'ARRAY OF OFFERING LIST');
       this.listings = listingListArray;
     })
   }
