@@ -79,10 +79,25 @@ app.get('/profile', (req, res) => {
 // User add a want book, should also return all the user's want books
 app.get('/user/want', (req, res) => {
   console.log(req.body.isbn);
-  // db.Want.create({
-
-  // })
-})
+  db.Want.create({
+    isbn: 123444446, // go back and input params
+    condition: 'fresh', // client needs to input condition
+    id_user: 1, // need to grab user id
+  }).then(() => {
+    return db.Want.findAll({
+      where: {
+        id_user: 1, // need to replace with user id
+      }
+    });
+  }).catch((err) => {
+    console.log(`there's a findAll want err: ${err}`);
+  }).then((allUserWantBooks) => {
+    console.log(allUserWantBooks, 'ALL WANT');
+    res.status(200).send(allUserWantBooks);
+  }).catch((err) => {
+    console.log(`unfortunate error with wants: ${err}`);
+  });
+});
 
 // POST /listing
 // user adds a listing 
@@ -114,23 +129,25 @@ app.get('/search/listing/isbn', (req, res) => {
   // db helper function getBookByIsbn
     // send back res from helper
     // console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
-  let isbnNum = Number(Object.keys(req.query)[0]);
-  db.Book.findAll({
-    where: {
-      isbn: isbnNum
-    }, 
-    include: [db.Listing]
-  }).then((allBooksWithIsbn) => {
-    // console.log(allBooksWithIsbn, 'ALL BOOKS ISBN');
-    let listingResults = [];
-    allBooksWithIsbn.forEach((book) => {
-      listingResults.push(book.dataValues);
-    });
-    // console.log(listingResults, 'LISTING RESULTS');
-    res.send(listingResults);
-  }).catch((err) => {
-    console.log(`there was an error: ${err}`);
-  });
+
+  ////// 
+  // let isbnNum = Number(Object.keys(req.query)[0]);
+  // db.Book.findAll({
+  //   where: {
+  //     isbn: isbnNum
+  //   }, 
+  //   include: [db.Listing]
+  // }).then((allBooksWithIsbn) => {
+  //   // console.log(allBooksWithIsbn, 'ALL BOOKS ISBN');
+  //   let listingResults = [];
+  //   allBooksWithIsbn.forEach((book) => {
+  //     listingResults.push(book.dataValues);
+  //   });
+  //   // console.log(listingResults, 'LISTING RESULTS');
+  //   res.send(listingResults);
+  // }).catch((err) => {
+  //   console.log(`there was an error: ${err}`);
+  // });
 
 });
 
