@@ -78,13 +78,36 @@ app.get('/profile', (req, res) => {
 // POST / want
 // User add a want book
 
+// POST /listing
+// user adds a listing 
+app.get('/addlisting', (req, res) => {
+  let count = 0;
+  console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
+  let isbnNum = Number(Object.keys(req.query)[0]);
+  db.Listing.create({
+    id_book: count += 1,
+    date_created: new Date(),
+    id_user: 1
+  }).then(() => {
+    db.Book.create({
+      id_book: count,
+      isbn: isbnNum,
+      title: 'The Cat Chronicles',
+      condition: 'brand spankin new'
+    })
+  }).then(() => {
+    console.log('book saved successfully');
+  }).catch((err) => {
+    console.log(`oh no, it's a terrible error: ${err}`);
+  });
+})
 
 // GET /search/listing/isbn
 // Search for listing(other’s offers)
 app.get('/search/listing/isbn', (req, res) => {
   // db helper function getBookByIsbn
     // send back res from helper
-  console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
+    console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
   let isbnNum = Number(Object.keys(req.query)[0]);
   db.Book.findAll({
     where: {
@@ -92,25 +115,12 @@ app.get('/search/listing/isbn', (req, res) => {
     }, 
     include: [db.Listing]
   }).then((allBooksWithIsbn) => {
-    console.log(allBooksWithIsbn);
+    // console.log(allBooksWithIsbn, 'ALL BOOKS ISBN');
     let listingResults = [];
-    // allBooksWithIsbn.forEach((book) => {
-    //   const books = {};
-    //   books.id = book.id_book;
-    //   books.isbn = book.isbn;
-    //   books.title = book.title;
-    //   books.condition = book.condition;
-    //   db.Book.findOne({
-    //     where: {
-    //       id_book: book.id_book
-    //     }
-    //   }).then((listing) => {
-    //     books.user = listing.id_user;
-    //   }).catch((err) => {
-    //     console.log(`there's an error getting book's owner: ${err}`);
-    //   })
-    //   listingResults.push(book.dataValues);
-    // });
+    allBooksWithIsbn.forEach((book) => {
+      listingResults.push(book.dataValues);
+    });
+    // console.log(listingResults, 'LISTING RESULTS');
     res.send(listingResults);
   }).catch((err) => {
     console.log(`there was an error: ${err}`);
