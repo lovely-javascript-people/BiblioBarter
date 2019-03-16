@@ -6,6 +6,7 @@ import { WantListModal } from '../want_list_modal/want_list_modal.component';
 import { AddListingModal } from '../add_listing_modal/add_listing_modal.component';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router'
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -21,7 +22,20 @@ export class ProfilePage implements OnInit{
     {title1: 'My name jeff', title2: 'Your name jeff', offerer: 'Jim Pickens'},
     {title1: 'How to argue with "round earthers"', title2: "Trump's toupee: A feat of modern engineering", offerer: 'Jeff Sessions'}
   ];
-  wants: any[];
+  wants: any = [
+    {
+      title: 'Computer science 101: how to be toxic on stack overflow',
+      ISBN: 8675309
+    },
+    {
+      title: 'Computer science 102: Why backbone is the best',
+      ISBN: 5551234
+    },
+    {
+      title: 'ZOMG! Those coding bootcamps steal jobs',
+      ISBN: 8000000
+    }
+  ];
   listings: any = [
     {
       title: "How to eat your van's insulation and other life hacks",
@@ -35,7 +49,7 @@ export class ProfilePage implements OnInit{
     }
   ];
 
-  constructor(private apiService: ApiService, public modal: ModalController, private router: Router,) {}
+  constructor(private apiService: ApiService, public modal: ModalController, private router: Router, private http: HttpClient,) {}
 
   setUser(data) {
     console.log(data);
@@ -73,21 +87,16 @@ export class ProfilePage implements OnInit{
     return await modalPage.present();
   }
 
+  renderWantList() {
+    console.log(localStorage.userid, 'USERID');
+  this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
+    .subscribe((wantListArray) => {
+      console.log(wantListArray, 'ARRAY OF WANT LIST');
+    })
+  }
+
   ngOnInit() {
-    this.wants = [
-      {
-        title: 'Computer science 101: how to be toxic on stack overflow',
-        ISBN: 8675309
-      },
-      {
-        title: 'Computer science 102: Why backbone is the best',
-        ISBN: 5551234
-      },
-      {
-        title: 'ZOMG! Those coding bootcamps steal jobs',
-        ISBN: 8000000
-      }
-    ];
+    this.renderWantList();
     this.setUser = this.setUser.bind(this);
     this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
   }
