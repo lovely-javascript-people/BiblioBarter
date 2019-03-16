@@ -39,10 +39,14 @@ export class ProfilePage implements OnInit{
 
   setUser(data) {
     console.log(data);
-    if (data[0].length) {
-    this.user = data[0].user_name;
-    this.school = data[1][0].name_school;
-    this.img = data[0].link_image;
+    if (data[0]) {
+      if(data[0].length){
+        this.user = data[0].user_name;
+        this.school = data[1][0].name_school;
+        this.img = data[0].link_image;
+      } else {
+        this.user = localStorage.username;
+      }
     } else {
       this.user = localStorage.username;
     }
