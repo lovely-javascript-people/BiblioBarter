@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { conditionallyCreateMapObjectLiteral } from '@angular/compiler/src/render3/view/util';
 import { PopoverController } from '@ionic/angular';
+import { WantListModal } from '../want_list_modal/want_list_modal.component';
+import { AddListingModal } from '../add_listing_modal/add_listing_modal.component';
+import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router'
 
 
 @Component({
@@ -31,15 +35,7 @@ export class ProfilePage implements OnInit{
     }
   ];
 
-  constructor(private apiService: ApiService) {}
-
-  addWant(object) {
-    console.log('added');
-  }
-
-  addBook(object) {
-    console.log('How dare you add a book in a condition such as this!')
-  }
+  constructor(private apiService: ApiService, public modal: ModalController, private router: Router,) {}
 
   setUser(data) {
     console.log(data);
@@ -47,7 +43,27 @@ export class ProfilePage implements OnInit{
     this.school = data[1][0].name_school;
     this.img = data[0].link_image;
   }
+
+  async openWantListModal()
+  {
+    var data = { message : 'hello world' };
+    const modalPage = await this.modal.create({
+      component: WantListModal, 
+      componentProps:{values: data}
+    });
+    return await modalPage.present();
+  }
   
+  async openAddListingModal()
+  {
+    var data = { message : 'hello world' };
+    const modalPage = await this.modal.create({
+      component: AddListingModal, 
+      componentProps:{values: data}
+    });
+    return await modalPage.present();
+  }
+
   ngOnInit() {
     this.wants = [
       {
