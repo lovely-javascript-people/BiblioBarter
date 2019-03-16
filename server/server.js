@@ -55,7 +55,7 @@ app.post('/signup', (req, res) => {
   .then(() => {
     console.log('new user success');
   }).catch((err) => {
-    res.send(`there was an problem: ${err}`);
+    res.send(`there was a problem: ${err}`);
   })
 });
 
@@ -70,32 +70,62 @@ app.post('/listing', (req, res) => {
 });
 
 app.get('/profile', (req, res) => {
-  let data;
-  db.User.findAll({
-    where: {
-      user_name: 'jeff'
-    }
-  }).then(data1 => {
-    data = data1;
-  }).then(() => db.School.findAll({
-    where: {
-      id_school: 1
-    }
-  }
-  )).then(data2 => data.push(data2))
-  .then(() => res.send(data));
-});
+  console.log(req);
+  res.send(JSON.stringify(req.query));
+})
+
 
 // POST / want
 // User add a want book
 
+// POST /listing
+// user adds a listing 
+app.get('/addlisting', (req, res) => {
+  let count = 0;
+  console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
+  let isbnNum = Number(Object.keys(req.query)[0]);
+  db.Listing.create({
+    id_book: count += 1,
+    date_created: new Date(),
+    id_user: 1
+  }).then(() => {
+    db.Book.create({
+      id_book: count,
+      isbn: isbnNum,
+      title: 'The Cat Chronicles',
+      condition: 'brand spankin new'
+    })
+  }).then(() => {
+    console.log('book saved successfully');
+  }).catch((err) => {
+    console.log(`oh no, it's a terrible error: ${err}`);
+  });
+})
 
 // GET /search/listing/isbn
 // Search for listing(other’s offers)
 app.get('/search/listing/isbn', (req, res) => {
   // db helper function getBookByIsbn
     // send back res from helper
-  console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
+    // console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
+  let isbnNum = Number(Object.keys(req.query)[0]);
+  db.Book.findAll({
+    where: {
+      isbn: isbnNum
+    }, 
+    include: [db.Listing]
+  }).then((allBooksWithIsbn) => {
+    // console.log(allBooksWithIsbn, 'ALL BOOKS ISBN');
+    let listingResults = [];
+    allBooksWithIsbn.forEach((book) => {
+      listingResults.push(book.dataValues);
+    });
+    // console.log(listingResults, 'LISTING RESULTS');
+    res.send(listingResults);
+  }).catch((err) => {
+    console.log(`there was an error: ${err}`);
+  });
+
 });
 
 // GET / want

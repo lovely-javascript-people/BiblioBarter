@@ -1,13 +1,18 @@
 /* eslint-disable */
 const db = require('../database/database.js');
-
 /**
  * function findBookISBN takes in book title and calls on api to grab isbn number for return
- * @params {string}: string of book title
- * 
+ * @param {string} : isbnVal of book title, need to change to number for query
+ * @returns {array} array of objects containing each listing information
  */
-const findBookISBN = () => {
-
+const findBookByIsbn = (isbnVal) => {
+  const isbnNum = Number(isbnVal);
+  // db.Book.findAll({
+  //   where: {
+  //     isbn = isbnNum,
+  //   },
+  // });
+  // .then((allBooks))
 };
 
 /**
@@ -22,7 +27,9 @@ const findBookISBN = () => {
  * @param {string} number - user phone number
  * @param {number} radius - user set search radius
  */
-const insertNewUser = (username, first, last, link, school, add, email, number, radius) => {
+const insertNewUser = async (username, first, last, link, school, add, email, number, radius) => {
+  console.log(User, 'USER');
+  console.log(db.User, 'DDDBBB');
   db.User.create({
     user_name: username,
     // id_school: school,
@@ -90,6 +97,7 @@ const createWant = (userId, isbn, condition) => {
 };
 
 module.exports = {
+  findBookByIsbn,
   insertNewUser,
   newListing,
   createWant,
