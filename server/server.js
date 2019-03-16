@@ -55,7 +55,7 @@ app.post('/signup', (req, res) => {
   .then(() => {
     console.log('new user success');
   }).catch((err) => {
-    res.send(`there was a problem: ${err}`);
+    res.send(JSON.stringify(`there was a problem: ${err}`));
   })
 });
 
@@ -73,7 +73,7 @@ app.get('/profile', (req, res) => {
   let data;
   db.User.findAll({
     where: {
-      user_name: 'jim'
+      user_name: req.query.username
     }
   }).then(data1 => {
     data = data1;
