@@ -127,34 +127,34 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
   // title, and 
   // condition, may need helper function to call api for title
   let isbnNum = Number(req.body.params);
-  db.Listing.create({
-    date_created: new Date(),
-    id_user: 1
+  db.Book.create({
+    isbn: isbnNum,
+    title: 'Juju',
+    condition: 'Jum',
   }).catch((err) => {
-    console.log(`listing creation err: ${err}`)
-  }).then((createdListing) => {
-    listing = createdListing;
-    console.log(listing, 'FROM LISTING');
-    return db.Book.create({
-      isbn: isbnNum,
-      title: 'Sugar Cain',
-      condition: 'Sweet',
-    })
-  }).catch((err) => {
-    console.log(`creation of book err: ${err}`);
-  }).then((book) => {
-    // console.log(listing.setBook(book), 'LALA');
-    listing.setBook(book);
-    // listing.addBook(book);
-
-    db.Book.findAll({
+    console.log(`book creation err: ${err}`)
+  }).then(() => {
+    return db.Book.findAll({
       limit: 1,
       where: {
         isbn: isbnNum
       },
       order: [['id_book', 'DESC']]
     })
-    console.log('listing set book');
+    // console.log(listing, 'FROM LISTING');
+  }).catch((err) => {
+    console.log(`listing of book err: ${err}`);
+  }).then((book) => {
+    // console.log(listing.setBook(book), 'LALA');
+    console.log(book, 'BOOOK ID!!!!');
+    console.log(book[0].dataValues.id_book, 'DATAVALUES');
+    let idOfBook = book[0].dataValues.id_book;
+    return db.Listing.create({
+      date_created: new Date(),
+      id_user: 1,
+      id_book: idOfBook,
+    })
+    // console.log('listing set book');
   }).then((bookEntry) => {
     console.log(bookEntry, 'BOOK ENTRY');
   }).then(() => {
