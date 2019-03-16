@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class WantListModal implements OnInit {
   isbnVal: string = '';
   userid: number = localStorage.userid;
+  title: string = '';
 
   constructor(public modal: ModalController, private http: HttpClient) { }
 
@@ -22,15 +23,30 @@ export class WantListModal implements OnInit {
   // and sends get req to api server /search/listing/isbn
     // returns all listings of book
   addBookToWant() {
-    console.log(this.isbnVal);
     const isbnVal = this.isbnVal;
+
+    this.http.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbnVal}&format=json`)
+    .subscribe(((bookInfo: any) => {
+      // console.log(localStorage, 'LOCAL STORAGE');
+      console.log(bookInfo);
+      // sends obj w url key where the end of the url is the book title separated by _
+      // grab just the title out of the url and switch _ to ' '
+      this.title = bookInfo[Object.keys(bookInfo)[0]].info_url
+      .split('/')[bookInfo[Object.keys(bookInfo)[0]].info_url.split('/').length - 1]
+      .split('_').join(' ');
+
+    // post req to api server to save wanted book to db  
     const userid = this.userid;
-    console.log(userid, 'USER ID');
-    this.http.post('http://localhost:3000/user/want', { params: isbnVal, userid })
+    const title = this.title;
+
+    this.http.post('http://localhost:3000/user/want', { params: isbnVal, userid, title })
     .subscribe((allWants: any) => {
       console.log(allWants, 'ALL WANTS + NEW ONE');
     })
+    
     this.closeModal();
+    }));
+
   }
 
 
