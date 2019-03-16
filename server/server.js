@@ -99,27 +99,42 @@ app.get('/user/want', (req, res) => {
   });
 });
 
-// POST /listing
+// POST /user/listing
 // user adds a listing 
-app.get('/addlisting', (req, res) => {
+app.get('/user/listing', (req, res) => {
   let count = 0;
   console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
+  // needs user id, 
+  // book isbn number, 
+  // title, and 
+  // condition, may need helper function to call api for title
   let isbnNum = Number(Object.keys(req.query)[0]);
   db.Listing.create({
-    id_book: count += 1,
+    id_book: 4,
     date_created: new Date(),
     id_user: 1
   }).then(() => {
     db.Book.create({
-      id_book: count,
-      isbn: isbnNum,
-      title: 'The Cat Chronicles',
-      condition: 'brand spankin new'
+      id_book: 4,
+      isbn: 13413423,
+      title: 'Hippo',
+      condition: 'Happy'
     })
   }).then(() => {
     console.log('book saved successfully');
+    return db.Listing.findAll({
+      where: {
+        id_user: 1, // change to user id
+      },
+      include: [db.Book]
+    })
   }).catch((err) => {
-    console.log(`oh no, it's a terrible error: ${err}`);
+    console.log(`an error in acquiring all listings for user: ${err}`);
+  }).then((usersListings) => {
+    console.log(`these are the user's listings: ${usersListings}`);
+    res.status(200).send(usersListings);
+  }).catch((err) => {
+    console.log(`oh no, it's an err in listings: ${err}`);
   });
 })
 
@@ -129,25 +144,24 @@ app.get('/search/listing/isbn', (req, res) => {
   // db helper function getBookByIsbn
     // send back res from helper
     // console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
-
   ////// 
-  // let isbnNum = Number(Object.keys(req.query)[0]);
-  // db.Book.findAll({
-  //   where: {
-  //     isbn: isbnNum
-  //   }, 
-  //   include: [db.Listing]
-  // }).then((allBooksWithIsbn) => {
-  //   // console.log(allBooksWithIsbn, 'ALL BOOKS ISBN');
-  //   let listingResults = [];
-  //   allBooksWithIsbn.forEach((book) => {
-  //     listingResults.push(book.dataValues);
-  //   });
-  //   // console.log(listingResults, 'LISTING RESULTS');
-  //   res.send(listingResults);
-  // }).catch((err) => {
-  //   console.log(`there was an error: ${err}`);
-  // });
+  let isbnNum = Number(Object.keys(req.query)[0]);
+  db.Book.findAll({
+    where: {
+      isbn: isbnNum
+    }, 
+    include: [db.Listing]
+  }).then((allBooksWithIsbn) => {
+    // console.log(allBooksWithIsbn, 'ALL BOOKS ISBN');
+    let listingResults = [];
+    allBooksWithIsbn.forEach((book) => {
+      listingResults.push(book.dataValues);
+    });
+    // console.log(listingResults, 'LISTING RESULTS');
+    res.send(listingResults);
+  }).catch((err) => {
+    console.log(`there was an error: ${err}`);
+  });
 
 });
 
