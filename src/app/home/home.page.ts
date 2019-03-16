@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class HomePage implements OnInit{
 
   url: any;
+
+  constructor(private http: HttpClient) { }
 
   // SAMPLE DATA //
   // the listings prop should be set to the array of listings sent back from the DB on search
@@ -57,6 +60,15 @@ export class HomePage implements OnInit{
   profileButtonClick(index) {
     console.log(this.listings[index]);
   }
+
+  renderSearchedBooksList() {
+    this.http.get(`http://localhost:3000/search/listing/isbn?${localStorage.userid}`)
+      .subscribe((searchedBooksArray) => {
+        console.log(searchedBooksArray, 'searched books array');
+        this.listings = searchedBooksArray;
+        
+      })
+    }
 
   ngOnInit() {
     this.url = document.URL;

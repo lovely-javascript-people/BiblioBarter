@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class SearchModal implements OnInit {
   isbnQuery: string = '';
+  listings: any = [];
 
   constructor(public modal: ModalController, private http: HttpClient) { }
 
@@ -26,8 +27,18 @@ export class SearchModal implements OnInit {
     .subscribe((searchedListings: any) => {
       console.log(searchedListings, 'BOOKS USER HAS SEARCHED FOR');
     })
+    this.renderSearchedBooksList();
     this.closeModal();
   }
+
+  renderSearchedBooksList() {
+    this.http.get(`http://localhost:3000/search/listing/isbn?${this.isbnQuery}`)
+      .subscribe((searchedBooksArray) => {
+        // console.log(searchedBooksArray, 'searched books array');
+        this.listings = searchedBooksArray;
+        // console.log(this.listings, 'THIS.LISTINGS');
+      })
+    }
 
 
   ngOnInit() {}
