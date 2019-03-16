@@ -38,6 +38,7 @@ export class AddListingModal implements OnInit {
         .split('/')[bookInfo[Object.keys(bookInfo)[0]].info_url.split('/').length - 1]
         .split('_').join(' ');
 
+        //commment
         const title = this.title; // so that sending will not yield undefined
 
     // make sure userid is saved to loacal storage
