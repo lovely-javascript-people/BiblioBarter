@@ -53,7 +53,7 @@ app.post('/signup', (req, res) => {
   console.log(req.body.params, 'REQ');
   db.User.create({ user_name: nickname, name_first: given_name, name_last: family_name, link_image: picture }, {fields: ['user_name', 'name_first', 'name_last', 'link_image']})
   .then(() => {
-    console.log('new user success');
+    console.log(JSON.stringify('new user success'));
   }).catch((err) => {
     res.send(JSON.stringify(`there was a problem: ${err}`));
   })
