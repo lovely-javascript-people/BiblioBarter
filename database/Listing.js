@@ -16,19 +16,20 @@ module.exports = (sequelize, DataTypes) => {
     //     deferrable: DataTypes.Deferrable.INITIALLY_IMMEDIATE,
     //   },
     // },
-    id_book: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Book,
-        key: 'id_book',
-        deferrable: DataTypes.Deferrable.INITIALLY_IMMEDIATE,
-      },
-    },
+    // id_book: {
+    //   type: DataTypes.INTEGER,
+    //   references: {
+    //     model: Book,
+    //     key: 'id_book',
+    //     deferrable: DataTypes.Deferrable.INITIALLY_IMMEDIATE,
+    //   },
+    // },
     date_created: DataTypes.DATE,
   });
 
   Listing.associate = (models) => {
-    Listing.belongsTo(models.User);
+    // Listing.belongsTo(models.User, { foreignKey: 'id_listing' });
+    Listing.hasOne(models.Book, { foreignKey: 'id_listing' });
   };
   return Listing;
 };

@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   Book.associate = (models) => {
     // Book.belongsToMany(models.User);
-    Book.hasOne(models.Listing);
+    Book.belongsTo(models.Listing, { foreignKey: 'id_book' });
   };
   return Book;
 };

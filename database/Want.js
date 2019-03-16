@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Want.associate = (models) => {
-    Want.belongsToMany(models.User);
+    Want.belongsTo(models.User);
   };
   return Want;
 };

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 
 // user table, holds data for each user
-module.export = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
 
   const User = sequelize.define('user', {
     id_user: {
@@ -31,11 +31,16 @@ module.export = (sequelize, DataTypes) => {
   });
 
   User.associate = (models) => {
-    User.hasMany(models.Book);
-    User.hasMany(models.Listing);
-    User.hasMany(models.Want);
-    User.hasOne(models.School);
+    // User.hasMany(models.Book);
+    // User.hasMany(models.Listing);
+    User.hasMany(models.Want, { foreignKey: 'id_user' });
+    // User.hasOne(models.School);
+    // User.belongsTo(models.Book, { foreignKey: 'id_book' });
+    User.hasMany(models.Listing, { foreignKey: 'id_user' });
+    // User.belongsTo(models.Want);
+    User.hasOne(models.School, { foreignKey: 'id_school' });
+    // User.belongsTo(models.School);
   };
-  
+
   return User;
 };

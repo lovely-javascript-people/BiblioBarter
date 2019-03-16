@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
 // SCHOOL table is the user's school, takes in geo location so that we can access map proximity for filter feature
-module.export = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const School = sequelize.define('school', {
     id_school: {
       type: DataTypes.INTEGER,
@@ -15,7 +15,7 @@ module.export = (sequelize, DataTypes) => {
     geo_longitude: DataTypes.DECIMAL,
   });
   School.associate = (models) => {
-    School.belongsToMany(models.User);
+    School.belongsToMany(models.User, { through: 'school_id' });
   };
   return School;
 };
