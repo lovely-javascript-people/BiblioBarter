@@ -13,36 +13,39 @@ import { Router } from '@angular/router'
   styleUrls: ['./peer-profile.page.scss'],
 })
 export class PeerProfilePage implements OnInit {
-  img: any;
+  img: string;
+  me: any;
+  peer: any;
   user: any;
-  school: any;
-  offers: any = [
-    {title1: 'My name jeff', title2: 'Your name jeff', offerer: 'Jim Pickens'},
-    {title1: 'How to argue with "round earthers"', title2: "Trump's toupee: A feat of modern engineering", offerer: 'Jeff Sessions'}
-  ];
+  school: string;
+  offers: any[];
   wants: any[];
-  listings: any = [
-    {
-      title: "How to eat your van's insulation and other life hacks",
-      condition: 'poor',
-      value: '$0.01'
-    },
-    {
-      title: "How to not give off that 'creepy guy' vibe",
-      condition: 'Fair',
-      value: 'Priceless'
-    }
-  ];
+  listings: any[];
 
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router,) {}
+
+  getPeerBooks(id) {
+    this.apiService.getPeerProfile(id, console.log);
+  }
+
+  makeOffer(myOffer: number, bookWanted: number) {
+    this.apiService.sendOffer({ 
+      myId: this.me, 
+      myOffer, 
+      bookWanted: this.peer.listing.id_listing, 
+      peerId: this.peer.listing.id_user 
+    });
+  }
 
   setUser(data) {
     let user: any = JSON.parse(localStorage.getItem('selectedUser'));
     console.log(data);
-    this.user = data || user.nickname; 
-    this
+    this.user = data || user.nickname;
   }
   ngOnInit() {
+    this.me = JSON.parse(localStorage.userid);
+    this.peer = JSON.parse(localStorage.getItem('selectedUser'));
+
     this.wants = [
       {
         title: 'Computer science 101: how to be toxic on stack overflow',
@@ -58,6 +61,8 @@ export class PeerProfilePage implements OnInit {
       }
     ];
     this.setUser = this.setUser.bind(this);
+    this.getPeerBooks = this.getPeerBooks.bind(this);
+    this.getPeerBooks(this.peer.listing.id_user)
   }
 
 }
