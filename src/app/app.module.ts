@@ -18,10 +18,22 @@ import { AddListingModule } from './add_listing_modal/add_listing_modal.module';
 import { WantListModule } from './want_list_modal/want_list_modal.module';
 import { SettingsService } from './services/settings/settings.service';
 import { AutoCompleteService } from './services/autoComplete/auto-complete.service';
+import { PeerProfilePageModule } from './profile/peerProfile/peer-profile/peer-profile.module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, HomePageModule, FooterModule, ModalsModule, SearchModalsModule, AddListingModule, WantListModule],
+  imports: [
+    BrowserModule, 
+    IonicModule.forRoot(), 
+    AppRoutingModule, 
+    HttpClientModule, 
+    HomePageModule, 
+    FooterModule, 
+    ModalsModule, 
+    SearchModalsModule, 
+    AddListingModule,
+    WantListModule,
+    PeerProfilePageModule],
   providers: [
     StatusBar,
     SplashScreen,

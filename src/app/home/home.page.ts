@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -54,8 +55,10 @@ export class HomePage implements OnInit{
         updated_at: "2019-03-14T23:55:43.269Z"
         }];
 
+        constructor(private router: Router) {}
   profileButtonClick(index) {
-    console.log(this.listings[index]);
+    localStorage.setItem('selectedUser', JSON.stringify(this.listings[index]));
+    this.router.navigate(['/peer-profile']);
   }
 
   ngOnInit() {
