@@ -248,37 +248,32 @@ app.get('/search/listing/isbn', (req, res) => {
 // GET / want
 // Search for want(people who want your book)
 
-// GET /peer/wants
+// GET /peer
 // returns wants for a profile you visit 
-app.get('/peer/wants', (req, res) => {
+app.get('/peer', (req, res) => {
+  let books;
   db.Want.findAll({
     where: {
-      id_user: req.query.userid
+      id_user: req.query.peerId
     }
   }).catch((err) => {
     console.log(`error in peer wants: ${err}`);
   }).then((peerWants) => {
-    res.status(200).send(peerWants);
+    books = peerWants;
+  }).then(() => {
+    db.Listing.findAll({
+      where: {
+        id_user: req.query.peerId
+      }
+    }).then((data) => {
+      books.push(data);
+      res.send(books);
+    })
   }).catch((err) => {
     console.log(`error in get peer wants: ${err}`);
   });
 });
 
-// GET /peer/listings
-// returns listings for a profile you visit
-app.get('/peer/listings', (req, res) => {
-  db.Listing.findAll({
-    where: {
-      id_user: req.query.userid
-    }
-  }).catch((err) => {
-    console.log(`error in peer wants: ${err}`);
-  }).then((peerListings) => {
-    res.status(200).send(peerListings);
-  }).catch((err) => {
-    console.log(`error in get peer wants: ${err}`);
-  });
-});
 
 // POST / offer
 // Make an offer and counter offer
@@ -289,7 +284,7 @@ app.post('/offerlisting', (req, res) => {
   // myId = sender (me)
   // bookWanted = id_listing_recipient
   // myOffer = isbn (my book)
-  db.Listing.findAll({
+  return db.Listing.findAll({
     limit: 1,
     where: {
       id_user: req.body.params.myId
@@ -332,7 +327,7 @@ app.post('/offerlisting', (req, res) => {
     let idOfOffer = offer[0].dataValues.id_offer;
     return db.Offer_Listing.create({
       id_offer: idOfOffer,
-      id_listing: 2, // req.body.listingid
+      id_listing: req.body.listingid
     })
   }).catch((err) => {
     console.log(`err in offer listing creation: ${err}`);
@@ -341,6 +336,7 @@ app.post('/offerlisting', (req, res) => {
   }).catch((err) => {
     console.log(`error for offer creation: ${err}`);
   });
+});
 });
 
 
