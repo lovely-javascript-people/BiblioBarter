@@ -321,7 +321,24 @@ app.post('/offerlisting', (req, res) => {
 });
 
 
-// PATCH / offer
+// PATCH / offerlisting
 // Final transaction made by two users boolean changed
+app.patch('/offerlisting', (req, res) => {
+  // needs id of offer
+  db.Offer.update(
+    {
+      accepted: true,
+    }, 
+    {
+    returning: true,
+    where: {
+      id_offer: req.params.offerid,
+      }
+  }).then(([listingsUpdated, [updatedListing]]) => {
+    res.status(200).send(updatedListing);
+  }).catch((err) => {
+    console.log(`patch error: ${err}`);
+  });
+});
 
 // app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
