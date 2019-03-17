@@ -18,36 +18,9 @@ export class ProfilePage implements OnInit{
   img: any;
   user: any;
   school: any;
-  offers: any = [
-    {title1: 'My name jeff', title2: 'Your name jeff', offerer: 'Jim Pickens'},
-    {title1: 'How to argue with "round earthers"', title2: "Trump's toupee: A feat of modern engineering", offerer: 'Jeff Sessions'}
-  ];
-  wants: any = [
-    {
-      title: 'Computer science 101: how to be toxic on stack overflow',
-      ISBN: 8675309
-    },
-    {
-      title: 'Computer science 102: Why backbone is the best',
-      ISBN: 5551234
-    },
-    {
-      title: 'ZOMG! Those coding bootcamps steal jobs',
-      ISBN: 8000000
-    }
-  ];
-  listings: any = [
-    {
-      title: "How to eat your van's insulation and other life hacks",
-      condition: 'poor',
-      value: '$0.01'
-    },
-    {
-      title: "How to not give off that 'creepy guy' vibe",
-      condition: 'Fair',
-      value: 'Priceless'
-    }
-  ];
+  offers: any = [];
+  wants: any = [];
+  listings: any = [];
 
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router, private http: HttpClient,) {}
 
