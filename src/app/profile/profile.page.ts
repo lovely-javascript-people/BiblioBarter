@@ -61,7 +61,7 @@ export class ProfilePage implements OnInit{
   }
 
   renderWantList() {
-    console.log(localStorage.userid, 'USERID');
+    // console.log(localStorage.userid, 'USERID');
   this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
     .subscribe((wantListArray) => {
       console.log(wantListArray, 'ARRAY OF WANT LIST');
