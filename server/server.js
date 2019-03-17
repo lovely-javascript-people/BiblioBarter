@@ -249,6 +249,7 @@ app.get('/search/listing/isbn', (req, res) => {
 // Search for want(people who want your book)
 
 // GET /peer/wants
+// returns wants for a profile you visit 
 app.get('/peer/wants', (req, res) => {
   db.Want.findAll({
     where: {
@@ -258,6 +259,22 @@ app.get('/peer/wants', (req, res) => {
     console.log(`error in peer wants: ${err}`);
   }).then((peerWants) => {
     res.status(200).send(peerWants);
+  }).catch((err) => {
+    console.log(`error in get peer wants: ${err}`);
+  });
+});
+
+// GET /peer/listings
+// returns listings for a profile you visit
+app.get('/peer/listings', (req, res) => {
+  db.Listing.findAll({
+    where: {
+      id_user: req.query.userid
+    }
+  }).catch((err) => {
+    console.log(`error in peer wants: ${err}`);
+  }).then((peerListings) => {
+    res.status(200).send(peerListings);
   }).catch((err) => {
     console.log(`error in get peer wants: ${err}`);
   });
