@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     autoIncrement: true,
     unique: true,
   },
-  id_offer: DataTypes.INTEGER,
+  // id_offer: DataTypes.INTEGER,
   // id_offer: {
   //   type: DataTypes.INTEGER,
   //   references: {
@@ -31,9 +31,13 @@ module.exports = (sequelize, DataTypes) => {
 
 
   Offer_Listing.associate = (models) => {
+    Offer_Listing.belongsTo(models.Offer, { foreignKey: 'id_offer', targetKey: 'id_offer' });
+    Offer_Listing.belongsTo(models.Listing, { foreignKey: 'id_listing', targetKey: 'id_listing' });
+    // Offer_Listing.belongsTo(models.Offer_Listing, { foreignKey: 'id_listing' });
     // Offer_Listing.hasMany(models.Offer);
-    Offer_Listing.hasOne(models.Offer, { foreignKey: 'id_offer' });
-    Offer_Listing.belongsTo(models.Listing, { foreignKey: 'id_listing' });
+    // Offer_Listing.hasOne(models.Offer, { foreignKey: 'id_offer' });
+    // // Offer_Listing.belongsTo(models.Offer, { foreignKey: 'id_offer' });
+    // Offer_Listing.belongsTo(models.Listing, { foreignKey: 'id_listing' });
   };
   return Offer_Listing;
 };

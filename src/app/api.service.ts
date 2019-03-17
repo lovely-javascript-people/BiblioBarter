@@ -10,6 +10,18 @@ export class ApiService {
     
   }
 
+  getPeerProfile(peerId, callback) {
+    this.http.get(`http://localhost:3000/peer`, { params: {peerId} }).subscribe(data => {
+      callback(data);
+    })
+  }
+
+  sendOffer(options) {
+    this.http.post('http://localhost:3000/offerlisting', { params: options }).subscribe(resp => {
+      console.log(resp);
+    })
+  }
+
   getProfile(username, callback) {
     this.http.get('http://localhost:3000/profile', { params: { username } })
     .subscribe(data => {

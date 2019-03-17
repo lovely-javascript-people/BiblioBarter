@@ -248,12 +248,92 @@ app.get('/search/listing/isbn', (req, res) => {
 // GET / want
 // Search for want(people who want your book)
 
+// GET /peer
+// returns wants for a profile you visit 
+app.get('/peer', (req, res) => {
+  let books;
+  db.Want.findAll({
+    where: {
+      id_user: req.query.peerId
+    }
+  }).catch((err) => {
+    console.log(`error in peer wants: ${err}`);
+  }).then((peerWants) => {
+    books = peerWants;
+  }).then(() => {
+    db.Listing.findAll({
+      where: {
+        id_user: req.query.peerId
+      }
+    }).then((data) => {
+      books.push(data);
+      res.send(books);
+    })
+  }).catch((err) => {
+    console.log(`error in get peer wants: ${err}`);
+  });
+});
+
 
 // POST / offer
 // Make an offer and counter offer
+app.post('/offerlisting', (req, res) => {
+  console.log(req.body);
+  // MISSING ID LISTING IN OFFER LISTINGS
+  db.Offer.create({
+    // need id_listing, create offer, then save to offer listing
+    // listing recipient, listing prev, listing sender, money, accepted
+    id_listing_recipient: 2,
+    id_offer_prev: 2,
+    id_listing_sender: 5,
+    money_exchange: null,
+    accepted: false,
+  }).catch((err) => {
+    console.log(`err in offer creation: ${err}`);
+  }).then(() => {
+    return db.Offer.findAll({
+      limit: 1,
+      where: {
+        id_listing_recipient: 2
+      },
+      order: [['id_offer', 'DESC']]
+    })
+  }).catch((err) => {
+    console.log(`error in finding offer id: ${err}`);
+  }).then((offer) => {
+    let idOfOffer = offer[0].dataValues.id_offer;
+    return db.Offer_Listing.create({
+      id_offer: idOfOffer,
+      id_listing: req.body.listingid
+    })
+  }).catch((err) => {
+    console.log(`err in offer listing creation: ${err}`);
+  }).then(() => {
+    res.send(JSON.stringify('offer creation'));
+  }).catch((err) => {
+    console.log(`error for offer creation: ${err}`);
+  });
+});
 
 
-// PATCH / offer
+// PATCH / offerlisting
 // Final transaction made by two users boolean changed
+app.patch('/offerlisting', (req, res) => {
+  // needs id of offer
+  db.Offer.update(
+    {
+      accepted: true,
+    }, 
+    {
+    returning: true,
+    where: {
+      id_offer: req.params.offerid,
+      }
+  }).then(([listingsUpdated, [updatedListing]]) => {
+    res.status(200).send(updatedListing);
+  }).catch((err) => {
+    console.log(`patch error: ${err}`);
+  });
+});
 
 // app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
