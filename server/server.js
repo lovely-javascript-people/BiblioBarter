@@ -248,6 +248,20 @@ app.get('/search/listing/isbn', (req, res) => {
 // GET / want
 // Search for want(people who want your book)
 
+// GET /peer/wants
+app.get('/peer/wants', (req, res) => {
+  db.Want.findAll({
+    where: {
+      id_user: req.query.userid
+    }
+  }).catch((err) => {
+    console.log(`error in peer wants: ${err}`);
+  }).then((peerWants) => {
+    res.status(200).send(peerWants);
+  }).catch((err) => {
+    console.log(`error in get peer wants: ${err}`);
+  });
+});
 
 // POST / offer
 // Make an offer and counter offer
