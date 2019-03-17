@@ -52,6 +52,11 @@ export class FooterComponent implements OnInit {
     this.modal.dismiss();
   }
 
+  redirectOnClick() {
+    console.log('PLEASE WORK');
+    this.router.navigate(['/Matches']);
+  }
+
   ngOnInit() {}
 
 

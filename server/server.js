@@ -139,9 +139,10 @@ app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new f
 // GET /user/want
 // should get all users want listing
 app.get('/user/want', (req, res) => {
+  console.log(Object.keys(req.query)[0]);
   return db.Want.findAll({
     where: {
-      id_user: req.body.userid,
+      id_user: Object.keys(req.query)[0],
     }
   }).then((allWantBooks) => {
     res.status(200).send(allWantBooks);
@@ -206,9 +207,10 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
 // GET /user/listing
 // should get all users want listing
 app.get('/user/listing', (req, res) => {
+  console.log(Object.keys(req.query)[0]);
   return db.Listing.findAll({
     where: {
-      id_user: req.body.userid,
+      id_user: Object.keys(req.query)[0],
     },
     include: [db.Book],
   }).then((allListingBooks) => {
