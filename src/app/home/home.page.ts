@@ -10,12 +10,9 @@ export class HomePage implements OnInit{
 
   url: any;
   isbnQuery: string = " ";
+  listings: any = [];
 
   constructor(private http: HttpClient) { }
-
-  // SAMPLE DATA //
-  // the listings prop should be set to the array of listings sent back from the DB on search
-  listings: any = [];
 
 
   profileButtonClick(index) {
