@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -12,11 +13,11 @@ export class HomePage implements OnInit{
   isbnQuery: string = " ";
   listings: any = [];
 
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient, private router: Router) { }
 
   profileButtonClick(index) {
-    console.log(this.listings[index]);
+    localStorage.setItem('selectedUser', JSON.stringify(this.listings[index]));
+    this.router.navigate(['/peer-profile']);
   }
 
   searchBooks() {
