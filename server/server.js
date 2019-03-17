@@ -224,7 +224,7 @@ app.get('/search/listing/isbn', (req, res) => {
   // db helper function getBookByIsbn
     // send back res from helper
     // console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
-  ////// 
+    ////// 
   let isbnNum = Number(Object.keys(req.query)[0]);
   db.Book.findAll({
     where: {
@@ -284,7 +284,30 @@ app.get('/peer/listings', (req, res) => {
 // Make an offer and counter offer
 app.post('/offerlisting', (req, res) => {
   console.log(req);
-  // MISSING ID LISTING IN OFFER LISTINGS
+  // incoming req.boy.params. 
+  // peerId = recipient (them)
+  // myId = sender (me)
+  // bookWanted = id_listing_recipient
+  // myOffer = isbn (my book)
+  db.Listing.findAll({
+    limit: 1,
+    where: {
+      id_user: req.body.params.myId
+    },
+    include: [{
+      model: db.Book,
+      limit: 1, // change later, this is for demo purposes
+      where: {
+        isbn: req.body.params.myOffer
+      }
+    }]
+  }).catch((err) => {
+    console.log(`listing find failure: ${err}`);
+  }).then((myListing) => {
+    console.log(myListing, 'MY LISTING HERE');
+  }).catch((err) => {
+    console.log(`myListing error: ${err}`);
+  }).then(() => {
   db.Offer.create({
     // need id_listing, create offer, then save to offer listing
     // listing recipient, listing prev, listing sender, money, accepted
@@ -309,7 +332,7 @@ app.post('/offerlisting', (req, res) => {
     let idOfOffer = offer[0].dataValues.id_offer;
     return db.Offer_Listing.create({
       id_offer: idOfOffer,
-      id_Listing: req.body.listingid
+      id_listing: 2, // req.body.listingid
     })
   }).catch((err) => {
     console.log(`err in offer listing creation: ${err}`);
