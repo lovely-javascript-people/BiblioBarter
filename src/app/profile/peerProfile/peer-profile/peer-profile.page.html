@@ -7,7 +7,6 @@
 </ion-header>
 
 <ion-content padding fullscreen="true">
-  The world is your oyster.<br />
   <img src='{{img}}' /><br />
   {{school}}
   <p>Welcome to my profile, {{user}}</p>
@@ -25,7 +24,7 @@
       Title: {{want.title}}<br />
       ISBN: {{want.ISBN}}
     </ion-item>
-  </ion-list><br /><br /><br />
+  </ion-list><br /><br />
   Offering:
   <ion-list>
       <ion-item *ngFor="let listing of listings">
@@ -33,6 +32,19 @@
         Condition: {{listing.condition}}<br />
         <!-- Value: {{listing.value}} -->
       </ion-item>
+    </ion-list><br /><br />
+    Make an offer:
+    <ion-list>
+      <ion-item>
+        <label color="primary" stacked>I want:     </label><br />
+        <input placeholder="Wanted ISBN" />
+      </ion-item>
+    
+      <ion-item>
+        <label color="primary" stacked>I'm offering: </label><br />
+        <input placeholder="Offering ISBN" />
+      </ion-item>
+      <button>Submit offer</button>
     </ion-list>
 </ion-content>
 

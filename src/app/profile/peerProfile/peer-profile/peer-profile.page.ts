@@ -38,8 +38,8 @@ export class PeerProfilePage implements OnInit {
 
   setUser(data) {
     let user: any = JSON.parse(localStorage.getItem('selectedUser'));
-    console.log(user);
-    this.user = user.nickname;
+    console.log(data);
+    this.user = data || user.nickname; 
     this
   }
   ngOnInit() {
@@ -58,7 +58,6 @@ export class PeerProfilePage implements OnInit {
       }
     ];
     this.setUser = this.setUser.bind(this);
-    this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
   }
 
 }
