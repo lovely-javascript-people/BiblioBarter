@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { HomePage } from '../home/home.page';
 
 @Component({
   selector: 'app-modals',
@@ -26,21 +27,16 @@ export class SearchModal implements OnInit {
     this.http.get(`http://localhost:3000/search/listing/isbn?${this.isbnQuery}`)
     .subscribe((searchedListings: any) => {
       console.log(searchedListings, 'BOOKS USER HAS SEARCHED FOR');
+      localStorage.setItem('searchedListings', searchedListings);
+      console.log(localStorage);
     })
-    this.renderSearchedBooksList();
+
     this.closeModal();
   }
 
-  renderSearchedBooksList() {
-    this.http.get(`http://localhost:3000/search/listing/isbn?${this.isbnQuery}`)
-      .subscribe((searchedBooksArray) => {
-        // console.log(searchedBooksArray, 'searched books array');
-        this.listings = searchedBooksArray;
-        // console.log(this.listings, 'THIS.LISTINGS');
-      })
-    }
 
+  ngOnInit() {
 
-  ngOnInit() {}
+  }
 
 }
