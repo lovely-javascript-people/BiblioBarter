@@ -32,8 +32,9 @@ export class PeerProfilePage implements OnInit {
     let temp = data.slice(0, data.length - 1)
     this.wants = temp;
     this.listings = data[data.length - 1];
+    console.log(data, 'DATA');
     console.log(this.wants);
-    console.log(this.listings);
+    console.log(this.listings, 'LISTINGS');
   }
 
   makeOffer(myOffer: number, bookWanted: number) {

@@ -11,6 +11,14 @@
   <img src='{{img}}' /><br />
   {{school}}
   <p>Welcome to your profile, {{user}}</p>
+  Offers:<br />
+  <ion-list>
+      <ion-item *ngFor="let offer of offers">
+        Titles: <br />{{offer.title1}}<br /> 
+        {{offer.title2}} <br />
+        Offered by: <br />{{offer.offerer}}
+      </ion-item>
+  </ion-list><br /><br /><br />
   Looking for: <ion-icon (click)="openWantListModal()" name="add-circle-outline"></ion-icon>Add a book!<br />
   <ion-list>
     <ion-item *ngFor="let want of wants">
