@@ -250,6 +250,30 @@ app.get('/search/listing/isbn', (req, res) => {
 
 // GET /peer
 // returns wants for a profile you visit 
+// app.get('/peer', (req, res) => {
+//   let books;
+//   db.Want.findAll({
+//     where: {
+//       id_user: req.query.peerId
+//     }
+//   }).catch((err) => {
+//     console.log(`error in peer wants: ${err}`);
+//   }).then((peerWants) => {
+//     books = peerWants;
+//   }).then(() => {
+//     db.Listing.findAll({
+//       where: {
+//         id_user: req.query.peerId
+//       }
+//     }).then((data) => {
+//       books.push(data);
+//       res.send(books);
+//     })
+//   }).catch((err) => {
+//     console.log(`error in get peer wants: ${err}`);
+//   });
+// });
+
 app.get('/peer', (req, res) => {
   let books;
   db.Want.findAll({
@@ -266,13 +290,25 @@ app.get('/peer', (req, res) => {
         id_user: req.query.peerId
       }
     }).then((data) => {
-      books.push(data);
+      // create array of just books using book ids
+      let offeredbooks = data.map((listing) => {
+        return db.Book.findAll({
+          where: {
+            id_book: listing.id_book
+          },
+          // include: [db.Listing]
+        })
+      })
+      books.push(offeredbooks);
+      
       res.send(books);
     })
   }).catch((err) => {
     console.log(`error in get peer wants: ${err}`);
   });
 });
+
+
 
 
 // POST / offer
