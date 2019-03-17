@@ -224,9 +224,6 @@ app.get('/search/listing/isbn', (req, res) => {
   // db helper function getBookByIsbn
     // send back res from helper
     // console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
-    // db.Offer.create({
-
-    // })
   ////// 
   let isbnNum = Number(Object.keys(req.query)[0]);
   db.Book.findAll({
@@ -256,8 +253,41 @@ app.get('/search/listing/isbn', (req, res) => {
 // Make an offer and counter offer
 app.post('/offerlisting', (req, res) => {
   console.log(req);
-  res.send(JSON.stringify('HI'));
-})
+  // MISSING ID LISTING IN OFFER LISTINGS
+  db.Offer.create({
+    // need id_listing, create offer, then save to offer listing
+    // listing recipient, listing prev, listing sender, money, accepted
+    id_listing_recipient: 2,
+    id_offer_prev: 2,
+    id_listing_sender: 5,
+    money_exchange: null,
+    accepted: false,
+  }).catch((err) => {
+    console.log(`err in offer creation: ${err}`);
+  }).then(() => {
+    return db.Offer.findAll({
+      limit: 1,
+      where: {
+        id_listing_recipient: 2
+      },
+      order: [['id_offer', 'DESC']]
+    })
+  }).catch((err) => {
+    console.log(`error in finding offer id: ${err}`);
+  }).then((offer) => {
+    let idOfOffer = offer[0].dataValues.id_offer;
+    return db.Offer_Listing.create({
+      id_offer: idOfOffer,
+      id_Listing: req.body.listingid
+    })
+  }).catch((err) => {
+    console.log(`err in offer listing creation: ${err}`);
+  }).then(() => {
+    res.send(JSON.stringify('offer creation'));
+  }).catch((err) => {
+    console.log(`error for offer creation: ${err}`);
+  });
+});
 
 
 // PATCH / offer
