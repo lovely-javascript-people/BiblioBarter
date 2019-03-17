@@ -224,6 +224,9 @@ app.get('/search/listing/isbn', (req, res) => {
   // db helper function getBookByIsbn
     // send back res from helper
     // console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
+    // db.Offer.create({
+
+    // })
   ////// 
   let isbnNum = Number(Object.keys(req.query)[0]);
   db.Book.findAll({
