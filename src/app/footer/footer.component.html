@@ -3,7 +3,8 @@
     <ion-title style="font-size: 40px;">
       <div style="display: inline-flex; text-align: center">
         <img style="width: 40px; height: 40px; margin-top: 10px;" src="../../assets/img/biblio-logo-notext-whiteBG-06.png" (click)="logoClick()" />
-        <ion-icon name="search" (click)="openSearchModal()"></ion-icon>
+        <!-- <ion-icon name="search" (click)="openSearchModal()"></ion-icon> -->
+        <ion-icon name="search" (click)="redirectOnClick()"></ion-icon>
         <ion-icon (click)="openSettingsModal()" name="settings"></ion-icon>
         <ion-icon (click)="logoutButton()" name="log-out"></ion-icon>
       </div>

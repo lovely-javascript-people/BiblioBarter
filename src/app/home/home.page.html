@@ -5,9 +5,10 @@
 </ion-header>
 
 <ion-content padding>
+    <div>Search For A Book <input [(ngModel)]="isbnQuery" #ctrl="ngModel" placeholder="#isbn" /><button (click)="searchBooks()" routerLink="/Matches">Search</button></div>
   <!-- <p>Welcome to your matches!</p> -->
   <ion-list>
-    <ion-item #list class={{listing.id_user}} *ngFor="let listing of listings; let i = index" [type]="listing">TITLE: {{listing.title}}  |  #ISBN: {{listing.isbn}} <button (click)="profileButtonClick(i)">PROFILE</button></ion-item>
+    <ion-item #list class={{listing.id_user}} *ngFor="let listing of listings; let i = index" [type]="listing">TITLE: {{listing.title}}  |  #ISBN: {{listing.isbn}}  |  CONDITION: {{listing.condition}} <button (click)="profileButtonClick(i)">PROFILE</button></ion-item>
   </ion-list>
 </ion-content>
 
