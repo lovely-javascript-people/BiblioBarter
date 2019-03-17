@@ -16,6 +16,7 @@ export class HomePage implements OnInit{
   constructor(private http: HttpClient, private router: Router) { }
 
   profileButtonClick(index) {
+    console.log(this.listings[index]);
     localStorage.setItem('selectedUser', JSON.stringify(this.listings[index]));
     this.router.navigate(['/peer-profile']);
   }
