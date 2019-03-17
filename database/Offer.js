@@ -25,8 +25,9 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Offer.associate = (models) => {
-    Offer.belongsTo(models.Offer, { foreignKey: 'id_offer' });
-    // Offer.hasOne(models.Offer, { foreignKey: 'id_offer', target: 'id_offer' });
+    // Offer.belongsTo(models.Offer_Listing, { foreignKey: 'id_offer' });
+    // Offer.hasOne(models.Offer_Listing, { foreignKey: 'id_offer', target: 'id_offer' });
+    // Offer.hasMany(models.Offer_Listing, { foreignKey: 'offer_id', sourceKey: 'id_offer' });
   };
   return Offer;
 };

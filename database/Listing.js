@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     // Listing.belongsTo(models.User, { foreignKey: 'id_listing' });
     // Listing.hasOne(models.Book, { foreignKey: 'id_book', targetKey: 'id_book' });
     Listing.belongsTo(models.Book, { foreignKey: 'id_book' });
+
   };
   return Listing;
 };
