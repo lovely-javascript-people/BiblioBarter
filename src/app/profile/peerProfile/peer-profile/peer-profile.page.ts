@@ -24,8 +24,16 @@ export class PeerProfilePage implements OnInit {
 
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router,) {}
 
-  getPeerBooks(id) {
-    this.apiService.getPeerProfile(id, console.log);
+  getPeerBooks(id, callback) {
+    this.apiService.getPeerProfile(id, callback);
+  }
+
+  setBooks(data) {
+    let temp = data.slice(0, data.length - 1)
+    this.wants = temp;
+    this.listings = data[data.length - 1];
+    console.log(this.wants);
+    console.log(this.listings);
   }
 
   makeOffer(myOffer: number, bookWanted: number) {
@@ -61,8 +69,8 @@ export class PeerProfilePage implements OnInit {
       }
     ];
     this.setUser = this.setUser.bind(this);
-    this.getPeerBooks = this.getPeerBooks.bind(this);
-    this.getPeerBooks(this.peer.listing.id_user)
+    this.setBooks = this.setBooks.bind(this);
+    this.getPeerBooks(this.peer.listing.id_user, this.setBooks)
   }
 
 }
