@@ -424,6 +424,7 @@ app.post('/offerlisting', (req, res) => {
   // });
   // console.log(one, 'ONEEEE');
   console.log(req.body.params, 'PARAMSSS');
+  console.log(req.body.params.myOffer, 'REQ BODY PARAMS MY OFFER');
   return db.Book.findOne({
     where: {
       isbn: Number(req.body.params.myOffer),
@@ -446,6 +447,7 @@ app.post('/offerlisting', (req, res) => {
     console.log(myListing, 'LIST LIST LIST');
     console.log(myListing.listing.dataValues, 'MY LISTING AGAIN');
     console.log(req.body.params.bookWanted, 'ERRRR');
+    console.log(myListing, 'LIST LIST LIST');
     listingSenderId = myListing.listing.dataValues.id_user;
     db.Offer.create({
       // need id_listing, create offer, then save to offer listing
@@ -460,6 +462,7 @@ app.post('/offerlisting', (req, res) => {
       console.log(`error in offer creation: ${err}`);
   }).then(() => {
     console.log(req.body.params.bookWanted, 'WANTED');
+    console.log(req.body.params.myOffer, 'MY OFFER');
     db.Offer.findAll({
       limit: 1,
       where: {
@@ -468,10 +471,11 @@ app.post('/offerlisting', (req, res) => {
       order: [['id_offer', 'DESC']]
     }).then((offerBefore) => {
       console.log(offerBefore[0].dataValues.id_offer, 'WHAAAAT');
+      console.log(req.body, 'REQ BODY');
       currentOfferId = offerBefore[0].dataValues.id_offer; // + 1;
       return db.Offer_Listing.create({
         id_offer: currentOfferId,
-        id_listing: req.body.listingId || 7, // 444 for TESTING
+        id_listing: req.body.params.bookWanted || 7, // 444 for TESTING
       })
     }).catch((err) => {
       console.log(`error in creating offer listing: ${err}`);

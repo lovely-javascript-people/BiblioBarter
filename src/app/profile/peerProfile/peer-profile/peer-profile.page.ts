@@ -34,7 +34,7 @@ export class PeerProfilePage implements OnInit {
     this.listings = data[data.length - 1];
   }
 
-  makeOffer(myOffer: number, bookWanted: number) {
+  makeOffer(bookWanted: number, myOffer: number) {
     this.apiService.sendOffer({ 
       myId: this.me, 
       myOffer, 
