@@ -1,3 +1,12 @@
 <ion-icon style="width: 40px;height: 40px;" name="close" (click)="closeModal()"></ion-icon>
-<div>Add a Book to Your Listings<input [(ngModel)]="isbnVal" #ctrl="ngModel" placeholder="#isbn" /><button>ADD</button></div>
-<div>Condition of Your Book<input [(ngModel)]="bookCondition" #ctrl="ngModel" placeholder="condition" /><button (click)="addBook()">ADD</button></div>
+<div>Add a Book to Your Listings<input [(ngModel)]="isbnVal" #ctrl="ngModel" placeholder="#isbn" />
+<ion-item>
+    <ion-label>Condition</ion-label>
+    <ion-select [(ngModel)]="bookCondition">
+        <ion-select-option value="Like New">Like New</ion-select-option>
+        <ion-select-option value="Good">Good</ion-select-option>
+        <ion-select-option value="Fair">Fair</ion-select-option>
+        <ion-select-option value="Poor">Poor</ion-select-option>
+    </ion-select>
+</ion-item>
+<button (click)="addBook()" >ADD</button></div>
