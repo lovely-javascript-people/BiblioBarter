@@ -38,7 +38,8 @@ export class PeerProfilePage implements OnInit {
     this.apiService.sendOffer({ 
       myId: this.me, 
       myOffer, 
-      bookWanted: this.peer.listing.id_listing, 
+      bookWanted: this.peer.listing.id_listing,
+      bookWantedTitle: this.peer.title,
       peerId: this.peer.listing.id_user 
     });
   }

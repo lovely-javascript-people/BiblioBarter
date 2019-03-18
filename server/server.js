@@ -486,6 +486,7 @@ app.post('/offerlisting', (req, res) => {
       // res.status(200).send(JSON.stringify('offer created'));
     }).then((currentOffer) => {
       console.log(currentOffer);
+      currentOffer.bookWated = req.body.params.bookWantedTitle;
       res.status(200).send(currentOffer);
     }).catch((err) => {
       console.log(`error in finding or sending offer: ${err}`);
@@ -522,11 +523,9 @@ app.patch('/offerlisting', (req, res) => {
     {
     returning: true,
     where: {
-      id_offer: req.body.params.offerId,
+      id_offer: req.params.offerid,
       }
   }).then(([listingsUpdated, [updatedListing]]) => {
-    console.log(listingsUpdated, 'LISTING UPDATED');
-    console.log(updatedListing, 'UPDATED LISTING');
     res.status(200).send(updatedListing);
   }).catch((err) => {
     console.log(`patch error: ${err}`);
@@ -534,3 +533,58 @@ app.patch('/offerlisting', (req, res) => {
 });
 
 // app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
+
+app.get('/offers', (req, res) => {
+  db.Listing.findAll({
+    where: {
+      id_user: req.query.id_user
+    }
+  }).then(async data => {
+    console.log(data)
+    let myOffers = {};
+    for (let piece of data) {
+    let offered = await db.Offer.findOne({
+      where: {
+        id_listing_recipient: piece.dataValues.id_listing
+      }
+    })
+    myOffers.offer = offered;
+    let offerer = await db.User.findOne({
+      where: {
+        id_user: await piece.dataValues.id_user
+      }
+    })
+    let titleOffered = await db.Book.findOne({
+      where: {
+        id_book: await piece.id_book
+      }
+    })
+    myOffers.titleWanted =titleOffered;
+    let wanted = await db.Listing.findOne({
+      where: {
+        id_listing: offered.id_listing_sender
+      }
+    })
+    let titleWantd = await db.Book.findOne({
+      where: {
+        id_book: await wanted.id_book
+      }
+    })
+    myOffers.titleOffered = titleWantd;
+    let peerListing = await db.Listing.findOne({
+      where: {
+        id_listing: offered.id_listing_sender
+      }
+    })
+    let peer = await db.User.findOne({
+      where: {
+        id_user: peerListing.id_user
+      }
+    })
+    myOffers.peer = peer;
+    console.log(myOffers);
+  }
+  data.push(myOffers);
+    res.send(data)
+  })
+})
