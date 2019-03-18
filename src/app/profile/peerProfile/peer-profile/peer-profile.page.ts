@@ -35,7 +35,6 @@ export class PeerProfilePage implements OnInit {
   }
 
   makeOffer(bookWanted: number, myOffer: number) {
-    console.log(this.peer);
     this.apiService.sendOffer({ 
       myId: this.me, 
       myOffer, 
