@@ -21,6 +21,7 @@ export class ProfilePage implements OnInit{
   offers: any = [];
   wants: any = [];
   listings: any = [];
+  allOffers: any = [];
   offerid: any; // need to grab correct offerid --> where do we get this
 
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router, private http: HttpClient,) {}
@@ -70,6 +71,22 @@ export class ProfilePage implements OnInit{
     })
   }
 
+  renderOffers(offers) {
+    this.allOffers = offers;
+    let offs: any = []
+    for (let offer of offers.slice(1)) {
+    let offerobj: any = {};
+    offerobj.offeredTitle = offer.titleOffered.title;
+    offerobj.wantedTitle = offer.titleWanted.title;
+    offerobj.peer = offer.peer.user_name;
+    offerobj.status = offer.offer.status;
+    offerobj.email = offer.peer.email;
+    offs.push(offerobj);
+  }
+  this.offers = offs;
+  console.log(this.offers);
+}
+
   rejectOffer() {
     console.log('offer rejected');
     const id_offer = this.offerid; // need to grab correct offerid
@@ -99,8 +116,10 @@ export class ProfilePage implements OnInit{
   ngOnInit() {
     this.renderWantList();
     this.renderListingsList();
+    this.renderOffers = this.renderOffers.bind(this);
     this.setUser = this.setUser.bind(this);
     this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
+    this.apiService.getOffers(this.renderOffers);
   }
 
 }

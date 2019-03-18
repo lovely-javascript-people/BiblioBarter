@@ -16,9 +16,16 @@ export class ApiService {
     })
   }
 
-  sendOffer(options) {
+  sendOffer(options: any) {
     this.http.post('http://localhost:3000/offerlisting', { params: options }).subscribe(resp => {
+      resp['bookWantedTitle'] = options.bookWantedTitle;
       console.log(resp);
+    })
+  }
+
+  getOffers(callback) {
+    this.http.get('http://localhost:3000/offers', { params: { id_user: localStorage.userid }}).subscribe(data => {
+      callback(data)
     })
   }
 
