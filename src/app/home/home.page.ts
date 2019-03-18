@@ -25,7 +25,7 @@ export class HomePage implements OnInit{
 
   searchBooks() {
     console.log(this.isbnQuery)
-    this.http.get(`http://localhost:3000/search/listing/isbn?${this.isbnQuery}`)
+    this.http.get(`ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/search/listing/isbn?${this.isbnQuery}`)
     .subscribe((searchedListings: any) => {
       console.log(searchedListings, 'BOOKS USER HAS SEARCHED FOR');
       this.listings = searchedListings;
@@ -33,7 +33,7 @@ export class HomePage implements OnInit{
   }
 
   userMatches() {
-    this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
+    this.http.get(`ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/user/want?${localStorage.userid}`)
     .subscribe((wantListArray) => {
       console.log(wantListArray, 'ARRAY OF WANT LIST');
       this.wants = wantListArray;

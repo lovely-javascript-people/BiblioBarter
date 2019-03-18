@@ -11,26 +11,26 @@ export class ApiService {
   }
 
   getPeerProfile(peerId, callback) {
-    this.http.get(`http://localhost:3000/peer`, { params: {peerId} }).subscribe(data => {
+    this.http.get(`ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/peer`, { params: {peerId} }).subscribe(data => {
       callback(data);
     })
   }
 
   sendOffer(options: any) {
-    this.http.post('http://localhost:3000/offerlisting', { params: options }).subscribe(resp => {
+    this.http.post('ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/offerlisting', { params: options }).subscribe(resp => {
       resp['bookWantedTitle'] = options.bookWantedTitle;
       console.log(resp);
     })
   }
 
   getOffers(callback) {
-    this.http.get('http://localhost:3000/offers', { params: { id_user: localStorage.userid }}).subscribe(data => {
+    this.http.get('ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/offers', { params: { id_user: localStorage.userid }}).subscribe(data => {
       callback(data)
     })
   }
 
   getProfile(username, callback) {
-    this.http.get('http://localhost:3000/profile', { params: { username } })
+    this.http.get('ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/profile', { params: { username } })
     .subscribe(data => {
       callback(data);
     });
@@ -40,7 +40,7 @@ export class ApiService {
     userSignup({nickname, family_name, given_name, picture}) {
       // // this.http.post('http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/signup', {
       // // this.http.post('http://bibliobarter.com/signup', {
-      this.http.post('http://localhost:3000/signup', { params :{
+      this.http.post('ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/signup', { params :{
         nickname,
         family_name,
         given_name,

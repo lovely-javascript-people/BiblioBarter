@@ -423,10 +423,11 @@ app.post('/offerlisting', (req, res) => {
   //   },
   // });
   // console.log(one, 'ONEEEE');
+  console.log(req.body.params, 'PARAMSSS');
   console.log(req.body.params.myOffer, 'REQ BODY PARAMS MY OFFER');
   return db.Book.findOne({
     where: {
-      isbn: req.body.params.myOffer,
+      isbn: Number(req.body.params.myOffer),
     },
     // include: [db.Listing]
     include: [{
@@ -443,6 +444,7 @@ app.post('/offerlisting', (req, res) => {
   // }).catch((err) => {
   //   console.log(`myListing error: ${err}`);
   }).then((myListing) => {
+    console.log(myListing, 'LIST LIST LIST');
     console.log(myListing.listing.dataValues, 'MY LISTING AGAIN');
     console.log(req.body.params.bookWanted, 'ERRRR');
     console.log(myListing, 'LIST LIST LIST');

@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.TEXT, // change from boolean to text so allows accepted, rejected
-      allowNull: true,
+      // allowNull: true,
       defaultValue: 'pending',
     },
   });
