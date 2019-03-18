@@ -60,6 +60,14 @@ export class ProfilePage implements OnInit{
     return await modalPage.present();
   }
 
+  acceptOffer() {
+  console.log('offer accepted');
+  }
+
+  rejectOffer() {
+    console.log('offer rejected');
+    }
+
   renderWantList() {
     // console.log(localStorage.userid, 'USERID');
   this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
