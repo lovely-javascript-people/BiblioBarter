@@ -41,4 +41,3 @@ module.exports = (sequelize, DataTypes) => {
   };
   return Offer_Listing;
 };
-
