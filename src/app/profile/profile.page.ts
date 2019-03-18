@@ -62,6 +62,8 @@ export class ProfilePage implements OnInit{
 
   acceptOffer() {
   console.log('offer accepted');
+  // patch req to server to make accepted: true
+  // endpoint /
   }
 
   rejectOffer() {
