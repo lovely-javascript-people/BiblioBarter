@@ -21,6 +21,7 @@ export class ProfilePage implements OnInit{
   offers: any = [];
   wants: any = [];
   listings: any = [];
+  offerid: any; // need to grab correct offerid --> where do we get this
 
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router, private http: HttpClient,) {}
 
@@ -62,12 +63,20 @@ export class ProfilePage implements OnInit{
 
   acceptOffer() {
   console.log('offer accepted');
-  // patch req to server to make accepted: true
-  // endpoint /
+  const id_offer = 53; // need to grab correct offerid
+  this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'accepted', offerId: id_offer} })
+    .subscribe((offerData) => {
+      console.log(offerData, 'OFFER DATA FROM SERVER');
+    })
   }
 
   rejectOffer() {
     console.log('offer rejected');
+    const id_offer = this.offerid; // need to grab correct offerid
+    this.http.patch('http://localhost:3000/offerlisting', { params: {accepted: 'rejected', offerId: id_offer} })
+    .subscribe(() => {
+
+    })
     }
 
   renderWantList() {
