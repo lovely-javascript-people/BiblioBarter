@@ -7,15 +7,13 @@
 </ion-header>
 
 <ion-content padding fullscreen="true">
-  The world is your oyster.<br />
   <img src='{{img}}' /><br />
   {{school}}
   <p>Welcome to your profile, {{user}}</p>
   Offers:<br />
-  Offerer is offering title and would like title  |  STATUS: {{status}} <button (click)="acceptOffer()" >Accept</button>
   <ion-list>
       <ion-item *ngFor="let offer of offers">
-        {{offer.offerer}} is offering {{offer.title1}} and would like {{offer.title2}}  |  STATUS: {{status}} <button (click)="acceptOffer()" >Accept</button> <button (click)="rejectOffer()" >Reject</button>
+        {{offer.offerer}} is offering {{offer.title1}} and would like {{offer.title2}}  |  STATUS: {{offer.status}} <button (click)="acceptOffer()" >Accept</button> <button (click)="rejectOffer()" >Reject</button>
       </ion-item>
   </ion-list><br /><br /><br />
   Looking for: <ion-icon (click)="openWantListModal()" name="add-circle-outline"></ion-icon>Add a book!<br />
