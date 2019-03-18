@@ -519,9 +519,11 @@ app.patch('/offerlisting', (req, res) => {
     {
     returning: true,
     where: {
-      id_offer: req.params.offerid,
+      id_offer: req.body.params.offerId,
       }
   }).then(([listingsUpdated, [updatedListing]]) => {
+    console.log(listingsUpdated, 'LISTING UPDATED');
+    console.log(updatedListing, 'UPDATED LISTING');
     res.status(200).send(updatedListing);
   }).catch((err) => {
     console.log(`patch error: ${err}`);

@@ -12,11 +12,10 @@
   {{school}}
   <p>Welcome to your profile, {{user}}</p>
   Offers:<br />
+  Offerer is offering title and would like title  |  STATUS: {{status}} <button (click)="acceptOffer()" >Accept</button>
   <ion-list>
       <ion-item *ngFor="let offer of offers">
-        Titles: <br />{{offer.title1}}<br /> 
-        {{offer.title2}} <br />
-        Offered by: <br />{{offer.offerer}}
+        {{offer.offerer}} is offering {{offer.title1}} and would like {{offer.title2}}  |  STATUS: {{status}} <button (click)="acceptOffer()" >Accept</button> <button (click)="rejectOffer()" >Reject</button>
       </ion-item>
   </ion-list><br /><br /><br />
   Looking for: <ion-icon (click)="openWantListModal()" name="add-circle-outline"></ion-icon>Add a book!<br />
@@ -31,6 +30,7 @@
       <ion-item *ngFor="let listing of listings">
         Title: {{listing.book.title}}<br />
         Condition: {{listing.book.condition}}<br />
+        ISBN: {{listing.book.isbn}}<br />
         <!-- Value: {{listing.value}} -->
       </ion-item>
     </ion-list>
