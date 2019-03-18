@@ -535,37 +535,56 @@ app.patch('/offerlisting', (req, res) => {
 // app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
 
 app.get('/offers', (req, res) => {
-  db.Offer.findAll({
+  db.Listing.findAll({
     where: {
-      id_listing_recipient: req.query.id_user
+      id_user: req.query.id_user
     }
   }).then(async data => {
-    let offered = await db.Listing.findOne({
+    console.log(data)
+    let myOffers = {};
+    for (let piece of data) {
+    let offered = await db.Offer.findOne({
       where: {
-        id_listing: data.id_listing_sender
+        id_listing_recipient: piece.dataValues.id_listing
       }
     })
+    myOffers.offer = offered;
     let offerer = await db.User.findOne({
       where: {
-        id_user: offered.id_user
+        id_user: await piece.dataValues.id_user
       }
     })
     let titleOffered = await db.Book.findOne({
       where: {
-        id_book: offered.id_book
+        id_book: await piece.id_book
       }
     })
+    myOffers.titleWanted =titleOffered;
     let wanted = await db.Listing.findOne({
       where: {
-        id_listing: data.id_listing_recipient
+        id_listing: offered.id_listing_sender
       }
     })
     let titleWantd = await db.Book.findOne({
       where: {
-        id_book: wanted.id_book
+        id_book: await wanted.id_book
       }
     })
-    data.push([offerer, titleOffered, titleWantd])
+    myOffers.titleOffered = titleWantd;
+    let peerListing = await db.Listing.findOne({
+      where: {
+        id_listing: offered.id_listing_sender
+      }
+    })
+    let peer = await db.User.findOne({
+      where: {
+        id_user: peerListing.id_user
+      }
+    })
+    myOffers.peer = peer;
+    console.log(myOffers);
+  }
+  data.push(myOffers);
     res.send(data)
   })
 })
