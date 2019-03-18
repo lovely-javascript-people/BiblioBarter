@@ -482,6 +482,7 @@ app.post('/offerlisting', (req, res) => {
       // res.status(200).send(JSON.stringify('offer created'));
     }).then((currentOffer) => {
       console.log(currentOffer);
+      currentOffer.bookWated = req.body.params.bookWantedTitle;
       res.status(200).send(currentOffer);
     }).catch((err) => {
       console.log(`error in finding or sending offer: ${err}`);
@@ -528,3 +529,39 @@ app.patch('/offerlisting', (req, res) => {
 });
 
 // app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
+
+app.get('/offers', (req, res) => {
+  db.Offer.findAll({
+    where: {
+      id_listing_recipient: req.query.id_user
+    }
+  }).then(async data => {
+    let offered = await db.Listing.findOne({
+      where: {
+        id_listing: data.id_listing_sender
+      }
+    })
+    let offerer = await db.User.findOne({
+      where: {
+        id_user: offered.id_user
+      }
+    })
+    let titleOffered = await db.Book.findOne({
+      where: {
+        id_book: offered.id_book
+      }
+    })
+    let wanted = await db.Listing.findOne({
+      where: {
+        id_listing: data.id_listing_recipient
+      }
+    })
+    let titleWantd = await db.Book.findOne({
+      where: {
+        id_book: wanted.id_book
+      }
+    })
+    data.push([offerer, titleOffered, titleWantd])
+    res.send(data);
+  })
+})
