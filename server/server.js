@@ -452,7 +452,7 @@ app.post('/offerlisting', (req, res) => {
       id_offer_prev: req.body.params.previousId || null,
       id_listing_sender: listingSenderId,
       money_exchange: req.body.params.money || null,
-      accepted: req.body.params.accepted || false,
+      status: req.body.params.status || 'pending',
     });
   }).catch((err) => {
       console.log(`error in offer creation: ${err}`);
@@ -513,12 +513,12 @@ app.patch('/offerlisting', (req, res) => {
   // needs id of offer
   db.Offer.update(
     {
-      accepted: true,
+      status: req.body.params.status,
     }, 
     {
     returning: true,
     where: {
-      id_offer: req.params.offerid,
+      id_offer: req.body.params.offerId,
       }
   }).then(([listingsUpdated, [updatedListing]]) => {
     res.status(200).send(updatedListing);
