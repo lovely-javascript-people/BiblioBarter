@@ -391,6 +391,7 @@ app.post('/offerlisting', (req, res) => {
   // bookWanted = id_listing_recipient
   // myOffer = isbn (my book)
   let listingSenderId;
+  let currentOfferId;
   // return db.Listing.findOne({
   //   // limit: 1,
   //   where: {
@@ -417,7 +418,7 @@ app.post('/offerlisting', (req, res) => {
     include: [{
       model: db.Listing,
       where: {
-        id_user: 1, // req.body.params.myId,
+        id_user: req.body.params.myId || 1,
       },
     }],
   // });
@@ -452,7 +453,7 @@ app.post('/offerlisting', (req, res) => {
       order: [['id_offer', 'DESC']]
     }).then((offerBefore) => {
       console.log(offerBefore[0].dataValues.id_offer, 'WHAAAAT');
-      let currentOfferId = offerBefore[0].dataValues.id_offer + 1;
+      currentOfferId = offerBefore[0].dataValues.id_offer; // + 1;
       return db.Offer_Listing.create({
         id_offer: currentOfferId,
         id_listing: req.body.listingId || 7, // 444 for TESTING
@@ -460,8 +461,18 @@ app.post('/offerlisting', (req, res) => {
     }).catch((err) => {
       console.log(`error in creating offer listing: ${err}`);
     }).then(() => {
-      res.status(200).send(JSON.stringify('offer created'));
-    });
+      return db.Offer.findOne({
+        where: {
+          id_offer: currentOfferId,
+        }
+      })
+      // res.status(200).send(JSON.stringify('offer created'));
+    }).then((currentOffer) => {
+      console.log(currentOffer);
+      res.status(200).send(currentOffer);
+    }).catch((err) => {
+      console.log(`error in finding or sending offer: ${err}`);
+    })
   });
   // .catch((err) => {
   //     console.log(`error in finding offer id: ${err}`);
