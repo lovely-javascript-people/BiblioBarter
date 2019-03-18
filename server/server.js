@@ -270,15 +270,15 @@ app.get('/peer', (req, res) => {
       }
     }).then((data) => {
       listings = data;
-    }).then(() => {
+    }).then(async () => {
       books.push([]);
       for (let listing of listings) {
-        books[books.length - 1].push(
-        db.Book.findOne({
+        let book = await db.Book.findOne({
           where: {
             id_book: listing.id_book
           }
-        }))}
+        })
+        books[books.length - 1].push(book)}
         console.log(books[1]);
         }).then(() => {
       res.send(books);

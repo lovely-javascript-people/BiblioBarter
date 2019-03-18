@@ -28,13 +28,10 @@ export class PeerProfilePage implements OnInit {
     this.apiService.getPeerProfile(id, callback);
   }
 
-  setBooks(data) {
+  async setBooks(data) {
     let temp = data.slice(0, data.length - 1)
     this.wants = temp;
     this.listings = data[data.length - 1];
-    console.log(data, 'DATA');
-    console.log(this.wants);
-    console.log(this.listings, 'LISTINGS');
   }
 
   makeOffer(myOffer: number, bookWanted: number) {
