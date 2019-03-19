@@ -92,7 +92,7 @@ app.get('/profile', (req, res) => {
 app.patch('/school', (req, res) => {
   db.School.findOrCreate({
     where: {
-      name_school: req.body.school
+      name_school: req.body.school // CHANGE WHEN DROP DATABASE
       //geolocal needed
     }
   })
@@ -250,7 +250,7 @@ app.get('/search/listing/isbn', (req, res) => {
 // Search for want(people who want your book)
 
 // GET /peer
-// returns wants for a profile you visit 
+// returns wants and listings for a profile you visit 
 app.get('/peer', (req, res) => {
   let books;
   let usersBooks = [];
@@ -525,7 +525,7 @@ app.patch('/offerlisting', (req, res) => {
     {
     returning: true,
     where: {
-      id_offer: req.params.offerid,
+      id_offer: req.body.params.offerId,
       }
   }).then(([listingsUpdated, [updatedListing]]) => {
     res.status(200).send(updatedListing);
@@ -542,7 +542,7 @@ app.get('/offers', (req, res) => {
       id_user: req.query.id_user
     }
   }).then(async data => {
-    console.log(data)
+    console.log(data, 'ISSSSSSSSS');
     let myOffers = {};
     for (let piece of data) {
     let offered = await db.Offer.findOne({
