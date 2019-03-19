@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       unique: true,
     },
-    name_school: {
+    name: {
       type: DataTypes.TEXT,
       unique: true,
     },
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     geo_longitude: DataTypes.DECIMAL,
   });
   School.associate = (models) => {
-    School.belongsToMany(models.User, { through: 'school_id' });
+    School.belongsToMany(models.User, { through: 'id_school' }); // previously school_id
   };
   return School;
 };

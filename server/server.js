@@ -92,7 +92,7 @@ app.get('/profile', (req, res) => {
 app.patch('/school', (req, res) => {
   db.School.findOrCreate({
     where: {
-      name_school: req.body.school // CHANGE WHEN DROP DATABASE
+      name: req.body.school // CHANGE WHEN DROP DATABASE
       //geolocal needed
     }
   })
@@ -455,7 +455,7 @@ app.post('/offerlisting', (req, res) => {
       id_listing_recipient: req.body.params.bookWanted,
       id_offer_prev: req.body.params.previousId || null,
       id_listing_sender: listingSenderId,
-      money_exchange: req.body.params.money || null,
+      money_exchange_cents: req.body.params.money || null,
       status: req.body.params.status || 'pending',
     });
   }).catch((err) => {
