@@ -22,37 +22,34 @@ export class AddListingModal implements OnInit {
     this.modal.dismiss();
   }
 
-  addBook(isbn, callback) {
-    this.apiService.addListingToUserOfferingList(isbn, callback);
-    // const bookCondition = this.bookCondition;
-    // // const isbnVal = this.isbnVal;
-
-    // this.http.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json`)
-    //   .subscribe(((bookInfo: any) => {
-
-    //     // sends obj w url key where the end of the url is the book title separated by _
-    //     // grab just the title out of the url and switch _ to ' '
-    //     this.title = bookInfo[Object.keys(bookInfo)[0]].info_url
-    //     .split('/')[bookInfo[Object.keys(bookInfo)[0]].info_url.split('/').length - 1]
-    //     .split('_').join(' ');
-    //     const title = this.title; // so that sending will not yield undefined
-
-    // // make sure userid is saved to loacal storage
-    // // send userid from localstorage.userid
-    // const userid = this.userid;
-    // console.log(userid, 'USER ID');
-
-    // this.http.post('http://localhost:3000/user/listing', { params: isbnVal, bookCondition, title, userid }) // add userid
-    // .subscribe((allListings: any) => {
-    //   console.log(allListings, 'ALL LISTINGS + NEW ONE');
-    // })
+  addBook(isbn) {
+    this.apiService.getBookInfoForOfferingList(isbn, this.getBookTitle);
     
-    // this.closeModal();
-    //   }));
+    const postBook = this.postBookToOfferingList;
+    setTimeout(function(){ postBook() }, 1000);
 
+    this.closeModal();
+  }
+
+  postBookToOfferingList() {
+    const isbnVal = this.isbnVal;
+    const bookCondition = this.bookCondition;
+    const title = this.title;
+    const userid = this.userid;
+    console.log(this.title, 'TITLE IN POSTBOOKTOOFFERINGLIST')
+    this.apiService.addBookToUserOfferingList(isbnVal, bookCondition, title, userid);
+  }
+
+  getBookTitle(bookInfo) {
+    this.title = bookInfo[Object.keys(bookInfo)[0]].info_url
+    .split('/')[bookInfo[Object.keys(bookInfo)[0]].info_url.split('/').length - 1]
+    .split('_').join(' ');
+    // console.log(this.title, 'TITLE OF THE BOOK');
   }
 
   ngOnInit() {
+    this.getBookTitle = this.getBookTitle.bind(this);
+    this.postBookToOfferingList = this.postBookToOfferingList.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 

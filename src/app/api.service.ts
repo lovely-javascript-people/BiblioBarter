@@ -11,9 +11,20 @@ export class ApiService {
   host = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
   local = 'http://localhost:3000';
 
-  addListingToUserOfferingList(isbn, callback) {
-    console.log(isbn);
-    callback();
+  getBookInfoForOfferingList(isbn: string, callback) {
+    this.http.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json`)
+      .subscribe(((bookInfo: any) => {
+        console.log(bookInfo, 'BOOK INFO API SERVICE');
+        callback(bookInfo); // gets title of book
+      }))
+  }
+
+  addBookToUserOfferingList(isbnVal, bookCondition, title, userid) {
+    console.log(title, 'TITLE');
+    this.http.post(`${this.local}/user/listing`, { params: isbnVal, bookCondition, title, userid })
+      .subscribe((allListings: any) => {
+          console.log(allListings, 'ALL LISTINGS IN API SERVICE');
+        });
   }
 
   getPeerProfile(peerId, callback) {
