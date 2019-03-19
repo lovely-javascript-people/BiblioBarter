@@ -540,7 +540,7 @@ app.get('/offers', (req, res) => {
       id_user: req.query.id_user
     }
   }).then(async data => {
-    console.log(data)
+    console.log(data, 'DATA');
     let myOffers = {};
     for (let piece of data) {
     let offered = await db.Offer.findOne({
