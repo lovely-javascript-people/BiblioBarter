@@ -523,7 +523,7 @@ app.patch('/offerlisting', (req, res) => {
     {
     returning: true,
     where: {
-      id_offer: req.params.offerid,
+      id_offer: req.body.params.offerId,
       }
   }).then(([listingsUpdated, [updatedListing]]) => {
     res.status(200).send(updatedListing);
