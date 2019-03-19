@@ -12,14 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     id_listing_recipient: DataTypes.INTEGER,
     id_offer_prev: DataTypes.INTEGER,
     id_listing_sender: DataTypes.INTEGER,
-    money_exchange: {
+    money_exchange_cents: {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: null,
     },
     status: {
       type: DataTypes.TEXT, // change from boolean to text so allows accepted, rejected
-      allowNull: true,
+      // allowNull: true,
       defaultValue: 'pending',
     },
   });

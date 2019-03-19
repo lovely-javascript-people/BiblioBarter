@@ -39,7 +39,7 @@ export class WantListModal implements OnInit {
     const userid = this.userid;
     const title = this.title;
 
-    this.http.post('http://localhost:3000/user/want', { params: isbnVal, userid, title })
+      this.http.post('ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/user/want', { params: isbnVal, userid, title })
     .subscribe((allWants: any) => {
       console.log(allWants, 'ALL WANTS + NEW ONE');
     })

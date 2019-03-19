@@ -34,7 +34,7 @@ export class ProfilePage implements OnInit{
     if (data[0].length) {
         this.user = data[0].user_name;
         if (data[1].length) {
-        this.school = data[1][0].name_school;
+        this.school = data[1][0].name;
         }
         this.img = data[0].link_image;
     } else {
@@ -91,8 +91,13 @@ export class ProfilePage implements OnInit{
 
   rejectOffer() {
     console.log('offer rejected');
+<<<<<<< HEAD
     const id_offer = this.allOffers[2].offer.id_offer;
     this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
+=======
+    const id_offer = this.offerid; // need to grab correct offerid
+    this.http.patch('ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
+>>>>>>> d7de118816c52ef4cecd3f8f7bd4b39b342768ef
     .subscribe(() => {
 
     })
@@ -100,7 +105,7 @@ export class ProfilePage implements OnInit{
 
   renderWantList() {
     // console.log(localStorage.userid, 'USERID');
-  this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
+    this.http.get(`ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/user/want?${localStorage.userid}`)
     .subscribe((wantListArray) => {
       console.log(wantListArray, 'ARRAY OF WANT LIST');
       this.wants = wantListArray;
@@ -108,7 +113,7 @@ export class ProfilePage implements OnInit{
   }
 
   renderListingsList() {
-  this.http.get(`http://localhost:3000/user/listing?${localStorage.userid}`)
+    this.http.get(`ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/user/listing?${localStorage.userid}`)
     .subscribe((listingListArray) => {
       console.log(listingListArray, 'ARRAY OF OFFERING LIST');
       this.listings = listingListArray;
