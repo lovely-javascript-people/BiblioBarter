@@ -72,6 +72,7 @@ export class ProfilePage implements OnInit{
   }
 
   renderOffers(offers) {
+    console.log(offers, 'OFFERS');
     this.allOffers = offers;
     let offs: any = []
     for (let offer of offers.slice(1)) {
