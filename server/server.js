@@ -590,3 +590,12 @@ app.get('/offers', (req, res) => {
     res.send(data)
   })
 })
+
+
+// make sure to create columns on want and listing tables
+// make them booleans, 
+// want fulfilled - true means no need, false means still wants (default)
+// listing - available - true still have default, false bartered 
+
+// school name school just be name, id in association change
+// money needs to be money_exchange_cents
