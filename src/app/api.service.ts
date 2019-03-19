@@ -31,6 +31,15 @@ export class ApiService {
     })
   }
 
+  searchForBookWithIsbn(isbn) {
+    this.http.get(`${this.local}/search/listing/isbn?${isbn}`)
+    .subscribe((searchedListings: any) => {
+      console.log(searchedListings, 'BOOKS USER HAS SEARCHED FOR');
+      localStorage.setItem('searchedListings', searchedListings);
+      console.log(localStorage);
+    })
+  }
+
   getPeerProfile(peerId, callback) {
     this.http.get(`${this.local}/peer`, { params: {peerId} }).subscribe(data => {
       callback(data);
