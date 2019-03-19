@@ -91,13 +91,8 @@ export class ProfilePage implements OnInit{
 
   rejectOffer() {
     console.log('offer rejected');
-<<<<<<< HEAD
     const id_offer = this.allOffers[2].offer.id_offer;
     this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
-=======
-    const id_offer = this.offerid; // need to grab correct offerid
-    this.http.patch('ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
->>>>>>> d7de118816c52ef4cecd3f8f7bd4b39b342768ef
     .subscribe(() => {
 
     })
