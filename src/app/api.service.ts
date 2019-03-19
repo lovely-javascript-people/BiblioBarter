@@ -10,7 +10,12 @@ export class ApiService {
 
   host = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
   local = 'http://localhost:3000';
-ß
+
+  addListingToUserOfferingList(isbn, callback) {
+    console.log(isbn);
+    callback();
+  }
+
   getPeerProfile(peerId, callback) {
     this.http.get(`${this.local}/peer`, { params: {peerId} }).subscribe(data => {
       callback(data);
@@ -18,10 +23,7 @@ export class ApiService {
   }
 
   getBooks(isbn: string, callback) {
-    console.log(isbn, 'ISBN APISERVICE')
-    this.http.get(`${this.local}/search/listing/isbn?${isbn}`)
-    .subscribe((searchedListings: any) => {
-      console.log(searchedListings, 'BOOKS USER HAS SEARCHED FOR');
+    this.http.get(`${this.local}/search/listing/isbn?${isbn}`).subscribe((searchedListings: any) => {
       callback(searchedListings);
     })
   }
