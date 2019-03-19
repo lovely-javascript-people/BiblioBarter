@@ -34,7 +34,7 @@ export class ProfilePage implements OnInit{
     if (data[0].length) {
         this.user = data[0].user_name;
         if (data[1].length) {
-        this.school = data[1][0].name_school;
+        this.school = data[1][0].name;
         }
         this.img = data[0].link_image;
     } else {
@@ -72,6 +72,7 @@ export class ProfilePage implements OnInit{
   }
 
   renderOffers(offers) {
+    console.log(offers, 'OFFERS');
     this.allOffers = offers;
     let offs: any = []
     for (let offer of offers.slice(1)) {

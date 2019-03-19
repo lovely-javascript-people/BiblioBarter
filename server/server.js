@@ -92,7 +92,7 @@ app.get('/profile', (req, res) => {
 app.patch('/school', (req, res) => {
   db.School.findOrCreate({
     where: {
-      name_school: req.body.school
+      name: req.body.school // CHANGE WHEN DROP DATABASE
       //geolocal needed
     }
   })
@@ -250,7 +250,7 @@ app.get('/search/listing/isbn', (req, res) => {
 // Search for want(people who want your book)
 
 // GET /peer
-// returns wants for a profile you visit 
+// returns wants and listings for a profile you visit 
 app.get('/peer', (req, res) => {
   let books;
   let usersBooks = [];
@@ -455,7 +455,7 @@ app.post('/offerlisting', (req, res) => {
       id_listing_recipient: req.body.params.bookWanted,
       id_offer_prev: req.body.params.previousId || null,
       id_listing_sender: listingSenderId,
-      money_exchange: req.body.params.money || null,
+      money_exchange_cents: req.body.params.money || null,
       status: req.body.params.status || 'pending',
     });
   }).catch((err) => {
@@ -525,7 +525,7 @@ app.patch('/offerlisting', (req, res) => {
     {
     returning: true,
     where: {
-      id_offer: req.params.offerid,
+      id_offer: req.body.params.offerId,
       }
   }).then(([listingsUpdated, [updatedListing]]) => {
     res.status(200).send(updatedListing);
@@ -542,7 +542,7 @@ app.get('/offers', (req, res) => {
       id_user: req.query.id_user
     }
   }).then(async data => {
-    console.log(data)
+    console.log(data, 'ISSSSSSSSS');
     let myOffers = {};
     for (let piece of data) {
     let offered = await db.Offer.findOne({
@@ -590,3 +590,12 @@ app.get('/offers', (req, res) => {
     res.send(data)
   })
 })
+
+
+// make sure to create columns on want and listing tables
+// make them booleans, 
+// want fulfilled - true means no need, false means still wants (default)
+// listing - available - true still have default, false bartered 
+
+// school name school just be name, id in association change
+// money needs to be money_exchange_cents
