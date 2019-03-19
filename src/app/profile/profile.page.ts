@@ -100,7 +100,7 @@ export class ProfilePage implements OnInit{
 
   renderWantList() {
     // console.log(localStorage.userid, 'USERID');
-    this.http.get(`ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/user/want?${localStorage.userid}`)
+    this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
     .subscribe((wantListArray) => {
       console.log(wantListArray, 'ARRAY OF WANT LIST');
       this.wants = wantListArray;
@@ -108,7 +108,7 @@ export class ProfilePage implements OnInit{
   }
 
   renderListingsList() {
-    this.http.get(`ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/user/listing?${localStorage.userid}`)
+    this.http.get(`http://localhost:3000/user/listing?${localStorage.userid}`)
     .subscribe((listingListArray) => {
       console.log(listingListArray, 'ARRAY OF OFFERING LIST');
       this.listings = listingListArray;

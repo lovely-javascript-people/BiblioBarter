@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,7 @@ export class HomePage implements OnInit{
   listings: any = [];
   wants: any = [];
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private apiService: ApiService,) { }
 
   profileButtonClick(index) {
     console.log(this.listings[index]);
@@ -23,17 +24,19 @@ export class HomePage implements OnInit{
     this.router.navigate(['/peer-profile']);
   }
 
-  searchBooks() {
-    console.log(this.isbnQuery)
-    this.http.get(`ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/search/listing/isbn?${this.isbnQuery}`)
-    .subscribe((searchedListings: any) => {
-      console.log(searchedListings, 'BOOKS USER HAS SEARCHED FOR');
-      this.listings = searchedListings;
-    })
+  searchBooks(data, callback) {
+    // let isbn = this.isbnQuery;
+    this.apiService.getBooks(data, callback);
   }
 
+    setListing(searchedListings) {
+      console.log(searchedListings, 'BACK ON MATCHES PAGE');
+      this.listings = searchedListings;
+    }
+
   userMatches() {
-    this.http.get(`ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/user/want?${localStorage.userid}`)
+    //this.http.get(`//ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/user/want?${localStorage.userid}`)
+    this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
     .subscribe((wantListArray) => {
       console.log(wantListArray, 'ARRAY OF WANT LIST');
       this.wants = wantListArray;
@@ -57,5 +60,8 @@ export class HomePage implements OnInit{
   ngOnInit() {
     // this.userMatches();
     this.url = document.URL;
+    this.setListing = this.setListing.bind(this);
+    this.searchBooks(this.isbnQuery, this.setListing);
   }
+
 }
