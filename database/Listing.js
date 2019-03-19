@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
     //   },
     // },
     id_book: DataTypes.INTEGER,
+    available: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
     date_created: DataTypes.DATE,
   });
 
