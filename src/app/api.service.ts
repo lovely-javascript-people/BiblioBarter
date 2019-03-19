@@ -12,19 +12,23 @@ export class ApiService {
   local = 'http://localhost:3000';
 
   getBookInfoForOfferingList(isbn: string, callback) {
-    this.http.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json`)
+    this.http.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json`) // book info from book api
       .subscribe(((bookInfo: any) => {
-        console.log(bookInfo, 'BOOK INFO API SERVICE');
         callback(bookInfo); // gets title of book
       }))
   }
 
   addBookToUserOfferingList(isbnVal, bookCondition, title, userid) {
-    console.log(title, 'TITLE');
     this.http.post(`${this.local}/user/listing`, { params: isbnVal, bookCondition, title, userid })
       .subscribe((allListings: any) => {
-          console.log(allListings, 'ALL LISTINGS IN API SERVICE');
         });
+  }
+
+  addBookToUserWantList(isbnVal, userid, title) {
+    this.http.post(`${this.local}/user/want`, { params: isbnVal, userid, title })
+      .subscribe((allWants: any) => {
+      console.log(allWants, 'ALL WANTS FROM API SERVICE');
+    })
   }
 
   getPeerProfile(peerId, callback) {
