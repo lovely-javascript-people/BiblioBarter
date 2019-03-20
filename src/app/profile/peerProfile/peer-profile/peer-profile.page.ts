@@ -19,8 +19,8 @@ export class PeerProfilePage implements OnInit {
   user: any;
   school: string;
   offers: object[];
-  wants: object[];
-  listings: object[];
+  wants: any[];
+  listings: any[];
   possibleBooks: object[] = [];
 
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router,) {}
@@ -34,11 +34,24 @@ export class PeerProfilePage implements OnInit {
   }
 
   getYourWants() {
-    this.apiService.renderWantList(this.setYourBooks);
+    this.apiService.renderWantList(this.setYourWants);
   }
 
   setYourBooks(data) {
-    this.possibleBooks.push(data);
+    console.log(data);
+    let lists = this.wants.map(list => list.title);
+    console.log(lists);
+    let xRefer = data.filter(piece => lists.includes(piece.book.title));
+    this.possibleBooks.push(xRefer);
+    console.log(this.possibleBooks);
+  }
+
+  setYourWants(data) {
+    console.log(data);
+    let wants = this.listings.map(want => want.title);
+    console.log(wants);
+    let xRefer = data.filter(piece => wants.includes(piece.title));
+    this.possibleBooks.push(xRefer);
     console.log(this.possibleBooks);
   }
 
@@ -46,6 +59,8 @@ export class PeerProfilePage implements OnInit {
     let temp = data.slice(0, data.length - 1)
     this.wants = temp;
     this.listings = data[data.length - 1];
+    this.getYourBooks();
+    this.getYourWants();
   }
 
   makeOffer(bookWanted: number, myOffer: number) {
@@ -60,7 +75,7 @@ export class PeerProfilePage implements OnInit {
 
   setUser(data) {
     let user: any = JSON.parse(localStorage.getItem('selectedUser'));
-    console.log(data);
+    // console.log(data);
     this.user = data || user.nickname;
   }
   ngOnInit() {
@@ -84,9 +99,10 @@ export class PeerProfilePage implements OnInit {
     this.setYourBooks = this.setYourBooks.bind(this);
     this.setUser = this.setUser.bind(this);
     this.setBooks = this.setBooks.bind(this);
-    this.getPeerBooks(this.peer.listing.id_user, this.setBooks)
-    this.getYourBooks();
-    this.getYourWants();
+    this.getPeerBooks = this.getPeerBooks.bind(this);
+    this.getPeerBooks(this.peer.listing.id_user, this.setBooks);
+    this.setYourWants = this.setYourWants.bind(this);
+    
   }
 
 }
