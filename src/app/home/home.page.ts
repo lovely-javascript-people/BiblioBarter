@@ -39,7 +39,7 @@ export class HomePage implements OnInit{
   }
 
   setWants(data) {
-
+    // this.wants = data;
   }
 
     setListing(searchedListings) {
@@ -80,6 +80,8 @@ export class HomePage implements OnInit{
     this.url = document.URL;
     this.setListing = this.setListing.bind(this);
     this.searchBooks(this.isbnQuery, this.setListing);
+    this.setWants = this.setWants.bind(this);
+    // this.apiService.renderWantList(this.setWants);
   }
 
 }
