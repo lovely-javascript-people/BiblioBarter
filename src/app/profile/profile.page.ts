@@ -60,12 +60,12 @@ export class ProfilePage implements OnInit{
       componentProps:{values: data}
     });
     return await modalPage.present();
-  };
+  }
+
   acceptOffer() {
-  // console.log(this.allOffers[2].offer.id_offer, 'ALL OFFERS');
   this.offerid = this.allOffers[2].offer.id_offer;
   const id_offer = this.offerid;
-  // console.log(id_offer, 'ID OFFER');
+    // this.apiService.userAcceptOffer();
   this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'accepted', offerId: id_offer} })
     .subscribe((offerData) => {
       console.log(offerData, 'OFFER DATA FROM SERVER');
@@ -76,7 +76,7 @@ export class ProfilePage implements OnInit{
     console.log(offers, 'OFFERS');
     this.allOffers = offers;
     let offs: any = []
-    for (let offer of offers.slice(2)) {
+    for (let offer of offers.slice(1)) {
     let offerobj: any = {};
     offerobj.offeredTitle = offer.titleOffered.title;
     offerobj.wantedTitle = offer.titleWanted.title;
@@ -86,7 +86,7 @@ export class ProfilePage implements OnInit{
     offs.push(offerobj);
   }
   this.offers = offs;
-  console.log(this.offers, 'OFFERS');
+  console.log(this.offers, 'THIS DOT OFFERS');
 }
 
   rejectOffer() {
