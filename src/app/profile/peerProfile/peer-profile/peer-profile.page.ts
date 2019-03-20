@@ -81,10 +81,10 @@ export class PeerProfilePage implements OnInit {
     let wanted = _.filter(this.listings, list => list.title === newWant);
     let offered = this.possibleBooks[0].filter(book => newOff === book.book.title);
     console.log(wanted, offered);
-    // this.apiService.sendOffer({ 
-    //   bookWanted: this.entireListings[0],
-    //   bookOffering: offered[0].id_listing,
-    // });
+    this.apiService.sendOffer({ 
+      bookWanted: this.entireListings[0],
+      bookOffering: offered[0].id_listing,
+    });
   }
 
   setUser(data) {
