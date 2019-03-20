@@ -19,30 +19,14 @@ export class ContactModal implements OnInit {
 
   available: boolean = true;
 
-  email: object = {
-    to: 'example@gmail.com',
-    subject: 'Cordova Icons',
-    body: 'How are you? Nice greetings from Leipzig',
-    isHtml: true       };
+  
 
   constructor(
     public modal: ModalController,
     private emailComposer: EmailComposer,
-    // private _FORM: FormBuilder,
-    // public form: FormGroup,
-    // public navCtrl: NavController,
-    ) { 
+    ) {  }
 
-    //   this.form = this._FORM.group({
-    //     "to"            : ["", Validators.required],
-    //     "cc"            : ["", Validators.required],
-    //     "bcc"           : ["", Validators.required],
-    //     "subject"       : ["", Validators.required],
-    //     "message"       : ["", Validators.required]
-    // });
-
-    }
-
+    
     
     send(){
       this.emailComposer.isAvailable().then((available) =>{
