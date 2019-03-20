@@ -404,6 +404,14 @@ app.post('/offerlisting', (req, res) => {
   // when one offer is created, it must be sent to the lister!! // 
   // ///////////////// END ///////////////// // 
   // /////////////////////////////////////// // 
+
+
+  
+  // ///////////////////////////////////////// // 
+  // ////////////////// RED ////////////////// // 
+  // CAN BE DELETED AFTER SUCCESS ON ALL CALLS // 
+  // WATCH OUT FOR THE LAST }) AT THE END FOR CLOSING // 
+
   // incoming req.body.params. 
   // peerId = recipient (them)
   // myId = sender (me)
