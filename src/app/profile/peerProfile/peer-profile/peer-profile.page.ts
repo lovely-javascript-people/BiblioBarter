@@ -18,14 +18,24 @@ export class PeerProfilePage implements OnInit {
   peer: any;
   user: any;
   school: string;
-  offers: any[];
-  wants: any[];
-  listings: any[];
+  offers: object[];
+  wants: object[];
+  listings: object[];
+  possibleBooks: object[];
 
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router,) {}
 
   getPeerBooks(id, callback) {
     this.apiService.getPeerProfile(id, callback);
+  }
+
+  getYourBooks() {
+    this.apiService.getProfile(localStorage.username, this.setYourBooks);
+  }
+
+  setYourBooks(data) {
+    this.possibleBooks = data;
+    console.log(this.possibleBooks);
   }
 
   async setBooks(data) {
@@ -67,9 +77,11 @@ export class PeerProfilePage implements OnInit {
         ISBN: 8000000
       }
     ];
+    this.setYourBooks = this.setYourBooks.bind(this);
     this.setUser = this.setUser.bind(this);
     this.setBooks = this.setBooks.bind(this);
     this.getPeerBooks(this.peer.listing.id_user, this.setBooks)
+    this.getYourBooks();
   }
 
 }
