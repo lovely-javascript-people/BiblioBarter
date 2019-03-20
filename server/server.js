@@ -166,7 +166,7 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
   // book isbn number, 
   // title, and 
   // condition, may need helper function to call api for title
-  let isbnNum = Number(req.body.params);
+  let isbnNum = req.body.params;
   db.Book.create({
     isbn: isbnNum,
     title: req.body.title,
@@ -230,7 +230,7 @@ app.get('/search/listing/isbn', (req, res) => {
     // send back res from helper
     // console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
     ////// 
-  let isbnNum = Number(Object.keys(req.query)[0]);
+  let isbnNum = Object.keys(req.query)[0];
   db.Book.findAll({
     where: {
       isbn: isbnNum
@@ -339,77 +339,86 @@ app.post('/offerlisting', (req, res) => {
   // myId = sender (me)
   // bookWanted = id_listing_recipient
   // myOffer = isbn (my book)
-  // // /////////////////////////////////////////// // 
-  // // DO NOT DELETE :: FOR AFTER MVP // 
-  // // BELOW HERE TO THE NEXT// 
-  // // need to have way to update the lister
-  // // CAN BE USED TO REPLACE MVP VERSION // 
-  // // TAKES IN TWO USER LISTINGS // 
-  // // object to be sent back to client to update listing user of offer
-  // // fill in with values after user can only select from own listing for offer
-  // // ALTER AS NEEDED
-  // let offerCreated = {
-  //   offerId: '',
-  //   senderUsername: req.body.myUsername, // need from front end
-  //   senderId: req.body.myId, // currently in body
-  //   senderBook: '',
-  //   senderBookIsbn: '',
-  //   senderListingId: '',
-  //   yourBook: '',
-  //   yourListingId: '',
-  //   yourBookIsbn: '',
-  //   money: null,
-  // };
-  // let idOfOffer;
-  // db.Offer.create({
-  //   // need id_listing, create offer, then save to offer listing
-  //   // listing recipient, listing prev, listing sender, money, accepted
-  //   id_listing_recipient: req.body.bookWanted,
-  //   id_offer_prev: req.body.previousId || null,
-  //   id_listing_sender: req.body.bookOffering, // not currently on front end
-  //   money_exchange: req.body.money || null,
-  //   accepted: req.body.accepted || false, // currently set to false until we accept money
-  // }).then(() => {
-  //   return db.Offer.findAll({
-  //     limit: 1,
-  //     where: {
-  //       id_listing_recipient: req.body.bookWanted,
-  //     },
-  //     order: [['id_offer', 'DESC']]
-  //   })
-  // }).then((offer) => {
-  //   idOfOffer = offer[0].dataValues.id_offer; // gets offer id to save values for offer listing
-  //   return db.Offer_Listing.create({ // create offer listing for lister, listing recipient
-  //     id_offer: idOfOffer,
-  //     id_listing: req.body.bookWanted,
-  //   });
-  // }).then(() => {
-  //   return db.Offer_Listing.create({ // create offer listing for listing sender
-  //     id_offer: idOfOffer,
-  //     id_listing: req.body.bookOffering,
-  //   })
-  // }).then(() => {
-    // return db.Offer.findAll({ 
-    //   where: {
-    //     id_offer: idOfOffer,
-    //   }
-    // });
-  // }).then((offerMade) => {
-  //   res.send(offerMade); // SEND offer from offer table, or object above with all information for display
-  //   // res.send(JSON.stringify('OFFER CREATION SUCCESS')); // currently only string is returned, need to return listing
-  // }).catch((err) => {
-  //   console.log(`there was an Offer Creation ERROR: ${err}`);
-  // });
-  // // when one offer is created, it must be sent to the lister!! // 
-  // // ///////////////// END ///////////////// // 
-  // // /////////////////////////////////////// // 
+  // /////////////////////////////////////////// // 
+  // DO NOT DELETE :: FOR AFTER MVP // 
+  // BELOW HERE TO THE NEXT// 
+  // need to have way to update the lister
+  // CAN BE USED TO REPLACE MVP VERSION // 
+  // TAKES IN TWO USER LISTINGS // 
+  // object to be sent back to client to update listing user of offer
+  // fill in with values after user can only select from own listing for offer
+  // ALTER AS NEEDED
+  let offerCreated = {
+    offerId: '',
+    senderUsername: req.body.myUsername, // need from front end
+    senderId: req.body.myId, // currently in body
+    senderBook: '',
+    senderBookIsbn: '',
+    senderListingId: '',
+    yourBook: '',
+    yourListingId: '',
+    yourBookIsbn: '',
+    money: null,
+  };
+  let idOfOffer;
+  db.Offer.create({
+    // need id_listing, create offer, then save to offer listing
+    // listing recipient, listing prev, listing sender, money, accepted
+    id_listing_recipient: req.body.params.bookWanted.id_listing,
+    id_offer_prev: req.body.params.previousId || null,
+    id_listing_sender: req.body.params.bookOffering, // not currently on front end
+    money_exchange: req.body.money || null,
+    accepted: req.body.accepted || false, // currently set to false until we accept money
+  }).then(async () => {
+    let newOffer = await db.Offer.findAll({
+      limit: 1,
+      where: {
+        id_listing_recipient: req.body.params.bookWanted.id_listing,
+      },
+      order: [['id_offer', 'DESC']]
+    })
+    return newOffer;
+  }).then((offer) => {
+    idOfOffer = offer[0].id_offer; // gets offer id to save values for offer listing
+    return db.Offer_Listing.create({ // create offer listing for lister, listing recipient
+      id_offer: idOfOffer,
+      id_listing: req.body.params.bookWanted.id_listing,
+    });
+  }).then(() => {
+    return db.Offer_Listing.create({ // create offer listing for listing sender
+      id_offer: idOfOffer,
+      id_listing: req.body.params.bookOffering,
+    })
+  }).then(() => {
+    return db.Offer.findAll({ 
+      where: {
+        id_offer: idOfOffer,
+      }
+    });
+  }).then((offerMade) => {
+    res.send(offerMade); // SEND offer from offer table, or object above with all information for display
+    // res.send(JSON.stringify('OFFER CREATION SUCCESS')); // currently only string is returned, need to return listing
+  }).catch((err) => {
+    console.log(`there was an Offer Creation ERROR: ${err}`);
+  });
+  // when one offer is created, it must be sent to the lister!! // 
+  // ///////////////// END ///////////////// // 
+  // /////////////////////////////////////// // 
+
+
+
+  // ///////////////////////////////////////// // 
+  // ////////////////// RED ////////////////// // 
+  // CAN BE DELETED AFTER SUCCESS ON ALL CALLS // 
+  // WATCH OUT FOR THE LAST }) AT THE END FOR CLOSING // 
+
   // incoming req.body.params. 
   // peerId = recipient (them)
   // myId = sender (me)
   // bookWanted = id_listing_recipient
   // myOffer = isbn (my book)
-  let listingSenderId;
-  let currentOfferId;
+  // let listingSenderId;
+  // let currentOfferId;
   // return db.Listing.findOne({
   //   // limit: 1,
   //   where: {
@@ -428,78 +437,78 @@ app.post('/offerlisting', (req, res) => {
   //   },
   // });
   // console.log(one, 'ONEEEE');
-  console.log(req.body.params, 'PARAMSSS');
-  console.log(req.body.params.myOffer, 'REQ BODY PARAMS MY OFFER');
-  let num = Number(req.body.params.myOffer);
-  return db.Book.findOne({
-    where: {
-      isbn: num,
-    },
-    // include: [db.Listing]
-    include: [{
-      model: db.Listing,
-      where: {
-        id_user: req.body.params.myId || 1,
-      },
-    }],
-  // });
-  }).catch((err) => {
-    console.log(`listing find failure: ${err}`);
-  // }).then((myListing) => {
-  //   console.log(myListing, 'MY LISTING HERE');
+  // console.log(req.body.params, 'PARAMSSS');
+  // console.log(req.body.params.myOffer, 'REQ BODY PARAMS MY OFFER');
+  // let num = Number(req.body.params.myOffer);
+  // return db.Book.findOne({
+  //   where: {
+  //     isbn: num,
+  //   },
+  //   // include: [db.Listing]
+  //   include: [{
+  //     model: db.Listing,
+  //     where: {
+  //       id_user: req.body.params.myId || 1,
+  //     },
+  //   }],
+  // // });
   // }).catch((err) => {
-  //   console.log(`myListing error: ${err}`);
-  }).then((myListing) => {
-    console.log(myListing, 'LIST LIST LIST');
-    console.log(myListing.listing.dataValues, 'MY LISTING AGAIN');
-    console.log(req.body.params.bookWanted, 'ERRRR');
-    console.log(myListing, 'LIST LIST LIST');
-    listingSenderId = myListing.listing.id_listing;
-    db.Offer.create({
-      // need id_listing, create offer, then save to offer listing
-      // listing recipient, listing prev, listing sender, money, accepted
-      id_listing_recipient: req.body.params.bookWanted,
-      id_offer_prev: req.body.params.previousId || null,
-      id_listing_sender: listingSenderId,
-      money_exchange_cents: req.body.params.money || null,
-      status: req.body.params.status || 'pending',
-    });
-  }).catch((err) => {
-      console.log(`error in offer creation: ${err}`);
-  }).then(() => {
-    console.log(req.body.params.bookWanted, 'WANTED');
-    console.log(req.body.params.myOffer, 'MY OFFER');
-    db.Offer.findAll({
-      limit: 1,
-      where: {
-        id_listing_recipient: req.body.params.bookWanted,
-      },
-      order: [['id_offer', 'DESC']]
-    }).then((offerBefore) => {
-      console.log(offerBefore[0].dataValues.id_offer, 'WHAAAAT');
-      console.log(req.body, 'REQ BODY');
-      currentOfferId = offerBefore[0].id_offer; // + 1;
-      return db.Offer_Listing.create({
-        id_offer: (currentOfferId + 1),
-        id_listing: req.body.params.bookWanted,
-      }).catch((err) => {
-      console.log(`error in creating offer listing: ${err}`);
-    }).then(() => {
-      return db.Offer.findOne({
-        where: {
-          id_offer: currentOfferId,
-        }
-      })
-      // res.status(200).send(JSON.stringify('offer created'));
-    }).then((currentOffer) => {
-      console.log(currentOffer);
-      currentOffer.bookWated = req.body.params.bookWantedTitle;
-      res.status(200).send(currentOffer);
-    }).catch((err) => {
-      console.log(`error in finding or sending offer: ${err}`);
-    })
-    })
-  });
+  //   console.log(`listing find failure: ${err}`);
+  // // }).then((myListing) => {
+  // //   console.log(myListing, 'MY LISTING HERE');
+  // // }).catch((err) => {
+  // //   console.log(`myListing error: ${err}`);
+  // }).then((myListing) => {
+  //   console.log(myListing, 'LIST LIST LIST');
+  //   console.log(myListing.listing.dataValues, 'MY LISTING AGAIN');
+  //   console.log(req.body.params.bookWanted, 'ERRRR');
+  //   console.log(myListing, 'LIST LIST LIST');
+  //   listingSenderId = myListing.listing.id_listing;
+  //   db.Offer.create({
+  //     // need id_listing, create offer, then save to offer listing
+  //     // listing recipient, listing prev, listing sender, money, accepted
+  //     id_listing_recipient: req.body.params.bookWanted,
+  //     id_offer_prev: req.body.params.previousId || null,
+  //     id_listing_sender: listingSenderId,
+  //     money_exchange_cents: req.body.params.money || null,
+  //     status: req.body.params.status || 'pending',
+  //   });
+  // }).catch((err) => {
+  //     console.log(`error in offer creation: ${err}`);
+  // }).then(() => {
+  //   console.log(req.body.params.bookWanted, 'WANTED');
+  //   console.log(req.body.params.myOffer, 'MY OFFER');
+  //   db.Offer.findAll({
+  //     limit: 1,
+  //     where: {
+  //       id_listing_recipient: req.body.params.bookWanted,
+  //     },
+  //     order: [['id_offer', 'DESC']]
+  //   }).then((offerBefore) => {
+  //     console.log(offerBefore[0].dataValues.id_offer, 'WHAAAAT');
+  //     console.log(req.body, 'REQ BODY');
+  //     currentOfferId = offerBefore[0].id_offer; // + 1;
+  //     return db.Offer_Listing.create({
+  //       id_offer: (currentOfferId + 1),
+  //       id_listing: req.body.params.bookWanted,
+  //     }).catch((err) => {
+  //     console.log(`error in creating offer listing: ${err}`);
+  //   }).then(() => {
+  //     return db.Offer.findOne({
+  //       where: {
+  //         id_offer: currentOfferId,
+  //       }
+  //     })
+  //     // res.status(200).send(JSON.stringify('offer created'));
+  //   }).then((currentOffer) => {
+  //     console.log(currentOffer);
+  //     currentOffer.bookWated = req.body.params.bookWantedTitle;
+  //     res.status(200).send(currentOffer);
+  //   }).catch((err) => {
+  //     console.log(`error in finding or sending offer: ${err}`);
+  //   })
+  //   })
+  // });
   // .catch((err) => {
   //     console.log(`error in finding offer id: ${err}`);
   // }).then((offer) => {

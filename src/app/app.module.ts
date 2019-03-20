@@ -16,11 +16,17 @@ import { FooterModule } from './footer/footer.module';
 import { ModalsModule } from './modals/modals.module';
 import { SearchModalsModule } from './search_modal/search_modal.module';
 import { AddListingModule } from './add_listing_modal/add_listing_modal.module';
+import { ContactModalModule } from './contact_modal/contact_modal.module';
 import { WantListModule } from './want_list_modal/want_list_modal.module';
 import { SettingsService } from './services/settings/settings.service';
 import { AutoCompleteService } from './services/autoComplete/auto-complete.service';
 import { PeerProfilePageModule } from './profile/peerProfile/peer-profile/peer-profile.module';
+<<<<<<< HEAD
 import { PrivacyModule } from './privacy/privacy.module';
+=======
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
+// import { EmailProvider } from '../providers/email/email';
+>>>>>>> b733f85591ebd279a4e87ac0548b59f7c1f0e7d5
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +40,7 @@ import { PrivacyModule } from './privacy/privacy.module';
     ModalsModule, 
     SearchModalsModule, 
     AddListingModule,
+    ContactModalModule,
     WantListModule,
     PeerProfilePageModule,
     PrivacyModule],
@@ -43,6 +50,7 @@ import { PrivacyModule } from './privacy/privacy.module';
     AuthService,
     SettingsService,
     AutoCompleteService,
+    EmailComposer,
     BarcodeScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
