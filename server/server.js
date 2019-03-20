@@ -429,9 +429,10 @@ app.post('/offerlisting', (req, res) => {
   // console.log(one, 'ONEEEE');
   console.log(req.body.params, 'PARAMSSS');
   console.log(req.body.params.myOffer, 'REQ BODY PARAMS MY OFFER');
+  let num = Number(req.body.params.myOffer);
   return db.Book.findOne({
     where: {
-      isbn: Number(req.body.params.myOffer),
+      isbn: num,
     },
     // include: [db.Listing]
     include: [{
@@ -452,7 +453,7 @@ app.post('/offerlisting', (req, res) => {
     console.log(myListing.listing.dataValues, 'MY LISTING AGAIN');
     console.log(req.body.params.bookWanted, 'ERRRR');
     console.log(myListing, 'LIST LIST LIST');
-    listingSenderId = myListing.listing.dataValues.id_user;
+    listingSenderId = myListing.listing.id_listing;
     db.Offer.create({
       // need id_listing, create offer, then save to offer listing
       // listing recipient, listing prev, listing sender, money, accepted
@@ -476,12 +477,11 @@ app.post('/offerlisting', (req, res) => {
     }).then((offerBefore) => {
       console.log(offerBefore[0].dataValues.id_offer, 'WHAAAAT');
       console.log(req.body, 'REQ BODY');
-      currentOfferId = offerBefore[0].dataValues.id_offer; // + 1;
+      currentOfferId = offerBefore[0].id_offer; // + 1;
       return db.Offer_Listing.create({
-        id_offer: currentOfferId,
-        id_listing: req.body.params.bookWanted || 7, // 444 for TESTING
-      })
-    }).catch((err) => {
+        id_offer: (currentOfferId + 1),
+        id_listing: req.body.params.bookWanted,
+      }).catch((err) => {
       console.log(`error in creating offer listing: ${err}`);
     }).then(() => {
       return db.Offer.findOne({
@@ -496,6 +496,7 @@ app.post('/offerlisting', (req, res) => {
       res.status(200).send(currentOffer);
     }).catch((err) => {
       console.log(`error in finding or sending offer: ${err}`);
+    })
     })
   });
   // .catch((err) => {
@@ -551,12 +552,12 @@ app.get('/offers', (req, res) => {
     let myOffers = {};
     for (let piece of data) {
       console.log(piece, 'PIECE');
-    let offered = await db.Offer.findOne({
+    let offered = await db.Offer.findAll({
       where: {
         id_listing_recipient: piece.dataValues.id_listing
       }
     })
-    myOffers.offer = offered;
+    myOffers.offer = await offered;
     let offerer = await db.User.findOne({
       where: {
         id_user: await piece.dataValues.id_user
