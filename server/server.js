@@ -166,7 +166,7 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
   // book isbn number, 
   // title, and 
   // condition, may need helper function to call api for title
-  let isbnNum = Number(req.body.params);
+  let isbnNum = req.body.params;
   db.Book.create({
     isbn: isbnNum,
     title: req.body.title,
@@ -230,7 +230,7 @@ app.get('/search/listing/isbn', (req, res) => {
     // send back res from helper
     // console.log(Object.keys(req.query)[0], 'THIS SHOULD BE THE ISBN NUMBER');
     ////// 
-  let isbnNum = Number(Object.keys(req.query)[0]);
+  let isbnNum = Object.keys(req.query)[0];
   db.Book.findAll({
     where: {
       isbn: isbnNum
@@ -406,7 +406,7 @@ app.post('/offerlisting', (req, res) => {
   // /////////////////////////////////////// // 
 
 
-  
+
   // ///////////////////////////////////////// // 
   // ////////////////// RED ////////////////// // 
   // CAN BE DELETED AFTER SUCCESS ON ALL CALLS // 
