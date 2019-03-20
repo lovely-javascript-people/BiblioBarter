@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       // unique: true,
     },
-    isbn: DataTypes.BIGINT,
+    isbn: DataTypes.TEXT,
     title: DataTypes.TEXT,
     condition: DataTypes.TEXT,
   });
