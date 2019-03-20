@@ -10,12 +10,18 @@ import { ModalController } from '@ionic/angular';
 
 export class ContactModal implements OnInit {
 
+  emailAddress: string = '';
+  emailBody: string = '';
+
   constructor(
     public modal: ModalController, 
-    // public settings: SettingsService, 
-    // private auth: AuthService,
-    // private auto: AutoCompleteService
     ) { }
+
+  submitEmail() {
+    console.log(this.emailAddress);
+    console.log(this.emailBody);
+    this.closeModal();
+  }
 
   async closeModal() {
     this.modal.dismiss();
