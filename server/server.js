@@ -582,7 +582,7 @@ app.get('/offers', (req, res) => {
     console.log('OFFERED ********', offered, 'OFFERED******');
     let wanted = await db.Listing.findOne({
       where: {
-        id_listing: offered.id_listing_sender
+        id_listing: offered[0].id_listing_sender
       }
     })
     let titleWantd = await db.Book.findOne({
@@ -593,7 +593,7 @@ app.get('/offers', (req, res) => {
     myOffers.titleOffered = titleWantd;
     let peerListing = await db.Listing.findOne({
       where: {
-        id_listing: offered.id_listing_sender
+        id_listing: offered[0].id_listing_sender
       }
     })
     let peer = await db.User.findOne({
