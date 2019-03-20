@@ -21,6 +21,8 @@ import { WantListModule } from './want_list_modal/want_list_modal.module';
 import { SettingsService } from './services/settings/settings.service';
 import { AutoCompleteService } from './services/autoComplete/auto-complete.service';
 import { PeerProfilePageModule } from './profile/peerProfile/peer-profile/peer-profile.module';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
+// import { EmailProvider } from '../providers/email/email';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,6 +45,7 @@ import { PeerProfilePageModule } from './profile/peerProfile/peer-profile/peer-p
     AuthService,
     SettingsService,
     AutoCompleteService,
+    EmailComposer,
     BarcodeScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
