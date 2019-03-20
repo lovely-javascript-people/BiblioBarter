@@ -15,6 +15,7 @@ export class SettingsModal implements OnInit {
   school: string = '';
   radius: any = '';
   universities: any[] = [];
+  emailAddress: string = '';
 
   constructor(
     public modal: ModalController, 
@@ -28,7 +29,8 @@ export class SettingsModal implements OnInit {
     }
 
     submitEmail() {
-      console.log('submit email');
+      console.log(this.emailAddress);
+      // patch req to server
     }
 
     selectUni(event) {
