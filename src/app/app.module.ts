@@ -21,12 +21,9 @@ import { WantListModule } from './want_list_modal/want_list_modal.module';
 import { SettingsService } from './services/settings/settings.service';
 import { AutoCompleteService } from './services/autoComplete/auto-complete.service';
 import { PeerProfilePageModule } from './profile/peerProfile/peer-profile/peer-profile.module';
-<<<<<<< HEAD
 import { PrivacyModule } from './privacy/privacy.module';
-=======
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 // import { EmailProvider } from '../providers/email/email';
->>>>>>> b733f85591ebd279a4e87ac0548b59f7c1f0e7d5
 
 @NgModule({
   declarations: [AppComponent],
