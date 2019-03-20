@@ -16,8 +16,9 @@ export class HomePage implements OnInit{
   isbnQuery: string = " ";
   isbn: string = " ";
   listings: any = [];
-  wants: any = [];
+  wants: any[];
   num: string; // stores the scanned result
+  matches: any[];
 
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService, public navCtrl: NavController,
     private barcodeScanner: BarcodeScanner) { }
@@ -30,6 +31,15 @@ export class HomePage implements OnInit{
 
   searchBooks(data, callback) {
     this.apiService.getBooks(data, callback);
+  }
+
+  setMatches(data) {
+    // let want = this.wants.map(want => want.title);
+    // data.filter(piece => want.includes(piece.title))
+  }
+
+  setWants(data) {
+
   }
 
     setListing(searchedListings) {
