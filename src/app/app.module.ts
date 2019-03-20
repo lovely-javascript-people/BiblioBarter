@@ -21,6 +21,7 @@ import { WantListModule } from './want_list_modal/want_list_modal.module';
 import { SettingsService } from './services/settings/settings.service';
 import { AutoCompleteService } from './services/autoComplete/auto-complete.service';
 import { PeerProfilePageModule } from './profile/peerProfile/peer-profile/peer-profile.module';
+import { PrivacyModule } from './privacy/privacy.module';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 // import { EmailProvider } from '../providers/email/email';
 
@@ -38,7 +39,8 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
     AddListingModule,
     ContactModalModule,
     WantListModule,
-    PeerProfilePageModule],
+    PeerProfilePageModule,
+    PrivacyModule],
   providers: [
     StatusBar,
     SplashScreen,
