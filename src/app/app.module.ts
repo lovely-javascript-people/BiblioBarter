@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+// import { IonicApp, IonicErrorHandler } from '@ionic/angular/ngx'; // if no work, try /ngx
+import { IonApp, IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -40,6 +41,7 @@ import { PeerProfilePageModule } from './profile/peerProfile/peer-profile/peer-p
     AuthService,
     SettingsService,
     AutoCompleteService,
+    BarcodeScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [],
