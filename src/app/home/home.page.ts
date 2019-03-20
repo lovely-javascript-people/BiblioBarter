@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NavController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { ApiService } from '../api.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -17,7 +19,7 @@ export class HomePage implements OnInit{
   wants: any = [];
   num: string; // stores the scanned result
 
-  constructor(private http: HttpClient, private router: Router, public navCtrl: NavController,
+  constructor(private http: HttpClient, private router: Router, private apiService: ApiService, public navCtrl: NavController,
     private barcodeScanner: BarcodeScanner) { }
 
   profileButtonClick(index) {
@@ -26,34 +28,27 @@ export class HomePage implements OnInit{
     this.router.navigate(['/peer-profile']);
   }
 
-  searchBooks() {
-    console.log(this.isbnQuery)
-    this.http.get(`http://localhost:3000/search/listing/isbn?${this.isbnQuery}`)
-    .subscribe((searchedListings: any) => {
-      console.log(searchedListings, 'BOOKS USER HAS SEARCHED FOR');
-      this.listings = searchedListings;
-    })
+  searchBooks(data, callback) {
+    this.apiService.getBooks(data, callback);
   }
 
-  userMatches() {
-    this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
-    .subscribe((wantListArray) => {
-      console.log(wantListArray, 'ARRAY OF WANT LIST');
-      this.wants = wantListArray;
-      this.isbnQuery = wantListArray[0].isbn;
-      console.log(this.isbnQuery, 'ISBN');
-    })
-  //   const http = this.http;
-  //   const isbn = this.isbn;
-  //   console.log(isbn, 'TEST ISBN');
-  // http.get(`http://localhost:3000/search/listing/isbn?${isbn}`)
-  //   .subscribe((searchedListings: any) => {
-  //     console.log(this.isbn, 'HEY THIS IS THE ISBN HEY');
-  //     // console.log(searchedListings, 'AUTOSEARCH BOOKS');
-  //     this.listings = searchedListings;
+    setListing(searchedListings) {
+      console.log(searchedListings, 'BACK ON MATCHES PAGE');
+      this.listings = searchedListings;
+    }
+
+  // THIS DOESNT WORK YET --> SUPPOSED TO GRAB USER MATCHES ON INIT 
+  // userMatches() {
+  //   this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
+  //   .subscribe((wantListArray) => {
+  //     console.log(wantListArray, 'ARRAY OF WANT LIST******');
+  //     this.wants = wantListArray;
+  //     this.isbnQuery = wantListArray[0].isbn;
+  //     console.log(this.isbnQuery, 'ISBN IN USER MATCHES');
   //   })
-    this.searchBooks();
-  }
+  //   let isbn = this.isbnQuery;
+  //   this.searchBooks(isbn, this.setListing);
+  // }
 
   // new scan method
   scan() {
@@ -73,5 +68,8 @@ export class HomePage implements OnInit{
   ngOnInit() {
     // this.userMatches();
     this.url = document.URL;
+    this.setListing = this.setListing.bind(this);
+    this.searchBooks(this.isbnQuery, this.setListing);
   }
+
 }

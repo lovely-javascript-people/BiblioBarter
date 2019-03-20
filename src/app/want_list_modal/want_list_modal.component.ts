@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-modals',
@@ -13,7 +14,7 @@ export class WantListModal implements OnInit {
   userid: number = localStorage.userid;
   title: string = '';
 
-  constructor(public modal: ModalController, private http: HttpClient) { }
+  constructor(public modal: ModalController, private http: HttpClient, private apiService: ApiService) { }
 
   async closeModal() {
     this.modal.dismiss();
@@ -35,14 +36,9 @@ export class WantListModal implements OnInit {
       .split('/')[bookInfo[Object.keys(bookInfo)[0]].info_url.split('/').length - 1]
       .split('_').join(' ');
 
-    // post req to api server to save wanted book to db  
     const userid = this.userid;
     const title = this.title;
-
-    this.http.post('http://localhost:3000/user/want', { params: isbnVal, userid, title })
-    .subscribe((allWants: any) => {
-      console.log(allWants, 'ALL WANTS + NEW ONE');
-    })
+    this.apiService.addBookToUserWantList(isbnVal, userid, title);
 
     this.closeModal();
     }));
