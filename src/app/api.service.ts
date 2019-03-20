@@ -36,6 +36,23 @@ export class ApiService {
     })
   }
 
+  renderWantList(callback) {
+    // console.log(localStorage.userid, 'USERID');
+    this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
+    .subscribe((wantListArray) => {
+      console.log(wantListArray, 'ARRAY OF WANT LIST');
+      callback(wantListArray);
+    })
+  }
+
+  renderListingsList(callback) {
+    this.http.get(`http://localhost:3000/user/listing?${localStorage.userid}`)
+    .subscribe((listingListArray) => {
+      console.log(listingListArray, 'ARRAY OF OFFERING LIST');
+      callback(listingListArray);
+    })
+  }
+
   searchForBookWithIsbn(isbn) {
     this.http.get(`${this.local}/search/listing/isbn?${isbn}`)
     .subscribe((searchedListings: any) => {
