@@ -599,11 +599,20 @@ app.get('/offers', (req, res) => {
   })
 })
 
-
-// make sure to create columns on want and listing tables
-// make them booleans, 
-// want fulfilled - true means no need, false means still wants (default)
-// listing - available - true still have default, false bartered 
-
-// school name school just be name, id in association change
-// money needs to be money_exchange_cents
+// PATCH /user/settings
+// patch request here for any changes to user information
+app.patch('/user/settings', (req, res) => {
+  db.User.update({
+    email: req.body.email
+  }, 
+  {
+    returning: true,
+    where: {
+      id_user: req.body.userId,
+    },
+  }).then(([userUpdated, [updatedUser]]) => {
+    res.status(200).send(updatedUser);
+  }).catch((err) => {
+    console.log(`patch error for user settings: ${err}`);
+  });
+});
