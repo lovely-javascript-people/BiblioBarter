@@ -19,6 +19,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/callback', (req, res) => {
+  res.send(JSON.stringify('hello'))
+})
+
 /**
  * GET request to /matches currently grabs all the users from the db and
  * returns them in an array with each user's information.
@@ -140,7 +144,7 @@ app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new f
 // GET /user/want
 // should get all users want listing
 app.get('/user/want', (req, res) => {
-  console.log(Object.keys(req.query)[0]);
+  console.log(Object.keys(req.query));
   return db.Want.findAll({
     where: {
       id_user: Object.keys(req.query)[0],

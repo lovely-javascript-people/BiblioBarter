@@ -46,7 +46,7 @@ export class AddListingModal implements OnInit {
     const userid = this.userid;
     console.log(userid, 'USER ID');
 
-        this.http.post('ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/user/listing', { params: isbnVal, bookCondition, title, userid }) // add userid
+        this.http.post('http://localhost:3000/user/listing', { params: isbnVal, bookCondition, title, userid }) // add userid
     .subscribe((allListings: any) => {
       console.log(allListings, 'ALL LISTINGS + NEW ONE');
     })
