@@ -10,7 +10,9 @@ export class SettingsService {
 
   
 
-  constructor(private auth: AuthService, private http: HttpClient) { }
+  constructor(private auth: AuthService, private http: HttpClient) {}
+  host = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
+  local = 'http://localhost:3000';
 
   switchAccount() {
     let that = this;
@@ -26,7 +28,7 @@ export class SettingsService {
 
   changeSchool(school) {
     console.log(school);
-    this.http.patch('ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/school', { 'school': school, 'userId': localStorage.userid }).subscribe(data => console.log(data));
+    this.http.patch(`${this.local}/school`, { 'school': school, 'userId': localStorage.userid }).subscribe(data => console.log(data));
   }
 
   deleteAccount(username) {

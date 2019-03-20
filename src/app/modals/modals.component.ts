@@ -27,6 +27,10 @@ export class SettingsModal implements OnInit {
       this.universities = data.collegeList;
     }
 
+    submitEmail() {
+      console.log('submit email');
+    }
+
     selectUni(event) {
       this.school = event.target.textContent;
       this.universities = [];

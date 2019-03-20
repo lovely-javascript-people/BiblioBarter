@@ -63,9 +63,10 @@ export class ProfilePage implements OnInit{
   }
 
   acceptOffer() {
-  console.log('offer accepted');
-  const id_offer = 53; // need to grab correct offerid
-    this.http.patch('ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/offerlisting', { params: {status: 'accepted', offerId: id_offer} })
+  this.offerid = this.allOffers[2].offer.id_offer;
+  const id_offer = this.offerid;
+    // this.apiService.userAcceptOffer();
+  this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'accepted', offerId: id_offer} })
     .subscribe((offerData) => {
       console.log(offerData, 'OFFER DATA FROM SERVER');
     })
@@ -85,13 +86,13 @@ export class ProfilePage implements OnInit{
     offs.push(offerobj);
   }
   this.offers = offs;
-  console.log(this.offers);
+  console.log(this.offers, 'THIS DOT OFFERS');
 }
 
   rejectOffer() {
     console.log('offer rejected');
-    const id_offer = this.offerid; // need to grab correct offerid
-    this.http.patch('ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
+    const id_offer = this.allOffers[2].offer.id_offer;
+    this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
     .subscribe(() => {
 
     })
@@ -99,7 +100,7 @@ export class ProfilePage implements OnInit{
 
   renderWantList() {
     // console.log(localStorage.userid, 'USERID');
-    this.http.get(`ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/user/want?${localStorage.userid}`)
+    this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
     .subscribe((wantListArray) => {
       console.log(wantListArray, 'ARRAY OF WANT LIST');
       this.wants = wantListArray;
@@ -107,7 +108,7 @@ export class ProfilePage implements OnInit{
   }
 
   renderListingsList() {
-    this.http.get(`ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/user/listing?${localStorage.userid}`)
+    this.http.get(`http://localhost:3000/user/listing?${localStorage.userid}`)
     .subscribe((listingListArray) => {
       console.log(listingListArray, 'ARRAY OF OFFERING LIST');
       this.listings = listingListArray;
