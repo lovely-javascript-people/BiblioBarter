@@ -98,26 +98,19 @@ export class ProfilePage implements OnInit{
     })
     }
 
-  renderWantList() {
-    // console.log(localStorage.userid, 'USERID');
-    this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
-    .subscribe((wantListArray) => {
-      console.log(wantListArray, 'ARRAY OF WANT LIST');
-      this.wants = wantListArray;
-    })
+  setWantList(array) {
+    this.wants = array;
   }
 
-  renderListingsList() {
-    this.http.get(`http://localhost:3000/user/listing?${localStorage.userid}`)
-    .subscribe((listingListArray) => {
-      console.log(listingListArray, 'ARRAY OF OFFERING LIST');
-      this.listings = listingListArray;
-    })
+  setListings(array) {
+    this.listings = array;
   }
 
   ngOnInit() {
-    this.renderWantList();
-    this.renderListingsList();
+    this.setWantList = this.setWantList.bind(this);
+    this.apiService.renderWantList(this.setWantList);
+    this.setListings = this.setListings.bind(this);
+    this.apiService.renderListingsList(this.setListings);
     this.renderOffers = this.renderOffers.bind(this);
     this.setUser = this.setUser.bind(this);
     this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
