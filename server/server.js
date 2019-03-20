@@ -284,6 +284,7 @@ app.get('/peer', (req, res) => {
         })
         books[books.length - 1].push(book)}
         console.log(books[1]);
+        books.push(listings);
         }).then(() => {
       res.send(books);
     })
