@@ -25,8 +25,6 @@ export class ContactModal implements OnInit {
     public modal: ModalController,
     private emailComposer: EmailComposer,
     ) {  }
-
-    
     
     send(){
       this.emailComposer.isAvailable().then((available) =>{
