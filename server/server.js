@@ -541,6 +541,7 @@ app.patch('/offerlisting', (req, res) => {
 // app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
 
 app.get('/offers', (req, res) => {
+  console.log(req.body, 'REQ BODY')
   db.Listing.findAll({
     where: {
       id_user: req.query.id_user
@@ -549,6 +550,7 @@ app.get('/offers', (req, res) => {
     console.log(data, 'ISSSSSSSSS');
     let myOffers = {};
     for (let piece of data) {
+      console.log(piece, 'PIECE');
     let offered = await db.Offer.findOne({
       where: {
         id_listing_recipient: piece.dataValues.id_listing
@@ -566,6 +568,7 @@ app.get('/offers', (req, res) => {
       }
     })
     myOffers.titleWanted =titleOffered;
+    console.log('OFFERED ********', offered, 'OFFERED******');
     let wanted = await db.Listing.findOne({
       where: {
         id_listing: offered.id_listing_sender
