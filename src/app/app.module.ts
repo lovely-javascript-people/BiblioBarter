@@ -20,6 +20,7 @@ import { WantListModule } from './want_list_modal/want_list_modal.module';
 import { SettingsService } from './services/settings/settings.service';
 import { AutoCompleteService } from './services/autoComplete/auto-complete.service';
 import { PeerProfilePageModule } from './profile/peerProfile/peer-profile/peer-profile.module';
+import { PrivacyModule } from './privacy/privacy.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,7 +35,8 @@ import { PeerProfilePageModule } from './profile/peerProfile/peer-profile/peer-p
     SearchModalsModule, 
     AddListingModule,
     WantListModule,
-    PeerProfilePageModule],
+    PeerProfilePageModule,
+    PrivacyModule],
   providers: [
     StatusBar,
     SplashScreen,
