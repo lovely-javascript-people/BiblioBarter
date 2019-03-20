@@ -70,6 +70,7 @@ export class ApiService {
 
   getBooks(isbn: string, callback) {
     this.http.get(`${this.local}/search/listing/isbn?${isbn}`).subscribe((searchedListings: any) => {
+      console.log(searchedListings, 'SEARCHED LISTINGS');
       callback(searchedListings);
     })
   }

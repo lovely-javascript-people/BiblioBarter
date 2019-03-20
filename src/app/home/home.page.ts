@@ -13,8 +13,8 @@ import { ApiService } from '../api.service';
 export class HomePage implements OnInit{
 
   url: any;
-  isbnQuery: string = " ";
-  isbn: string = " ";
+  isbnQuery: string = "";
+  isbn: string = "";
   listings: any = [];
   wants: any[];
   num: string; // stores the scanned result
