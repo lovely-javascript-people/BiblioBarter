@@ -58,11 +58,11 @@ export class PeerProfilePage implements OnInit {
   }
 
   async setBooks(data) {
-    console.log(data);
-    let temp = data.slice(0, 1)
+    console.log(data, 'jeef');
+    let temp = data.slice(0, data.length - 2)
     this.wants = temp;
-    this.listings = data[1];
-    this.entireListings = data[2];
+    this.listings = data[data.length - 2];
+    this.entireListings = data[data.length - 1];
     console.log(this.entireListings);
     this.getYourBooks();
     this.getYourWants();
