@@ -31,12 +31,20 @@
     <ion-list>
       <ion-item>
         <label color="primary" stacked>I want:     </label><br />
-        <input #want placeholder="Wanted ISBN" />
+        <ion-select #want multiple="true" placeholder="Book you want">
+          <ion-select-option *ngFor="let want of possibleBooks[1]" style="overflow: visible;">
+            {{want.title}}
+          </ion-select-option>
+        </ion-select>
       </ion-item>
     
       <ion-item>
         <label color="primary" stacked>I'm offering: </label><br />
-        <input #offer placeholder="Offering ISBN" />
+        <ion-select #offer multiple="true" placeholder="Book you are offering">
+          <ion-select-option *ngFor="let listing of possibleBooks[0]" style="overflow: visible;">
+            {{listing.book.title}}
+          </ion-select-option>
+        </ion-select>
       </ion-item>
       <button (click)="makeOffer(want.value, offer.value)">Submit offer</button>
     </ion-list>

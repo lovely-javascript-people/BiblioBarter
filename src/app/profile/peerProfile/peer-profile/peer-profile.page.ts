@@ -21,7 +21,7 @@ export class PeerProfilePage implements OnInit {
   offers: object[];
   wants: object[];
   listings: object[];
-  possibleBooks: object[];
+  possibleBooks: object[] = [];
 
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router,) {}
 
@@ -30,11 +30,15 @@ export class PeerProfilePage implements OnInit {
   }
 
   getYourBooks() {
-    this.apiService.getProfile(localStorage.username, this.setYourBooks);
+    this.apiService.renderListingsList(this.setYourBooks);
+  }
+
+  getYourWants() {
+    this.apiService.renderWantList(this.setYourBooks);
   }
 
   setYourBooks(data) {
-    this.possibleBooks = data;
+    this.possibleBooks.push(data);
     console.log(this.possibleBooks);
   }
 
@@ -82,6 +86,7 @@ export class PeerProfilePage implements OnInit {
     this.setBooks = this.setBooks.bind(this);
     this.getPeerBooks(this.peer.listing.id_user, this.setBooks)
     this.getYourBooks();
+    this.getYourWants();
   }
 
 }
