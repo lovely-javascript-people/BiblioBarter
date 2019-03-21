@@ -11,14 +11,18 @@
   {{school}}
   <p>Welcome to my profile, {{user}}</p>
 
-  Looking for:
+  <a style="color:176ACC; font-weight:700;">
+    LOOKING FOR:
+  </a>
   <ion-list>
     <ion-item *ngFor="let want of wants">
       Title: {{want.title}}<br />
       ISBN: {{want.isbn}}
     </ion-item>
   </ion-list><br /><br />
-  Offering:
+  <a style="color:176ACC; font-weight:700;">
+    OFFERING:
+  </a>
   <ion-list>
       <ion-item *ngFor="let listing of listings">
         Title: {{listing.title}}<br />
@@ -27,7 +31,9 @@
         <!-- Value: {{listing.value}} -->
       </ion-item>
     </ion-list><br /><br />
-    Make an offer:
+    <a style="color:176ACC; font-weight:700; Text-align:center;">
+      MAKE AN OFFER
+    </a>
     <ion-list>
       <ion-item>
         <label color="primary" stacked>I want:     </label><br />
