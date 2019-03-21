@@ -48,8 +48,30 @@ export class HomePage implements OnInit{
   }
 
   setMatches(data) {
-    // let want = this.wants.map(want => want.title);
-    // data.filter(piece => want.includes(piece.title))
+    console.log(data);
+    let keys = Object.keys(data);
+    let want = this.wants.map(want => want.title);
+    let matches = [];
+    let matchType;
+    for (let key of keys) {
+      let matchObj: any = {};
+      data[key] = data[key].filter(piece => want.includes(piece.title))
+      if (!data[key].length) {
+        delete data[key];
+      } else {
+      if (data[key].length > 1) {
+        matchType = 'books';
+      } else {
+        matchType = 'book';
+      }
+      matchObj.name = key;
+      matchObj.num = data[key].length;
+      matchObj.type = matchType;
+      matches.push(matchObj);
+    }
+    }
+    console.log(matches);
+    this.matches = matches;
   }
 
   setWants(data) {
@@ -91,12 +113,13 @@ export class HomePage implements OnInit{
   }
 
   ngOnInit() {
-    // this.userMatches();
     this.url = document.URL;
     this.setListing = this.setListing.bind(this);
     this.searchBooks(this.isbnQuery, this.setListing);
     this.setWants = this.setWants.bind(this);
+    this.setMatches = this.setMatches.bind(this);
     this.apiService.renderWantList(this.setWants);
+    this.apiService.getMatches(this.setMatches);
   }
 
 }

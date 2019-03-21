@@ -29,15 +29,38 @@ app.get('/callback', (req, res) => {
  * Please change alter findAll() to grab specific matches.
  * 
  */
+let matches;
+let matchObj;
 app.get('/matches', (req, res) => {
-  db.User.findAll().then((data) => {
+  db.Listing.findAll().then(async (data) => {
   // give an array of object, each object is a user
-    const matches = [];
-    data.forEach((user) => {
-      matches.push(user.dataValues);
-    });
-    res.status(200).send(matches);
-  });
+    matches = [];
+    matchObj = {};
+    for (let listing of data) {
+      let user = await db.User.findOne({
+        where: {
+          id_user: listing.id_user
+        }
+      })
+      let book = await db.Book.findOne({
+        where: {
+          id_book: listing.id_book
+        }
+      })
+      if (!matchObj.hasOwnProperty(user.user_name)) {
+      matchObj[user.user_name] = [book];
+      } else {
+        matchObj[user.user_name].push(book);
+      }
+
+      matches.push([await user, await book]);
+      
+    }
+  }).then(() => {
+    res.status(200).send(matchObj);
+    matches = [];
+    matchObj = {};
+  })
 });
 
 app.listen(port, () => console.log(`Biblio server listening on port ${port}!${db.User.create}`));
