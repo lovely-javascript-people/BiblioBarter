@@ -86,19 +86,12 @@ app.get('/', function (req, res) {
 });
 
 // socket io connection
-// this works alone just fine
-// io.on('connection', function (socket) {
-//   console.log('a user connected');
-//   socket.on('disconnect', function () {
-//     console.log('user disconnected');
-//   });
-// });
-// combining here: 
 io.on('connection', function (socket) {
   console.log('a user connected');
+  // this sends message into chatroom
   socket.on('chat message', function (msg) {
-    console.log('message: ' + msg);
-    io.emit('chat message', msg);
+    console.log('message: ' + msg); // logs in terminal
+    io.emit('chat message', msg); // emits to the chat..
   });
   socket.on('disconnect', function () {
     console.log('user disconnected');
@@ -106,10 +99,12 @@ io.on('connection', function (socket) {
   // When we receive a 'message' event from our client, print out
   // the contents of that message and then echo it back to our client
   // using `io.emit()`
-  socket.on("message", message => {
-    console.log("Message Received: " + message);
-    io.emit("message", { type: "new-message", text: message });
-  });
+  // CURRENTLY BELOW only logs on server
+  // emit sent to client, but NO Messages appear in chat room
+  // socket.on('message', message => {
+  //   console.log('Message Received: ' + message);
+  //   io.emit('message', { type: 'new-message', text: message });
+  // });
 });
 // ///////////////////////////
 // io.on('connection', function (socket) {
