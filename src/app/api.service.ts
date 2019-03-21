@@ -11,6 +11,14 @@ export class ApiService {
   host = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
   local = 'http://localhost:3000';
 
+  contactUs(userId, userEmail, emailBody) {
+    console.log(userId, userEmail, emailBody, 'USER AND MESSAGE INFO');
+    this.http.post(`${this.local}/contactUs`, {userId: userId, userEmail: userEmail, emailBody: emailBody})
+      .subscribe((data) => {
+        console.log(data);
+      });
+  }
+
   userAcceptOffer() {
     console.log('accepted');
   }
