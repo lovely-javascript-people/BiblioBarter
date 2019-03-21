@@ -15,11 +15,14 @@ export class ApiService {
     console.log('accepted');
   }
 
-  updateSettings(nameFirst, nameLast, userEmail, userId, searchRadius, address, phoneNumber) {
+  updateSettings(firstName, lastName, userEmail, userId, searchRadius, address, phoneNumber) {
     console.log(userId, 'USER ID');
+    console.log(firstName, 'first name');
     // patch req to server
-    this.http.patch(`${this.local}/user/settings`, {email: userEmail, userId: userId, search_radius: searchRadius, name_first: nameFirst, name_last: nameLast, address: address, phone_number: phoneNumber})
-      .subscribe(() => {});
+    this.http.patch(`${this.local}/user/settings`, {email: userEmail, userId: userId, radius: searchRadius, firstName: firstName, lastName: lastName, address: address, phoneNumber: phoneNumber})
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
 
   getBookInfoForOfferingList(isbn: string, callback) {

@@ -14,13 +14,14 @@ import { ApiService } from '../api.service';
 export class SettingsModal implements OnInit {
 
   school: string;
-  radius: number;
+  radius: number = 10;
   universities: any[] = [];
   emailAddress: string;
   nameFirst: string;
   nameLast: string;
   userEmail: string;
   phoneNumber: string;
+  address: string;
 
   constructor(
     public modal: ModalController, 
@@ -39,8 +40,8 @@ export class SettingsModal implements OnInit {
       const searchRadius = this.radius;
       const nameFirst = this.nameFirst;
       const nameLast = this.nameLast;
-      const userEmail = this.userEmail;
-      const address = this.emailAddress;
+      const userEmail = this.emailAddress;
+      const address = this.address;
       const phoneNumber = this.phoneNumber;
       this.apiService.updateSettings(nameFirst, nameLast, userEmail, userId, searchRadius, address, phoneNumber);
     }
