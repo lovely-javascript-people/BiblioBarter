@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'callback', redirectTo: '/Matches', pathMatch: 'full'},
   { path: 'login', redirectTo: '/Matches', pathMatch: 'full'},
   { path: 'peer-profile', loadChildren: './profile/peerProfile/peer-profile/peer-profile.module#PeerProfilePageModule' },
+  { path: 'Chat', loadChildren: './chat/chat.module#ChatPageModule'},
 ];
 
 @NgModule({
