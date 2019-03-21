@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { NavController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ApiService } from '../api.service';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +20,7 @@ export class HomePage implements OnInit{
   wants: any[];
   num: string; // stores the scanned result
   matches: any[];
+  open: boolean = false;
 
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService, public navCtrl: NavController,
     private barcodeScanner: BarcodeScanner) { }
@@ -27,6 +29,18 @@ export class HomePage implements OnInit{
     console.log(this.listings[index]);
     localStorage.setItem('selectedUser', JSON.stringify(this.listings[index]));
     this.router.navigate(['/peer-profile']);
+  }
+
+  camOpen() {
+    if (!this.open) {
+      this.open = true;
+    }
+  }
+
+  camClose() {
+    if (this.open) {
+      this.open = false;
+    }
   }
 
   searchBooks(data, callback) {
@@ -39,8 +53,30 @@ export class HomePage implements OnInit{
    * @param {array} data - contains tuples, all users and book titles
    */
   setMatches(data) {
-    // let want = this.wants.map(want => want.title);
-    // data.filter(piece => want.includes(piece.title))
+    console.log(data);
+    let keys = Object.keys(data);
+    let want = this.wants.map(want => want.title);
+    let matches = [];
+    let matchType;
+    for (let key of keys) {
+      let matchObj: any = {};
+      data[key] = data[key].filter(piece => want.includes(piece.title))
+      if (!data[key].length) {
+        delete data[key];
+      } else {
+      if (data[key].length > 1) {
+        matchType = 'books';
+      } else {
+        matchType = 'book';
+      }
+      matchObj.name = key;
+      matchObj.num = data[key].length;
+      matchObj.type = matchType;
+      matches.push(matchObj);
+    }
+    }
+    console.log(matches);
+    this.matches = matches;
   }
 
   setWants(data) {
@@ -82,12 +118,13 @@ export class HomePage implements OnInit{
   }
 
   ngOnInit() {
-    // this.userMatches();
     this.url = document.URL;
     this.setListing = this.setListing.bind(this);
     this.searchBooks(this.isbnQuery, this.setListing);
     this.setWants = this.setWants.bind(this);
-    // this.apiService.renderWantList(this.setWants);
+    this.setMatches = this.setMatches.bind(this);
+    this.apiService.renderWantList(this.setWants);
+    this.apiService.getMatches(this.setMatches);
   }
 
 }
