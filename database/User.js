@@ -24,7 +24,10 @@ module.exports = (sequelize, DataTypes) => {
     // },
     id_school: DataTypes.INTEGER,
     address: DataTypes.TEXT,
-    email: DataTypes.TEXT,
+    email: {
+      type: DataTypes.TEXT,
+      unique: true,
+    }
     phone_number: DataTypes.TEXT,
     name_first: DataTypes.TEXT,
     name_last: DataTypes.TEXT,
