@@ -629,7 +629,7 @@ app.patch('/user/settings', (req, res) => {
       }
     }
   ).then(([userUpdated, [updatedUser]]) => {
-    res.statusMessage(200).send(updatedUser);
+    res.status(200).send(updatedUser);
   }).catch((err) => {
     console.log(`patch error to user settings: ${err}`);
   });

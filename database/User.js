@@ -29,7 +29,10 @@ module.exports = (sequelize, DataTypes) => {
     name_first: DataTypes.TEXT,
     name_last: DataTypes.TEXT,
     link_image: DataTypes.TEXT,
-    search_radius_miles: DataTypes.INTEGER,
+    search_radius_miles: {
+      type: DataTypes.INTEGER,
+      defaultValue: 10,
+    },
   });
 
   User.associate = (models) => {
