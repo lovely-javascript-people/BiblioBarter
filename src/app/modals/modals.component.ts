@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { SettingsService } from '../services/settings/settings.service';
 import { AuthService } from '../services/auth/auth.service';
 import { AutoCompleteService } from '../services/autoComplete/auto-complete.service';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-modals',
@@ -12,25 +13,37 @@ import { AutoCompleteService } from '../services/autoComplete/auto-complete.serv
 
 export class SettingsModal implements OnInit {
 
-  school: string = '';
-  radius: any = '';
+  school: string;
+  radius: number = 10;
   universities: any[] = [];
-  emailAddress: string = '';
+  emailAddress: string;
+  nameFirst: string;
+  nameLast: string;
+  userEmail: string;
+  phoneNumber: string;
+  address: string;
 
   constructor(
     public modal: ModalController, 
     public settings: SettingsService, 
     private auth: AuthService,
-    private auto: AutoCompleteService
+    private auto: AutoCompleteService,
+    private apiService: ApiService
     ) { }
 
     autoComplete(data) {
       this.universities = data.collegeList;
     }
 
-    submitEmail() {
-      console.log(this.emailAddress);
-      // patch req to server
+    settingsUpdate() {
+      const userId = localStorage.userid;
+      const searchRadius = this.radius;
+      const nameFirst = this.nameFirst;
+      const nameLast = this.nameLast;
+      const userEmail = this.emailAddress;
+      const address = this.address;
+      const phoneNumber = this.phoneNumber;
+      this.apiService.updateSettings(nameFirst, nameLast, userEmail, userId, searchRadius, address, phoneNumber);
     }
 
     selectUni(event) {
@@ -55,9 +68,9 @@ export class SettingsModal implements OnInit {
     this.settings.changeSchool(this.school)
   }
 
-  searchRadius() {
-    this.settings.defineSearchRadius(this.radius)
-  }
+  // searchRadius() {
+  //   this.settings.defineSearchRadius(this.radius)
+  // }
 
   async closeModal() {
     this.modal.dismiss();

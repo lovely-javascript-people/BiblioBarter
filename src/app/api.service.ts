@@ -15,6 +15,16 @@ export class ApiService {
     console.log('accepted');
   }
 
+  updateSettings(firstName, lastName, userEmail, userId, searchRadius, address, phoneNumber) {
+    console.log(userId, 'USER ID');
+    console.log(firstName, 'first name');
+    // patch req to server
+    this.http.patch(`${this.local}/user/settings`, {email: userEmail, userId: userId, radius: searchRadius, firstName: firstName, lastName: lastName, address: address, phoneNumber: phoneNumber})
+      .subscribe((data) => {
+        console.log(data);
+      });
+  }
+
   getBookInfoForOfferingList(isbn: string, callback) {
     this.http.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json`) // book info from book api
       .subscribe(((bookInfo: any) => {
