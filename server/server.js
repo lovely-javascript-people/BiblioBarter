@@ -634,3 +634,24 @@ app.patch('/user/settings', (req, res) => {
     console.log(`patch error to user settings: ${err}`);
   });
 });
+
+// POST /contactus 
+// users can send us a message
+// userId, userEmail, emailBody
+app.post('/contactUs', (req, res) => {
+  db.ContactUs.create({
+    id_user: req.body.userId,
+    id_message: req.body.emailBody,
+  }).then((success) => {
+    console.log(success);
+    db.User.findOrCreate({
+      where: {
+        email: req.body.userEmail,
+      },
+    });
+  }).then(() => {
+    console.log('sucesss in email input');
+  }).catch((err) => {
+    console.log(`error in contact us: ${err}`);
+  });
+});

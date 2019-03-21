@@ -24,12 +24,18 @@ module.exports = (sequelize, DataTypes) => {
     // },
     id_school: DataTypes.INTEGER,
     address: DataTypes.TEXT,
-    email: DataTypes.TEXT,
+    email: {
+      type: DataTypes.TEXT,
+      unique: true,
+    }
     phone_number: DataTypes.TEXT,
     name_first: DataTypes.TEXT,
     name_last: DataTypes.TEXT,
     link_image: DataTypes.TEXT,
-    search_radius_miles: DataTypes.INTEGER,
+    search_radius_miles: {
+      type: DataTypes.INTEGER,
+      defaultValue: 10,
+    },
   });
 
   User.associate = (models) => {
@@ -42,6 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     // User.belongsTo(models.Want);
     User.hasOne(models.School, { foreignKey: 'id_school' });
     // User.belongsTo(models.School);
+    User.hasMany(models.Contact_Us, { foreignKey: 'id_user' });
   };
 
   return User;
