@@ -13,7 +13,7 @@ export class ApiService {
 
   contactUs(userId, userEmail, emailBody) {
     console.log(userId, userEmail, emailBody, 'USER AND MESSAGE INFO');
-    this.http.patch(`${this.local}/contactUs`, {userId: userId, userEmail: userEmail, emailBody: emailBody})
+    this.http.post(`${this.local}/contactUs`, {userId: userId, userEmail: userEmail, emailBody: emailBody})
       .subscribe((data) => {
         console.log(data);
       });
