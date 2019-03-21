@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     id_user: DataTypes.INTEGER,
     message: DataTypes.TEXT,
+    responsed: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   });
 
   Contact_Us.associate = (models) => {

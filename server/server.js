@@ -639,18 +639,24 @@ app.patch('/user/settings', (req, res) => {
 // users can send us a message
 // userId, userEmail, emailBody
 app.post('/contactUs', (req, res) => {
-  db.ContactUs.create({
+  console.log
+  db.Contact_Us.create({
     id_user: req.body.userId,
     id_message: req.body.emailBody,
   }).then((success) => {
-    console.log(success);
-    db.User.findOrCreate({
+    console.log(success, 'SUCCESS');
+    db.User.update(
+      {
+        id_user: req.body.userId,
+      },
+      {
       where: {
         email: req.body.userEmail,
       },
     });
   }).then(() => {
     console.log('sucesss in email input');
+    res.status(200).send(JSON.stringify('Message sent to developers'));
   }).catch((err) => {
     console.log(`error in contact us: ${err}`);
   });

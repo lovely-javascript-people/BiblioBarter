@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.TEXT,
       unique: true,
-    }
+    },
     phone_number: DataTypes.TEXT,
     name_first: DataTypes.TEXT,
     name_last: DataTypes.TEXT,
