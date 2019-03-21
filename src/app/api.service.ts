@@ -15,6 +15,13 @@ export class ApiService {
     console.log('accepted');
   }
 
+  addUserEmail(userEmail, userId) {
+    console.log(userId, 'USER ID');
+    // patch req to server
+    this.http.patch(`${this.local}/user/settings`, {email: userEmail, userId: userId})
+      .subscribe(() => {});
+  }
+
   getBookInfoForOfferingList(isbn: string, callback) {
     this.http.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json`) // book info from book api
       .subscribe(((bookInfo: any) => {

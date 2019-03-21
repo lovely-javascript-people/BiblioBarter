@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { SettingsService } from '../services/settings/settings.service';
 import { AuthService } from '../services/auth/auth.service';
 import { AutoCompleteService } from '../services/autoComplete/auto-complete.service';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-modals',
@@ -21,7 +22,8 @@ export class SettingsModal implements OnInit {
     public modal: ModalController, 
     public settings: SettingsService, 
     private auth: AuthService,
-    private auto: AutoCompleteService
+    private auto: AutoCompleteService,
+    private apiService: ApiService
     ) { }
 
     autoComplete(data) {
@@ -29,8 +31,9 @@ export class SettingsModal implements OnInit {
     }
 
     submitEmail() {
-      console.log(this.emailAddress);
-      // patch req to server
+      const email = this.emailAddress;
+      const userId = localStorage.userid;
+      this.apiService.addUserEmail(email, userId);
     }
 
     selectUni(event) {
