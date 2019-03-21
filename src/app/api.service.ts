@@ -129,15 +129,10 @@ export class ApiService {
         });
     }
 
-    /**
-     * recently added callback, takes in response
-     * @param callback 
-     */
-    getMatches(callback): any {
+    getMatches(): any {
       // const DNS = process.env.DEVELOPMENT === 'development' ? '/matches' : 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/matches';
       this.http.get(`${this.local}/matches`).subscribe((response) => {
       console.log(response);
-      callback(response);//
       });
     }
 }

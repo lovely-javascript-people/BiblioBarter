@@ -34,12 +34,13 @@ export class HomePage implements OnInit{
   }
 
   /**
-   * uncommented
-   * @param data 
+   * setMatches receives all the data from the API server with information on all books.
+   * Contains user and book title information. Filtered 
+   * @param {array} data - contains tuples, all users and book titles
    */
   setMatches(data) {
-    let want = this.wants.map(want => want.title);
-    data.filter(piece => want.includes(piece.title))
+    // let want = this.wants.map(want => want.title);
+    // data.filter(piece => want.includes(piece.title))
   }
 
   setWants(data) {
@@ -86,7 +87,7 @@ export class HomePage implements OnInit{
     this.setListing = this.setListing.bind(this);
     this.searchBooks(this.isbnQuery, this.setListing);
     this.setWants = this.setWants.bind(this);
-    this.apiService.renderWantList(this.setWants); // uncommented PHUOC
+    // this.apiService.renderWantList(this.setWants);
   }
 
 }
