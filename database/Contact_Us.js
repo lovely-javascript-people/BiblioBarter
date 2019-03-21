@@ -10,14 +10,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     id_user: DataTypes.INTEGER,
     message: DataTypes.TEXT,
-    responsed: {
+    responded: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
   });
 
-  Contact_Us.associate = (models) => {
-    Contact_Us.belongsTo(models.User, { foreignKey: 'id_user' });
-  };
+  // Contact_Us.associate = (models) => {
+  //   Contact_Us.belongsTo(models.User, { foreignKey: 'id_user' });
+  // };
   return Contact_Us;
 };

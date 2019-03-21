@@ -642,18 +642,22 @@ app.post('/contactUs', (req, res) => {
   console.log(req.body, 'BODY OF EMAIL');
   db.Contact_Us.create({
     id_user: req.body.userId,
-    id_message: req.body.emailBody,
+    message: req.body.emailBody,
   }).then((success) => {
     console.log(success, 'SUCCESS');
-    db.User.update(
-      {
-        id_user: req.body.userId,
-      },
-      {
-      where: {
-        email: req.body.userEmail,
-      },
-    });
+    if (req.body.userEmail !== undefined) {
+      db.User.update(
+        {
+          email: req.body.userEmail,
+        },
+        {
+        where: {
+          id_user: req.body.userId,
+        },
+      });
+    } else {
+      console.log('no need to change email');
+    }
   }).then(() => {
     console.log('sucesss in email input');
     res.status(200).send(JSON.stringify('Message sent to developers'));
