@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     //     deferrable: DataTypes.Deferrable.INITIALLY_IMMEDIATE,
     //   },
     // },
-    isbn: DataTypes.BIGINT,
+    isbn: DataTypes.TEXT,
     title: DataTypes.TEXT,
     condition: DataTypes.TEXT,
     fulfilled: {
