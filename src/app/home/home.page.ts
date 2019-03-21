@@ -47,6 +47,11 @@ export class HomePage implements OnInit{
     this.apiService.getBooks(data, callback);
   }
 
+  /**
+   * setMatches receives all the data from the API server with information on all books.
+   * Contains user and book title information. Filtered 
+   * @param {array} data - contains tuples, all users and book titles
+   */
   setMatches(data) {
     console.log(data);
     let keys = Object.keys(data);

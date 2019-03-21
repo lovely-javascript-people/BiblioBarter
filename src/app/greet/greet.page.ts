@@ -25,7 +25,7 @@ export class GreetPage implements OnInit {
   }
 
   getMatches(): void {
-    this.apiService.getMatches();
+    // this.apiService.getMatches();
   }
 
   ngOnInit() {

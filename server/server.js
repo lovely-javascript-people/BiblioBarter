@@ -6,9 +6,26 @@ const { sequelize } = require('../database/database.js');
 const db = require('../database/database.js');
 const helpers = require('./apiHelpers.js');
 
+// const app = express();
+const PORT = process.env.PORT || 3000;
+////////////////
 const app = express();
+const socketIO = require('socket.io');
 
-const port = process.env.PORT || 3000;
+const server = express()
+  .use(app)
+  .listen(PORT, () => console.log(`BiblioBarter listening on ${PORT}`));
+
+const io = socketIO(server);
+///////////////
+
+// var http = require('http').Server(app);
+// // var io = require('socket.io')(http);
+
+// let serve = app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
+// var io = require('socket.io').listen(serve);
+
+
 
 app.use(bodyParser.json());
 // app.use(cors());
@@ -63,7 +80,45 @@ app.get('/matches', (req, res) => {
   })
 });
 
-app.listen(port, () => console.log(`Biblio server listening on port ${port}!${db.User.create}`));
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '../src/app/chat/chat.page.html');
+  res.send(("HEY HEY HEY"));
+});
+
+// socket io connection
+io.on('connection', function (socket) {
+  console.log('a user connected');
+  // this sends message into chatroom
+  socket.on('chat message', function (msg) {
+    console.log('message: ' + msg); // logs in terminal
+    io.emit('chat message', msg); // emits to the chat..
+  });
+  socket.on('disconnect', function () {
+    console.log('user disconnected');
+  });
+  // When we receive a 'message' event from our client, print out
+  // the contents of that message and then echo it back to our client
+  // using `io.emit()`
+  // CURRENTLY BELOW only logs on server
+  // emit sent to client, but NO Messages appear in chat room
+  // socket.on('message', message => {
+  //   console.log('Message Received: ' + message);
+  //   io.emit('message', { type: 'new-message', text: message });
+  // });
+});
+// ///////////////////////////
+// io.on('connection', function (socket) {
+//   socket.on('chat message', function (msg) {
+//     console.log('message: ' + msg);
+//   });
+// });
+// io.on('connection', function (socket) {
+  // socket.on('chat message', function (msg) {
+  //   io.emit('chat message', msg);
+  // });
+// });
+
+// app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
 
 
 // /////////////////////////////////////////////////////////////
