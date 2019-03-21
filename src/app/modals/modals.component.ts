@@ -4,6 +4,7 @@ import { SettingsService } from '../services/settings/settings.service';
 import { AuthService } from '../services/auth/auth.service';
 import { AutoCompleteService } from '../services/autoComplete/auto-complete.service';
 import { ApiService } from '../api.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-modals',
@@ -28,14 +29,15 @@ export class SettingsModal implements OnInit {
     public settings: SettingsService, 
     private auth: AuthService,
     private auto: AutoCompleteService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    public toastController: ToastController
     ) { }
 
     autoComplete(data) {
       this.universities = data.collegeList;
     }
 
-    settingsUpdate() {
+    settingsUpdate(setting) {
       const userId = localStorage.userid;
       const searchRadius = this.radius;
       const nameFirst = this.nameFirst;
@@ -43,6 +45,7 @@ export class SettingsModal implements OnInit {
       const userEmail = this.emailAddress;
       const address = this.address;
       const phoneNumber = this.phoneNumber;
+      this.presentToast(setting);
       this.apiService.updateSettings(nameFirst, nameLast, userEmail, userId, searchRadius, address, phoneNumber);
     }
 
@@ -64,7 +67,8 @@ export class SettingsModal implements OnInit {
     this.auth.logout();
   }
 
-  setSchool() {
+  setSchool(setting) {
+    this.presentToast(setting);
     this.settings.changeSchool(this.school)
   }
 
@@ -74,6 +78,14 @@ export class SettingsModal implements OnInit {
 
   async closeModal() {
     this.modal.dismiss();
+  }
+
+  async presentToast(setting) {
+    const toast = await this.toastController.create({
+      message: `Your ${setting} has been saved.`,
+      duration: 2000
+    });
+    toast.present();
   }
 
   ngOnInit() {
