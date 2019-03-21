@@ -23,7 +23,7 @@
       </div>
   <p>Welcome to your matches!</p>
   <ion-list>
-    <ion-item #list class={{listing.id_user}} *ngFor="let listing of listings; let i = index" [type]="listing">TITLE: {{listing.title}}  |  #ISBN: {{listing.isbn}}  |  CONDITION: {{listing.condition}} <button (click)="profileButtonClick(i)">PROFILE</button></ion-item>
+    <ion-item #list class={{listing.id_user}} *ngFor="let listing of listings; let i = index" [type]="listing">TITLE: {{listing.title}}  |  #ISBN: {{listing.isbn}}  |  CONDITION: {{listing.condition}} <ion-button (click)="profileButtonClick(i)">PROFILE</ion-button></ion-item>
   </ion-list>
   <ion-list>
   

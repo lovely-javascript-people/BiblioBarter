@@ -13,17 +13,22 @@
   Offers:<br />
   <ion-list>
       <ion-item *ngFor="let offer of offers">
-        {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}  |  STATUS: {{offer.status}} <button (click)="acceptOffer()" >Accept</button> <button (click)="rejectOffer()" >Reject</button>
+        {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}  |  STATUS: {{offer.status}} <ion-button (click)="acceptOffer()" >Accept</ion-button> <ion-button (click)="rejectOffer()" >Reject</ion-button>
       </ion-item>
   </ion-list><br /><br /><br />
-  Looking for: <ion-icon (click)="openWantListModal()" name="add-circle-outline"></ion-icon>Add a book!<br />
+  <!-- Looking for: <ion-icon (click)="openWantListModal()" name="add-circle-outline"></ion-icon>Add a book!<br /> -->
+  Looking for:<ion-button (click)="openAddListingModal()">Add Book</ion-button>
+
   <ion-list>
     <ion-item *ngFor="let want of wants">
       Title: {{want.title}}<br />
       ISBN: {{want.isbn}}
     </ion-item>
   </ion-list><br /><br /><br />
-  Offering:<ion-icon (click)="openAddListingModal()" name="add-circle-outline"></ion-icon>Add a book!<br />
+  <!-- Offering:<ion-icon (click)="openAddListingModal()" name="add-circle-outline"></ion-icon>Add a book!<br /> -->
+  Offering:<ion-button (click)="openAddListingModal()">Add Book</ion-button>
+
+
   <ion-list>
       <ion-item *ngFor="let listing of listings">
         Title: {{listing.book.title}}<br />
