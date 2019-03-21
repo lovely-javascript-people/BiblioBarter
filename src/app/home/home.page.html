@@ -20,7 +20,7 @@
       </div>
   <p>Welcome to your matches!</p>
   <ion-list>
-    <ion-item #matched style="font-size: 16px" *ngFor="let match of matches; let i = index" [type]="match">{{match.name}} has {{match.num}} {{match.type}} you want <ion-button (click)="profileButtonClick(i)">PROFILE</ion-button></ion-item>
+    <ion-item #matched style="font-size: 16px" *ngFor="let match of matches; let i = index" [type]="match">{{match.name}} has {{match.num}} {{match.type}} you want <ion-button (click)="profileButtonClick(match.id)">PROFILE</ion-button></ion-item>
     <ion-item #list class={{listing.id_user}} *ngFor="let listing of listings; let i = index" [type]="listing">TITLE: {{listing.title}}  |  #ISBN: {{listing.isbn}}  |  CONDITION: {{listing.condition}} <ion-button (click)="profileButtonClick(i)">PROFILE</ion-button></ion-item>
   </ion-list>
 </ion-content>
