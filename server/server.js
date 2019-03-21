@@ -27,6 +27,7 @@ app.get('/callback', (req, res) => {
  * GET request to /matches currently grabs all the users from the db and
  * returns them in an array with each user's information.
  * Please change alter findAll() to grab specific matches.
+ * 
  */
 app.get('/matches', (req, res) => {
   db.User.findAll().then((data) => {
@@ -609,11 +610,27 @@ app.get('/offers', (req, res) => {
   })
 })
 
-
-// make sure to create columns on want and listing tables
-// make them booleans, 
-// want fulfilled - true means no need, false means still wants (default)
-// listing - available - true still have default, false bartered 
-
-// school name school just be name, id in association change
-// money needs to be money_exchange_cents
+// patch /user/settings
+// user may change settings
+app.patch('/user/settings', (req, res) => {
+  db.User.update(
+    {
+      name_first: req.body.firstName || null,
+      name_last: req.body.lastName || null,
+      email: req.body.email || null,
+      search_radius_miles: req.body.radius || null,
+      address: req.body.address || null,
+      phone_number: req.body.phoneNumber || null,
+    },
+    {
+      returning: true, 
+      where: {
+        id_user: req.body.userId,
+      }
+    }
+  ).then(([userUpdated, [updatedUser]]) => {
+    res.statusMessage(200).send(updatedUser);
+  }).catch((err) => {
+    console.log(`patch error to user settings: ${err}`);
+  });
+});

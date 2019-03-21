@@ -39,7 +39,7 @@ const insertNewUser = async (username, first, last, link, school, add, email, nu
     name_first: first,
     name_last: last,
     link_image: link,
-    // search_radius: radius,
+    // search_radius_miles: radius,
   }).then(() => {
     console.log('new user created');
   }).catch(() => {
