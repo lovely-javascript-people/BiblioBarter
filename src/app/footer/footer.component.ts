@@ -66,6 +66,10 @@ export class FooterComponent implements OnInit {
   redirectOnClick() {
     this.router.navigate(['/Matches']);
   }
+  
+  redirectToChat() {
+    this.router.navigate(['/Chat']);
+  }
 
   ngOnInit() {}
 
