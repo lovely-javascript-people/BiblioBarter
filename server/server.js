@@ -366,6 +366,7 @@ app.get('/peer', (req, res) => {
         console.log(books[1]);
         books.push(listings);
         }).then(() => {
+          console.log(books);
       res.send(books);
     })
   }).catch((err) => {
