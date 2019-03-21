@@ -15,6 +15,7 @@ export class AddListingModal implements OnInit {
   bookCondition: string = '';
   title: string = '';
   userid: number = localStorage.userid;
+  // animated: boolean = true;
 
   constructor(public modal: ModalController, private http: HttpClient, private apiService: ApiService) { }
 

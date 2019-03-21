@@ -1,5 +1,6 @@
+<!-- <ion-content style="width: 40%; height: 40%;"></ion-content> -->
 <ion-icon style="width: 40px;height: 40px;" name="close" (click)="closeModal()"></ion-icon>
-<div>Add a Book to Your Listings<input [(ngModel)]="isbnVal" #ctrl="ngModel" placeholder="#isbn" />
+<div>Add a Book to Your Listings<ion-input [(ngModel)]="isbnVal" #ctrl="ngModel" placeholder="#isbn"></ion-input>
 <ion-item>
     <ion-label >Condition</ion-label>
     <ion-select [(ngModel)]="bookCondition">
