@@ -15,10 +15,10 @@ export class ApiService {
     console.log('accepted');
   }
 
-  addUserEmail(userEmail, userId) {
+  updateSettings(nameFirst, nameLast, userEmail, userId, searchRadius, address, phoneNumber) {
     console.log(userId, 'USER ID');
     // patch req to server
-    this.http.patch(`${this.local}/user/settings`, {email: userEmail, userId: userId})
+    this.http.patch(`${this.local}/user/settings`, {email: userEmail, userId: userId, search_radius: searchRadius, name_first: nameFirst, name_last: nameLast, address: address, phone_number: phoneNumber})
       .subscribe(() => {});
   }
 

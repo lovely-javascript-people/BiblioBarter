@@ -1,10 +1,12 @@
 <ion-icon style="width: 40px;height: 40px;" name="close" (click)="closeModal()"></ion-icon>
-<div>Add Email<input [(ngModel)]="emailAddress" #ctrl="ngModel" placeholder="Your Email Address" /><button (click)="submitEmail()">Submit</button></div>
-<div>Set search radius: <input [(ngModel)]="radius" #ctrl="ngModel" placeholder="Search Radius" /><button (click)="searchRadius()">Submit</button></div>
-<div>School: example university <input [(ngModel)]="school" #ctrl="ngModel" placeholder="New School" (ngModelChange)="onChange($event)" /><ion-list>
+<div>First Name<input [(ngModel)]="nameFirst" #ctrl="ngModel" placeholder="First Name" /><button (click)="settingsUpdate()">Add</button></div>
+<div>Last Name<input [(ngModel)]="nameLast" #ctrl="ngModel" placeholder="Last Name" /><button (click)="settingsUpdate()">Add</button></div>
+<div>Add Email<input [(ngModel)]="emailAddress" #ctrl="ngModel" placeholder="Your Email Address" /><button (click)="settingsUpdate()">Add</button></div>
+<div>Set search radius <input [(ngModel)]="radius" #ctrl="ngModel" placeholder="Miles" /><button (click)="settingsUpdate()">Add</button></div>
+<div>School<input [(ngModel)]="school" #ctrl="ngModel" placeholder="New School" (ngModelChange)="onChange($event)" /><ion-list>
   <ion-item *ngFor="let uni of universities">
     <div (click)="selectUni($event)">{{uni.name}}</div>
   </ion-item>
-</ion-list><button (click)="setSchool()">Submit</button></div>
-<div>Currently logged in as: example user<button (click)="switchAccount()">Switch Accounts</button></div>
+</ion-list><button (click)="setSchool()">Add</button></div>
+<div>Currently logged in as<button (click)="switchAccount()">Switch Accounts</button></div>
 <div style="color: crimson">DANGER ZONE!!!<br />Delete Your Account <button (click)="deleteProfile()">Please don't press me!!!<ion-icon name="sad"></ion-icon></button></div>

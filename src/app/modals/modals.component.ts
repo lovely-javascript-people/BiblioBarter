@@ -13,10 +13,14 @@ import { ApiService } from '../api.service';
 
 export class SettingsModal implements OnInit {
 
-  school: string = '';
-  radius: any = '';
+  school: string;
+  radius: number;
   universities: any[] = [];
-  emailAddress: string = '';
+  emailAddress: string;
+  nameFirst: string;
+  nameLast: string;
+  userEmail: string;
+  phoneNumber: string;
 
   constructor(
     public modal: ModalController, 
@@ -30,10 +34,15 @@ export class SettingsModal implements OnInit {
       this.universities = data.collegeList;
     }
 
-    submitEmail() {
-      const email = this.emailAddress;
+    settingsUpdate() {
       const userId = localStorage.userid;
-      this.apiService.addUserEmail(email, userId);
+      const searchRadius = this.radius;
+      const nameFirst = this.nameFirst;
+      const nameLast = this.nameLast;
+      const userEmail = this.userEmail;
+      const address = this.emailAddress;
+      const phoneNumber = this.phoneNumber;
+      this.apiService.updateSettings(nameFirst, nameLast, userEmail, userId, searchRadius, address, phoneNumber);
     }
 
     selectUni(event) {
@@ -58,9 +67,9 @@ export class SettingsModal implements OnInit {
     this.settings.changeSchool(this.school)
   }
 
-  searchRadius() {
-    this.settings.defineSearchRadius(this.radius)
-  }
+  // searchRadius() {
+  //   this.settings.defineSearchRadius(this.radius)
+  // }
 
   async closeModal() {
     this.modal.dismiss();
