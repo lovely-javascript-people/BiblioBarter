@@ -1,13 +1,15 @@
 <ion-header>
   <ion-toolbar>
-      <a routerLink="/Profile">Profile</a> <a style="color: blueviolet" routerLink="/Matches">Matches</a> 
+      <ion-title>
+      <a routerLink="/Profile">Profile</a> <a style="color: #B1C634" routerLink="/Matches">Matches</a> 
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
     
         
-    <div>Search For A Book <input [(ngModel)]="isbnQuery" #ctrl="ngModel" placeholder="isbn" /><ion-button (click)="searchBooks(isbnQuery, setListing)" routerLink="/Matches">Search</ion-button></div>
+    <div>Search For A Book <ion-input [(ngModel)]="isbnQuery" #ctrl="ngModel" placeholder="isbn"></ion-input><ion-button (click)="searchBooks(isbnQuery, setListing)" routerLink="/Matches">Search</ion-button></div>
   <p>Welcome to your matches!</p>
   <ion-list>
     <ion-item #list class={{listing.id_user}} *ngFor="let listing of listings; let i = index" [type]="listing">TITLE: {{listing.title}}  |  #ISBN: {{listing.isbn}}  |  CONDITION: {{listing.condition}} <ion-button (click)="profileButtonClick(i)">PROFILE</ion-button></ion-item>
