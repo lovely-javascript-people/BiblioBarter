@@ -612,7 +612,11 @@ app.get('/offers', (req, res) => {
 
 // patch /user/settings
 // user may change settings
+/**
+ * @todo make it so that each update does not turn the other values to null
+ */
 app.patch('/user/settings', (req, res) => {
+  let val = req.body; // please change later, not currently saving and not replacing
   db.User.update(
     {
       name_first: req.body.firstName || null,

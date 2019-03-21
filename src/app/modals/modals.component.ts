@@ -83,7 +83,9 @@ export class SettingsModal implements OnInit {
   async presentToast(setting) {
     const toast = await this.toastController.create({
       message: `Your ${setting} has been saved.`,
-      duration: 2000
+      duration: 2000,
+      color: 'primary',
+      position: 'top', // or don't include to be bottom
     });
     toast.present();
   }
