@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
       <ion-title>
-      <a style="color:blueviolet;width:50%" routerLink="/Profile">Profile</a> <a style="width:50%" routerLink="/Matches">Matches</a> 
+      <a style="color: #B1C634; width:50%" routerLink="/Profile">Profile</a> <a style="width:50%" routerLink="/Matches">Matches</a> 
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,15 +9,21 @@
 <ion-content padding fullscreen="true">
   <img src='{{img}}' /><br />
   {{school}}
-  <p>Welcome to your profile, {{user}}</p>
-  Offers:<br />
+  <div style="width:100%;Text-align:center; font-size: 20px; font-weight:700; font-size:120%">
+    <p>{{user.toUpperCase()}}</p>
+  </div>
+  <a style="color:176ACC; font-weight:700;">
+    MY OFFERS:
+  </a>
   <ion-list>
       <ion-item *ngFor="let offer of offers">
         {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}  |  STATUS: {{offer.status}} <ion-button (click)="acceptOffer()" >Accept</ion-button> <ion-button (click)="rejectOffer()" >Reject</ion-button>
       </ion-item>
   </ion-list><br /><br /><br />
-  <!-- Looking for: <ion-icon (click)="openWantListModal()" name="add-circle-outline"></ion-icon>Add a book!<br /> -->
-  Looking for:<ion-button (click)="openAddListingModal()">Add Book</ion-button>
+  <a style="color:176ACC; font-weight:700;">
+    I'M LOOKING FOR:
+  </a>
+  <ion-button size="small" style="font-weight:700;" (click)="openWantListModal()"> + </ion-button>
 
   <ion-list>
     <ion-item *ngFor="let want of wants">
@@ -25,8 +31,10 @@
       ISBN: {{want.isbn}}
     </ion-item>
   </ion-list><br /><br /><br />
-  <!-- Offering:<ion-icon (click)="openAddListingModal()" name="add-circle-outline"></ion-icon>Add a book!<br /> -->
-  Offering:<ion-button (click)="openAddListingModal()">Add Book</ion-button>
+  <a style="color:176ACC; font-weight:700;">
+    I'M OFFERING:
+  </a>
+  <ion-button size="small" style="font-weight:700;" (click)="openAddListingModal()"> + </ion-button>
 
 
   <ion-list>
