@@ -72,7 +72,7 @@ sequelize
 //   name_first: Sequelize.TEXT,
 //   name_last: Sequelize.TEXT,
 //   link_image: Sequelize.TEXT,
-//   search_radius: Sequelize.INTEGER,
+//   search_radius_miles: Sequelize.INTEGER,
 // });
 
 // // WANT table is the books the user would like / need
