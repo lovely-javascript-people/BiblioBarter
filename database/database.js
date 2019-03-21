@@ -269,6 +269,7 @@ const models = [
   'Listing',
   'Offer',
   'Offer_Listing',
+  'Contact_Us',
 ];
 
 models.forEach((model) => {
