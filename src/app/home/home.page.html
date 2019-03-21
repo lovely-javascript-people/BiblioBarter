@@ -7,35 +7,18 @@
 <ion-content padding>
     
         
-    <div>Search For A Book <input [(ngModel)]="isbnQuery" #ctrl="ngModel" [(ngModel)]="num" placeholder="isbn" /><button (click)="searchBooks(isbnQuery, setListing)" routerLink="/Matches">Search</button><button ion-button id="startButton" (click)="scan(); camOpen()">Scan Barcode</button>
+    <div>Search For A Book <input id="searchInput" [(ngModel)]="isbnQuery" #ctrl="ngModel" [(ngModel)]="num" placeholder="isbn" /><button (click)="searchBooks(isbnQuery, setListing)" routerLink="/Matches">Search</button><button ion-button id="startButton" (click)="scan(); camOpen()">Scan Barcode</button>
       <button ion-button id="resetButton" (click)="camClose()">Close Scanner</button></div>
-      <div id="sourceSelectPanel" style="display:none">
+      <div [hidden]='!open' id="sourceSelectPanel" style="display:none">
           <select id="sourceSelect" style="max-width:400px">
           </select>
       </div>
-  
-      <label>Result:</label>
-      <blockquote>
-          <p id="result"></p>
-        </blockquote>
       <div *ngIf='open'>
           <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
       </div>
   <p>Welcome to your matches!</p>
   <ion-list>
     <ion-item #list class={{listing.id_user}} *ngFor="let listing of listings; let i = index" [type]="listing">TITLE: {{listing.title}}  |  #ISBN: {{listing.isbn}}  |  CONDITION: {{listing.condition}} <ion-button (click)="profileButtonClick(i)">PROFILE</ion-button></ion-item>
-  </ion-list>
-  <ion-list>
-  
-    <ion-item>
-      <ion-label fixed>Number</ion-label>
-      <ion-input type="text" value="" [(ngModel)]="num"></ion-input>
-    </ion-item>
-
-    
-
-    
-  
   </ion-list>
 </ion-content>
 

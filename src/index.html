@@ -51,7 +51,7 @@
                   document.getElementById('startButton').addEventListener('click', () => {
                       codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'video').then((result) => {
                           console.log(result)
-                          document.getElementById('result').textContent = result.text
+                          document.getElementById('searchInput').textContent = result.text
                       }).catch((err) => {
                           console.error(err)
                           document.getElementById('result').textContent = err
@@ -59,7 +59,7 @@
                       console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
                   })
                   document.getElementById('resetButton').addEventListener('click', () => {
-                      document.getElementById('result').textContent = '';
+                      // document.getElementById('').textContent = '';
                       codeReader.reset();
                       console.log('Reset.')
                   })

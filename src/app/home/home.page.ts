@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { NavController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ApiService } from '../api.service';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'app-home',
@@ -54,7 +55,6 @@ export class HomePage implements OnInit{
   setWants(data) {
     this.wants = data;
     console.log(this.wants);
-    console.log($);
   }
 
     setListing(searchedListings) {
