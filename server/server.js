@@ -27,6 +27,7 @@ app.get('/callback', (req, res) => {
  * GET request to /matches currently grabs all the users from the db and
  * returns them in an array with each user's information.
  * Please change alter findAll() to grab specific matches.
+ * 
  */
 app.get('/matches', (req, res) => {
   db.User.findAll().then((data) => {
@@ -609,11 +610,62 @@ app.get('/offers', (req, res) => {
   })
 })
 
+// patch /user/settings
+// user may change settings
+/**
+ * @todo make it so that each update does not turn the other values to null
+ */
+app.patch('/user/settings', (req, res) => {
+  let val = req.body; // please change later, not currently saving and not replacing
+  db.User.update(
+    {
+      name_first: req.body.firstName || null,
+      name_last: req.body.lastName || null,
+      email: req.body.email || null,
+      search_radius_miles: req.body.radius || null,
+      address: req.body.address || null,
+      phone_number: req.body.phoneNumber || null,
+    },
+    {
+      returning: true, 
+      where: {
+        id_user: req.body.userId,
+      }
+    }
+  ).then(([userUpdated, [updatedUser]]) => {
+    res.status(200).send(updatedUser);
+  }).catch((err) => {
+    console.log(`patch error to user settings: ${err}`);
+  });
+});
 
-// make sure to create columns on want and listing tables
-// make them booleans, 
-// want fulfilled - true means no need, false means still wants (default)
-// listing - available - true still have default, false bartered 
-
-// school name school just be name, id in association change
-// money needs to be money_exchange_cents
+// POST /contactus 
+// users can send us a message
+// userId, userEmail, emailBody
+app.post('/contactUs', (req, res) => {
+  console.log(req.body, 'BODY OF EMAIL');
+  db.Contact_Us.create({
+    id_user: req.body.userId,
+    message: req.body.emailBody,
+  }).then((success) => {
+    console.log(success, 'SUCCESS');
+    if (req.body.userEmail !== undefined) {
+      db.User.update(
+        {
+          email: req.body.userEmail,
+        },
+        {
+        where: {
+          id_user: req.body.userId,
+        },
+      });
+    } else {
+      console.log('no need to change email');
+    }
+  }).then(() => {
+    console.log('sucesss in email input');
+    res.status(200).send(JSON.stringify('Message sent to developers'));
+  }).catch((err) => {
+    console.log(`error in contact us: ${err}`);
+  });
+});

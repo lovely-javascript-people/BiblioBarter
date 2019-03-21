@@ -11,8 +11,26 @@ export class ApiService {
   host = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
   local = 'http://localhost:3000';
 
+  contactUs(userId, userEmail, emailBody) {
+    console.log(userId, userEmail, emailBody, 'USER AND MESSAGE INFO');
+    this.http.post(`${this.local}/contactUs`, {userId: userId, userEmail: userEmail, emailBody: emailBody})
+      .subscribe((data) => {
+        console.log(data);
+      });
+  }
+
   userAcceptOffer() {
     console.log('accepted');
+  }
+
+  updateSettings(firstName, lastName, userEmail, userId, searchRadius, address, phoneNumber) {
+    console.log(userId, 'USER ID');
+    console.log(firstName, 'first name');
+    // patch req to server
+    this.http.patch(`${this.local}/user/settings`, {email: userEmail, userId: userId, radius: searchRadius, firstName: firstName, lastName: lastName, address: address, phoneNumber: phoneNumber})
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
 
   getBookInfoForOfferingList(isbn: string, callback) {
