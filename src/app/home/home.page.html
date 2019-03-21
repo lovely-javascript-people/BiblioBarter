@@ -7,10 +7,10 @@
 <ion-content padding>
     
         
-    <div>Search For A Book <input [(ngModel)]="isbnQuery" #ctrl="ngModel" placeholder="isbn" /><button (click)="searchBooks(isbnQuery, setListing)" routerLink="/Matches">Search</button></div>
+    <div>Search For A Book <input [(ngModel)]="isbnQuery" #ctrl="ngModel" placeholder="isbn" /><ion-button (click)="searchBooks(isbnQuery, setListing)" routerLink="/Matches">Search</ion-button></div>
   <p>Welcome to your matches!</p>
   <ion-list>
-    <ion-item #list class={{listing.id_user}} *ngFor="let listing of listings; let i = index" [type]="listing">TITLE: {{listing.title}}  |  #ISBN: {{listing.isbn}}  |  CONDITION: {{listing.condition}} <button (click)="profileButtonClick(i)">PROFILE</button></ion-item>
+    <ion-item #list class={{listing.id_user}} *ngFor="let listing of listings; let i = index" [type]="listing">TITLE: {{listing.title}}  |  #ISBN: {{listing.isbn}}  |  CONDITION: {{listing.condition}} <ion-button (click)="profileButtonClick(i)">PROFILE</ion-button></ion-item>
   </ion-list>
   <ion-list>
   
@@ -20,10 +20,10 @@
     </ion-item>
   
     <ion-item>
-      <button ion-button id="startButton" (click)="scan()">Scan Barcode</button>
+      <ion-button ion-button id="startButton" (click)="scan()">Scan Barcode</ion-button>
     </ion-item>
     <div>
-        <button ion-button id="resetButton">Close Scanner</button>
+        <ion-button ion-button id="resetButton">Close Scanner</ion-button>
     </div>
 
     
