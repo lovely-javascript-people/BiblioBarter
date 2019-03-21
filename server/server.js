@@ -66,6 +66,7 @@ app.get('/matches', (req, res) => {
       })
       if (!matchObj.hasOwnProperty(user.user_name)) {
       matchObj[user.user_name] = [book];
+      matchObj[user.user_name + '_id'] = listing.id_user;
       } else {
         matchObj[user.user_name].push(book);
       }

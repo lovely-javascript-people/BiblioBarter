@@ -17,17 +17,24 @@ export class HomePage implements OnInit{
   isbnQuery: string = "";
   isbn: string = "";
   listings: any = [];
-  wants: any[];
+  yourWants: any[];
   num: string; // stores the scanned result
   matches: any[];
   open: boolean = false;
+  yourListings: any[];
+  othersWants: any[] = [];
+  matchedUsers: any[] = [];
 
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService, public navCtrl: NavController,
     private barcodeScanner: BarcodeScanner) { }
 
   profileButtonClick(index) {
     console.log(this.listings[index]);
-    localStorage.setItem('selectedUser', JSON.stringify(this.listings[index]));
+    if (this.listings.length) {
+    localStorage.setItem('selectedUser', this.listings[index]);
+    } else {
+      localStorage.setItem('selectedUser', index);
+    }
     this.router.navigate(['/peer-profile']);
   }
 
@@ -47,6 +54,20 @@ export class HomePage implements OnInit{
     this.apiService.getBooks(data, callback);
   }
 
+  setOthersWants(data) {
+    let piece = data.slice(0, data.length - 2);
+    let filtP = piece.filter(bit => this.yourListings.includes(bit.title));
+    if (filtP.length) {
+      this.matchedUsers.push(filtP[0].id_user);
+    }
+    this.othersWants.push(filtP);
+    console.log(this.othersWants);
+    if (this.othersWants.length === this.matches.length) {
+      let filtMatches = this.matches.filter(match => this.matchedUsers.includes(match.id))
+      this.matches = filtMatches;
+    }
+  }
+
   /**
    * setMatches receives all the data from the API server with information on all books.
    * Contains user and book title information. Filtered 
@@ -55,13 +76,14 @@ export class HomePage implements OnInit{
   setMatches(data) {
     console.log(data);
     let keys = Object.keys(data);
-    let want = this.wants.map(want => want.title);
+    let want = this.yourWants.map(want => want.title);
     let matches = [];
     let matchType;
     for (let key of keys) {
       let matchObj: any = {};
+      if (!key.includes('id')) {
       data[key] = data[key].filter(piece => want.includes(piece.title))
-      if (!data[key].length) {
+      if (!data[key].length || key === localStorage.username) {
         delete data[key];
       } else {
       if (data[key].length > 1) {
@@ -72,37 +94,35 @@ export class HomePage implements OnInit{
       matchObj.name = key;
       matchObj.num = data[key].length;
       matchObj.type = matchType;
+      matchObj.id = data[key + '_id'];
       matches.push(matchObj);
     }
     }
+    }
     console.log(matches);
-    this.matches = matches;
+    this.matches = matches.sort((a, b) => b.num - a.num);
+    for (let match of this.matches) {
+      this.apiService.getPeerProfile(match.id, this.setOthersWants);
+    }
   }
 
-  setWants(data) {
-    this.wants = data;
-    console.log(this.wants);
+  setYourWants(data) {
+    this.yourWants = data;
+    console.log(this.yourWants);
+  }
+
+  setYourListings(data) {
+    let lists = data.map(piece => {
+      return piece.book.title;
+    });
+    this.yourListings = lists;
+    console.log(this.yourListings);
   }
 
     setListing(searchedListings) {
       console.log(searchedListings, 'BACK ON MATCHES PAGE');
       this.listings = searchedListings;
     }
-
-  // THIS DOESNT WORK YET --> SUPPOSED TO GRAB USER MATCHES ON INIT 
-  // userMatches() {
-  //   this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
-  //   .subscribe((wantListArray) => {
-  //     console.log(wantListArray, 'ARRAY OF WANT LIST******');
-  //     this.wants = wantListArray;
-  //     this.isbnQuery = wantListArray[0].isbn;
-  //     console.log(this.isbnQuery, 'ISBN IN USER MATCHES');
-  //   })
-  //   let isbn = this.isbnQuery;
-  //   this.searchBooks(isbn, this.setListing);
-  // }
-
-  // new scan method
   scan() {
     this.barcodeScanner.scan().then(barcodeData => {
       // this is called when a barcode is found
@@ -121,9 +141,12 @@ export class HomePage implements OnInit{
     this.url = document.URL;
     this.setListing = this.setListing.bind(this);
     this.searchBooks(this.isbnQuery, this.setListing);
-    this.setWants = this.setWants.bind(this);
+    this.setYourWants = this.setYourWants.bind(this);
+    this.setYourListings = this.setYourListings.bind(this);
+    this.setOthersWants = this.setOthersWants.bind(this);
     this.setMatches = this.setMatches.bind(this);
-    this.apiService.renderWantList(this.setWants);
+    this.apiService.renderWantList(this.setYourWants);
+    this.apiService.renderListingsList(this.setYourListings);
     this.apiService.getMatches(this.setMatches);
   }
 

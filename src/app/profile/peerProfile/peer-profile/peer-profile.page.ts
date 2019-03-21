@@ -88,13 +88,13 @@ export class PeerProfilePage implements OnInit {
   }
 
   setUser(data) {
-    let user: any = JSON.parse(localStorage.getItem('selectedUser'));
+    let user: any = localStorage.selectedUser;
     // console.log(data);
     this.user = data || user.nickname;
   }
   ngOnInit() {
     this.me = JSON.parse(localStorage.userid);
-    this.peer = JSON.parse(localStorage.getItem('selectedUser'));
+    this.peer = localStorage.selectedUser;
 
     this.wants = [
       {
@@ -114,7 +114,11 @@ export class PeerProfilePage implements OnInit {
     this.setUser = this.setUser.bind(this);
     this.setBooks = this.setBooks.bind(this);
     this.getPeerBooks = this.getPeerBooks.bind(this);
+    if (this.peer.listing) {
     this.getPeerBooks(this.peer.listing.id_user, this.setBooks);
+    } else {
+      this.getPeerBooks(Number(this.peer), this.setBooks);
+    }
     this.setYourWants = this.setYourWants.bind(this);
     
   }
