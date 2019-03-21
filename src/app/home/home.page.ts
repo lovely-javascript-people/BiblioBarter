@@ -33,13 +33,18 @@ export class HomePage implements OnInit{
     this.apiService.getBooks(data, callback);
   }
 
+  /**
+   * uncommented
+   * @param data 
+   */
   setMatches(data) {
-    // let want = this.wants.map(want => want.title);
-    // data.filter(piece => want.includes(piece.title))
+    let want = this.wants.map(want => want.title);
+    data.filter(piece => want.includes(piece.title))
   }
 
   setWants(data) {
-    // this.wants = data;
+    this.wants = data;
+    console.log(this.wants);
   }
 
     setListing(searchedListings) {
@@ -81,7 +86,7 @@ export class HomePage implements OnInit{
     this.setListing = this.setListing.bind(this);
     this.searchBooks(this.isbnQuery, this.setListing);
     this.setWants = this.setWants.bind(this);
-    // this.apiService.renderWantList(this.setWants);
+    this.apiService.renderWantList(this.setWants); // uncommented PHUOC
   }
 
 }
