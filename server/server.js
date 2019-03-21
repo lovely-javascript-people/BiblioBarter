@@ -101,10 +101,10 @@ io.on('connection', function (socket) {
   // using `io.emit()`
   // CURRENTLY BELOW only logs on server
   // emit sent to client, but NO Messages appear in chat room
-  // socket.on('message', message => {
-  //   console.log('Message Received: ' + message);
-  //   io.emit('message', { type: 'new-message', text: message });
-  // });
+  socket.on('message', message => {
+    console.log('Message Received: ' + message);
+    io.emit('message', { type: 'new-message', text: message });
+  });
 });
 // ///////////////////////////
 // io.on('connection', function (socket) {
