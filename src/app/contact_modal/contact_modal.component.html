@@ -1,0 +1,84 @@
+<ion-icon style="width: 40px;height: 40px;" name="close" (click)="closeModal()"></ion-icon>
+<div>Your Email<input [(ngModel)]="emailAddress" #ctrl="ngModel" placeholder="Email" />
+<div><input [(ngModel)]="emailBody" #ctrl="ngModel" placeholder="Message Us" /><button (click)="submitEmail()">Submit</button></div>
+
+<!-- <ion-header>
+    <ion-toolbar>
+        <ion-title>
+             EMAIL
+        </ion-title>
+        <ion-icon style="width: 40px;height: 40px;" name="close" (click)="closeModal()"></ion-icon>
+     </ion-toolbar>
+ </ion-header>
+<ion-content padding fullscreen="true">
+     <div text-center style="margin-top: 5cm">
+            <button ion-button (click)="send()">Send-Email</button>
+       </div>
+</ion-content>    -->
+<!-- 
+<ion-content padding>
+
+    <form
+       [formGroup]="form"
+       (ngSubmit)="sendMessage()">
+ 
+       <ion-list>
+ 
+ 
+          <ion-item margin-bottom>
+             <ion-label>To:</ion-label>
+             <ion-input
+                type="email"
+                formControlName="to"></ion-input>
+          </ion-item>
+ 
+ 
+          <ion-item margin-bottom>
+             <ion-label>Cc:</ion-label>
+             <ion-input
+                type="email"
+                formControlName="cc"></ion-input>
+          </ion-item>
+ 
+ 
+          <ion-item margin-bottom>
+             <ion-label>Bcc:</ion-label>
+             <ion-input
+                type="email"
+                formControlName="bcc"></ion-input>
+          </ion-item>
+ 
+ 
+          <ion-item margin-bottom>
+             <span
+                ion-button
+                color="primary"
+                text-center
+                block
+                (click)="retrieveAttachment()">Attachment</span>
+          </ion-item>
+ 
+ 
+          <ion-item margin-bottom>
+             <ion-label>Subject:</ion-label>
+             <ion-input
+                type="string"
+                formControlName="subject"></ion-input>
+          </ion-item>
+ 
+ 
+          <ion-item margin-bottom>
+             <ion-label>Message:</ion-label>
+             <ion-textarea
+                formControlName="message"></ion-textarea>
+          </ion-item>
+ 
+ 
+          <button
+             ion-button
+             color="primary"
+             text-center
+             block [disabled]="!form.valid">Send your message</button>
+       </ion-list>
+    </form>
+ </ion-content> -->

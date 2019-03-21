@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router'
 import { SettingsModal } from '../modals/modals.component';
 import { SearchModal } from '../search_modal/search_modal.component';
+import { ContactModal } from '../contact_modal/contact_modal.component';
 
 @Component({
   selector: 'app-footer',
@@ -20,9 +21,9 @@ export class FooterComponent implements OnInit {
     this.router.navigate(['/Greet']);
   }
 
-  onSearch(): void {
-    console.log('Search clicked');
-  }
+  // onSearch(): void {
+  //   console.log('Search clicked');
+  // }
 
   logoClick(): void {
     console.log('logo clicked');
@@ -48,12 +49,21 @@ export class FooterComponent implements OnInit {
     return await modalPage.present();
   }
 
+  async openContactModal()
+  {
+    var data = { message : 'hello world' };
+    const modalPage = await this.modal.create({
+      component: ContactModal, 
+      componentProps:{values: data}
+    });
+    return await modalPage.present();
+  }
+
   async closeModal() {
     this.modal.dismiss();
   }
 
   redirectOnClick() {
-    console.log('PLEASE WORK');
     this.router.navigate(['/Matches']);
   }
 

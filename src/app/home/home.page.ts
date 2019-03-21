@@ -13,11 +13,12 @@ import { ApiService } from '../api.service';
 export class HomePage implements OnInit{
 
   url: any;
-  isbnQuery: string = " ";
-  isbn: string = " ";
+  isbnQuery: string = "";
+  isbn: string = "";
   listings: any = [];
-  wants: any = [];
+  wants: any[];
   num: string; // stores the scanned result
+  matches: any[];
 
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService, public navCtrl: NavController,
     private barcodeScanner: BarcodeScanner) { }
@@ -30,6 +31,15 @@ export class HomePage implements OnInit{
 
   searchBooks(data, callback) {
     this.apiService.getBooks(data, callback);
+  }
+
+  setMatches(data) {
+    // let want = this.wants.map(want => want.title);
+    // data.filter(piece => want.includes(piece.title))
+  }
+
+  setWants(data) {
+    // this.wants = data;
   }
 
     setListing(searchedListings) {
@@ -70,6 +80,8 @@ export class HomePage implements OnInit{
     this.url = document.URL;
     this.setListing = this.setListing.bind(this);
     this.searchBooks(this.isbnQuery, this.setListing);
+    this.setWants = this.setWants.bind(this);
+    // this.apiService.renderWantList(this.setWants);
   }
 
 }

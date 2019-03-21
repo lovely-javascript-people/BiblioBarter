@@ -6,7 +6,7 @@
   <title>BiblioBarter</title>
 
   <base href="/" />
-
+  <script src="cordova.js"></script>
   <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="msapplication-tap-highlight" content="no" />
@@ -20,6 +20,52 @@
 
 <body>
   <app-root></app-root>
+  
+
+  <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
+  <script type="text/javascript">
+      window.addEventListener('load', function () {
+          let selectedDeviceId;
+          const codeReader = new ZXing.BrowserBarcodeReader()
+          console.log('ZXing code reader initialized')
+          codeReader.getVideoInputDevices()
+              .then((videoInputDevices) => {
+                  const sourceSelect = document.getElementById('sourceSelect')
+                  selectedDeviceId = videoInputDevices[0].deviceId
+                  if (videoInputDevices.length > 1) {
+                      videoInputDevices.forEach((element) => {
+                          const sourceOption = document.createElement('option')
+                          sourceOption.text = element.label
+                          sourceOption.value = element.deviceId
+                          sourceSelect.appendChild(sourceOption)
+                      })
+                      sourceSelect.onchange = () => {
+                          selectedDeviceId = sourceSelect.value;
+                      }
+                      const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+                      sourceSelectPanel.style.display = 'block'
+                  }
+                  document.getElementById('startButton').addEventListener('click', () => {
+                      codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'video').then((result) => {
+                          console.log(result)
+                          document.getElementById('result').textContent = result.text
+                      }).catch((err) => {
+                          console.error(err)
+                          document.getElementById('result').textContent = err
+                      })
+                      console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
+                  })
+                  document.getElementById('resetButton').addEventListener('click', () => {
+                      document.getElementById('result').textContent = '';
+                      codeReader.reset();
+                      console.log('Reset.')
+                  })
+              })
+              .catch((err) => {
+                  console.error(err)
+              })
+      })
+  </script>
 </body>
 
 </html>

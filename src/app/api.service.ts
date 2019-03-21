@@ -11,8 +11,26 @@ export class ApiService {
   host = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
   local = 'http://localhost:3000';
 
+  contactUs(userId, userEmail, emailBody) {
+    console.log(userId, userEmail, emailBody, 'USER AND MESSAGE INFO');
+    this.http.post(`${this.local}/contactUs`, {userId: userId, userEmail: userEmail, emailBody: emailBody})
+      .subscribe((data) => {
+        console.log(data);
+      });
+  }
+
   userAcceptOffer() {
     console.log('accepted');
+  }
+
+  updateSettings(firstName, lastName, userEmail, userId, searchRadius, address, phoneNumber) {
+    console.log(userId, 'USER ID');
+    console.log(firstName, 'first name');
+    // patch req to server
+    this.http.patch(`${this.local}/user/settings`, {email: userEmail, userId: userId, radius: searchRadius, firstName: firstName, lastName: lastName, address: address, phoneNumber: phoneNumber})
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
 
   getBookInfoForOfferingList(isbn: string, callback) {
@@ -36,6 +54,23 @@ export class ApiService {
     })
   }
 
+  renderWantList(callback) {
+    // console.log(localStorage.userid, 'USERID');
+    this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
+    .subscribe((wantListArray) => {
+      console.log(wantListArray, 'ARRAY OF WANT LIST');
+      callback(wantListArray);
+    })
+  }
+
+  renderListingsList(callback) {
+    this.http.get(`http://localhost:3000/user/listing?${localStorage.userid}`)
+    .subscribe((listingListArray) => {
+      console.log(listingListArray, 'ARRAY OF OFFERING LIST');
+      callback(listingListArray);
+    })
+  }
+
   searchForBookWithIsbn(isbn) {
     this.http.get(`${this.local}/search/listing/isbn?${isbn}`)
     .subscribe((searchedListings: any) => {
@@ -53,6 +88,7 @@ export class ApiService {
 
   getBooks(isbn: string, callback) {
     this.http.get(`${this.local}/search/listing/isbn?${isbn}`).subscribe((searchedListings: any) => {
+      console.log(searchedListings, 'SEARCHED LISTINGS');
       callback(searchedListings);
     })
   }
@@ -65,7 +101,7 @@ export class ApiService {
   }
 
   getOffers(callback) {
-    console.log('TRYING TO GET OFFERS BUT STILL NOT WORKING');
+    // console.log('TRYING TO GET OFFERS BUT STILL NOT WORKING');
     this.http.get(`${this.local}/offers`, { params: { id_user: localStorage.userid }}).subscribe(data => {
       console.log(data, 'DATA IN FROM GETOFFERS API CALL');
       callback(data);
