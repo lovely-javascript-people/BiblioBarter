@@ -639,7 +639,7 @@ app.patch('/user/settings', (req, res) => {
 // users can send us a message
 // userId, userEmail, emailBody
 app.post('/contactUs', (req, res) => {
-  console.log
+  console.log(req.body, 'BODY OF EMAIL');
   db.Contact_Us.create({
     id_user: req.body.userId,
     id_message: req.body.emailBody,
