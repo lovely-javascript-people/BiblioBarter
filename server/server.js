@@ -612,7 +612,11 @@ app.get('/offers', (req, res) => {
 
 // patch /user/settings
 // user may change settings
+/**
+ * @todo make it so that each update does not turn the other values to null
+ */
 app.patch('/user/settings', (req, res) => {
+  let val = req.body; // please change later, not currently saving and not replacing
   db.User.update(
     {
       name_first: req.body.firstName || null,
@@ -642,16 +646,25 @@ app.post('/contactUs', (req, res) => {
   console.log(req.body, 'BODY OF EMAIL');
   db.Contact_Us.create({
     id_user: req.body.userId,
-    id_message: req.body.emailBody,
+    message: req.body.emailBody,
   }).then((success) => {
-    console.log(success);
-    db.User.findOrCreate({
-      where: {
-        email: req.body.userEmail,
-      },
-    });
+    console.log(success, 'SUCCESS');
+    if (req.body.userEmail !== undefined) {
+      db.User.update(
+        {
+          email: req.body.userEmail,
+        },
+        {
+        where: {
+          id_user: req.body.userId,
+        },
+      });
+    } else {
+      console.log('no need to change email');
+    }
   }).then(() => {
     console.log('sucesss in email input');
+    res.status(200).send(JSON.stringify('Message sent to developers'));
   }).catch((err) => {
     console.log(`error in contact us: ${err}`);
   });
