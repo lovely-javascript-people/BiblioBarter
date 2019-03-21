@@ -58,27 +58,40 @@ app.get('/matches', (req, res) => {
 });
 
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '../src/app/greet/greet.page.html');
+  res.sendFile(__dirname + '../src/app/chat/chat.page.html');
   res.send(("HEY HEY HEY"));
 });
 
 // socket io connection
+// this works alone just fine
 // io.on('connection', function (socket) {
 //   console.log('a user connected');
 //   socket.on('disconnect', function () {
 //     console.log('user disconnected');
 //   });
 // });
+// combining here: 
+io.on('connection', function (socket) {
+  console.log('a user connected');
+  socket.on('chat message', function (msg) {
+    console.log('message: ' + msg);
+    io.emit('chat message', msg);
+  });
+  socket.on('disconnect', function () {
+    console.log('user disconnected');
+  });
+});
+// ///////////////////////////
 // io.on('connection', function (socket) {
 //   socket.on('chat message', function (msg) {
 //     console.log('message: ' + msg);
 //   });
 // });
-io.on('connection', function (socket) {
-  socket.on('chat message', function (msg) {
-    io.emit('chat message', msg);
-  });
-});
+// io.on('connection', function (socket) {
+  // socket.on('chat message', function (msg) {
+  //   io.emit('chat message', msg);
+  // });
+// });
 
 // app.listen(port, () => console.log(`Biblio server listening on port ${port}!`));
 
