@@ -56,7 +56,7 @@ export class AuthService {
    * logs user in via auth0 when login button clicked
    */
   public login(): void {
-    // this.auth0.authorize();
+    this.auth0.authorize();
   }
 
 // when user is authenticated, access token is saved to local storage
