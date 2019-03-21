@@ -617,7 +617,7 @@ app.patch('/user/settings', (req, res) => {
     {
       name_first: req.body.firstName || null,
       name_last: req.body.lastName || null,
-      email: req.body.email,
+      email: req.body.email || null,
       search_radius: req.body.radius || null,
       address: req.body.address || null,
       phone_number: req.body.phoneNumber || null,
