@@ -19,6 +19,7 @@ export class HomePage implements OnInit{
   wants: any[];
   num: string; // stores the scanned result
   matches: any[];
+  open: boolean = false;
 
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService, public navCtrl: NavController,
     private barcodeScanner: BarcodeScanner) { }
@@ -27,6 +28,18 @@ export class HomePage implements OnInit{
     console.log(this.listings[index]);
     localStorage.setItem('selectedUser', JSON.stringify(this.listings[index]));
     this.router.navigate(['/peer-profile']);
+  }
+
+  camOpen() {
+    if (!this.open) {
+      this.open = true;
+    }
+  }
+
+  camClose() {
+    if (this.open) {
+      this.open = false;
+    }
   }
 
   searchBooks(data, callback) {
@@ -39,7 +52,9 @@ export class HomePage implements OnInit{
   }
 
   setWants(data) {
-    // this.wants = data;
+    this.wants = data;
+    console.log(this.wants);
+    console.log($);
   }
 
     setListing(searchedListings) {
@@ -81,7 +96,7 @@ export class HomePage implements OnInit{
     this.setListing = this.setListing.bind(this);
     this.searchBooks(this.isbnQuery, this.setListing);
     this.setWants = this.setWants.bind(this);
-    // this.apiService.renderWantList(this.setWants);
+    this.apiService.renderWantList(this.setWants);
   }
 
 }
