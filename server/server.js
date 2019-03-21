@@ -103,6 +103,13 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function () {
     console.log('user disconnected');
   });
+  // When we receive a 'message' event from our client, print out
+  // the contents of that message and then echo it back to our client
+  // using `io.emit()`
+  socket.on("message", message => {
+    console.log("Message Received: " + message);
+    io.emit("message", { type: "new-message", text: message });
+  });
 });
 // ///////////////////////////
 // io.on('connection', function (socket) {

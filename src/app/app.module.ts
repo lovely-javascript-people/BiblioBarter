@@ -26,6 +26,8 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
 // import { EmailProvider } from '../providers/email/email';
 import { ChatPageModule } from './chat/chat.module';
 // import { ChatPage } from './chat/chat.page';
+import { WebSocketServiceService } from './web-socket-service.service';
+import { ChatService } from './chat.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -52,6 +54,8 @@ import { ChatPageModule } from './chat/chat.module';
     AutoCompleteService,
     EmailComposer,
     BarcodeScanner,
+    ChatService,
+    WebSocketServiceService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [],
