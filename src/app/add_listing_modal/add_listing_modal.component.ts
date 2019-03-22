@@ -16,6 +16,7 @@ export class AddListingModal implements OnInit {
   title: string = '';
   userid: number = localStorage.userid;
   // animated: boolean = true;
+  image: string;
 
   constructor(public modal: ModalController, private http: HttpClient, private apiService: ApiService) { }
 
@@ -37,8 +38,9 @@ export class AddListingModal implements OnInit {
     const bookCondition = this.bookCondition;
     const title = this.title;
     const userid = this.userid;
+    const imageLink = this.image;
     console.log(this.title, 'TITLE IN POSTBOOKTOOFFERINGLIST')
-    this.apiService.addBookToUserOfferingList(isbnVal, bookCondition, title, userid);
+    this.apiService.addBookToUserOfferingList(isbnVal, bookCondition, title, userid, imageLink);
   }
 
   getBookTitle(bookInfo) {
@@ -46,6 +48,7 @@ export class AddListingModal implements OnInit {
     this.title = bookInfo[Object.keys(bookInfo)[0]].info_url
     .split('/')[bookInfo[Object.keys(bookInfo)[0]].info_url.split('/').length - 1]
     .split('_').join(' ');
+    this.image = bookInfo[Object.keys(bookInfo)[0]].thumbnail_url || null; // GRABS THE THUMBNAIL
     // console.log(this.title, 'TITLE OF THE BOOK');
   }
 
