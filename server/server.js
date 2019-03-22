@@ -66,7 +66,6 @@ app.get('/matches', (req, res) => {
       })
       if (!matchObj.hasOwnProperty(user.user_name)) {
       matchObj[user.user_name] = [book];
-      matchObj[user.user_name + '_id'] = listing.id_user;
       } else {
         matchObj[user.user_name].push(book);
       }
@@ -136,7 +135,7 @@ io.on('connection', function (socket) {
 app.post('/signup', (req, res) => {
   const { nickname, family_name, given_name, picture } = req.body.params;
   console.log(req.body.params, 'REQ');
-  db.User.create({ user_name: nickname, name_first: given_name, name_last: family_name, link_image: picture }, {fields: ['user_name', 'name_first', 'name_last', 'link_image']})
+  db.User.create({ user_name: nickname, name_first: given_name, name_last: family_name, image_link: picture }, {fields: ['user_name', 'name_first', 'name_last', 'image_link']})
   .then(() => {
     console.log(JSON.stringify('new user success'));
   }).catch((err) => {
@@ -366,7 +365,6 @@ app.get('/peer', (req, res) => {
         console.log(books[1]);
         books.push(listings);
         }).then(() => {
-          console.log(books);
       res.send(books);
     })
   }).catch((err) => {

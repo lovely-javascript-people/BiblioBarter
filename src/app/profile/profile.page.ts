@@ -36,7 +36,7 @@ export class ProfilePage implements OnInit{
         if (data[1].length) {
         this.school = data[1][0].name;
         }
-        this.img = data[0].link_image;
+        this.img = data[0].image_link;
     } else {
       this.user = localStorage.username;
     }

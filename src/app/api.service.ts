@@ -81,6 +81,7 @@ export class ApiService {
   }
 
   getPeerProfile(peerId, callback) {
+    console.log(peerId, 'PEEER ID');
     this.http.get(`${this.local}/peer`, { params: {peerId} }).subscribe(data => {
       callback(data);
     })
