@@ -68,6 +68,7 @@ export class ProfilePage implements OnInit{
 
   acceptOffer(index) {
   // console.log(this.allOffers[index + 1].offer[index], 'OFFER AT INDEX');
+  console.log(this.offers, 'WHAT IM LOOKING FOR');
   this.offerid = this.allOffers[index + 1].offer[index].id_offer;
   const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
@@ -83,14 +84,16 @@ export class ProfilePage implements OnInit{
     this.allOffers = offers;
     let offs: any = []
     for (let offer of offers.slice(1)) {
+      let i = 0;
       if (offer.offer.length) {
     let offerObj: any = {};
     offerObj.offeredTitle = offer.titleOffered.title;
     offerObj.wantedTitle = offer.titleWanted.title;
     offerObj.peer = offer.peer.user_name;
-    offerObj.status = offer.offer.status;
+    offerObj.status = offer.offer[i].status;
     offerObj.email = offer.peer.email;
     offs.push(offerObj);
+    i++;
       }
   }
   this.offers = offs;
