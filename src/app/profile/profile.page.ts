@@ -23,6 +23,7 @@ export class ProfilePage implements OnInit{
   wants: any = [];
   listings: any = [];
   allOffers: any = [];
+  loaded: boolean = false;
   offerid: any; // need to grab correct offerid --> where do we get this
 
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router, private http: HttpClient,) {}
@@ -37,6 +38,7 @@ export class ProfilePage implements OnInit{
         this.user = data[0].user_name;
         if (data[1].length) {
         this.school = data[1][0].name;
+        this.loaded = true;
         }
         
     } else {
@@ -79,13 +81,15 @@ export class ProfilePage implements OnInit{
     this.allOffers = offers;
     let offs: any = []
     for (let offer of offers.slice(1)) {
-    let offerobj: any = {};
-    offerobj.offeredTitle = offer.titleOffered.title;
-    offerobj.wantedTitle = offer.titleWanted.title;
-    offerobj.peer = offer.peer.user_name;
-    offerobj.status = offer.offer.status;
-    offerobj.email = offer.peer.email;
-    offs.push(offerobj);
+      if (offer.offer.length) {
+    let offerObj: any = {};
+    offerObj.offeredTitle = offer.titleOffered.title;
+    offerObj.wantedTitle = offer.titleWanted.title;
+    offerObj.peer = offer.peer.user_name;
+    offerObj.status = offer.offer.status;
+    offerObj.email = offer.peer.email;
+    offs.push(offerObj);
+      }
   }
   this.offers = offs;
   console.log(this.offers, 'THIS DOT OFFERS');
