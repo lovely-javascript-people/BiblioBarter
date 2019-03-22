@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { AutoCompleteService } from '../services/autoComplete/auto-complete.service';
 import { ApiService } from '../api.service';
 import { ToastController } from '@ionic/angular';
+import { FormGroup, FormControl, Validators, } from '@angular/forms';
 
 @Component({
   selector: 'app-modals',
@@ -23,6 +24,7 @@ export class SettingsModal implements OnInit {
   userEmail: string;
   phoneNumber: string;
   address: string;
+  registrationForm: FormGroup;
 
   constructor(
     public modal: ModalController, 
