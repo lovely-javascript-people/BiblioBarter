@@ -653,6 +653,7 @@ app.get('/offers', (req, res) => {
       }
     })
     if (offered.length) {
+      for (let offer of offered) {
     let offerer = await db.User.findOne({
       where: {
         id_user: await piece.dataValues.id_user
@@ -663,10 +664,10 @@ app.get('/offers', (req, res) => {
         id_book: await piece.id_book
       }
     })
-    console.log('OFFERED ********', offered, 'OFFERED******');
+    console.log('OFFERED ********', offer, 'offer******');
     let wanted = await db.Listing.findOne({
       where: {
-        id_listing: offered[0].id_listing_sender
+        id_listing: offer.id_listing_sender
       }
     })
     var titleWantd = await db.Book.findOne({
@@ -676,7 +677,7 @@ app.get('/offers', (req, res) => {
     })
     let peerListing = await db.Listing.findOne({
       where: {
-        id_listing: offered[0].id_listing_sender
+        id_listing: offer.id_listing_sender
       }
     })
     var peer = await db.User.findOne({
@@ -684,8 +685,9 @@ app.get('/offers', (req, res) => {
         id_user: peerListing.id_user
       }
     })
+    resArr.push({ offer: await offered, 'titleWanted': titleOffered, 'titleOffered': titleWantd, peer });
   }
-  resArr.push({ offer: await offered, 'titleWanted': titleOffered, 'titleOffered': titleWantd, peer });
+}
   }
     res.send(resArr);
   })
