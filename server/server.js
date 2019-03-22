@@ -207,6 +207,7 @@ app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new f
     condition: null, // set to NULL for now
     id_user: req.body.userid,
     title: req.body.title,
+    image_link: req.body.imageLink,
   }).then(() => {
     return db.Want.findAll({
       where: {
@@ -253,6 +254,7 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
     isbn: isbnNum,
     title: req.body.title,
     condition: req.body.bookCondition,
+    image_link: req.body.imageLink
   }).catch((err) => {
     console.log(`book creation err: ${err}`)
   }).then(() => {

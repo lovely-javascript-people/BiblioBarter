@@ -42,6 +42,9 @@ npm install
 bower install
 ```
 
+start api server: `node server/server.js`
+start ionic server: `ionic serve`
+
 ### Roadmap
 
 View the project roadmap [here](LINK_TO_PROJECT_ISSUES)

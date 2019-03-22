@@ -40,15 +40,15 @@ export class ApiService {
       }))
   }
 
-  addBookToUserOfferingList(isbnVal, bookCondition, title, userid) {
-    this.http.post(`${this.local}/user/listing`, { params: isbnVal, bookCondition, title, userid })
+  addBookToUserOfferingList(isbnVal, bookCondition, title, userid, imageLink) {
+    this.http.post(`${this.local}/user/listing`, { params: isbnVal, bookCondition, title, userid, imageLink })
       .subscribe((allListings: any) => {
         console.log(allListings, 'ALL LISTINGS IN OFFERING LIST')
         });
   }
 
-  addBookToUserWantList(isbnVal, userid, title) {
-    this.http.post(`${this.local}/user/want`, { params: isbnVal, userid, title })
+  addBookToUserWantList(isbnVal, userid, title, imageLink) {
+    this.http.post(`${this.local}/user/want`, { params: isbnVal, userid, title, imageLink })
       .subscribe((allWants: any) => {
       console.log(allWants, 'ALL WANTS FROM API SERVICE');
     })
