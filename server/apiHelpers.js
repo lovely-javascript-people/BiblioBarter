@@ -1,5 +1,10 @@
 /* eslint-disable */
 const db = require('../database/database.js');
+
+/**
+ * @todo File is currently depracated. Was started out in the beginning of project.
+ * Come back to refactor server functions into here
+ */
 /**
  * function findBookISBN takes in book title and calls on api to grab isbn number for return
  * @param {string} : isbnVal of book title, need to change to number for query

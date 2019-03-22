@@ -16,6 +16,7 @@ export class AddListingModal implements OnInit {
   title: string = '';
   userid: number = localStorage.userid;
   // animated: boolean = true;
+  image: string = '';
 
   constructor(public modal: ModalController, private http: HttpClient, private apiService: ApiService) { }
 
@@ -45,6 +46,7 @@ export class AddListingModal implements OnInit {
     this.title = bookInfo[Object.keys(bookInfo)[0]].info_url
     .split('/')[bookInfo[Object.keys(bookInfo)[0]].info_url.split('/').length - 1]
     .split('_').join(' ');
+    this.image = bookInfo.thumbnail_url;
     // console.log(this.title, 'TITLE OF THE BOOK');
   }
 
