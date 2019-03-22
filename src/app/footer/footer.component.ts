@@ -32,10 +32,9 @@ export class FooterComponent implements OnInit {
   async openSettingsModal()
   {
     console.log('hi')
-    var data = { message : 'hello world' };
+
     const modalPage = await this.modal.create({
-      component: SettingsModal, 
-      componentProps:{values: data}
+      component: SettingsModal
     });
     return await modalPage.present();
   }
@@ -54,8 +53,7 @@ export class FooterComponent implements OnInit {
   {
     var data = { message : 'hello world' };
     const modalPage = await this.modal.create({
-      component: ContactModal, 
-      componentProps:{values: data}
+      component: ContactModal,
     });
     return modalPage.present();
   }
@@ -66,6 +64,10 @@ export class FooterComponent implements OnInit {
 
   redirectOnClick() {
     this.router.navigate(['/Matches']);
+  }
+
+  redirectToProfile() {
+    this.router.navigate(['/Profile']);
   }
   
   redirectToChat() {
