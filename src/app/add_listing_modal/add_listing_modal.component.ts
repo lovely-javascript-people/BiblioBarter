@@ -44,6 +44,7 @@ export class AddListingModal implements OnInit {
   }
 
   getBookTitle(bookInfo) {
+    console.log(bookInfo, 'BOOK INFO');
     this.title = bookInfo[Object.keys(bookInfo)[0]].info_url
     .split('/')[bookInfo[Object.keys(bookInfo)[0]].info_url.split('/').length - 1]
     .split('_').join(' ');

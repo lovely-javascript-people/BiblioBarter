@@ -1,3 +1,4 @@
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <ion-header>
   <ion-toolbar>
       <ion-title>
@@ -10,13 +11,20 @@
         
     <div>
       <!-- <div style="width:100%;Text-align:center; font-size: 20px; font-weight:700; font-size:120%; color: black"> -->
-      <a style="color:#176ACC; font-weight:700;">
+      <!-- <a style="color:#176ACC; font-weight:700;">
         SEARCH:
-      </a>
+      </a> -->
     </div>
       <div>
-      <input id="searchInput" [(ngModel)]="isbnQuery" #ctrl="ngModel" [(ngModel)]="num" placeholder="isbn" /> <br>
-      <ion-button size="small" (click)="searchBooks(isbnQuery, setListing)" routerLink="/Matches">Search</ion-button>
+      <!-- <input id="searchInput" [(ngModel)]="isbnQuery" #ctrl="ngModel" [(ngModel)]="num" placeholder="isbn" /> <br> -->
+      <!-- <ion-button size="small" (click)="searchBooks(isbnQuery, setListing)" routerLink="/Matches">Search</ion-button> -->
+      <div class="input-group mb-3">
+          <input type="text" class="form-control" [(ngModel)]="isbnQuery" #ctrl="ngModel" [(ngModel)]="num" placeholder="isbn" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <span (click)="searchBooks(isbnQuery, setListing)" routerLink="/Matches" class="input-group-text" style="background-color:#176ACC; color: white" id="basic-addon2">Search</span>
+          </div>
+        </div>
+
       <ion-button size="small" id="startButton" (click)="camOpen()">Scan Barcode</ion-button>
       <ion-button size="small" id="resetButton" (click)="camClose()">Close Scanner</ion-button></div>
       <div [hidden]='!open' id="sourceSelectPanel" style="display:none">
@@ -25,9 +33,17 @@
       </div>
       <div *ngIf='open'>
           <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
-      </div>
-      <div style="color:#176ACC; font-weight:700;">  
-          <p>YOUR MATCHES</p>
+        </div>
+        <div style="color:#176ACC; font-weight:700;">
+          <br>
+            <p>SEARCH RESULTS:</p>
+          </div>
+          <ion-list>
+              <ion-item #list class={{listing.id_user}} *ngFor="let listing of listings; let i = index" [type]="listing">TITLE: {{listing.title}}  |  #ISBN: {{listing.isbn}}  |  CONDITION: {{listing.condition}} <ion-button (click)="profileButtonClick(i)">PROFILE</ion-button></ion-item>
+            </ion-list>
+      <div style="color:#176ACC; font-weight:700;">
+        <br>
+          <p>YOUR MATCHES:</p>
         </div>
         <ion-list>
             <ion-item #matched style="font-size: 16px" *ngFor="let match of matches; let i = index" [type]="match">{{match.name}} has {{match.num}} {{match.type}} you want <ion-button (click)="profileButtonClick(match.id)">PROFILE</ion-button></ion-item>

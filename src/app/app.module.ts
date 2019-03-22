@@ -28,6 +28,8 @@ import { ChatPageModule } from './chat/chat.module';
 // import { ChatPage } from './chat/chat.page';
 import { WebSocketServiceService } from './web-socket-service.service';
 import { ChatService } from './chat.service';
+// import { ReactiveFormsModule, FormControl } from '@angular/forms';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,7 +46,9 @@ import { ChatService } from './chat.service';
     ContactModalModule,
     WantListModule,
     PeerProfilePageModule,
-    PrivacyModule, 
+    PrivacyModule,
+    // ReactiveFormsModule,
+    // FormControl,
     ChatPageModule],
   providers: [
     StatusBar,

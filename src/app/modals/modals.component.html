@@ -12,6 +12,8 @@
 <ion-button (click)="closeModal()">Submit Info</ion-button>
 <div style="color: crimson">DANGER ZONE!!!<br />Delete Your Account <ion-button (click)="deleteProfile()">Please don't press me!!!<ion-icon name="sad"></ion-icon></ion-button></div> -->
 
+
+
 <ion-content padding>
     <ion-icon style="width: 40px;height: 40px;" name="close" (click)="closeModal()"></ion-icon>
     <div style="margin-bottom:15px; text-align:center">
@@ -32,3 +34,11 @@
         </div>    
     </div>
   </ion-content>
+
+<!-- 
+  <form [formGroup]="myForm">
+      Naam: <input type="text" formControlName="name"><br>
+      Age: <input type="number" formControlName="age">
+    
+      <button>Save</button>
+    </form> -->
