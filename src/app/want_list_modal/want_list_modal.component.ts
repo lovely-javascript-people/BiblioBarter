@@ -13,6 +13,7 @@ export class WantListModal implements OnInit {
   isbnVal: string = '';
   userid: number = localStorage.userid;
   title: string = '';
+  imageLink: string;
 
   constructor(public modal: ModalController, private http: HttpClient, private apiService: ApiService) { }
 
@@ -35,10 +36,11 @@ export class WantListModal implements OnInit {
       this.title = bookInfo[Object.keys(bookInfo)[0]].info_url
       .split('/')[bookInfo[Object.keys(bookInfo)[0]].info_url.split('/').length - 1]
       .split('_').join(' ');
-
+      this.imageLink = bookInfo[Object.keys(bookInfo)[0]].thumbnail_url || null;
     const userid = this.userid;
     const title = this.title;
-    this.apiService.addBookToUserWantList(isbnVal, userid, title);
+    const imageLink = this.imageLink;
+    this.apiService.addBookToUserWantList(isbnVal, userid, title, imageLink);
 
     this.closeModal();
     }));
