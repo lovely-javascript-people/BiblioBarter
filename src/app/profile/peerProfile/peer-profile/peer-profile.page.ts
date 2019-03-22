@@ -96,20 +96,7 @@ export class PeerProfilePage implements OnInit {
     this.me = JSON.parse(localStorage.userid);
     this.peer = localStorage.selectedUser;
 
-    this.wants = [
-      {
-        title: 'Computer science 101: how to be toxic on stack overflow',
-        ISBN: 8675309
-      },
-      {
-        title: 'Computer science 102: Why backbone is the best',
-        ISBN: 5551234
-      },
-      {
-        title: 'ZOMG! Those coding bootcamps steal jobs',
-        ISBN: 8000000
-      }
-    ];
+    this.wants = [];
     this.setYourBooks = this.setYourBooks.bind(this);
     this.setUser = this.setUser.bind(this);
     this.setBooks = this.setBooks.bind(this);
