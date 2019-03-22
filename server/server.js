@@ -638,53 +638,51 @@ app.get('/offers', (req, res) => {
     }
   }).then(async data => {
     console.log(data, 'ISSSSSSSSS');
-    let myOffers = {};
-    for (let piece of data) {
+    let lists = [...data];
+    let resArr = [data];
+    for (let piece of lists) {
       console.log(piece, 'PIECE');
-    let offered = await db.Offer.findAll({
+    var offered = await db.Offer.findAll({
       where: {
         id_listing_recipient: piece.dataValues.id_listing
       }
     })
-    myOffers.offer = await offered;
+    if (offered.length) {
     let offerer = await db.User.findOne({
       where: {
         id_user: await piece.dataValues.id_user
       }
     })
-    let titleOffered = await db.Book.findOne({
+    var titleOffered = await db.Book.findOne({
       where: {
         id_book: await piece.id_book
       }
     })
-    myOffers.titleWanted =titleOffered;
     console.log('OFFERED ********', offered, 'OFFERED******');
     let wanted = await db.Listing.findOne({
       where: {
         id_listing: offered[0].id_listing_sender
       }
     })
-    let titleWantd = await db.Book.findOne({
+    var titleWantd = await db.Book.findOne({
       where: {
         id_book: await wanted.id_book
       }
     })
-    myOffers.titleOffered = titleWantd;
     let peerListing = await db.Listing.findOne({
       where: {
         id_listing: offered[0].id_listing_sender
       }
     })
-    let peer = await db.User.findOne({
+    var peer = await db.User.findOne({
       where: {
         id_user: peerListing.id_user
       }
     })
-    myOffers.peer = peer;
-    console.log(myOffers);
   }
-  data.push(myOffers);
-    res.send(data)
+  resArr.push({ offer: await offered, 'titleWanted': titleOffered, 'titleOffered': titleWantd, peer });
+  }
+    res.send(resArr);
   })
 })
 
