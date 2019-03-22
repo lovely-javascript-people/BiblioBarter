@@ -99,7 +99,7 @@ export class ApiService {
       resp['bookWantedTitle'] = options.bookWantedTitle;
       console.log(resp);
     })
-  }
+  };
 
   getOffers(callback) {
     console.log('TRYING TO GET OFFERS BUT STILL NOT WORKING');

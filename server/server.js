@@ -1,14 +1,14 @@
 /* eslint-disable */
 const express = require('express');
 const bodyParser = require('body-parser');
-// const cors = require('cors');
+// const cors = require('cors')
 const { sequelize } = require('../database/database.js');
 const db = require('../database/database.js');
 const helpers = require('./apiHelpers.js');
 
 // const app = express();
 const PORT = process.env.PORT || 3000;
-////////////////
+///////////////
 const app = express();
 const socketIO = require('socket.io');
 
@@ -64,8 +64,10 @@ app.get('/matches', (req, res) => {
           id_book: listing.id_book
         }
       })
+      matchObj[user.user_name + '_id'] = listing.id_user;
       if (!matchObj.hasOwnProperty(user.user_name)) {
       matchObj[user.user_name] = [book];
+      matchObj[(user.user_name + '_id')] = listing.id_user;
       } else {
         matchObj[user.user_name].push(book);
       }
@@ -77,6 +79,7 @@ app.get('/matches', (req, res) => {
     res.status(200).send(matchObj);
     matches = [];
     matchObj = {};
+    return;
   })
 });
 
@@ -688,7 +691,7 @@ app.get('/offers', (req, res) => {
   })
 })
 
-// patch /user/settings
+// patch /user/setting
 // user may change settings
 /**
  * @todo make it so that each update does not turn the other values to null

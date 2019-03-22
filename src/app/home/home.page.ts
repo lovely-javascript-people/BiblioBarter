@@ -123,19 +123,18 @@ export class HomePage implements OnInit{
       console.log(searchedListings, 'BACK ON MATCHES PAGE');
       this.listings = searchedListings;
     }
-  scan() {
-    this.barcodeScanner.scan().then(barcodeData => {
-      // this is called when a barcode is found
-      console.log(`barcode data: ${barcodeData}`);
-      console.log(("We got a barcode\n" +
-        "Result: " + barcodeData.text + "\n" +
-        "Format: " + barcodeData.format + "\n" +
-        "Cancelled: " + barcodeData.cancelled));
-      this.num = barcodeData.text
-    }).catch((err) => {
-      console.log(`error in barcode scan: ${err}`);
-    });
-  }
+  // scan() {
+  //   this.barcodeScanner.scan().then(barcodeData => {
+  //     // this is called when a barcode is found
+  //     console.log(`barcode data: ${barcodeData}`);
+  //     console.log(("We got a barcode\n" +
+  //       "Result: " + barcodeData.text + "\n" +
+  //       "Format: " + barcodeData.format + "\n" +
+  //       "Cancelled: " + barcodeData.cancelled));
+  //     this.num = barcodeData.text
+  //   }).catch((err) => {
+  //   });
+  // }
 
   ngOnInit() {
     this.url = document.URL;
