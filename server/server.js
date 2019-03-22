@@ -617,6 +617,7 @@ app.post('/offerlisting', (req, res) => {
 // Final transaction made by two users boolean changed
 app.patch('/offerlisting', (req, res) => {
   // needs id of offer
+  console.log(req.body, 'REQ BODY /OFFERLISTING');
   db.Offer.update(
     {
       status: req.body.params.status,

@@ -19,11 +19,11 @@ export class ProfilePage implements OnInit{
   user: any;
   school: any;
   offers: any = [];
-  acceptedOffers: any = [];
   wants: any = [];
   listings: any = [];
   allOffers: any = [];
   loaded: boolean = false;
+  acceptedOffs: any = [];
   offerid: any; // need to grab correct offerid --> where do we get this
 
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router, private http: HttpClient,) {}
@@ -66,13 +66,20 @@ export class ProfilePage implements OnInit{
     return await modalPage.present();
   }
 
-  acceptOffer() {
-  this.offerid = this.allOffers[1].offer.id_offer;
+  acceptOffer(index) {
+  
+  this.offerid = this.allOffers[index + 1].offer[index].id_offer;
   const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
   this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'accepted', offerId: id_offer} })
     .subscribe((offerData) => {
-      console.log(offerData, 'OFFER DATA FROM SERVER');
+      console.log(offerData, 'OFFER DATA');
+      // move accepted offers to accepted offers list
+      // if(offerData.status === 'accepted'){
+      //   console.log(offerData, 'OFFER DATA');
+      //   console.log(this.offers[index], 'OFFERS AT INDEX');
+      //   this.acceptedOffers.push(this.offers[index]);
+      // }
     })
   }
 
@@ -80,28 +87,48 @@ export class ProfilePage implements OnInit{
     console.log(offers, 'OFFERS');
     this.allOffers = offers;
     let offs: any = []
-    for (let offer of offers.slice(1)) {
-      if (offer.offer.length) {
+    let acceptedOffers: any = [];
+    // let i = 0;
+    for (let i = 1; i < offers.length; i++) {
+      console.log(offers[i].offer[i - 1], 'OFFERS AT I');
+        if (offers[i].offer.length && offers[i].offer[i - 1] && offers[i].offer[i - 1].status === 'pending') {
     let offerObj: any = {};
-    offerObj.offeredTitle = offer.titleOffered.title;
-    offerObj.wantedTitle = offer.titleWanted.title;
-    offerObj.peer = offer.peer.user_name;
-    offerObj.status = offer.offer.status;
-    offerObj.email = offer.peer.email;
+    offerObj.offeredTitle = offers[i].titleOffered.title;
+    offerObj.wantedTitle = offers[i].titleWanted.title;
+    offerObj.peer = offers[i].peer.user_name;
+    offerObj.status = offers[i].offer[i - 1].status;
+    offerObj.email = offers[i].peer.email;
+    offerObj.index = i;
+    console.log(offerObj, 'OFFER OBJECT');
     offs.push(offerObj);
-      }
+      } else if (offers[i].offer.length && offers[i].offer[i - 1] && offers[i].offer[i - 1].status === 'accepted') {
+    let offerObj: any = {};
+    offerObj.offeredTitle = offers[i].titleOffered.title;
+    offerObj.wantedTitle = offers[i].titleWanted.title;
+    offerObj.peer = offers[i].peer.user_name;
+    offerObj.status = offers[i].offer[i - 1].status;
+    offerObj.email = offers[i].peer.email;
+    offerObj.index = i;
+    console.log(offerObj, 'OFFER OBJECT');
+    acceptedOffers.push(offerObj);
+      } 
+
   }
+
   this.offers = offs;
+  this.acceptedOffs = acceptedOffers;
   console.log(this.offers, 'THIS DOT OFFERS');
 }
 
-  rejectOffer() {
-    console.log('offer rejected');
-    const id_offer = this.allOffers[2].offer.id_offer;
+  rejectOffer(index) {
+    this.offerid = this.allOffers[index + 1].offer[index].id_offer;
+    const id_offer = this.offerid;
+      // this.apiService.userAcceptOffer(); // for when we refactor
     this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
-    .subscribe(() => {
+      .subscribe((offerData) => {
+        console.log(offerData, 'OFFER DATA FROM SERVER --- REJECTED');
+      })
 
-    })
     }
 
   setWantList(array) {
