@@ -66,13 +66,16 @@ export class ProfilePage implements OnInit{
     return await modalPage.present();
   }
 
-  acceptOffer() {
-  this.offerid = this.allOffers[1].offer.id_offer;
+  acceptOffer(index) {
+  // console.log(this.allOffers[index + 1].offer[index], 'OFFER AT INDEX');
+  console.log(this.offers, 'WHAT IM LOOKING FOR');
+  this.offerid = this.allOffers[index + 1].offer[index].id_offer;
   const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
+    console.log(this.allOffers, 'ALL OFFERS');
   this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'accepted', offerId: id_offer} })
     .subscribe((offerData) => {
-      console.log(offerData, 'OFFER DATA FROM SERVER');
+      // console.log(offerData, 'OFFER DATA FROM SERVER');
     })
   }
 
@@ -81,21 +84,23 @@ export class ProfilePage implements OnInit{
     this.allOffers = offers;
     let offs: any = []
     for (let offer of offers.slice(1)) {
+      let i = 0;
       if (offer.offer.length) {
     let offerObj: any = {};
     offerObj.offeredTitle = offer.titleOffered.title;
     offerObj.wantedTitle = offer.titleWanted.title;
     offerObj.peer = offer.peer.user_name;
-    offerObj.status = offer.offer.status;
+    offerObj.status = offer.offer[i].status;
     offerObj.email = offer.peer.email;
     offs.push(offerObj);
+    i++;
       }
   }
   this.offers = offs;
   console.log(this.offers, 'THIS DOT OFFERS');
 }
 
-  rejectOffer() {
+  rejectOffer(index) {
     console.log('offer rejected');
     const id_offer = this.allOffers[2].offer.id_offer;
     this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
