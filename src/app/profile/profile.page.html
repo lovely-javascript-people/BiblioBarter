@@ -52,10 +52,9 @@
       </a>
       <ion-list>
           <ion-item *ngFor="let offer of acceptedOffs">
-            {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}} <ion-button (click)="acceptOffer()" >Accept</ion-button><ion-button (click)="rejectOffer()" >Reject</ion-button>
+            {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}<ion-button (click)="rejectOffer()" >Cancel</ion-button>
           </ion-item>
       </ion-list><br />
 </ion-content>
-
 
 <app-footer></app-footer>
