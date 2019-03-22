@@ -102,9 +102,10 @@ export class PeerProfilePage implements OnInit {
     this.setBooks = this.setBooks.bind(this);
     this.getPeerBooks = this.getPeerBooks.bind(this);
     if (this.peer.listing) {
+      console.log(this.peer);
     this.getPeerBooks(this.peer.listing.id_user, this.setBooks);
     } else {
-      this.getPeerBooks(Number(this.peer), this.setBooks);
+      this.getPeerBooks(this.peer, this.setBooks);
     }
     this.setYourWants = this.setYourWants.bind(this);
     
