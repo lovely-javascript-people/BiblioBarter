@@ -32,11 +32,12 @@ export class ProfilePage implements OnInit{
     localStorage.setItem('userid', data[0].id_user);
 
     if (data[0].length) {
+      this.img = data[0].image_link;
         this.user = data[0].user_name;
         if (data[1].length) {
         this.school = data[1][0].name;
         }
-        this.img = data[0].image_link;
+        
     } else {
       this.user = localStorage.username;
     }

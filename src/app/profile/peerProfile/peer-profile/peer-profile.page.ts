@@ -24,6 +24,7 @@ export class PeerProfilePage implements OnInit {
   listings: any[];
   entireListings: any[];
   possibleBooks: any[] = [];
+  isReady: string;
 
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router,) {}
 
@@ -55,6 +56,7 @@ export class PeerProfilePage implements OnInit {
     let xRefer = data.filter(piece => wants.includes(piece.title));
     this.possibleBooks.push(xRefer);
     console.log(this.possibleBooks);
+    this.isReady = 'Ready!'
   }
 
   async setBooks(data) {

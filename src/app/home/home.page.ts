@@ -54,6 +54,12 @@ export class HomePage implements OnInit{
     this.apiService.getBooks(data, callback);
   }
 
+  setUser(data) {
+    console.log(data);
+    // add userid to local storage
+    localStorage.setItem('userid', data[0].id_user);
+  }
+
   setOthersWants(data) {
     let piece = data.slice(0, data.length - 2);
     let filtP = piece.filter(bit => this.yourListings.includes(bit.title));
@@ -147,6 +153,7 @@ export class HomePage implements OnInit{
     this.apiService.renderWantList(this.setYourWants);
     this.apiService.renderListingsList(this.setYourListings);
     this.apiService.getMatches(this.setMatches);
+    this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
   }
 
 }

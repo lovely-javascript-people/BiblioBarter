@@ -34,6 +34,7 @@
     <a style="color:176ACC; font-weight:700; Text-align:center;">
       MAKE AN OFFER
     </a>
+    <div *ngIf="isReady === 'Ready!'">
     <ion-list>
       <ion-item>
         <label color="primary" stacked>I want:     </label><br />
@@ -54,6 +55,7 @@
       </ion-item>
       <ion-button (click)="makeOffer(want.value[0], offer.value[0])">Submit offer</ion-button>
     </ion-list>
+    </div>
 </ion-content>
 
 
