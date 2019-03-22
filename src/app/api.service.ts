@@ -101,7 +101,7 @@ export class ApiService {
   }
 
   getOffers(callback) {
-    // console.log('TRYING TO GET OFFERS BUT STILL NOT WORKING');
+    console.log(localStorage.userid, 'TRYING TO GET OFFERS BUT STILL NOT WORKING');
     this.http.get(`${this.local}/offers`, { params: { id_user: localStorage.userid }}).subscribe(data => {
       console.log(data, 'DATA IN FROM GETOFFERS API CALL');
       callback(data);
