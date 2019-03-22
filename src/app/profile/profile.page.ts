@@ -23,6 +23,7 @@ export class ProfilePage implements OnInit{
   wants: any = [];
   listings: any = [];
   allOffers: any = [];
+  loaded: boolean = false;
   offerid: any; // need to grab correct offerid --> where do we get this
 
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router, private http: HttpClient,) {}
@@ -33,11 +34,13 @@ export class ProfilePage implements OnInit{
     localStorage.setItem('userid', data[0].id_user);
 
     if (data[0].length) {
+      this.img = data[0].image_link;
         this.user = data[0].user_name;
         if (data[1].length) {
         this.school = data[1][0].name;
+        this.loaded = true;
         }
-        this.img = data[0].image_link;
+        
     } else {
       this.user = localStorage.username;
     }
@@ -63,13 +66,16 @@ export class ProfilePage implements OnInit{
     return await modalPage.present();
   }
 
-  acceptOffer() {
-  this.offerid = this.allOffers[1].offer.id_offer;
+  acceptOffer(index) {
+  // console.log(this.allOffers[index + 1].offer[index], 'OFFER AT INDEX');
+  console.log(this.offers, 'WHAT IM LOOKING FOR');
+  this.offerid = this.allOffers[index + 1].offer[index].id_offer;
   const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
+    console.log(this.allOffers, 'ALL OFFERS');
   this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'accepted', offerId: id_offer} })
     .subscribe((offerData) => {
-      console.log(offerData, 'OFFER DATA FROM SERVER');
+      // console.log(offerData, 'OFFER DATA FROM SERVER');
     })
   }
 
@@ -78,19 +84,23 @@ export class ProfilePage implements OnInit{
     this.allOffers = offers;
     let offs: any = []
     for (let offer of offers.slice(1)) {
-    let offerobj: any = {};
-    offerobj.offeredTitle = offer.titleOffered.title;
-    offerobj.wantedTitle = offer.titleWanted.title;
-    offerobj.peer = offer.peer.user_name;
-    offerobj.status = offer.offer.status;
-    offerobj.email = offer.peer.email;
-    offs.push(offerobj);
+      let i = 0;
+      if (offer.offer.length) {
+    let offerObj: any = {};
+    offerObj.offeredTitle = offer.titleOffered.title;
+    offerObj.wantedTitle = offer.titleWanted.title;
+    offerObj.peer = offer.peer.user_name;
+    offerObj.status = offer.offer[i].status;
+    offerObj.email = offer.peer.email;
+    offs.push(offerObj);
+    i++;
+      }
   }
   this.offers = offs;
   console.log(this.offers, 'THIS DOT OFFERS');
 }
 
-  rejectOffer() {
+  rejectOffer(index) {
     console.log('offer rejected');
     const id_offer = this.allOffers[2].offer.id_offer;
     this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })

@@ -25,8 +25,8 @@
           </div>
         </div>
 
-      <ion-button size="small" id="startButton" (click)="camOpen()">Scan Barcode</ion-button>
-      <ion-button size="small" id="resetButton" (click)="camClose()">Close Scanner</ion-button></div>
+      <ion-button [hidden]='open' size="small" id="startButton" (click)="camOpen()">Scan Barcode</ion-button>
+      <ion-button [hidden]='!open' size="small" id="resetButton" (click)="camClose()">Close Scanner</ion-button></div>
       <div [hidden]='!open' id="sourceSelectPanel" style="display:none">
           <select id="sourceSelect" style="max-width:400px">
           </select>
