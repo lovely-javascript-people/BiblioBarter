@@ -31,6 +31,7 @@ export class FooterComponent implements OnInit {
 
   async openSettingsModal()
   {
+    console.log('hi')
     var data = { message : 'hello world' };
     const modalPage = await this.modal.create({
       component: SettingsModal, 
@@ -46,7 +47,7 @@ export class FooterComponent implements OnInit {
       component: SearchModal, 
       componentProps:{values: data}
     });
-    return await modalPage.present();
+    return modalPage.present();
   }
 
   async openContactModal()
@@ -56,7 +57,7 @@ export class FooterComponent implements OnInit {
       component: ContactModal, 
       componentProps:{values: data}
     });
-    return await modalPage.present();
+    return modalPage.present();
   }
 
   async closeModal() {
