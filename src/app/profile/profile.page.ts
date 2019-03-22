@@ -19,6 +19,7 @@ export class ProfilePage implements OnInit{
   user: any;
   school: any;
   offers: any = [];
+  acceptedOffers: any = [];
   wants: any = [];
   listings: any = [];
   allOffers: any = [];

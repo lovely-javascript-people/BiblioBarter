@@ -16,8 +16,15 @@
       </a> -->
     </div>
       <div>
-      <input id="searchInput" [(ngModel)]="isbnQuery" #ctrl="ngModel" [(ngModel)]="num" placeholder="isbn" /> <br>
-      <ion-button size="small" (click)="searchBooks(isbnQuery, setListing)" routerLink="/Matches">Search</ion-button>
+      <!-- <input id="searchInput" [(ngModel)]="isbnQuery" #ctrl="ngModel" [(ngModel)]="num" placeholder="isbn" /> <br> -->
+      <!-- <ion-button size="small" (click)="searchBooks(isbnQuery, setListing)" routerLink="/Matches">Search</ion-button> -->
+      <div class="input-group mb-3">
+          <input type="text" class="form-control" [(ngModel)]="isbnQuery" #ctrl="ngModel" [(ngModel)]="num" placeholder="isbn" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <span (click)="searchBooks(isbnQuery, setListing)" routerLink="/Matches" class="input-group-text" style="background-color:#176ACC; color: white" id="basic-addon2">Search</span>
+          </div>
+        </div>
+
       <ion-button size="small" id="startButton" (click)="camOpen()">Scan Barcode</ion-button>
       <ion-button size="small" id="resetButton" (click)="camClose()">Close Scanner</ion-button></div>
       <div [hidden]='!open' id="sourceSelectPanel" style="display:none">

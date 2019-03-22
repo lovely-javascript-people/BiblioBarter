@@ -7,19 +7,20 @@
 </ion-header>
 
 <ion-content padding fullscreen="true">
-  <!-- <img src='{{img}}' /><br /> -->
-  <!-- {{school}} -->
+  <img src='{{img}}' /><br />
+  {{school}}
   <div style="width:100%;Text-align:center; font-size: 20px; font-weight:700; font-size:120%">
     <p>{{user | uppercase}}</p>
   </div>
+  <br />
   <a style="color:176ACC; font-weight:700;">
-    MY OFFERS:
+    PENDING OFFERS:
   </a>
   <ion-list>
       <ion-item *ngFor="let offer of offers">
         {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}  |  STATUS: {{offer.status}} <ion-button (click)="acceptOffer()" >Accept</ion-button><ion-button (click)="rejectOffer()" >Reject</ion-button>
       </ion-item>
-  </ion-list><br /><br /><br />
+  </ion-list><br />
   <a style="color:176ACC; font-weight:700;">
     I'M LOOKING FOR:
   </a>
@@ -30,14 +31,12 @@
     Title: {{want.title}}<br />
     ISBN: {{want.isbn}}
     </ion-item>
-  </ion-list><br /><br /><br />
+  </ion-list><br />
   <a style="color:176ACC; font-weight:700;">
     I'M OFFERING:
   </a>
   <ion-button size="small" style="font-weight:700; background-color: #B1C634; width:10%" (click)="openAddListingModal()"> + </ion-button>
   <ion-button size="small" style="font-weight:700;" (click)="openAddListingModal()"> Edit </ion-button>
-
-
   <ion-list>
       <ion-item *ngFor="let listing of listings">
         Title: {{listing.book.title}}<br />
@@ -45,7 +44,16 @@
         ISBN: {{listing.book.isbn}}<br />
         <!-- Value: {{listing.value}} -->
       </ion-item>
-    </ion-list>
+    </ion-list> <br/>
+
+    <a style="color:176ACC; font-weight:700;">
+        ACCEPTED OFFERS:
+      </a>
+      <ion-list>
+          <ion-item *ngFor="let offer of acceptedOffers">
+            {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}  |  STATUS: {{offer.status}} <ion-button (click)="acceptOffer()" >Accept</ion-button><ion-button (click)="rejectOffer()" >Reject</ion-button>
+          </ion-item>
+      </ion-list><br />
 </ion-content>
 
 
