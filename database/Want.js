@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     isbn: DataTypes.TEXT,
     title: DataTypes.TEXT,
     condition: DataTypes.TEXT,
+    image_link: DataTypes.TEXT,
     fulfilled: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,

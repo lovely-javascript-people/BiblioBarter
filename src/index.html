@@ -99,7 +99,7 @@
                   document.getElementById('startButton').addEventListener('click', () => {
                       codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'video').then((result) => {
                           console.log(result)
-                          document.getElementById('searchInput').textContent = result.text
+                          document.getElementById('searchInput').value = result.text
                       }).catch((err) => {
                           console.error(err)
                           document.getElementById('result').textContent = err

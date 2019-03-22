@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     phone_number: DataTypes.TEXT,
     name_first: DataTypes.TEXT,
     name_last: DataTypes.TEXT,
-    link_image: DataTypes.TEXT,
+    image_link: DataTypes.TEXT,
     search_radius_miles: {
       type: DataTypes.INTEGER,
       defaultValue: 10,
