@@ -81,6 +81,7 @@ export class ApiService {
   }
 
   getPeerProfile(peerId, callback) {
+    console.log(peerId, 'PEEER ID');
     this.http.get(`${this.local}/peer`, { params: {peerId} }).subscribe(data => {
       callback(data);
     })
@@ -101,7 +102,11 @@ export class ApiService {
   }
 
   getOffers(callback) {
+<<<<<<< HEAD
     console.log(localStorage.userid, 'TRYING TO GET OFFERS BUT STILL NOT WORKING');
+=======
+    console.log('TRYING TO GET OFFERS BUT STILL NOT WORKING');
+>>>>>>> 8789c8e16705283bcf1532d4c566ccbc2a845ec4
     this.http.get(`${this.local}/offers`, { params: { id_user: localStorage.userid }}).subscribe(data => {
       console.log(data, 'DATA IN FROM GETOFFERS API CALL');
       callback(data);

@@ -48,4 +48,6 @@
             <ion-item #matched style="font-size: 16px" *ngFor="let match of matches; let i = index" [type]="match">{{match.name}} has {{match.num}} {{match.type}} you want <ion-button (click)="profileButtonClick(match.id)">PROFILE</ion-button></ion-item>
           </ion-list>
 </ion-content>
+
+
 <app-footer></app-footer>

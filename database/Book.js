@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     isbn: DataTypes.TEXT,
     title: DataTypes.TEXT,
+    image_link: DataTypes.TEXT,
     condition: DataTypes.TEXT,
   });
   Book.associate = (models) => {

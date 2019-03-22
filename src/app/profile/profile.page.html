@@ -17,14 +17,14 @@
   </a>
   <ion-list>
       <ion-item *ngFor="let offer of offers">
-        {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}  |  STATUS: {{offer.status}} <ion-button (click)="acceptOffer()" >Accept</ion-button> <ion-button (click)="rejectOffer()" >Reject</ion-button>
+        {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}  |  STATUS: {{offer.status}} <ion-button (click)="acceptOffer()" >Accept</ion-button><ion-button (click)="rejectOffer()" >Reject</ion-button>
       </ion-item>
   </ion-list><br /><br /><br />
   <a style="color:176ACC; font-weight:700;">
     I'M LOOKING FOR:
   </a>
-  <ion-button size="small" style="font-weight:700;" (click)="openWantListModal()"> + </ion-button>
-
+  <ion-button size="small" style="font-weight:700; background-color: #B1C634; width:10%" (click)="openWantListModal()"> + </ion-button>
+  <ion-button size="small" style="font-weight:700;" (click)="openAddListingModal()"> Edit </ion-button>
   <ion-list>
     <ion-item *ngFor="let want of wants">
     Title: {{want.title}}<br />
@@ -34,7 +34,8 @@
   <a style="color:176ACC; font-weight:700;">
     I'M OFFERING:
   </a>
-  <ion-button size="small" style="font-weight:700;" (click)="openAddListingModal()"> + </ion-button>
+  <ion-button size="small" style="font-weight:700; background-color: #B1C634; width:10%" (click)="openAddListingModal()"> + </ion-button>
+  <ion-button size="small" style="font-weight:700;" (click)="openAddListingModal()"> Edit </ion-button>
 
 
   <ion-list>
