@@ -18,7 +18,8 @@
   </a>
   <ion-list>
       <ion-item *ngFor="let offer of offers; let i = index">
-        {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}  |  STATUS: {{offer.status}} <ion-button (click)="acceptOffer(i)" >Accept</ion-button><ion-button (click)="rejectOffer(i)" >Reject</ion-button>
+        {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}} <ion-button (click)="acceptOffer(i)" >Accept</ion-button><ion-button (click)="rejectOffer(i)" >Reject</ion-button>
+        <!-- {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}  |  STATUS: {{offer.status}} <ion-button (click)="acceptOffer(i)" >Accept</ion-button><ion-button (click)="rejectOffer(i)" >Reject</ion-button> -->
       </ion-item>
   </ion-list><br />
   <a style="color:176ACC; font-weight:700;">
@@ -50,11 +51,10 @@
         ACCEPTED OFFERS:
       </a>
       <ion-list>
-          <ion-item *ngFor="let offer of acceptedOffers">
-            {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}  |  STATUS: {{offer.status}} <ion-button (click)="acceptOffer()" >Accept</ion-button><ion-button (click)="rejectOffer()" >Reject</ion-button>
+          <ion-item *ngFor="let offer of acceptedOffs">
+            {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}<ion-button (click)="rejectOffer()" >Cancel</ion-button>
           </ion-item>
       </ion-list><br />
 </ion-content>
-
 
 <app-footer></app-footer>
