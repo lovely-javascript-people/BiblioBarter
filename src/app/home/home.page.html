@@ -17,7 +17,7 @@
       <div>
       <input id="searchInput" [(ngModel)]="isbnQuery" #ctrl="ngModel" [(ngModel)]="num" placeholder="isbn" /> <br>
       <ion-button size="small" (click)="searchBooks(isbnQuery, setListing)" routerLink="/Matches">Search</ion-button>
-      <ion-button size="small" id="startButton" (click)="scan(); camOpen()">Scan Barcode</ion-button>
+      <ion-button size="small" id="startButton" (click)="camOpen()">Scan Barcode</ion-button>
       <ion-button size="small" id="resetButton" (click)="camClose()">Close Scanner</ion-button></div>
       <div [hidden]='!open' id="sourceSelectPanel" style="display:none">
           <select id="sourceSelect" style="max-width:400px">
