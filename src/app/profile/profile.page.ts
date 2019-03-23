@@ -7,7 +7,7 @@ import { AddListingModal } from '../add_listing_modal/add_listing_modal.componen
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router'
 import { HttpClient } from '@angular/common/http';
-
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile',
@@ -26,20 +26,20 @@ export class ProfilePage implements OnInit{
   acceptedOffs: any = [];
   offerid: any; // need to grab correct offerid --> where do we get this
 
-  constructor(private apiService: ApiService, public modal: ModalController, private router: Router, private http: HttpClient,) {}
+  constructor(private apiService: ApiService, public modal: ModalController, private router: Router, private http: HttpClient, public toastController: ToastController,) {}
 
   setUser(data) {
-    console.log(data);
+    console.log(data, 'THIS DATA', data[0], 'length');
     // add userid to local storage
     localStorage.setItem('userid', data[0].id_user);
-
-    if (data[0].length) {
+    console.log(data[1][0].name, 'SCHOOL NAME');
+    if (data[0]) {
       this.img = data[0].image_link;
-        this.user = data[0].user_name;
-        if (data[1].length) {
-        this.school = data[1][0].name; // put || null later if not changing dynamicallys
-        this.loaded = true;
-        }
+      this.user = data[0].user_name;
+      if (data[1].length) {
+        this.school = data[1][0].name || null;
+      }
+      this.loaded = true;
         
     } else {
       this.user = localStorage.username;
@@ -146,20 +146,32 @@ export class ProfilePage implements OnInit{
     this.listings = array;
   }
 
-  deleteListing(bookId, listingId) {
+  deleteListing(bookId, listingId, listing) {
     console.log(listingId, 'delete listing clicked');
+    this.presentToast(listing);
     this.http.delete('http://localhost:3000/deleteListing', { params: { bookId, listingId }})
       .subscribe((data) => {
         console.log(data, 'delete listing');
       });
   }
 
-  deleteWant(wantId) {
+  deleteWant(wantId, want) {
     console.log('delete want', wantId);
-    this.http.delete('http://localhost:3000', { params: { wantId }})
+    this.presentToast(want);
+    this.http.delete('http://localhost:3000/deleteWant', { params: { wantId }})
       .subscribe((data) => {
         console.log(data, 'delete want');
       });
+  }
+
+  async presentToast(item) {
+    const toast = await this.toastController.create({
+      message: `Your ${item} has been deleted.`,
+      duration: 2000,
+      color: 'primary',
+      position: 'top', // or don't include to be bottom
+    });
+    toast.present();
   }
 
   ngOnInit() {

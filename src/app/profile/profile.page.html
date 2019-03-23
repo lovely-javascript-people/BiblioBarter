@@ -7,8 +7,10 @@
 </ion-header>
 
 <ion-content padding fullscreen="true">
-  <img src={{img}} *ngIf="loaded" /><br />
-  <div *ngIf="loaded">{{school}}</div>
+  <ion-avatar>
+    <img src={{img}} *ngIf="loaded" /><br />
+  </ion-avatar>
+  <div *ngIf="loaded" style="Text-align:center">{{school}}</div>
   <div style="width:100%;Text-align:center; font-size: 20px; font-weight:700; font-size:120%">
     <p>{{user | uppercase}}</p>
   </div>
@@ -37,7 +39,7 @@
         <b>Title:</b> {{want.title}}<br />
         <b>ISBN:</b> {{want.isbn}}
       </ion-label>
-      <ion-icon name="remove-circle-outline" (click)="deleteWant(want.id_want)"></ion-icon>
+      <ion-icon name="remove-circle-outline" (click)="deleteWant(want.id_want, 'want listing')"></ion-icon>
     </ion-item>
   </ion-list><br />
   <a style="color:176ACC; font-weight:700;">
@@ -55,7 +57,7 @@
           <b>Condition:</b> {{listing.book.condition}}<br />
           <b>ISBN:</b> {{listing.book.isbn}}<br />
         </ion-label>
-        <ion-icon name="remove-circle-outline" (click)="deleteListing(listing.id_book, listing.id_listing)"></ion-icon>
+        <ion-icon name="remove-circle-outline" (click)="deleteListing(listing.id_book, listing.id_listing, 'offer listing')"></ion-icon>
         <!-- Value: {{listing.value}} -->
       </ion-item>
     </ion-list> <br/>
