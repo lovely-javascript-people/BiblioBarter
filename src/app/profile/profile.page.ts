@@ -106,7 +106,7 @@ export class ProfilePage implements OnInit{
     offerObj.peer = offer.peer.user_name;
     offerObj.status = offer.offer.status;
     offerObj.email = offer.peer.email;
-    offerObj.index = i;
+    offerObj.offerId = offer.offer.id_offer;
     // console.log(offerObj, 'OFFER OBJECT');
     acceptedOffers.push(offerObj);
     i++
@@ -129,11 +129,9 @@ export class ProfilePage implements OnInit{
     }
 
   cancelAcceptedOffer(index) {
-    console.log('I WANT TO CANCEL THIS OFFER');
-    this.offerid = this.offers[index].offerId;
-    // console.log(index, 'INDEX');
+    console.log(this.acceptedOffs[index], 'OFFER TO BE CANCELED');
+    this.offerid = this.acceptedOffs[index].offerId;
     const id_offer = this.offerid;
-      // this.apiService.userAcceptOffer(); // for when we refactor
     this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
