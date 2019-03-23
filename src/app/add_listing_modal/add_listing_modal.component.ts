@@ -44,12 +44,19 @@ export class AddListingModal implements OnInit {
   }
 
   getBookTitle(bookInfo) {
-    console.log(bookInfo, 'BOOK INFO');
+    const isbnNum = this.isbnVal;
+    // console.log(bookInfo, 'BOOK INFO');
     this.title = bookInfo[Object.keys(bookInfo)[0]].info_url
     .split('/')[bookInfo[Object.keys(bookInfo)[0]].info_url.split('/').length - 1]
     .split('_').join(' ');
-    this.image = bookInfo[Object.keys(bookInfo)[0]].thumbnail_url || null; // GRABS THE THUMBNAIL
+    // this.image = bookInfo[Object.keys(bookInfo)[0]].thumbnail_url || null; // GRABS THE THUMBNAIL
     // console.log(this.title, 'TITLE OF THE BOOK');
+    //get book image
+    this.http.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbnNum}`)
+      .subscribe((bookInfo: any) => {
+        this.image = bookInfo.items[0].volumeInfo.imageLinks.thumbnail;
+        console.log(bookInfo.items[0].volumeInfo.imageLinks.thumbnail, 'BOOK IMAGE GOOGLE BOOKS API');
+      })
   }
 
   ngOnInit() {
