@@ -29,17 +29,17 @@ export class ProfilePage implements OnInit{
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router, private http: HttpClient,) {}
 
   setUser(data) {
-    console.log(data);
+    console.log(data, 'THIS DATA', data[0], 'length');
     // add userid to local storage
     localStorage.setItem('userid', data[0].id_user);
 
-    if (data[0].length) {
+    if (data[0]) {
       this.img = data[0].image_link;
-        this.user = data[0].user_name;
-        if (data[1].length) {
+      this.user = data[0].user_name;
+      if (data[1].length) {
         this.school = data[1][0].name;
         this.loaded = true;
-        }
+      }
         
     } else {
       this.user = localStorage.username;
