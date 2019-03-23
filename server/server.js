@@ -615,7 +615,6 @@ app.post('/contactUs', (req, res) => {
   });
 });
 
-<<<<<<< HEAD
 app.get('/schools', (req, res) => {
   axios({
     method: 'GET',
@@ -632,7 +631,6 @@ app.get('/schools', (req, res) => {
 app.get('/counter', (req, res) => {
   res.send("Please wait while you are redirected to your peer's profile");
 })
-=======
 
 // /DELETE /deleteListing
 // delete request deletes a listing (including from books)
@@ -671,4 +669,3 @@ app.delete('/deleteWant', (req, res) => {
     console.log(`Error in deleting want: ${err}`);
   });
 });
->>>>>>> a357d71496f3ccc5822b65a8fd3c77415fe5cbfe
