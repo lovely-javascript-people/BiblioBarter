@@ -629,7 +629,7 @@ app.get('/schools', (req, res) => {
 })
 
 app.get('/counter', (req, res) => {
-  res.send("Please wait while you are redirected to your peer's profile");
+  res.send(JSON.stringify("Please wait while you are redirected to your peer's profile"));
 })
 
 // /DELETE /deleteListing
