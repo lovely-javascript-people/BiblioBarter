@@ -686,7 +686,7 @@ app.get('/offers', (req, res) => {
         id_user: peerListing.id_user
       }
     })
-    resArr.push({ offer: await offered, 'titleWanted': titleOffered, 'titleOffered': titleWantd, peer });
+    resArr.push({ offer, 'titleWanted': titleOffered, 'titleOffered': titleWantd, peer });
   }
 }
   }
