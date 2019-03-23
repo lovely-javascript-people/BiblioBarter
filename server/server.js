@@ -448,7 +448,7 @@ app.post('/offerlisting', (req, res) => {
   db.Offer.create({
     // need id_listing, create offer, then save to offer listing
     // listing recipient, listing prev, listing sender, money, accepted
-    id_listing_recipient: req.body.params.bookWanted.id_listing,
+    id_listing_recipient: req.body.params.bookWanted[0].id_listing,
     id_offer_prev: req.body.params.previousId || null,
     id_listing_sender: req.body.params.bookOffering, // not currently on front end
     money_exchange: req.body.money || null,
@@ -457,7 +457,7 @@ app.post('/offerlisting', (req, res) => {
     let newOffer = await db.Offer.findAll({
       limit: 1,
       where: {
-        id_listing_recipient: req.body.params.bookWanted.id_listing,
+        id_listing_recipient: req.body.params.bookWanted[0].id_listing,
       },
       order: [['id_offer', 'DESC']]
     })
@@ -466,7 +466,7 @@ app.post('/offerlisting', (req, res) => {
     idOfOffer = offer[0].id_offer; // gets offer id to save values for offer listing
     return db.Offer_Listing.create({ // create offer listing for lister, listing recipient
       id_offer: idOfOffer,
-      id_listing: req.body.params.bookWanted.id_listing,
+      id_listing: req.body.params.bookWanted[0].id_listing,
     });
   }).then(() => {
     return db.Offer_Listing.create({ // create offer listing for listing sender

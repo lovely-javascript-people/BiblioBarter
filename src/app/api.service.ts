@@ -136,4 +136,13 @@ export class ApiService {
       callback(response);
       });
     }
+
+    getGeoData() {
+//       https://api.tomtom.com/search/2/search/${schoolName}.json?countrySet=US&idxSet=POI&key=nt0WpoWFNPf7PxPWE2qcHgjtthK73CPY
+
+// required headers : {
+// Referer: https://developer.tomtom.com/content/search-api-explorer,
+// Accept: */*,
+// }
+    }
 }
