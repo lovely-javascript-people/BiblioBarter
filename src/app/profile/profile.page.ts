@@ -69,17 +69,13 @@ export class ProfilePage implements OnInit{
   acceptOffer(index) {
   
   this.offerid = this.allOffers[index + 1].offer[index].id_offer;
+  console.log(this.allOffers[index]);
+  console.log(index, 'INDEX');
   const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
   this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'accepted', offerId: id_offer} })
     .subscribe((offerData) => {
       console.log(offerData, 'OFFER DATA');
-      // move accepted offers to accepted offers list
-      // if(offerData.status === 'accepted'){
-      //   console.log(offerData, 'OFFER DATA');
-      //   console.log(this.offers[index], 'OFFERS AT INDEX');
-      //   this.acceptedOffers.push(this.offers[index]);
-      // }
     })
   }
 
@@ -88,7 +84,8 @@ export class ProfilePage implements OnInit{
     this.allOffers = offers;
     let offs: any = []
     let acceptedOffers: any = [];
-    // let i = 0;
+    console.log(this.allOffers, 'ALL OFFERS');
+
     for (let i = 1; i < offers.length; i++) {
       console.log(offers[i].offer[i - 1], 'OFFERS AT I');
         if (offers[i].offer.length && offers[i].offer[i - 1] && offers[i].offer[i - 1].status === 'pending') {
