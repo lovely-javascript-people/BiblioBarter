@@ -89,31 +89,41 @@ app.get('/matches', (req, res) => {
   })
 });
 
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '../src/app/chat/chat.page.html');
-  res.send(("HEY HEY HEY"));
-});
+// does not currently work, no get request on front end
+// app.get('/chat', function (req, res) {
+//   // res.sendFile(__dirname + '../src/app/chat/chat.page.html');
+//   res.send(JSON.stringify("HEY HEY HEY"));
+// });
+
+// ///////////////////////////////////// // 
+// ///////////////////////////////////// //
+
+// users object, holds each user's socket connection
+// property is username of user, value is socket
+const users = {};
 
 // socket io connection
-io.on('connection', function (socket) {
+// on each new socket creation, we save it on users object
+io.on('connection', (socket) => {
   console.log('a user connected');
   // this sends message into chatroom
-  socket.on('chat message', function (msg) {
+  socket.on('chat message', (msg) => {
     console.log('message: ' + msg); // logs in terminal
     io.emit('chat message', msg); // emits to the chat..
   });
-  socket.on('disconnect', function () {
+  socket.on('disconnect', (data) => {
     console.log('user disconnected');
+    io.emit('emit user disconnected'); // has not worked on one computer connection
   });
   // When we receive a 'message' event from our client, print out
   // the contents of that message and then echo it back to our client
   // using `io.emit()`
   // CURRENTLY BELOW only logs on server
   // emit sent to client, but NO Messages appear in chat room
-  socket.on('message', message => {
-    console.log('Message Received: ' + message);
-    io.emit('message', { type: 'new-message', text: message });
-  });
+  // socket.on('message', (message) => {
+  //   console.log('Message Received: ' + message);
+  //   io.emit('message', { type: 'new-message', text: message });
+  // });
 });
 // ///////////////////////////
 // io.on('connection', function (socket) {

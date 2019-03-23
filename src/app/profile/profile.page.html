@@ -7,8 +7,10 @@
 </ion-header>
 
 <ion-content padding fullscreen="true">
-  <img src={{img}} *ngIf="loaded" /><br />
-  <div *ngIf="loaded">{{school}}</div>
+  <ion-avatar>
+    <img src={{img}} *ngIf="loaded" /><br />
+  </ion-avatar>
+  <div *ngIf="loaded" style="Text-align:center">{{school}}</div>
   <div style="width:100%;Text-align:center; font-size: 20px; font-weight:700; font-size:120%">
     <p>{{user | uppercase}}</p>
   </div>
@@ -51,8 +53,8 @@
         ACCEPTED OFFERS:
       </a>
       <ion-list>
-          <ion-item *ngFor="let offer of acceptedOffs">
-            {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}<ion-button (click)="rejectOffer()" >Cancel</ion-button>
+          <ion-item *ngFor="let offer of acceptedOffs; let i = index">
+            {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}<ion-button (click)="cancelAcceptedOffer(i)" >Cancel</ion-button>
           </ion-item>
       </ion-list><br />
     </ion-content>
