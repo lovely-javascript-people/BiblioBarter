@@ -98,31 +98,12 @@ const users = {};
 
 // socket io connection
 // on each new socket creation, we save it on users object
-io.sockets.on('connection', (socket) => {
+io.on('connection', (socket) => {
   console.log('a user connected');
-  // on new user
-  // socket.on('new user', (data, callback) => {
-  //   console.log('hello new user', data);
-  //   if (data in users) {
-  //     callback(false);
-  //   } else {
-  //     callback(true);
-  //     socket.nickname = data;
-  //     user[nickname.socket] = socket;
-  //     updateNicknames();
-  //   }
-  // });
-  // const updateNicknames = () => {
-  //   console.log('update nicknames');
-  //   io.sockets.emit('username', Object.keys(users));
-  // };
-  // socket.on('send message', (data) => {
-  //   console.log('sending a message');
-  //   io.sockets.emit('new message', {msg: data, nick: socket.nickname})
-  // // })
-  // socket.on('message', (data) => {
-  //   console.log('FROM web socket to server, NEW observable');
-  // });
+  socket.emit('news', { hello: 'world' }); // prints on client
+  socket.on('my other event', function (data) {
+    console.log(data, 'MY OTHER EVENT SERVER'); // prints in console
+  });
   // this sends message into chatroom
   socket.on('chat message', (msg) => {
     console.log('message: ' + msg); // logs in terminal
@@ -130,9 +111,7 @@ io.sockets.on('connection', (socket) => {
   });
   socket.on('disconnect', (data) => {
     console.log('user disconnected');
-    // if (!socket.nickname) { return }
-    // delete users[socket.name];
-    // updateNicknames();
+    io.emit('emit user disconnected'); // has not worked on one computer connection
   });
   // When we receive a 'message' event from our client, print out
   // the contents of that message and then echo it back to our client
