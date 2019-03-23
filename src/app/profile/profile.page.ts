@@ -19,10 +19,11 @@ export class ProfilePage implements OnInit{
   user: any;
   school: any;
   offers: any = [];
-  acceptedOffers: any = [];
   wants: any = [];
   listings: any = [];
   allOffers: any = [];
+  loaded: boolean = false;
+  acceptedOffs: any = [];
   offerid: any; // need to grab correct offerid --> where do we get this
 
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router, private http: HttpClient,) {}
@@ -33,11 +34,13 @@ export class ProfilePage implements OnInit{
     localStorage.setItem('userid', data[0].id_user);
 
     if (data[0].length) {
+      this.img = data[0].image_link;
         this.user = data[0].user_name;
         if (data[1].length) {
         this.school = data[1][0].name;
+        this.loaded = true;
         }
-        this.img = data[0].image_link;
+        
     } else {
       this.user = localStorage.username;
     }
@@ -63,41 +66,77 @@ export class ProfilePage implements OnInit{
     return await modalPage.present();
   }
 
-  acceptOffer() {
-  this.offerid = this.allOffers[1].offer.id_offer;
+  acceptOffer(index) {
+  console.log(this.allOffers, 'ALL OFFERS');
+  console.log(this.offers[index], 'CLICKED ON OFFER');
+
+  this.offerid = this.offers[index].offerId;
+  // console.log(index, 'INDEX');
   const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
   this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'accepted', offerId: id_offer} })
     .subscribe((offerData) => {
-      console.log(offerData, 'OFFER DATA FROM SERVER');
+      console.log(offerData, 'OFFER DATA');
     })
   }
 
   renderOffers(offers) {
     console.log(offers, 'OFFERS');
     this.allOffers = offers;
-    let offs: any = []
+    let offs: object[] = []
+    let acceptedOffers: object[] = [];
+    let i = 0;
     for (let offer of offers.slice(1)) {
-    let offerobj: any = {};
-    offerobj.offeredTitle = offer.titleOffered.title;
-    offerobj.wantedTitle = offer.titleWanted.title;
-    offerobj.peer = offer.peer.user_name;
-    offerobj.status = offer.offer.status;
-    offerobj.email = offer.peer.email;
-    offs.push(offerobj);
+    if (offer.offer.status === 'pending') {
+    let offerObj: any = {};
+    offerObj.offeredTitle = offer.titleOffered.title;
+    offerObj.wantedTitle = offer.titleWanted.title;
+    offerObj.peer = offer.peer.user_name;
+    offerObj.status = offer.offer.status;
+    offerObj.email = offer.peer.email;
+    offerObj.offerId = offer.offer.id_offer;
+    // offerObj.index = i;
+    // console.log(offerObj, 'OFFER OBJECT');
+    offs.push(offerObj);
+    i++
+      } else if (offer.offer.status === 'accepted') {
+    let offerObj: any = {};
+    offerObj.offeredTitle = offer.titleOffered.title;
+    offerObj.wantedTitle = offer.titleWanted.title;
+    offerObj.peer = offer.peer.user_name;
+    offerObj.status = offer.offer.status;
+    offerObj.email = offer.peer.email;
+    offerObj.offerId = offer.offer.id_offer;
+    // console.log(offerObj, 'OFFER OBJECT');
+    acceptedOffers.push(offerObj);
+    i++
+      } 
   }
   this.offers = offs;
-  console.log(this.offers, 'THIS DOT OFFERS');
+  this.acceptedOffs = acceptedOffers;
+  // console.log(this.offers, 'THIS DOT OFFERS');
 }
 
-  rejectOffer() {
-    console.log('offer rejected');
-    const id_offer = this.allOffers[2].offer.id_offer;
+  rejectOffer(index) {
+    this.offerid = this.offers[index].offerId;
+    const id_offer = this.offerid;
+      // this.apiService.userAcceptOffer(); // for when we refactor
     this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
-    .subscribe(() => {
+      .subscribe((offerData) => {
+        console.log(offerData, 'OFFER DATA');
+      })
 
-    })
     }
+
+  cancelAcceptedOffer(index) {
+    console.log(this.acceptedOffs[index], 'OFFER TO BE CANCELED');
+    this.offerid = this.acceptedOffs[index].offerId;
+    const id_offer = this.offerid;
+    this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
+      .subscribe((offerData) => {
+        console.log(offerData, 'OFFER DATA');
+      })
+  }
 
   setWantList(array) {
     this.wants = array;

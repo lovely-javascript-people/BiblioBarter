@@ -31,10 +31,10 @@ export class FooterComponent implements OnInit {
 
   async openSettingsModal()
   {
-    var data = { message : 'hello world' };
+    console.log('hi')
+
     const modalPage = await this.modal.create({
-      component: SettingsModal, 
-      componentProps:{values: data}
+      component: SettingsModal
     });
     return await modalPage.present();
   }
@@ -46,17 +46,16 @@ export class FooterComponent implements OnInit {
       component: SearchModal, 
       componentProps:{values: data}
     });
-    return await modalPage.present();
+    return modalPage.present();
   }
 
   async openContactModal()
   {
     var data = { message : 'hello world' };
     const modalPage = await this.modal.create({
-      component: ContactModal, 
-      componentProps:{values: data}
+      component: ContactModal,
     });
-    return await modalPage.present();
+    return modalPage.present();
   }
 
   async closeModal() {
@@ -65,6 +64,10 @@ export class FooterComponent implements OnInit {
 
   redirectOnClick() {
     this.router.navigate(['/Matches']);
+  }
+
+  redirectToProfile() {
+    this.router.navigate(['/Profile']);
   }
   
   redirectToChat() {

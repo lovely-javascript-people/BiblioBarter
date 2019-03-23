@@ -25,8 +25,8 @@
           </div>
         </div>
 
-      <ion-button size="small" id="startButton" (click)="camOpen()">Scan Barcode</ion-button>
-      <ion-button size="small" id="resetButton" (click)="camClose()">Close Scanner</ion-button></div>
+      <ion-button [hidden]='open' size="small" id="startButton" (click)="camOpen()">Scan Barcode</ion-button>
+      <ion-button [hidden]='!open' size="small" id="resetButton" (click)="camClose()">Close Scanner</ion-button></div>
       <div [hidden]='!open' id="sourceSelectPanel" style="display:none">
           <select id="sourceSelect" style="max-width:400px">
           </select>
@@ -39,7 +39,7 @@
             <p>SEARCH RESULTS:</p>
           </div>
           <ion-list>
-              <ion-item #list class={{listing.id_user}} *ngFor="let listing of listings; let i = index" [type]="listing">TITLE: {{listing.title}}  |  #ISBN: {{listing.isbn}}  |  CONDITION: {{listing.condition}} <ion-button (click)="profileButtonClick(i)">PROFILE</ion-button></ion-item>
+              <ion-item #list class={{listing.id_user}} *ngFor="let listing of listings; let i = index" [type]="listing"><div><img src={{listing.image_link}} /></div>TITLE: {{listing.title}}  |  #ISBN: {{listing.isbn}}  |  CONDITION: {{listing.condition}} <ion-button (click)="profileButtonClick(i)">PROFILE</ion-button></ion-item>
             </ion-list>
       <div style="color:#176ACC; font-weight:700;">
         <br>
@@ -47,7 +47,6 @@
         </div>
         <ion-list>
             <ion-item #matched style="font-size: 16px" *ngFor="let match of matches; let i = index" [type]="match">{{match.name}} has {{match.num}} {{match.type}} you want <ion-button (click)="profileButtonClick(match.id)">PROFILE</ion-button></ion-item>
-            <ion-item #list class={{listing.id_user}} *ngFor="let listing of listings; let i = index" [type]="listing"><div><img src={{listing.image_link}} /></div> TITLE: {{listing.title}}  |  #ISBN: {{listing.isbn}}  |  CONDITION: {{listing.condition}} <ion-button (click)="profileButtonClick(i)">PROFILE</ion-button></ion-item>
           </ion-list>
 </ion-content>
 

@@ -83,31 +83,41 @@ app.get('/matches', (req, res) => {
   })
 });
 
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '../src/app/chat/chat.page.html');
-  res.send(("HEY HEY HEY"));
-});
+// does not currently work, no get request on front end
+// app.get('/chat', function (req, res) {
+//   // res.sendFile(__dirname + '../src/app/chat/chat.page.html');
+//   res.send(JSON.stringify("HEY HEY HEY"));
+// });
+
+// ///////////////////////////////////// // 
+// ///////////////////////////////////// //
+
+// users object, holds each user's socket connection
+// property is username of user, value is socket
+const users = {};
 
 // socket io connection
-io.on('connection', function (socket) {
+// on each new socket creation, we save it on users object
+io.on('connection', (socket) => {
   console.log('a user connected');
   // this sends message into chatroom
-  socket.on('chat message', function (msg) {
+  socket.on('chat message', (msg) => {
     console.log('message: ' + msg); // logs in terminal
     io.emit('chat message', msg); // emits to the chat..
   });
-  socket.on('disconnect', function () {
+  socket.on('disconnect', (data) => {
     console.log('user disconnected');
+    io.emit('emit user disconnected'); // has not worked on one computer connection
   });
   // When we receive a 'message' event from our client, print out
   // the contents of that message and then echo it back to our client
   // using `io.emit()`
   // CURRENTLY BELOW only logs on server
   // emit sent to client, but NO Messages appear in chat room
-  socket.on('message', message => {
-    console.log('Message Received: ' + message);
-    io.emit('message', { type: 'new-message', text: message });
-  });
+  // socket.on('message', (message) => {
+  //   console.log('Message Received: ' + message);
+  //   io.emit('message', { type: 'new-message', text: message });
+  // });
 });
 // ///////////////////////////
 // io.on('connection', function (socket) {
@@ -448,7 +458,7 @@ app.post('/offerlisting', (req, res) => {
   db.Offer.create({
     // need id_listing, create offer, then save to offer listing
     // listing recipient, listing prev, listing sender, money, accepted
-    id_listing_recipient: req.body.params.bookWanted.id_listing,
+    id_listing_recipient: req.body.params.bookWanted[0].id_listing,
     id_offer_prev: req.body.params.previousId || null,
     id_listing_sender: req.body.params.bookOffering, // not currently on front end
     money_exchange: req.body.money || null,
@@ -457,7 +467,7 @@ app.post('/offerlisting', (req, res) => {
     let newOffer = await db.Offer.findAll({
       limit: 1,
       where: {
-        id_listing_recipient: req.body.params.bookWanted.id_listing,
+        id_listing_recipient: req.body.params.bookWanted[0].id_listing,
       },
       order: [['id_offer', 'DESC']]
     })
@@ -466,7 +476,7 @@ app.post('/offerlisting', (req, res) => {
     idOfOffer = offer[0].id_offer; // gets offer id to save values for offer listing
     return db.Offer_Listing.create({ // create offer listing for lister, listing recipient
       id_offer: idOfOffer,
-      id_listing: req.body.params.bookWanted.id_listing,
+      id_listing: req.body.params.bookWanted[0].id_listing,
     });
   }).then(() => {
     return db.Offer_Listing.create({ // create offer listing for listing sender
@@ -617,6 +627,7 @@ app.post('/offerlisting', (req, res) => {
 // Final transaction made by two users boolean changed
 app.patch('/offerlisting', (req, res) => {
   // needs id of offer
+  console.log(req.body, 'REQ BODY /OFFERLISTING');
   db.Offer.update(
     {
       status: req.body.params.status,
@@ -653,6 +664,7 @@ app.get('/offers', (req, res) => {
       }
     })
     if (offered.length) {
+      for (let offer of offered) {
     let offerer = await db.User.findOne({
       where: {
         id_user: await piece.dataValues.id_user
@@ -663,10 +675,10 @@ app.get('/offers', (req, res) => {
         id_book: await piece.id_book
       }
     })
-    console.log('OFFERED ********', offered, 'OFFERED******');
+    console.log('OFFERED ********', offer, 'offer******');
     let wanted = await db.Listing.findOne({
       where: {
-        id_listing: offered[0].id_listing_sender
+        id_listing: offer.id_listing_sender
       }
     })
     var titleWantd = await db.Book.findOne({
@@ -676,7 +688,7 @@ app.get('/offers', (req, res) => {
     })
     let peerListing = await db.Listing.findOne({
       where: {
-        id_listing: offered[0].id_listing_sender
+        id_listing: offer.id_listing_sender
       }
     })
     var peer = await db.User.findOne({
@@ -684,8 +696,9 @@ app.get('/offers', (req, res) => {
         id_user: peerListing.id_user
       }
     })
+    resArr.push({ offer, 'titleWanted': titleOffered, 'titleOffered': titleWantd, peer });
   }
-  resArr.push({ offer: await offered, 'titleWanted': titleOffered, 'titleOffered': titleWantd, peer });
+}
   }
     res.send(resArr);
   })

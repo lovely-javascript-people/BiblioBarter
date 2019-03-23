@@ -4,7 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: '/Greet', pathMatch: 'full' },
   { path: 'Matches', loadChildren: './home/home.module#HomePageModule' },
+  { path: 'Matches/Home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'Profile', loadChildren: './profile/profile.module#ProfileModule' },
+  { path: 'Matches/Profile', loadChildren: './profile/profile.module#ProfileModule' },
   { path: 'Greet', loadChildren: './greet/greet.module#GreetPageModule' },
   { path: 'callback', redirectTo: '/Matches', pathMatch: 'full'},
   { path: 'login', redirectTo: '/Matches', pathMatch: 'full'},
