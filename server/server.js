@@ -100,10 +100,6 @@ const users = {};
 // on each new socket creation, we save it on users object
 io.on('connection', (socket) => {
   console.log('a user connected');
-  socket.emit('news', { hello: 'world' }); // prints on client
-  socket.on('my other event', function (data) {
-    console.log(data, 'MY OTHER EVENT SERVER'); // prints in console
-  });
   // this sends message into chatroom
   socket.on('chat message', (msg) => {
     console.log('message: ' + msg); // logs in terminal
