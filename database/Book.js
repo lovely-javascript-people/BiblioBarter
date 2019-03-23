@@ -10,10 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     isbn: DataTypes.TEXT,
     title: DataTypes.TEXT,
-    image_link: {
-      type: DataTypes.TEXT,
-      defaultValue: '../../../../assets/img/book.png',
-    },
+    image_link: DataTypes.TEXT,
+    // {
+    //   type: DataTypes.TEXT,
+    //   defaultValue: '../../../../assets/img/book.png',
+    // },
     condition: DataTypes.TEXT,
   });
   Book.associate = (models) => {

@@ -37,7 +37,7 @@ export class ProfilePage implements OnInit{
       this.img = data[0].image_link;
         this.user = data[0].user_name;
         if (data[1].length) {
-        this.school = data[1][0].name;
+        this.school = data[1][0].name; // put || null later if not changing dynamicallys
         this.loaded = true;
         }
         
@@ -146,12 +146,20 @@ export class ProfilePage implements OnInit{
     this.listings = array;
   }
 
-  deleteListing(listingId) {
+  deleteListing(bookId, listingId) {
     console.log(listingId, 'delete listing clicked');
-    this.http.delete('http://localhost:3000/deleteListing', { params: { listingId }})
+    this.http.delete('http://localhost:3000/deleteListing', { params: { bookId, listingId }})
       .subscribe((data) => {
         console.log(data, 'delete listing');
-      })
+      });
+  }
+
+  deleteWant(wantId) {
+    console.log('delete want', wantId);
+    this.http.delete('http://localhost:3000', { params: { wantId }})
+      .subscribe((data) => {
+        console.log(data, 'delete want');
+      });
   }
 
   ngOnInit() {

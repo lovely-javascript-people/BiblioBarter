@@ -387,73 +387,12 @@ app.get('/peer', (req, res) => {
   });
 });
 
-// app.get('/peer', (req, res) => {
-//   let books;
-//   db.Want.findAll({
-//     where: {
-//       id_user: req.query.peerId
-//     }
-//   }).catch((err) => {
-//     console.log(`error in peer wants: ${err}`);
-//   }).then((peerWants) => {
-//     books = peerWants;
-//   }).then(() => {
-//     db.Listing.findAll({
-//       where: {
-//         id_user: req.query.peerId
-//       }
-//     }).then((data) => {
-//       // create array of just books using book ids
-//       let offeredbooks = data.map((listing) => {
-//         return db.Book.findAll({
-//           where: {
-//             id_book: listing.id_book
-//           },
-//           // include: [db.Listing]
-//         })
-//       })
-//       books.push(offeredbooks);
-      
-//       res.send(books);
-//     })
-//   }).catch((err) => {
-//     console.log(`error in get peer wants: ${err}`);
-//   });
-// });
-
-
 
 
 // POST / offer
 // Make an offer and counter offer
 app.post('/offerlisting', (req, res) => {
   console.log(req);
-  // incoming req.body.params. 
-  // peerId = recipient (them)
-  // myId = sender (me)
-  // bookWanted = id_listing_recipient
-  // myOffer = isbn (my book)
-  // /////////////////////////////////////////// // 
-  // DO NOT DELETE :: FOR AFTER MVP // 
-  // BELOW HERE TO THE NEXT// 
-  // need to have way to update the lister
-  // CAN BE USED TO REPLACE MVP VERSION // 
-  // TAKES IN TWO USER LISTINGS // 
-  // object to be sent back to client to update listing user of offer
-  // fill in with values after user can only select from own listing for offer
-  // ALTER AS NEEDED
-  let offerCreated = {
-    offerId: '',
-    senderUsername: req.body.myUsername, // need from front end
-    senderId: req.body.myId, // currently in body
-    senderBook: '',
-    senderBookIsbn: '',
-    senderListingId: '',
-    yourBook: '',
-    yourListingId: '',
-    yourBookIsbn: '',
-    money: null,
-  };
   let idOfOffer;
   db.Offer.create({
     // need id_listing, create offer, then save to offer listing
@@ -490,137 +429,13 @@ app.post('/offerlisting', (req, res) => {
       }
     });
   }).then((offerMade) => {
-    res.send(offerMade); // SEND offer from offer table, or object above with all information for display
-    // res.send(JSON.stringify('OFFER CREATION SUCCESS')); // currently only string is returned, need to return listing
+    res.send(offerMade);
   }).catch((err) => {
     console.log(`there was an Offer Creation ERROR: ${err}`);
   });
-  // when one offer is created, it must be sent to the lister!! // 
-  // ///////////////// END ///////////////// // 
-  // /////////////////////////////////////// // 
-
-
-
-  // ///////////////////////////////////////// // 
-  // ////////////////// RED ////////////////// // 
-  // CAN BE DELETED AFTER SUCCESS ON ALL CALLS // 
-  // WATCH OUT FOR THE LAST }) AT THE END FOR CLOSING // 
-
-  // incoming req.body.params. 
-  // peerId = recipient (them)
-  // myId = sender (me)
-  // bookWanted = id_listing_recipient
-  // myOffer = isbn (my book)
-  // let listingSenderId;
-  // let currentOfferId;
-  // return db.Listing.findOne({
-  //   // limit: 1,
-  //   where: {
-  //     id_user: req.body.params.myId
-  //   },
-  //   include: [{
-  //     model: db.Book,
-  //     limit: 1, // change later, this is for demo purposes
-  //     where: {
-  //       isbn: req.body.params.myOffer
-  //     }
-  //   }]
-  // let one = db.Book.findOne({
-  //   where: {
-  //     isbn: req.body.params.myOffer
-  //   },
-  // });
-  // console.log(one, 'ONEEEE');
-  // console.log(req.body.params, 'PARAMSSS');
-  // console.log(req.body.params.myOffer, 'REQ BODY PARAMS MY OFFER');
-  // let num = Number(req.body.params.myOffer);
-  // return db.Book.findOne({
-  //   where: {
-  //     isbn: num,
-  //   },
-  //   // include: [db.Listing]
-  //   include: [{
-  //     model: db.Listing,
-  //     where: {
-  //       id_user: req.body.params.myId || 1,
-  //     },
-  //   }],
-  // // });
-  // }).catch((err) => {
-  //   console.log(`listing find failure: ${err}`);
-  // // }).then((myListing) => {
-  // //   console.log(myListing, 'MY LISTING HERE');
-  // // }).catch((err) => {
-  // //   console.log(`myListing error: ${err}`);
-  // }).then((myListing) => {
-  //   console.log(myListing, 'LIST LIST LIST');
-  //   console.log(myListing.listing.dataValues, 'MY LISTING AGAIN');
-  //   console.log(req.body.params.bookWanted, 'ERRRR');
-  //   console.log(myListing, 'LIST LIST LIST');
-  //   listingSenderId = myListing.listing.id_listing;
-  //   db.Offer.create({
-  //     // need id_listing, create offer, then save to offer listing
-  //     // listing recipient, listing prev, listing sender, money, accepted
-  //     id_listing_recipient: req.body.params.bookWanted,
-  //     id_offer_prev: req.body.params.previousId || null,
-  //     id_listing_sender: listingSenderId,
-  //     money_exchange_cents: req.body.params.money || null,
-  //     status: req.body.params.status || 'pending',
-  //   });
-  // }).catch((err) => {
-  //     console.log(`error in offer creation: ${err}`);
-  // }).then(() => {
-  //   console.log(req.body.params.bookWanted, 'WANTED');
-  //   console.log(req.body.params.myOffer, 'MY OFFER');
-  //   db.Offer.findAll({
-  //     limit: 1,
-  //     where: {
-  //       id_listing_recipient: req.body.params.bookWanted,
-  //     },
-  //     order: [['id_offer', 'DESC']]
-  //   }).then((offerBefore) => {
-  //     console.log(offerBefore[0].dataValues.id_offer, 'WHAAAAT');
-  //     console.log(req.body, 'REQ BODY');
-  //     currentOfferId = offerBefore[0].id_offer; // + 1;
-  //     return db.Offer_Listing.create({
-  //       id_offer: (currentOfferId + 1),
-  //       id_listing: req.body.params.bookWanted,
-  //     }).catch((err) => {
-  //     console.log(`error in creating offer listing: ${err}`);
-  //   }).then(() => {
-  //     return db.Offer.findOne({
-  //       where: {
-  //         id_offer: currentOfferId,
-  //       }
-  //     })
-  //     // res.status(200).send(JSON.stringify('offer created'));
-  //   }).then((currentOffer) => {
-  //     console.log(currentOffer);
-  //     currentOffer.bookWated = req.body.params.bookWantedTitle;
-  //     res.status(200).send(currentOffer);
-  //   }).catch((err) => {
-  //     console.log(`error in finding or sending offer: ${err}`);
-  //   })
-  //   })
-  // });
-  // .catch((err) => {
-  //     console.log(`error in finding offer id: ${err}`);
-  // }).then((offer) => {
-  //   console.log(offer, 'WHAT AM I');
-  //   let idOfOffer = offer[0].dataValues.id_offer;
-  //   return db.Offer_Listing.create({
-  //     id_offer: idOfOffer,
-  //     id_listing: req.body.listingId || 444 // 444 for TESTING
-  //   })
-  // }).catch((err) => {
-  //   console.log(`err in offer listing creation: ${err}`);
-  // }).then(() => {
-  //   res.send(JSON.stringify('offer creation'));
-  // }).catch((err) => {
-  //   console.log(`error for offer creation: ${err}`);
-  // });
+  
 });
-// });
+
 
 
 // PATCH / offerlisting
@@ -761,5 +576,44 @@ app.post('/contactUs', (req, res) => {
     res.status(200).send(JSON.stringify('Message sent to developers'));
   }).catch((err) => {
     console.log(`error in contact us: ${err}`);
+  });
+});
+
+
+// /DELETE /deleteListing
+// delete request deletes a listing (including from books)
+app.delete('/deleteListing', (req, res) => {
+  console.log(req.query, 'DELETE LISTING BODY');
+  db.Book.destroy({
+    where: {
+      id_book: req.query.bookId,
+    },
+    // include: [db.Listing],
+  }).then(() => {
+    db.Listing.destroy({
+      where: {
+        id_listing: req.query.listingId,
+      },
+    });
+  }).then((data) => {
+    console.log(`${data}, Listing deletion successful.`);
+  }).catch((err) => {
+    console.log(`Error in deleting listing: ${err}`);
+  });
+});
+
+
+// /DELETE /deleteWant
+// delete request deletes a want
+app.delete('/deleteWant', (req, res) => {
+  console.log(req.query, 'WANT BODY');
+  db.Want.destroy({
+    where: {
+      id_want: req.query.wantId,
+    },
+  }).then(() => {
+    console.log(`Want deletion successful.`);
+  }).catch((err) => {
+    console.log(`Error in deleting want: ${err}`);
   });
 });

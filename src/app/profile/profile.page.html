@@ -29,8 +29,15 @@
   <ion-button size="small" style="font-weight:700;" (click)="openAddListingModal()"> Edit </ion-button>
   <ion-list>
     <ion-item *ngFor="let want of wants">
-    Title: {{want.title}}<br />
-    ISBN: {{want.isbn}}
+      <ion-thumbnail slot="start">
+        <img
+          [src]="want.image_link === null ? '../../assets/img/biblio-logo-noBG-small-07.png' : want.image_link " />
+      </ion-thumbnail>
+      <ion-label>
+        <b>Title:</b> {{want.title}}<br />
+        <b>ISBN:</b> {{want.isbn}}
+      </ion-label>
+      <ion-icon name="remove-circle-outline" (click)="deleteWant(want.id_want)"></ion-icon>
     </ion-item>
   </ion-list><br />
   <a style="color:176ACC; font-weight:700;">
@@ -48,7 +55,7 @@
           <b>Condition:</b> {{listing.book.condition}}<br />
           <b>ISBN:</b> {{listing.book.isbn}}<br />
         </ion-label>
-        <ion-icon name="remove-circle-outline" (click)="deleteListing(listing.book.id_book)"></ion-icon>
+        <ion-icon name="remove-circle-outline" (click)="deleteListing(listing.id_book, listing.id_listing)"></ion-icon>
         <!-- Value: {{listing.value}} -->
       </ion-item>
     </ion-list> <br/>
