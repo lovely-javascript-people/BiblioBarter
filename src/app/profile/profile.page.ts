@@ -146,6 +146,14 @@ export class ProfilePage implements OnInit{
     this.listings = array;
   }
 
+  deleteListing(listingId) {
+    console.log(listingId, 'delete listing clicked');
+    this.http.delete('http://localhost:3000/deleteListing', { params: { listingId }})
+      .subscribe((data) => {
+        console.log(data, 'delete listing');
+      })
+  }
+
   ngOnInit() {
     this.setWantList = this.setWantList.bind(this);
     this.apiService.renderWantList(this.setWantList);
