@@ -131,6 +131,44 @@
     // });
     $(function () {
             var socket = io.connect('http://localhost:3000');
+            ////////////////////////////////
+            // var $nickForm = localhost.username;
+            // var $nickError = $('nickError');
+            // var $nickBox = $('#nickname');
+            // var $users = $('#users');
+            // var $messageForm = $('#send-message');
+            // var $messageBox = $('#message');
+            // var $chat = $('#chat');
+
+            // $nickForm.submit((e) => {
+            //     e.preventDefault();
+            //     socket.emit('new user', $nickBox.val(), (data) => {
+            //         if (data) {
+            //             $('#nickWrap').hide();
+            //             $('#contentWrap').show();
+            //         } else {
+            //             $nickError.html('That username is already taken. Try again.');
+            //         }
+            //     });
+            //     $nickBox.val('');
+            // });
+            // // array of nicknames
+            // socket.on('usernames', (data) => {
+            //     var html = '';
+            //     for (let i = 0; i < data.length; i++) {
+            //         html += data[i] + '<br />';
+            //     }
+            //     $users.html(html);
+            // });
+            // $messageForm.submit((e) => {
+            //     e.preventDefault();
+            //     socket.emit('send message', $messageBox.val());
+            //     $messageBox.val('');
+            // });
+            // socket.on('new message', (data) => {
+            //     $chat.append('<br/>' + data.nick + ': <br/>' + data.msg + '<br/>');
+            // });
+            /////////////////////////////
             $('form').submit(function (e) {
                 e.preventDefault(); // prevents page reloading
                 socket.emit('chat message', $('#m').val());

@@ -18,7 +18,12 @@ export class ChatPage implements OnInit {
     });
   }
 
-  sendMessage() {
+  /* 
+   * sendMessage removed from button on chat.page.html
+   * <button (click)="sendMessage()"></button>
+   * currently depracated
+   */
+  sendMessage(msg) {
     this.chat.sendMsg("Test Message");
   }
   

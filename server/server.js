@@ -83,31 +83,66 @@ app.get('/matches', (req, res) => {
   })
 });
 
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '../src/app/chat/chat.page.html');
-  res.send(("HEY HEY HEY"));
-});
+// does not currently work, no get request on front end
+// app.get('/chat', function (req, res) {
+//   // res.sendFile(__dirname + '../src/app/chat/chat.page.html');
+//   res.send(JSON.stringify("HEY HEY HEY"));
+// });
+
+// ///////////////////////////////////// // 
+// ///////////////////////////////////// //
+
+// users object, holds each user's socket connection
+// property is username of user, value is socket
+const users = {};
 
 // socket io connection
-io.on('connection', function (socket) {
+// on each new socket creation, we save it on users object
+io.sockets.on('connection', (socket) => {
   console.log('a user connected');
+  // on new user
+  // socket.on('new user', (data, callback) => {
+  //   console.log('hello new user', data);
+  //   if (data in users) {
+  //     callback(false);
+  //   } else {
+  //     callback(true);
+  //     socket.nickname = data;
+  //     user[nickname.socket] = socket;
+  //     updateNicknames();
+  //   }
+  // });
+  // const updateNicknames = () => {
+  //   console.log('update nicknames');
+  //   io.sockets.emit('username', Object.keys(users));
+  // };
+  // socket.on('send message', (data) => {
+  //   console.log('sending a message');
+  //   io.sockets.emit('new message', {msg: data, nick: socket.nickname})
+  // // })
+  // socket.on('message', (data) => {
+  //   console.log('FROM web socket to server, NEW observable');
+  // });
   // this sends message into chatroom
-  socket.on('chat message', function (msg) {
+  socket.on('chat message', (msg) => {
     console.log('message: ' + msg); // logs in terminal
     io.emit('chat message', msg); // emits to the chat..
   });
-  socket.on('disconnect', function () {
+  socket.on('disconnect', (data) => {
     console.log('user disconnected');
+    // if (!socket.nickname) { return }
+    // delete users[socket.name];
+    // updateNicknames();
   });
   // When we receive a 'message' event from our client, print out
   // the contents of that message and then echo it back to our client
   // using `io.emit()`
   // CURRENTLY BELOW only logs on server
   // emit sent to client, but NO Messages appear in chat room
-  socket.on('message', message => {
-    console.log('Message Received: ' + message);
-    io.emit('message', { type: 'new-message', text: message });
-  });
+  // socket.on('message', (message) => {
+  //   console.log('Message Received: ' + message);
+  //   io.emit('message', { type: 'new-message', text: message });
+  // });
 });
 // ///////////////////////////
 // io.on('connection', function (socket) {
