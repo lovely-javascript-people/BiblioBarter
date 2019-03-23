@@ -43,6 +43,7 @@
             {{want.title}}
           </ion-select-option>
         </ion-select>
+        <input #getPaid placeholder="Dolla dolla bills y'all" />
       </ion-item>
     
       <ion-item>
@@ -52,6 +53,7 @@
             {{listing.book.title}}
           </ion-select-option>
         </ion-select>
+        <input #walletLoss placeholder="Pay Regretfully" />
       </ion-item>
       <ion-button (click)="makeOffer(want.value[0], offer.value[0])">Submit offer</ion-button>
     </ion-list>

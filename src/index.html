@@ -120,10 +120,10 @@
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
     $(function () {
-            var socket = io.connect('http://18.188.132.186:3000')
+            var socket = io.connect('http://18.188.132.186:3000');
             $('form').submit(function (e) {
                 e.preventDefault(); // prevents page reloading
-                socket.emit('chat message', `${localStorage.username}: ` + $('#m').val());
+                socket.emit('chat message', `${localStorage.username}:  ` + $('#m').val());
                 $('#m').val('');
                 return false;
             });
