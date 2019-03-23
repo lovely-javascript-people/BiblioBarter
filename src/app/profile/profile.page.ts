@@ -67,10 +67,11 @@ export class ProfilePage implements OnInit{
   }
 
   acceptOffer(index) {
-  
-  this.offerid = this.allOffers[index + 1].offer[index].id_offer;
-  console.log(this.allOffers[index]);
-  console.log(index, 'INDEX');
+  console.log(this.allOffers, 'ALL OFFERS');
+  console.log(this.offers[index], 'CLICKED ON OFFER');
+
+  this.offerid = this.offers[index].offerId;
+  // console.log(index, 'INDEX');
   const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
   this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'accepted', offerId: id_offer} })
@@ -93,8 +94,9 @@ export class ProfilePage implements OnInit{
     offerObj.peer = offer.peer.user_name;
     offerObj.status = offer.offer.status;
     offerObj.email = offer.peer.email;
-    offerObj.index = i;
-    console.log(offerObj, 'OFFER OBJECT');
+    offerObj.offerId = offer.offer.id_offer;
+    // offerObj.index = i;
+    // console.log(offerObj, 'OFFER OBJECT');
     offs.push(offerObj);
     i++
       } else if (offer.offer.status === 'accepted') {
@@ -105,26 +107,38 @@ export class ProfilePage implements OnInit{
     offerObj.status = offer.offer.status;
     offerObj.email = offer.peer.email;
     offerObj.index = i;
-    console.log(offerObj, 'OFFER OBJECT');
+    // console.log(offerObj, 'OFFER OBJECT');
     acceptedOffers.push(offerObj);
     i++
       } 
   }
   this.offers = offs;
   this.acceptedOffs = acceptedOffers;
-  console.log(this.offers, 'THIS DOT OFFERS');
+  // console.log(this.offers, 'THIS DOT OFFERS');
 }
 
   rejectOffer(index) {
-    this.offerid = this.allOffers[index + 1].offer[index].id_offer;
+    this.offerid = this.offers[index].offerId;
     const id_offer = this.offerid;
       // this.apiService.userAcceptOffer(); // for when we refactor
     this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
       .subscribe((offerData) => {
-        console.log(offerData, 'OFFER DATA FROM SERVER --- REJECTED');
+        console.log(offerData, 'OFFER DATA');
       })
 
     }
+
+  cancelAcceptedOffer(index) {
+    console.log('I WANT TO CANCEL THIS OFFER');
+    this.offerid = this.offers[index].offerId;
+    // console.log(index, 'INDEX');
+    const id_offer = this.offerid;
+      // this.apiService.userAcceptOffer(); // for when we refactor
+    this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
+      .subscribe((offerData) => {
+        console.log(offerData, 'OFFER DATA');
+      })
+  }
 
   setWantList(array) {
     this.wants = array;
