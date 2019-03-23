@@ -1,16 +1,98 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>chat</ion-title>
-  </ion-toolbar>
-  <a href="/Matches"><button>back</button></a>
-</ion-header>
 
-<ion-content padding>
-  <ul id="messages"></ul>
+  <div class="App">
+    <aside class="sidebar left-sidebar">
+        <a href="/Matches"><button>Go Back</button></a>
+      <section *ngIf="!currentUser.id" class="join-chat">
+        <h4>Join Chat</h4>
+        <form style="width:fit-content; position:relative" (ngSubmit)="addUser()">
+          <input placeholder="Enter your username" type="text" name="userid" [(ngModel)]="userId" />
+          <input style="background-color: cornflowerblue" type="submit" value="Assimilate!">
+        </form>
+      </section>
+      <section *ngIf="currentUser.id" class="room-members">
+        <h4>Room Users</h4>
+        <ul class="user-list">
+          <li *ngFor="let user of roomUsers">
+            <span class="presence {{ user.presence.state }}"></span>
+            <span>{{ user.name }}</span>
+          </li>
+        </ul>
+      </section>
+      <form *ngIf="currentRoom.hasOwnProperty(isPrivate) && !currentRoom.isPrivate" (ngSubmit)="addUserToRoom()">
+        <label for="user-name">Invite user to {{ currentRoom.name }}</label>
+        <input type="text" class="newUser-input" [(ngModel)]="newUser" name="user-name" id="user-name" placeholder="Enter username">
+      </form>
+    </aside>
+
+    <main class="chat-window">
+      <header class="chat-header">
+        <h4 *ngIf="!currentRoom.name; else roomName">Chat</h4>
+        <ng-template #roomName>
+          <h4>{{ currentRoom.name }}</h4>
+        </ng-template>
+        <span class="participants"></span>
+      </header>
+      <section class="chat-session" style="z-index: auto;">
+        <ul class="message-list">
+          <li class="user-message" *ngFor="let message of messages">
+            <span class="user-id">{{ message.senderId }}</span>
+            <span>{{ message.text }}</span>
+          </li>
+        </ul>
+      </section>
+      <footer *ngIf="currentUser.id" class="chat-footer">
+        <form class="message-form" (ngSubmit)='sendMessage()'>
+          <input class="message-input" placeholder="Type a message. Hit Enter to send" type="text" name="message" [(ngModel)]="newMessage" />
+        </form>
+      </footer>
+    </main>
+    <aside class="sidebar right-sidebar">
+      <section class="room-section">
+        <section *ngIf="currentUser.id" class="user-rooms">
+            <h4>Rooms</h4>
+            <ul class="room-list">
+              <li *ngFor="let room of userRooms">
+                <div [class.active]="room.id==currentRoom.id" (click)="connectToRoom(room.id)" class="room">
+                  <span class="room-status" *ngIf="room.isPrivate; else publicRoom">🔒</span>
+                  <ng-template #publicRoom>
+                    <span>🌐</span>
+                  </ng-template>
+                  <span class="room-name">{{ room.name }}</span>
+                </div>
+              </li>
+            </ul>
+          </section>
+          <section *ngIf="joinableRooms.length > 0" class="joinable-rooms">
+              <h4>Joinable rooms</h4>
+              <ul class="room-list">
+                  <li *ngFor="let room of joinableRooms">
+                    <div class="room" (click)="joinRoom(room.id)">
+                      <span class="room-status" *ngIf="room.isPrivate; else publicRoom">🔒</span>
+                      <ng-template #publicRoom>
+                        <span>🌐</span>
+                      </ng-template>
+                      <span class="room-name">{{ room.name }}</span>
+                    </div>
+                  </li>
+                </ul>
+          </section>
+      </section>
+      <section *ngIf="currentUser.id" class="create-room">
+        <form (ngSubmit)="createRoom()">
+          <input type="text" style="width:auto" [(ngModel)]="newRoom.name" name="room-name" id="room-name" placeholder="Create a room"><br />
+          <label for="is-private">
+              <input type="checkbox" style="width:auto" [(ngModel)]="newRoom.isPrivate" name="is-private" id="is-private">
+              <span><-- click if room is private</span>
+          </label>
+        </form>
+      </section>
+    </aside>
+  </div>
+  <!-- <ul id="messages"></ul>
   <form action="">
     <input id="m" autocomplete="off" /><button></button>
   </form>
 
-  <img src="https://render.fineartamerica.com/images/rendered/default/poster/10/8/break/images/artworkimages/medium/1/sleeping-labrador-puppy-with-books-waldemar-dabrowski.jpg"
-  />
-</ion-content>
+  <img src="https://pupbox.com/wp-content/themes/pupbox-jb/assets/blog.v2/posts-by-age/puppy-running2.jpg"
+  /> -->
+

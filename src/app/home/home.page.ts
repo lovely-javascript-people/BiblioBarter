@@ -31,7 +31,8 @@ export class HomePage implements OnInit{
   profileButtonClick(index) {
     console.log(this.listings[index]);
     if (this.listings.length) {
-    localStorage.setItem('selectedUser', this.listings[index]);
+      console.log(this.listings[index], 'hi');
+    localStorage.setItem('selectedUser', this.listings[index].listing.id_user);
     } else {
       localStorage.setItem('selectedUser', index);
     }
