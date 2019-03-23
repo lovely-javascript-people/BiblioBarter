@@ -136,4 +136,10 @@ export class ApiService {
       callback(response);
       });
     }
+
+    getSchools(school, callback) {
+      // this.http.get(`${this.local}/schools`, { params: { school } }).subscribe((response) => {
+      //   callback(response);
+      //   }); 
+    }
 }
