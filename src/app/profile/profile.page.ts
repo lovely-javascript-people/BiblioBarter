@@ -82,36 +82,34 @@ export class ProfilePage implements OnInit{
   renderOffers(offers) {
     console.log(offers, 'OFFERS');
     this.allOffers = offers;
-    let offs: any = []
-    let acceptedOffers: any = [];
-    console.log(this.allOffers, 'ALL OFFERS');
-
-    for (let i = 1; i < offers.length; i++) {
-      console.log(offers[i].offer[i - 1], 'OFFERS AT I');
-        if (offers[i].offer.length && offers[i].offer[i - 1] && offers[i].offer[i - 1].status === 'pending') {
+    let offs: object[] = []
+    let acceptedOffers: object[] = [];
+    let i = 0;
+    for (let offer of offers.slice(1)) {
+    if (offer.offer.status === 'pending') {
     let offerObj: any = {};
-    offerObj.offeredTitle = offers[i].titleOffered.title;
-    offerObj.wantedTitle = offers[i].titleWanted.title;
-    offerObj.peer = offers[i].peer.user_name;
-    offerObj.status = offers[i].offer[i - 1].status;
-    offerObj.email = offers[i].peer.email;
+    offerObj.offeredTitle = offer.titleOffered.title;
+    offerObj.wantedTitle = offer.titleWanted.title;
+    offerObj.peer = offer.peer.user_name;
+    offerObj.status = offer.offer.status;
+    offerObj.email = offer.peer.email;
     offerObj.index = i;
     console.log(offerObj, 'OFFER OBJECT');
     offs.push(offerObj);
-      } else if (offers[i].offer.length && offers[i].offer[i - 1] && offers[i].offer[i - 1].status === 'accepted') {
+    i++
+      } else if (offer.offer.status === 'accepted') {
     let offerObj: any = {};
-    offerObj.offeredTitle = offers[i].titleOffered.title;
-    offerObj.wantedTitle = offers[i].titleWanted.title;
-    offerObj.peer = offers[i].peer.user_name;
-    offerObj.status = offers[i].offer[i - 1].status;
-    offerObj.email = offers[i].peer.email;
+    offerObj.offeredTitle = offer.titleOffered.title;
+    offerObj.wantedTitle = offer.titleWanted.title;
+    offerObj.peer = offer.peer.user_name;
+    offerObj.status = offer.offer.status;
+    offerObj.email = offer.peer.email;
     offerObj.index = i;
     console.log(offerObj, 'OFFER OBJECT');
     acceptedOffers.push(offerObj);
+    i++
       } 
-
   }
-
   this.offers = offs;
   this.acceptedOffs = acceptedOffers;
   console.log(this.offers, 'THIS DOT OFFERS');
