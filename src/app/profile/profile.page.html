@@ -44,7 +44,8 @@
   </a>
   <ion-list>
       <ion-item *ngFor="let offer of offers; let i = index">
-        {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}} <ion-button (click)="acceptOffer(i)" >Accept</ion-button><ion-button (click)="rejectOffer(i)" >Reject</ion-button>
+        {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}} 
+        <ion-button (click)="acceptOffer(i)" >Accept</ion-button><ion-button (click)="rejectOffer(i)" >Reject</ion-button><ion-button (click)="counterOffer(i)" >Counter</ion-button>
         <!-- {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}  |  STATUS: {{offer.status}} <ion-button (click)="acceptOffer(i)" >Accept</ion-button><ion-button (click)="rejectOffer(i)" >Reject</ion-button> -->
       </ion-item>
   </ion-list><br />

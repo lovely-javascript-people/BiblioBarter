@@ -6,6 +6,7 @@ const { sequelize } = require('../database/database.js');
 const db = require('../database/database.js');
 const helpers = require('./apiHelpers.js');
 const Chatkit = require('@pusher/chatkit-server');
+const axios = require('axios');
 
 const chatkit = new Chatkit.default({
   instanceLocator: process.env.CHATKIT_INSTANCE_LOCATOR,
@@ -614,6 +615,22 @@ app.post('/contactUs', (req, res) => {
   });
 });
 
+app.get('/schools', (req, res) => {
+  axios({
+    method: 'GET',
+    url: `https://api.tomtom.com/search/2/search/${req.query.school}.json?countrySet=US&idxSet=POI&key=${process.env.KEY}`,
+  headers: {
+    Referer: 'https://developer.tomtom.com/content/search-api-explorer',
+    Accept: '*/*',
+  }
+}).then(colleges => {
+  res.send(colleges.data);
+})
+})
+
+app.get('/counter', (req, res) => {
+  res.send(JSON.stringify("Please wait while you are redirected to your peer's profile"));
+})
 
 // /DELETE /deleteListing
 // delete request deletes a listing (including from books)

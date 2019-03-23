@@ -82,6 +82,10 @@ export class ProfilePage implements OnInit{
     })
   }
 
+  counterOffer(index) {
+    this.apiService.counterOffer(index);
+  }
+
   renderOffers(offers) {
     console.log(offers, 'OFFERS');
     this.allOffers = offers;
