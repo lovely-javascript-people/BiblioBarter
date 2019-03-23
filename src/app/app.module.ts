@@ -28,6 +28,7 @@ import { ChatPageModule } from './chat/chat.module';
 // import { ChatPage } from './chat/chat.page';
 import { WebSocketServiceService } from './web-socket-service.service';
 import { ChatService } from './chat.service';
+import Chatkit from '@pusher/chatkit-client';
 // import { ReactiveFormsModule, FormControl } from '@angular/forms';
 
 
