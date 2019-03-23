@@ -70,7 +70,6 @@ export class ChatPage implements OnInit {
     })
   }
 
-<<<<<<< HEAD
   joinRoom(id) {
     const { currentUser } = this;
     currentUser.joinRoom({ roomId: id })
@@ -156,15 +155,6 @@ export class ChatPage implements OnInit {
     // this.chat.messages.subscribe(msg => {
     //   console.log(msg);
     // });
-=======
-  /* 
-   * sendMessage removed from button on chat.page.html
-   * <button (click)="sendMessage()"></button>
-   * currently depracated
-   */
-  sendMessage(msg) {
-    this.chat.sendMsg("Test Message");
->>>>>>> a12af8ee623d281a896893cb1ae041cc944b3be0
   }
 
   // sendMessage() {
