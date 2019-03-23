@@ -138,8 +138,15 @@ export class ApiService {
     }
 
     getSchools(school, callback) {
-      // this.http.get(`${this.local}/schools`, { params: { school } }).subscribe((response) => {
-      //   callback(response);
-      //   }); 
+      this.http.get(`${this.local}/schools`, { params: { school } }).subscribe((response) => {
+        callback(response);
+        }); 
+    }
+
+    counterOffer(id) {
+      this.http.get(`${this.local}/counter`, { params: { id } }).subscribe((response) => {
+        console.log(response);
+        });
     }
 }
+

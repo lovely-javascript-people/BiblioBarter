@@ -155,6 +155,7 @@ export class HomePage implements OnInit{
     this.apiService.renderListingsList(this.setYourListings);
     this.apiService.getMatches(this.setMatches);
     this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
+    this.apiService.getSchools('LSU', console.log);
   }
 
 }
