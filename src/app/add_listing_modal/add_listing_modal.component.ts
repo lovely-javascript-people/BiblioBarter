@@ -11,9 +11,9 @@ import { ApiService } from '../api.service';
 
 export class AddListingModal implements OnInit {
 
-  isbnVal: string = '';
-  bookCondition: string = '';
-  title: string = '';
+  isbnVal: string;
+  bookCondition: string;
+  title: string;
   userid: number = localStorage.userid;
   // animated: boolean = true;
   image: string;
@@ -26,9 +26,9 @@ export class AddListingModal implements OnInit {
 
   addBook(isbn) {
     this.apiService.getBookInfoForOfferingList(isbn, this.getBookTitle);
-    
+
     const postBook = this.postBookToOfferingList;
-    setTimeout(function(){ postBook() }, 1000);
+    setTimeout(function() { postBook(); }, 1000);
 
     this.closeModal();
   }
@@ -39,7 +39,7 @@ export class AddListingModal implements OnInit {
     const title = this.title;
     const userid = this.userid;
     const imageLink = this.image;
-    console.log(this.title, 'TITLE IN POSTBOOKTOOFFERINGLIST')
+    console.log(this.title, 'TITLE IN POSTBOOKTOOFFERINGLIST');
     this.apiService.addBookToUserOfferingList(isbnVal, bookCondition, title, userid, imageLink);
   }
 
@@ -51,12 +51,12 @@ export class AddListingModal implements OnInit {
     .split('_').join(' ');
     // this.image = bookInfo[Object.keys(bookInfo)[0]].thumbnail_url || null; // GRABS THE THUMBNAIL
     // console.log(this.title, 'TITLE OF THE BOOK');
-    //get book image
+    // get book image
     this.http.get(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbnNum}`)
       .subscribe((bookInfo: any) => {
         this.image = bookInfo.items[0].volumeInfo.imageLinks.thumbnail;
         console.log(bookInfo.items[0].volumeInfo.imageLinks.thumbnail, 'BOOK IMAGE GOOGLE BOOKS API');
-      })
+      });
   }
 
   ngOnInit() {
