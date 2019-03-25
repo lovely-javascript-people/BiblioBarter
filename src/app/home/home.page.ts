@@ -14,8 +14,13 @@ import { $ } from 'protractor';
 export class HomePage implements OnInit {
 
   url: any;
+<<<<<<< HEAD
+  isbnQuery = "";
+  isbn = "";
+=======
   isbnQuery = '';
   isbn = '';
+>>>>>>> d3d4d1b19f141bd8f49c013b44a64e654b5aa2b6
   listings: any = [];
   yourWants: any[];
   num: string; // stores the scanned result

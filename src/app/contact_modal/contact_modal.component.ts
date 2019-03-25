@@ -15,24 +15,23 @@ import { ApiService } from '../api.service';
 
 export class ContactModal implements OnInit {
 
-  emailAddress: string = '';
-  emailBody: string = '';
+  emailAddress: string;
+  emailBody: string;
 
   // available: boolean = true;
 
-  
 
   constructor(
     public modal: ModalController,
     // private emailComposer: EmailComposer,
     private apiService: ApiService
     ) {  }
-    
+
     // send(){
     //   this.emailComposer.isAvailable().then((available) =>{
     //   if(available) {
-    //     //Now we know we can send    
-    //     console.log('sending email');  
+    //     //Now we know we can send
+    //     console.log('sending email');
     //   }
     //   });
     // }
