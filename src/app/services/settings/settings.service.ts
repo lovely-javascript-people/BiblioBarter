@@ -8,16 +8,14 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SettingsService {
 
-  
-
   constructor(private auth: AuthService, private http: HttpClient) {}
   host = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
   local = 'http://localhost:3000';
 
   switchAccount() {
-    let that = this;
+    const that = this;
     this.auth.logout();
-    
+
     setTimeout(() => that.auth.login(), 1500);
   }
 
