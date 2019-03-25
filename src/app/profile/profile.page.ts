@@ -26,11 +26,11 @@ export class ProfilePage implements OnInit {
   acceptedOffs: any = [];
   offerid: any; // need to grab correct offerid --> where do we get this
 
-  constructor( 
-    private apiService: ApiService, 
-    public modal: ModalController, 
-    private router: Router, 
-    private http: HttpClient, 
+  constructor(
+    private apiService: ApiService,
+    public modal: ModalController,
+    private router: Router,
+    private http: HttpClient,
     public toastController: ToastController,
     ) {}
 
@@ -51,8 +51,7 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  async openWantListModal()
-  {
+  async openWantListModal() {
     var data = { message : 'hello world' };
     const modalPage = await this.modal.create({
       component: WantListModal,
@@ -60,9 +59,8 @@ export class ProfilePage implements OnInit {
     });
     return await modalPage.present();
   }
-  
-  async openAddListingModal()
-  {
+
+  async openAddListingModal() {
     var data = { message : 'hello world' };
     const modalPage = await this.modal.create({
       component: AddListingModal, 
@@ -91,12 +89,12 @@ export class ProfilePage implements OnInit {
   renderOffers(offers) {
     console.log(offers, 'OFFERS');
     this.allOffers = offers;
-    let offs: object[] = []
-    let acceptedOffers: object[] = [];
+    const offs: object[] = [];
+    const acceptedOffers: object[] = [];
     let i = 0;
-    for (let offer of offers.slice(1)) {
+    for (const offer of offers.slice(1)) {
     if (offer.offer.status === 'pending') {
-    let offerObj: any = {};
+    const offerObj: any = {};
     offerObj.offeredTitle = offer.titleOffered.title;
     offerObj.wantedTitle = offer.titleWanted.title;
     offerObj.peer = offer.peer.user_name;
@@ -117,8 +115,8 @@ export class ProfilePage implements OnInit {
     offerObj.offerId = offer.offer.id_offer;
     // console.log(offerObj, 'OFFER OBJECT');
     acceptedOffers.push(offerObj);
-    i++
-      } 
+    i++;
+      }
   }
   this.offers = offs;
   this.acceptedOffs = acceptedOffers;
@@ -132,7 +130,7 @@ export class ProfilePage implements OnInit {
     this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
-      })
+      });
 
     }
 
@@ -143,7 +141,7 @@ export class ProfilePage implements OnInit {
     this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
-      })
+      });
   }
 
   setWantList(array) {
