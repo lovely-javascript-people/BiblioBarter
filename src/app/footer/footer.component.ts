@@ -71,9 +71,12 @@ export class FooterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.openSettingsModal = this.openSettingsModal.bind(this);
     if (localStorage.loginMethod === 'signup') {
-      this.openSettingsModal();
-      localStorage.set('loginMethod', 'login');
+      setTimeout(() => {
+        this.openSettingsModal();
+        localStorage.loginMethod = 'login';
+      }, 1000);
     }
   }
 

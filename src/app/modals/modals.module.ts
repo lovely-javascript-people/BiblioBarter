@@ -13,12 +13,6 @@ import { RouterModule } from '@angular/router';
     IonicModule,
     CommonModule,
     FormsModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: SettingsModal
-      }
-    ])
     // ReactiveFormsModule,
     // FormControl,
   ],

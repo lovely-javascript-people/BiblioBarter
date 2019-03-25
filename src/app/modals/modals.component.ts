@@ -25,6 +25,7 @@ export class SettingsModal implements OnInit {
   phoneNumber: string;
   address: string;
   registrationForm: FormGroup;
+  settingsFilled: boolean;
 
   constructor(
     public modal: ModalController,

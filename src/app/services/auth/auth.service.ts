@@ -77,7 +77,6 @@ export class AuthService {
         console.log(userInfo, 'USER');
         localStorage.setItem('username', userInfo.nickname);
         this.apiService.userSignup(userInfo);
-        this.router.navigate(['/Settings']);
       });
       } else if (err) {
         console.log(err);
