@@ -4,8 +4,8 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HomePage } from './home.page';
-import { FooterModule } from '../footer/footer.module'
-import { ModalsModule } from '../modals/modals.module'
+import { FooterModule } from '../footer/footer.module';
+import { ModalsModule } from '../modals/modals.module';
 
 @NgModule({
   imports: [
