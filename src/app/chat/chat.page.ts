@@ -42,7 +42,7 @@ export class ChatPage implements OnInit {
   createRoom() {
     const { newRoom: { name, isPrivate }, currentUser } = this;
 
-    if (name.trim() === '') {return};
+    if (name.trim() === '') {return;}
 
     currentUser.createRoom({
       name,
@@ -74,7 +74,7 @@ export class ChatPage implements OnInit {
     const { currentUser } = this;
     currentUser.joinRoom({ roomId: id })
     .catch(err => {
-      console.log(`Error joining room ${id}: ${err}`)
+      console.log(`Error joining room ${id}: ${err}`);
     });
   }
 
@@ -91,7 +91,7 @@ export class ChatPage implements OnInit {
             },
             onPresenceChanged: () => {
               this.roomUsers = this.currentRoom.users.sort((a) => {
-                if (a.presence.state === 'online') {return -1};
+                if (a.presence.state === 'online') {return -1;}
 
                 return 1;
               });
@@ -108,7 +108,7 @@ export class ChatPage implements OnInit {
       sendMessage() {
         const { newMessage, currentUser, currentRoom } = this;
 
-        if (newMessage.trim() === '') {return};
+        if (newMessage.trim() === '') {return;}
 
         currentUser.sendMessage({
           text: newMessage,

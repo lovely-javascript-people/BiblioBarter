@@ -41,7 +41,7 @@ export class FooterComponent implements OnInit {
     var data = { message : 'hello world' };
     const modalPage = await this.modal.create({
       component: SearchModal,
-      componentProps:{values: data}
+      componentProps: {values: data}
     });
     return modalPage.present();
   }
@@ -65,7 +65,7 @@ export class FooterComponent implements OnInit {
   redirectToProfile() {
     this.router.navigate(['/Profile']);
   }
-  
+
   redirectToChat() {
     this.router.navigate(['/Chat']);
   }

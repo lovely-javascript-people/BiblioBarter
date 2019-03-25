@@ -26,7 +26,7 @@ export class ContactModal implements OnInit {
     // private emailComposer: EmailComposer,
     private apiService: ApiService
     ) {  }
-    
+
     // send(){
     //   this.emailComposer.isAvailable().then((available) =>{
     //   if(available) {

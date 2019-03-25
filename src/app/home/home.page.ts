@@ -11,11 +11,11 @@ import { $ } from 'protractor';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit {
 
   url: any;
-  isbnQuery: string = "";
-  isbn: string = "";
+  isbnQuery = "";
+  isbn = "";
   listings: any = [];
   yourWants: any[];
   num: string; // stores the scanned result
