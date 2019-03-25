@@ -55,7 +55,7 @@ export class ProfilePage implements OnInit {
     var data = { message : 'hello world' };
     const modalPage = await this.modal.create({
       component: WantListModal,
-      componentProps:{values: data}
+      componentProps: {values: data}
     });
     return await modalPage.present();
   }
@@ -63,8 +63,8 @@ export class ProfilePage implements OnInit {
   async openAddListingModal() {
     var data = { message : 'hello world' };
     const modalPage = await this.modal.create({
-      component: AddListingModal, 
-      componentProps:{values: data}
+      component: AddListingModal,
+      componentProps: {values: data}
     });
     return await modalPage.present();
   }
@@ -79,7 +79,7 @@ export class ProfilePage implements OnInit {
   this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'accepted', offerId: id_offer} })
     .subscribe((offerData) => {
       console.log(offerData, 'OFFER DATA');
-    })
+    });
   }
 
   counterOffer(index) {
@@ -104,9 +104,9 @@ export class ProfilePage implements OnInit {
     // offerObj.index = i;
     // console.log(offerObj, 'OFFER OBJECT');
     offs.push(offerObj);
-    i++
+    i++;
       } else if (offer.offer.status === 'accepted') {
-    let offerObj: any = {};
+    const offerObj: any = {};
     offerObj.offeredTitle = offer.titleOffered.title;
     offerObj.wantedTitle = offer.titleWanted.title;
     offerObj.peer = offer.peer.user_name;
