@@ -16,7 +16,7 @@ import { FormGroup, FormControl, Validators, } from '@angular/forms';
 export class SettingsModal implements OnInit {
 
   school: string;
-  radius: number = 10;
+  radius = 10;
   universities: any[] = [];
   emailAddress: string;
   nameFirst: string;
@@ -27,8 +27,8 @@ export class SettingsModal implements OnInit {
   registrationForm: FormGroup;
 
   constructor(
-    public modal: ModalController, 
-    public settings: SettingsService, 
+    public modal: ModalController,
+    public settings: SettingsService,
     private auth: AuthService,
     private auto: AutoCompleteService,
     private apiService: ApiService,
@@ -71,7 +71,7 @@ export class SettingsModal implements OnInit {
 
   setSchool(setting) {
     this.presentToast(setting);
-    this.settings.changeSchool(this.school)
+    this.settings.changeSchool(this.school);
   }
 
   // searchRadius() {
