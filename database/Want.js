@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable @typescript-eslint/indent */
 // WANT table is the books the user would like / need
 module.exports = (sequelize, DataTypes) => {
@@ -8,22 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       unique: true,
     },
-    // id_user: {
-    //   type: DataTypes.INTEGER,
-    //   references: {
-    //     model: User,
-    //     key: 'id_user',
-    //     deferrable: DataTypes.Deferrable.INITIALLY_IMMEDIATE,
-    //   },
-    // },
     isbn: DataTypes.TEXT,
     title: DataTypes.TEXT,
     condition: DataTypes.TEXT,
     image_link: DataTypes.TEXT,
-    // {
-    //   type: DataTypes.TEXT,
-    //   defaultValue: '../../../../assets/img/book.png',
-    // },
     fulfilled: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
@@ -33,5 +22,6 @@ module.exports = (sequelize, DataTypes) => {
   Want.associate = (models) => {
     Want.belongsTo(models.User, { foreignKey: 'id_user' });
   };
+
   return Want;
 };

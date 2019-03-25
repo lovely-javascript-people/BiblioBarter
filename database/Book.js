@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable @typescript-eslint/indent */
 // BOOK table is the table that has all books for offering
 module.exports = (sequelize, DataTypes) => {
@@ -6,22 +7,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      // unique: true,
     },
     isbn: DataTypes.TEXT,
     title: DataTypes.TEXT,
     image_link: DataTypes.TEXT,
-    // {
-    //   type: DataTypes.TEXT,
-    //   defaultValue: '../../../../assets/img/book.png',
-    // },
     condition: DataTypes.TEXT,
   });
   Book.associate = (models) => {
-    // Book.belongsToMany(models.User);
-    // Book.belongsTo(models.Listing, { foreignKey: 'id_book' });
     Book.hasOne(models.Listing, { foreignKey: 'id_book', targetKey: 'id_book' });
   };
+
   return Book;
 };
-
