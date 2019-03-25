@@ -1,64 +1,61 @@
 <ion-header>
   <ion-toolbar>
       <ion-title>
-      <a style="color: #B1C634" routerLink="/Profile">Profile</a> <a style="width:50%" routerLink="/Matches">Matches</a> 
-    </ion-title>
+        <a style="color: #B1C634" routerLink="/Profile">Profile</a> <a style="width:50%" routerLink="/Matches">Matches</a> 
+      </ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content padding fullscreen="true">
   <img src='{{img}}' /><br />
   {{school}}
   <p>Welcome to my profile, {{user}}</p>
-
   <a style="color:176ACC; font-weight:700;">
-    LOOKING FOR:
+  LOOKING FOR:
   </a>
   <ion-list>
-    <ion-item *ngFor="let want of wants">
-      Title: {{want.title}}<br />
-      ISBN: {{want.isbn}}
-    </ion-item>
-  </ion-list><br /><br />
+     <ion-item *ngFor="let want of wants">
+        Title: {{want.title}}<br />
+        ISBN: {{want.isbn}}
+      </ion-item>
+  </ion-list>
+  <br /><br />
   <a style="color:176ACC; font-weight:700;">
-    OFFERING:
+  OFFERING:
   </a>
   <ion-list>
-      <ion-item *ngFor="let listing of listings">
+     <ion-item *ngFor="let listing of listings">
         Title: {{listing.title}}<br />
         Condition: {{listing.condition}}<br />
         ISBN: {{listing.isbn}}<br />
         <!-- Value: {{listing.value}} -->
       </ion-item>
-    </ion-list><br /><br />
-    <a style="color:176ACC; font-weight:700; Text-align:center;">
-      MAKE AN OFFER
-    </a>
-    <div *ngIf="isReady === 'Ready!'">
-    <ion-list>
-      <ion-item>
-        <label color="primary" stacked>I want:     </label><br />
-        <ion-select #want multiple="true" placeholder="Book you want">
-          <ion-select-option *ngFor="let want of possibleBooks[1]" style="overflow: visible;">
-            {{want.title}}
-          </ion-select-option>
-        </ion-select>
-        <input #getPaid placeholder="Dolla dolla bills y'all" />
-      </ion-item>
-    
-      <ion-item>
-        <label color="primary" stacked>I'm offering: </label><br />
-        <ion-select #offer multiple="true" placeholder="Book you are offering">
-          <ion-select-option *ngFor="let listing of possibleBooks[0]" style="overflow: visible;">
-            {{listing.book.title}}
-          </ion-select-option>
-        </ion-select>
-        <input #walletLoss placeholder="Pay Regretfully" />
-      </ion-item>
-      <ion-button (click)="makeOffer(want.value[0], offer.value[0])">Submit offer</ion-button>
-    </ion-list>
-    </div>
+  </ion-list>
+  <br /><br />
+  <a style="color:176ACC; font-weight:700; Text-align:center;">
+  MAKE AN OFFER
+  </a>
+  <div *ngIf="isReady === 'Ready!'">
+      <ion-list>
+        <ion-item>
+            <label color="primary" stacked>I want:     </label><br />
+            <ion-select #want multiple="true" placeholder="Book you want">
+              <ion-select-option *ngFor="let want of possibleBooks[1]" style="overflow: visible;">
+                  {{want.title}}
+              </ion-select-option>
+            </ion-select>
+            <input #getPaid placeholder="Dolla dolla bills y'all" />
+        </ion-item>
+        <ion-item>
+            <label color="primary" stacked>I'm offering: </label><br />
+            <ion-select #offer multiple="true" placeholder="Book you are offering">
+              <ion-select-option *ngFor="let listing of possibleBooks[0]" style="overflow: visible;">
+                  {{listing.book.title}}
+              </ion-select-option>
+            </ion-select>
+            <input #walletLoss placeholder="Pay Regretfully" />
+        </ion-item>
+        <ion-button (click)="makeOffer(want.value[0], offer.value[0])" size="small">Submit offer</ion-button>
+      </ion-list>
+  </div>
 </ion-content>
-
-
 <app-footer></app-footer>

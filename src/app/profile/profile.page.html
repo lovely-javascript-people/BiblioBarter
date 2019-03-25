@@ -1,18 +1,17 @@
 <ion-header>
   <ion-toolbar>
       <ion-title>
-      <a style="color: #B1C634; width:50%" routerLink="/Profile">Profile</a> <a style="width:50%" routerLink="/Matches">Matches</a> 
-    </ion-title>
+        <a style="color: #B1C634; width:50%" routerLink="/Profile">Profile</a> <a style="width:50%" routerLink="/Matches">Matches</a> 
+      </ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content padding fullscreen="true">
   <ion-avatar>
-    <img src={{img}} *ngIf="loaded" /><br />
+     <img src={{img}} *ngIf="loaded" /><br />
   </ion-avatar>
   <div *ngIf="loaded" style="Text-align:center">{{school}}</div>
   <div style="width:100%;Text-align:center; font-size: 20px; font-weight:700; font-size:120%">
-    <p>{{user | uppercase}}</p>
+      <p>{{user | uppercase}}</p>
   </div>
   <br />
   <!-- <ion-content>
@@ -40,61 +39,66 @@
   </div>
 
   <a style="color:176ACC; font-weight:700;">
-    PENDING OFFERS:
+  PENDING OFFERS:
   </a>
   <ion-list>
-      <ion-item *ngFor="let offer of offers; let i = index">
+     <ion-item *ngFor="let offer of offers; let i = index">
         {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}} 
-        <ion-button (click)="acceptOffer(i)" >Accept</ion-button><ion-button (click)="rejectOffer(i)" >Reject</ion-button><ion-button (click)="counterOffer(i)" >Counter</ion-button>
+        <ion-button (click)="acceptOffer(i)" size="small" style="float: right;">Accept</ion-button>
+        <ion-button (click)="rejectOffer(i)" >Reject</ion-button>
+        <ion-button (click)="counterOffer(i)" >Counter</ion-button>
         <!-- {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}  |  STATUS: {{offer.status}} <ion-button (click)="acceptOffer(i)" >Accept</ion-button><ion-button (click)="rejectOffer(i)" >Reject</ion-button> -->
       </ion-item>
-  </ion-list><br />
+  </ion-list>
+  <br />
   <a style="color:176ACC; font-weight:700;">
-    I'M LOOKING FOR:
+  I'M LOOKING FOR:
   </a>
-  <ion-button size="small" style="font-weight:700; background-color: #B1C634; width:10%" (click)="openWantListModal()"> + </ion-button>
-  <ion-button size="small" style="font-weight:700;" (click)="openAddListingModal()"> Edit </ion-button>
+  <ion-button size="small" style="font-weight:700; background-color: #B1C634; width:10%" (click)="openWantListModal()" style="float: right;"> + </ion-button>
+  <ion-button size="small" style="font-weight:700;" (click)="openAddListingModal()" style="float: right;"> Edit </ion-button>
   <ion-list>
-    <ion-item *ngFor="let want of wants">
-      <ion-thumbnail slot="start">
-        <img
-          [src]="want.image_link === null ? '../../assets/img/biblio-logo-noBG-small-07.png' : want.image_link " />
-      </ion-thumbnail>
-      <ion-label>
-        <b>Title:</b> {{want.title}}<br />
-        <b>ISBN:</b> {{want.isbn}}
-      </ion-label>
-      <ion-icon name="remove-circle-outline" (click)="deleteWant(want.id_want, 'want listing')"></ion-icon>
-    </ion-item>
-  </ion-list><br />
-  <a style="color:176ACC; font-weight:700;">
-    I'M OFFERING:
-  </a>
-  <ion-button size="small" style="font-weight:700; background-color: #B1C634; width:10%" (click)="openAddListingModal()"> + </ion-button>
-  <ion-button size="small" style="font-weight:700;" (click)="openAddListingModal()"> Edit </ion-button>
-  <ion-list>
-      <ion-item *ngFor="let listing of listings">
+     <ion-item *ngFor="let want of wants">
         <ion-thumbnail slot="start">
-          <img [src]="listing.book.image_link === null ? '../../assets/img/biblio-logo-noBG-small-07.png' : listing.book.image_link " />
+            <img
+              [src]="want.image_link === null ? '../../assets/img/biblio-logo-noBG-small-07.png' : want.image_link " />
         </ion-thumbnail>
         <ion-label>
-          <b>Title:</b> {{listing.book.title}}<br />
-          <b>Condition:</b> {{listing.book.condition}}<br />
-          <b>ISBN:</b> {{listing.book.isbn}}<br />
+            <b>Title:</b> {{want.title}}<br />
+            <b>ISBN:</b> {{want.isbn}}
+        </ion-label>
+        <ion-icon name="remove-circle-outline" (click)="deleteWant(want.id_want, 'want listing')"></ion-icon>
+      </ion-item>
+  </ion-list>
+  <br />
+  <a style="color:176ACC; font-weight:700;">
+  I'M OFFERING:
+  </a>
+  <ion-button size="small" style="font-weight:700; background-color: #B1C634; width:10%" (click)="openAddListingModal()" style="float: right;"> + </ion-button>
+  <ion-button size="small" style="font-weight:700;" (click)="openAddListingModal()" style="float: right;"> Edit </ion-button>
+  <ion-list>
+     <ion-item *ngFor="let listing of listings">
+        <ion-thumbnail slot="start">
+            <img [src]="listing.book.image_link === null ? '../../assets/img/biblio-logo-noBG-small-07.png' : listing.book.image_link " />
+        </ion-thumbnail>
+        <ion-label>
+            <b>Title:</b> {{listing.book.title}}<br />
+            <b>Condition:</b> {{listing.book.condition}}<br />
+            <b>ISBN:</b> {{listing.book.isbn}}<br />
         </ion-label>
         <ion-icon name="remove-circle-outline" (click)="deleteListing(listing.id_book, listing.id_listing, 'offer listing')"></ion-icon>
         <!-- Value: {{listing.value}} -->
       </ion-item>
-    </ion-list> <br/>
-
-    <a style="color:176ACC; font-weight:700;">
-        ACCEPTED OFFERS:
-      </a>
-      <ion-list>
-          <ion-item *ngFor="let offer of acceptedOffs; let i = index">
-            {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}<ion-button (click)="cancelAcceptedOffer(i)" >Cancel</ion-button>
-          </ion-item>
-      </ion-list><br />
-    </ion-content>
-    <app-footer></app-footer>
-
+  </ion-list>
+  <br/>
+  <a style="color:176ACC; font-weight:700;">
+  ACCEPTED OFFERS:
+  </a>
+  <ion-list>
+     <ion-item *ngFor="let offer of acceptedOffs; let i = index">
+        {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}
+        <ion-button (click)="cancelAcceptedOffer(i)" style="float: right;">Cancel</ion-button>
+      </ion-item>
+  </ion-list>
+  <br />
+</ion-content>
+<app-footer></app-footer>
