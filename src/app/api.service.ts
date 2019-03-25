@@ -152,7 +152,7 @@ export class ApiService {
         });
     }
 
-    counterOffer(id) {
+    counterOffer(id) { // this takes in the offerId of the offer that the user is countering
       this.http.get(`${this.local}/counter`, { params: { id } }).subscribe((response) => {
         console.log(response);
         });
