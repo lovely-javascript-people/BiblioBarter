@@ -68,7 +68,7 @@ app.get('/matches', (req, res) => {
     res.status(200).send(matchObj);
     matches = [];
     matchObj = {};
-    break;
+    return;
   });
 });
 
