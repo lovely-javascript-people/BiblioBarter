@@ -61,7 +61,6 @@ import Chatkit from '@pusher/chatkit-client';
     BarcodeScanner,
     ChatService,
     WebSocketServiceService,
-    Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [],

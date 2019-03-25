@@ -8,7 +8,7 @@ import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router'
 import { HttpClient } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx'; 
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-profile',
