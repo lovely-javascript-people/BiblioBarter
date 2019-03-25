@@ -42,9 +42,7 @@ export class ChatPage implements OnInit {
   createRoom() {
     const { newRoom: { name, isPrivate }, currentUser } = this;
 
-    if (name.trim() === '') {
-      return;
-    }
+    if (name.trim() === '') {return;}
 
     currentUser.createRoom({
       name,

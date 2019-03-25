@@ -5,17 +5,17 @@ import { PopoverController } from '@ionic/angular';
 import { WantListModal } from '../want_list_modal/want_list_modal.component';
 import { AddListingModal } from '../add_listing_modal/add_listing_modal.component';
 import { ModalController } from '@ionic/angular';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { CameraOptions } from '@ionic-native/camera/ngx'; 
 
 @Component({
   selector: 'app-profile',
   templateUrl: 'profile.page.html',
   styleUrls: ['profile.page.scss'],
 })
-export class ProfilePage implements OnInit{
+export class ProfilePage implements OnInit {
   img: any;
   user: any;
   school: any;
@@ -23,12 +23,18 @@ export class ProfilePage implements OnInit{
   wants: any = [];
   listings: any = [];
   allOffers: any = [];
-  loaded: boolean = false;
+  loaded = false;
   acceptedOffs: any = [];
   offerid: any; // need to grab correct offerid --> where do we get this
   open: boolean = false;
 
-  constructor(private apiService: ApiService, public modal: ModalController, private router: Router, private http: HttpClient, public toastController: ToastController, private camera: Camera,) {}
+  constructor(
+    private apiService: ApiService,
+    public modal: ModalController,
+    private router: Router,
+    private http: HttpClient,
+    public toastController: ToastController,
+    ) {}
 
   setUser(data) {
     console.log(data, 'THIS DATA', data[0], 'length');
@@ -42,28 +48,25 @@ export class ProfilePage implements OnInit{
         this.school = data[1][0].name || null;
       }
       this.loaded = true;
-        
-    } else {
+      } else {
       this.user = localStorage.username;
     }
   }
 
-  async openWantListModal()
-  {
+  async openWantListModal() {
     var data = { message : 'hello world' };
     const modalPage = await this.modal.create({
-      component: WantListModal, 
-      componentProps:{values: data}
+      component: WantListModal,
+      componentProps: {values: data}
     });
     return await modalPage.present();
   }
-  
-  async openAddListingModal()
-  {
+
+  async openAddListingModal() {
     var data = { message : 'hello world' };
     const modalPage = await this.modal.create({
-      component: AddListingModal, 
-      componentProps:{values: data}
+      component: AddListingModal,
+      componentProps: {values: data}
     });
     return await modalPage.present();
   }
@@ -73,13 +76,12 @@ export class ProfilePage implements OnInit{
   console.log(this.offers[index], 'CLICKED ON OFFER');
 
   this.offerid = this.offers[index].offerId;
-  // console.log(index, 'INDEX');
   const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
   this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'accepted', offerId: id_offer} })
     .subscribe((offerData) => {
       console.log(offerData, 'OFFER DATA');
-    })
+    });
   }
 
   counterOffer(index) {
@@ -89,12 +91,12 @@ export class ProfilePage implements OnInit{
   renderOffers(offers) {
     console.log(offers, 'OFFERS');
     this.allOffers = offers;
-    let offs: object[] = []
-    let acceptedOffers: object[] = [];
+    const offs: object[] = [];
+    const acceptedOffers: object[] = [];
     let i = 0;
-    for (let offer of offers.slice(1)) {
+    for (const offer of offers.slice(1)) {
     if (offer.offer.status === 'pending') {
-    let offerObj: any = {};
+    const offerObj: any = {};
     offerObj.offeredTitle = offer.titleOffered.title;
     offerObj.wantedTitle = offer.titleWanted.title;
     offerObj.peer = offer.peer.user_name;
@@ -104,9 +106,9 @@ export class ProfilePage implements OnInit{
     // offerObj.index = i;
     // console.log(offerObj, 'OFFER OBJECT');
     offs.push(offerObj);
-    i++
+    i++;
       } else if (offer.offer.status === 'accepted') {
-    let offerObj: any = {};
+    const offerObj: any = {};
     offerObj.offeredTitle = offer.titleOffered.title;
     offerObj.wantedTitle = offer.titleWanted.title;
     offerObj.peer = offer.peer.user_name;
@@ -115,8 +117,8 @@ export class ProfilePage implements OnInit{
     offerObj.offerId = offer.offer.id_offer;
     // console.log(offerObj, 'OFFER OBJECT');
     acceptedOffers.push(offerObj);
-    i++
-      } 
+    i++;
+      }
   }
   this.offers = offs;
   this.acceptedOffs = acceptedOffers;
@@ -130,7 +132,7 @@ export class ProfilePage implements OnInit{
     this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
-      })
+      });
 
     }
 
@@ -141,7 +143,7 @@ export class ProfilePage implements OnInit{
     this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
-      })
+      });
   }
 
   setWantList(array) {
@@ -180,22 +182,22 @@ export class ProfilePage implements OnInit{
     toast.present();
   }
 
-  openCamera() {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
+  // openCamera() {
+  //   const options: CameraOptions = {
+  //     quality: 100,
+  //     destinationType: this.camera.DestinationType.FILE_URI,
+  //     encodingType: this.camera.EncodingType.JPEG,
+  //     mediaType: this.camera.MediaType.PICTURE
+  //   }
 
-    this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
-    }, (err) => {
-      // Handle error
-    });
-  } 
+  //   this.camera.getPicture(options).then((imageData) => {
+  //     // imageData is either a base64 encoded string or a file URI
+  //     // If it's base64 (DATA_URL):
+  //     let base64Image = 'data:image/jpeg;base64,' + imageData;
+  //   }, (err) => {
+  //     // Handle error
+  //   });
+  // } 
 
   camOpen() {
     if (!this.open) {

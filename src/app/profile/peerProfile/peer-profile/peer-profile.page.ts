@@ -5,7 +5,7 @@ import { PopoverController } from '@ionic/angular';
 import { WantListModal } from '../../../want_list_modal/want_list_modal.component';
 import { AddListingModal } from '../../../add_listing_modal/add_listing_modal.component';
 import { ModalController } from '@ionic/angular';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 import { _ } from 'underscore';
 
 @Component({
@@ -26,7 +26,7 @@ export class PeerProfilePage implements OnInit {
   possibleBooks: any[] = [];
   isReady: string;
 
-  constructor(private apiService: ApiService, public modal: ModalController, private router: Router,) {}
+  constructor(private apiService: ApiService, public modal: ModalController, private router: Router, ) {}
 
   getPeerBooks(id, callback) {
     this.apiService.getPeerProfile(id, callback);
@@ -41,27 +41,22 @@ export class PeerProfilePage implements OnInit {
   }
 
   setYourBooks(data) {
-    console.log(data);
-    let lists = this.wants.map(list => list.title);
-    console.log(lists);
-    let xRefer = data.filter(piece => lists.includes(piece.book.title));
+    // console.log(data);
+    const lists = this.wants.map(list => list.title);
+    const xRefer = data.filter(piece => lists.includes(piece.book.title));
     this.possibleBooks.push(xRefer);
-    console.log(this.possibleBooks);
   }
 
   setYourWants(data) {
-    console.log(data);
-    let wants = this.listings.map(want => want.title);
-    console.log(wants);
-    let xRefer = data.filter(piece => wants.includes(piece.title));
+    const wants = this.listings.map(want => want.title);
+    const xRefer = data.filter(piece => wants.includes(piece.title));
     this.possibleBooks.push(xRefer);
-    console.log(this.possibleBooks);
-    this.isReady = 'Ready!'
+    this.isReady = 'Ready!';
   }
 
   async setBooks(data) {
     console.log(data, 'jeef');
-    let temp = data.slice(0, data.length - 2)
+    const temp = data.slice(0, data.length - 2);
     this.wants = temp;
     this.listings = data[data.length - 2];
     this.entireListings = data[data.length - 1];
@@ -71,27 +66,27 @@ export class PeerProfilePage implements OnInit {
   }
 
   makeOffer(bookWanted: any, myOffer: any) {
-    let want = bookWanted.split('')
+    const want = bookWanted.split('');
     want[0] = '';
     want[want.length - 1] = '';
-    let newWant = want.join('');
-    let off = myOffer.split('')
+    const newWant = want.join('');
+    const off = myOffer.split('');
     off[0] = '';
     off[off.length - 1] = '';
-    let newOff = off.join('');
+    const newOff = off.join('');
     console.log(newOff);
-    let wanted = _.filter(this.listings, list => list.title === newWant);
-    let offered = this.possibleBooks[0].filter(book => newOff === book.book.title);
-    let wanting = this.entireListings.filter(listin => listin.id_book === wanted[0].id_book);
+    const wanted = _.filter(this.listings, list => list.title === newWant);
+    const offered = this.possibleBooks[0].filter(book => newOff === book.book.title);
+    const wanting = this.entireListings.filter(listin => listin.id_book === wanted[0].id_book);
     console.log(wanted, offered);
-    this.apiService.sendOffer({ 
+    this.apiService.sendOffer({
       bookWanted: wanting,
       bookOffering: offered[0].id_listing,
     });
   }
 
   setUser(data) {
-    let user: any = localStorage.selectedUser;
+    const user: any = localStorage.selectedUser;
     // console.log(data);
     this.user = data || user.nickname;
   }
@@ -111,7 +106,7 @@ export class PeerProfilePage implements OnInit {
       this.getPeerBooks(this.peer, this.setBooks);
     }
     this.setYourWants = this.setYourWants.bind(this);
-    
+
   }
 
 }
