@@ -30,19 +30,19 @@ import { WebSocketServiceService } from './web-socket-service.service';
 import { ChatService } from './chat.service';
 import Chatkit from '@pusher/chatkit-client';
 // import { ReactiveFormsModule, FormControl } from '@angular/forms';
-
+ import { Camera } from '@ionic-native/camera/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule, 
-    IonicModule.forRoot(), 
-    AppRoutingModule, 
-    HttpClientModule, 
-    HomePageModule, 
-    FooterModule, 
-    ModalsModule, 
-    SearchModalsModule, 
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    HttpClientModule,
+    HomePageModule,
+    FooterModule,
+    ModalsModule,
+    SearchModalsModule,
     AddListingModule,
     ContactModalModule,
     WantListModule,
@@ -61,6 +61,7 @@ import Chatkit from '@pusher/chatkit-client';
     BarcodeScanner,
     ChatService,
     WebSocketServiceService,
+    Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [],

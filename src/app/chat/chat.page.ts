@@ -42,7 +42,9 @@ export class ChatPage implements OnInit {
   createRoom() {
     const { newRoom: { name, isPrivate }, currentUser } = this;
 
-    if (name.trim() === '') return;
+    if (name.trim() === '') {
+      return;
+    }
 
     currentUser.createRoom({
       name,
@@ -53,10 +55,9 @@ export class ChatPage implements OnInit {
         name: '',
         isPrivate: false,
       };
-    })
-    .catch(err => {
-      console.log(`Error creating room ${err}`)
-    })
+    }).catch(err => {
+      console.log(`Error creating room ${err}`);
+    });
   }
 
   getJoinableRooms() {
@@ -64,18 +65,17 @@ export class ChatPage implements OnInit {
     currentUser.getJoinableRooms()
     .then(rooms => {
       this.joinableRooms = rooms;
-    })
-    .catch(err => {
-      console.log(`Error getting joinable rooms: ${err}`)
-    })
+    }).catch(err => {
+      console.log(`Error getting joinable rooms: ${err}`);
+    });
   }
 
   joinRoom(id) {
     const { currentUser } = this;
     currentUser.joinRoom({ roomId: id })
     .catch(err => {
-      console.log(`Error joining room ${id}: ${err}`)
-    })
+      console.log(`Error joining room ${id}: ${err}`);
+    });
   }
 
       connectToRoom(id) {
@@ -91,8 +91,9 @@ export class ChatPage implements OnInit {
             },
             onPresenceChanged: () => {
               this.roomUsers = this.currentRoom.users.sort((a) => {
-                if (a.presence.state === 'online') return -1;
-
+                if (a.presence.state === 'online') {
+                  return -1;
+                }
                 return 1;
               });
             },
@@ -108,8 +109,9 @@ export class ChatPage implements OnInit {
       sendMessage() {
         const { newMessage, currentUser, currentRoom } = this;
 
-        if (newMessage.trim() === '') return;
-
+        if (newMessage.trim() === '') {
+          return;
+        }
         currentUser.sendMessage({
           text: newMessage,
           roomId: `${currentRoom.id}`,
@@ -143,8 +145,7 @@ export class ChatPage implements OnInit {
                 this.connectToRoom('19418038');
                 this.getJoinableRooms();
               });
-          })
-            .catch(error => console.error(error))
+          }).catch(error => console.error(error));
       }
 
   // title = 'app';
@@ -160,5 +161,4 @@ export class ChatPage implements OnInit {
   // sendMessage() {
   //   this.chat.sendMsg("Test Message");
   // }
-  
 }

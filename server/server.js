@@ -94,7 +94,7 @@ app.post('/signup', (req, res) => {
   },
   { fields: ['user_name', 'name_first', 'name_last', 'image_link'] })
   .then(() => {
-    res.status(200).send('User created');
+    res.status(200).send(JSON.stringify('User created'));
   }).catch((err) => {
     res.send(JSON.stringify(`there was a problem: ${err}`));
   });
@@ -113,7 +113,7 @@ app.post('/users', (req, res) => {
     })
     .catch((err) => {
       if (err.error === 'services/chatkit/user_already_exists') {
-        res.status(301).send(`User already exists: ${userId}`);
+        res.status(301).send(JSON.stringify(`User already exists: ${userId}`));
       } else {
         res.status(err.status).json(err);
       }
@@ -174,14 +174,14 @@ app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new f
         id_user: req.body.userid,
       },
     })).catch(() => {
-    res.status(404).send('Found no wants');
+    res.status(404).send(JSON.stringify('Found no wants'));
   })
   .then((allUserWantBooks) => {
     // console.log(allUserWantBooks, 'ALL WANT');
     res.status(200).send(allUserWantBooks);
   })
   .catch(() => {
-    res.status(404).send('Found no wants');
+    res.status(404).send(JSON.stringify('Found no wants'));
   });
 });
 
@@ -206,7 +206,7 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
     condition: req.body.bookCondition,
     image_link: req.body.imageLink,
   }).catch((err) => {
-    res.status(401).send(`book creation err: ${err}`);
+    res.status(401).send(JSON.stringify(`book creation err: ${err}`));
   }).then(() => db.Book.findAll({
       limit: 1,
       where: {
@@ -214,7 +214,7 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
       },
       order: [['id_book', 'DESC']],
     })).catch((err) => {
-      res.status(401).send(`listing of book err: ${err}`);
+      res.status(401).send(JSON.stringify(`listing of book err: ${err}`));
   })
   .then((book) => {
     const idOfBook = book[0].dataValues.id_book;
@@ -234,7 +234,7 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
     res.status(201).send(allListings);
   })
   .catch((err) => {
-    res.status(401).send(`there was a user listing err: ${err}`);
+    res.status(401).send(JSON.stringify(`there was a user listing err: ${err}`));
   });
 });
 
@@ -267,7 +267,7 @@ app.get('/search/listing/isbn', (req, res) => {
     });
     res.send(listingResults);
   }).catch((err) => {
-    res.status(401).send(`there was an error: ${err}`);
+    res.status(401).send(JSON.stringify(`there was an error: ${err}`));
   });
 });
 
@@ -281,7 +281,7 @@ app.get('/peer', (req, res) => {
       id_user: req.query.peerId,
     },
   }).catch((err) => {
-    res.status(401).send(`error in peer wants: ${err}`);
+    res.status(401).send(JSON.stringify(`error in peer wants: ${err}`));
   }).then((peerWants) => {
     books = peerWants;
   }).then(() => {
@@ -307,7 +307,7 @@ app.get('/peer', (req, res) => {
     });
   })
   .catch((err) => {
-    res.status(401).send(`error in get peer wants: ${err}`);
+    res.status(401).send(JSON.stringify(`error in get peer wants: ${err}`));
   });
 });
 
@@ -350,7 +350,7 @@ app.post('/offerlisting', (req, res) => {
     res.send(offerMade);
   })
   .catch((err) => {
-    res.status(401).send(`there was an Offer Creation ERROR: ${err}`);
+    res.status(401).send(JSON.stringify(`there was an Offer Creation ERROR: ${err}`));
   });
 });
 
@@ -371,7 +371,7 @@ app.patch('/offerlisting', (req, res) => {
   ).then(([listingsUpdated, [updatedListing]]) => {
     res.status(200).send(updatedListing);
   }).catch((err) => {
-    res.status(401).send(`patch error: ${err}`);
+    res.status(401).send(JSON.stringify(`patch error: ${err}`));
   });
 });
 
@@ -464,7 +464,7 @@ app.patch('/user/settings', (req, res) => {
   ).then(([userUpdated, [updatedUser]]) => {
     res.status(200).send(updatedUser);
   }).catch((err) => {
-    res.status(401).send(`patch error to user settings: ${err}`);
+    res.status(401).send(JSON.stringify(`patch error to user settings: ${err}`));
   });
 });
 
@@ -488,12 +488,12 @@ app.post('/contactUs', (req, res) => {
       },
       );
     } else {
-      res.send('no need to change email');
+      res.send(JSON.stringify('no need to change email'));
     }
   }).then(() => {
     res.status(200).send(JSON.stringify('Message sent to developers'));
   }).catch((err) => {
-    res.status(401).send(`error in contact us: ${err}`);
+    res.status(401).send(JSON.stringify(`error in contact us: ${err}`));
   });
 });
 
@@ -511,8 +511,8 @@ app.get('/schools', (req, res) => {
 });
 
 app.get('/counter', (req, res) => {
-  res.send("Please wait while you are redirected to your peer's profile");
-});
+  res.send(JSON.stringify("Please wait while you are redirected to your peer's profile"));
+})
 
 // /DELETE /deleteListing
 // delete request deletes a listing (including from books)
@@ -529,9 +529,9 @@ app.delete('/deleteListing', (req, res) => {
       },
     });
   }).then((data) => {
-    res.status(203).send(`${data}, Listing deletion successful.`);
+    res.status(203).send(JSON.stringify(`${data}, Listing deletion successful.`));
   }).catch((err) => {
-    res.status(401).send(`Error in deleting listing: ${err}`);
+    res.status(401).send(JSON.stringify(`Error in deleting listing: ${err}`));
   });
 });
 
@@ -544,8 +544,8 @@ app.delete('/deleteWant', (req, res) => {
       id_want: req.query.wantId,
     },
   }).then(() => {
-    res.send('Want deletion successful.');
+    res.send(JSON.stringify('Want deletion successful.'));
   }).catch((err) => {
-    res.status(401).send(`Error in deleting want: ${err}`);
+    res.status(401).send(JSON.stringify(`Error in deleting want: ${err}`));
   });
 });

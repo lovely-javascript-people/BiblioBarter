@@ -1,6 +1,7 @@
 # BiblioBarter
 
 > Pithy project description
+BiblioBarter is a collegiate textbook swapping app that helps to mitigate extra expenses for college students. 
 
 ## Team
 
@@ -24,11 +25,15 @@
 
 ## Requirements
 
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- npm (latest version)
+- Node 8.14.0
+- Angular 7.2.8
+- Ionic/Angular 4.1.1
+- Postgresql 11.2
+- Sequelize 4.43.0
+- TypeScript 3.2.4
+- rxjs 6.3.3
+- @pusher/chatkit-client 1.4.1
 
 ## Development
 
@@ -42,13 +47,10 @@ npm install
 bower install
 ```
 
-start api server: `node server/server.js`
-start ionic server: `ionic serve`
-
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
-
+start api server: `node server/server.js`
+start ionic server: `ionic serve`
 
 ## Contributing
 

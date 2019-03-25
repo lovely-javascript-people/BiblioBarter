@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable @typescript-eslint/indent */
 // Contact us table holds the users message to us
 module.exports = (sequelize, DataTypes) => {
@@ -16,8 +17,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  // Contact_Us.associate = (models) => {
-  //   Contact_Us.belongsTo(models.User, { foreignKey: 'id_user' });
-  // };
   return Contact_Us;
 };
