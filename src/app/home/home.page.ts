@@ -11,16 +11,16 @@ import { $ } from 'protractor';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit {
 
   url: any;
-  isbnQuery: string = "";
-  isbn: string = "";
+  isbnQuery = '';
+  isbn = '';
   listings: any = [];
   yourWants: any[];
   num: string; // stores the scanned result
   matches: any[];
-  open: boolean = false;
+  open = false;
   yourListings: any[];
   othersWants: any[] = [];
   matchedUsers: any[] = [];
@@ -62,34 +62,29 @@ export class HomePage implements OnInit{
   }
 
   setOthersWants(data) {
-    let piece = data.slice(0, data.length - 2);
-    let filtP = piece.filter(bit => this.yourListings.includes(bit.title));
+    const piece = data.slice(0, data.length - 2);
+    const filtP = piece.filter(bit => this.yourListings.includes(bit.title));
     if (filtP.length) {
       this.matchedUsers.push(filtP[0].id_user);
     }
     this.othersWants.push(filtP);
     console.log(this.othersWants);
     if (this.othersWants.length === this.matches.length) {
-      let filtMatches = this.matches.filter(match => this.matchedUsers.includes(match.id))
+      const filtMatches = this.matches.filter(match => this.matchedUsers.includes(match.id));
       this.matches = filtMatches;
     }
   }
 
-  /**
-   * setMatches receives all the data from the API server with information on all books.
-   * Contains user and book title information. Filtered 
-   * @param {array} data - contains tuples, all users and book titles
-   */
   setMatches(data) {
     console.log(data);
-    let keys = Object.keys(data);
-    let want = this.yourWants.map(want => want.title);
-    let matches = [];
+    const keys = Object.keys(data);
+    const want = this.yourWants.map(want => want.title);
+    const matches = [];
     let matchType;
-    for (let key of keys) {
-      let matchObj: any = {};
+    for (const key of keys) {
+      const matchObj: any = {};
       if (!key.includes('id')) {
-      data[key] = data[key].filter(piece => want.includes(piece.title))
+      data[key] = data[key].filter(piece => want.includes(piece.title));
       if (!data[key].length || key === localStorage.username) {
         delete data[key];
       } else {
@@ -108,7 +103,7 @@ export class HomePage implements OnInit{
     }
     console.log(matches);
     this.matches = matches.sort((a, b) => b.num - a.num);
-    for (let match of this.matches) {
+    for (const match of this.matches) {
       this.apiService.getPeerProfile(match.id, this.setOthersWants);
     }
   }
@@ -119,7 +114,7 @@ export class HomePage implements OnInit{
   }
 
   setYourListings(data) {
-    let lists = data.map(piece => {
+    const lists = data.map(piece => {
       return piece.book.title;
     });
     this.yourListings = lists;

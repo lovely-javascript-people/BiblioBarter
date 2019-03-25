@@ -27,7 +27,15 @@ export class ApiService {
     console.log(userId, 'USER ID');
     console.log(firstName, 'first name');
     // patch req to server
-    this.http.patch(`${this.local}/user/settings`, {email: userEmail, userId: userId, radius: searchRadius, firstName: firstName, lastName: lastName, address: address, phoneNumber: phoneNumber})
+    this.http.patch(`${this.local}/user/settings`,
+    { email: userEmail,
+      userId: userId,
+      radius: searchRadius,
+      firstName: firstName,
+      lastName: lastName,
+      address: address,
+      phoneNumber: phoneNumber
+    })
       .subscribe((data) => {
         console.log(data);
       });
@@ -37,13 +45,13 @@ export class ApiService {
     this.http.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json`) // book info from book api
       .subscribe(((bookInfo: any) => {
         callback(bookInfo); // gets title of book
-      }))
+      }));
   }
 
   addBookToUserOfferingList(isbnVal, bookCondition, title, userid, imageLink) {
     this.http.post(`${this.local}/user/listing`, { params: isbnVal, bookCondition, title, userid, imageLink })
       .subscribe((allListings: any) => {
-        console.log(allListings, 'ALL LISTINGS IN OFFERING LIST')
+        console.log(allListings, 'ALL LISTINGS IN OFFERING LIST');
         });
   }
 
@@ -51,7 +59,7 @@ export class ApiService {
     this.http.post(`${this.local}/user/want`, { params: isbnVal, userid, title, imageLink })
       .subscribe((allWants: any) => {
       console.log(allWants, 'ALL WANTS FROM API SERVICE');
-    })
+    });
   }
 
   renderWantList(callback) {
@@ -60,7 +68,7 @@ export class ApiService {
     .subscribe((wantListArray) => {
       console.log(wantListArray, 'ARRAY OF WANT LIST');
       callback(wantListArray);
-    })
+    });
   }
 
   renderListingsList(callback) {
@@ -68,7 +76,7 @@ export class ApiService {
     .subscribe((listingListArray) => {
       console.log(listingListArray, 'ARRAY OF OFFERING LIST');
       callback(listingListArray);
-    })
+    });
   }
 
   searchForBookWithIsbn(isbn) {
@@ -77,36 +85,36 @@ export class ApiService {
       console.log(searchedListings, 'BOOKS USER HAS SEARCHED FOR');
       localStorage.setItem('searchedListings', searchedListings);
       console.log(localStorage);
-    })
+    });
   }
 
   getPeerProfile(peerId, callback) {
     console.log(peerId, 'PEEER ID');
     this.http.get(`${this.local}/peer`, { params: {peerId} }).subscribe(data => {
       callback(data);
-    })
+    });
   }
 
   getBooks(isbn: string, callback) {
     this.http.get(`${this.local}/search/listing/isbn?${isbn}`).subscribe((searchedListings: any) => {
       console.log(searchedListings, 'SEARCHED LISTINGS');
       callback(searchedListings);
-    })
+    });
   }
 
   sendOffer(options: any) {
     this.http.post(`${this.local}/offerlisting`, { params: options }).subscribe(resp => {
       resp['bookWantedTitle'] = options.bookWantedTitle;
       console.log(resp);
-    })
-  };
+    });
+  }
 
   getOffers(callback) {
     console.log('TRYING TO GET OFFERS BUT STILL NOT WORKING');
     this.http.get(`${this.local}/offers`, { params: { id_user: localStorage.userid }}).subscribe(data => {
       console.log(data, 'DATA IN FROM GETOFFERS API CALL');
       callback(data);
-    })
+    });
   }
 
   getProfile(username, callback) {
@@ -120,7 +128,7 @@ export class ApiService {
     userSignup({nickname, family_name, given_name, picture}) {
       // // this.http.post('http://localhost:3000/signup', {
       // // this.http.post('http://bibliobarter.com/signup', {
-      this.http.post(`${this.local}/signup`, { params :{
+      this.http.post(`${this.local}/signup`, { params : {
         nickname,
         family_name,
         given_name,
@@ -131,7 +139,8 @@ export class ApiService {
     }
 
     getMatches(callback): any {
-      // const DNS = process.env.DEVELOPMENT === 'development' ? '/matches' : 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/matches';
+      // const DNS = process.env.DEVELOPMENT === 'development' ?
+      // '/matches' : 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/matches';
       this.http.get(`${this.local}/matches`).subscribe((response) => {
       callback(response);
       });
@@ -140,7 +149,7 @@ export class ApiService {
     getSchools(school, callback) {
       this.http.get(`${this.local}/schools`, { params: { school } }).subscribe((response) => {
         callback(response);
-        }); 
+        });
     }
 
     counterOffer(id) {
