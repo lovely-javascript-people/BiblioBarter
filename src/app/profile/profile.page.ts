@@ -85,7 +85,9 @@ export class ProfilePage implements OnInit {
   }
 
   counterOffer(index) {
-    this.apiService.counterOffer(index);
+    let id = this.offers[index].offerId; // this is the offerId of the offer that the user is countering
+    this.apiService.counterOffer(id);
+    console.log(this.offers, 'OFFERS FROM CLICKING COUNTER');
   }
 
   renderOffers(offers) {
