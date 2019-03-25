@@ -45,8 +45,8 @@
      <ion-item *ngFor="let offer of offers; let i = index">
         {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}} 
         <ion-button (click)="acceptOffer(i)" size="small" style="float: right;">Accept</ion-button>
-        <ion-button (click)="rejectOffer(i)" >Reject</ion-button>
-        <ion-button (click)="counterOffer(i)" >Counter</ion-button>
+        <ion-button (click)="rejectOffer(i)" size="small" style="float: right;">Reject</ion-button>
+        <ion-button (click)="counterOffer(i)" size="small" style="float: right;">Counter</ion-button>
         <!-- {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}  |  STATUS: {{offer.status}} <ion-button (click)="acceptOffer(i)" >Accept</ion-button><ion-button (click)="rejectOffer(i)" >Reject</ion-button> -->
       </ion-item>
   </ion-list>
@@ -55,7 +55,7 @@
   I'M LOOKING FOR:
   </a>
   <ion-button size="small" style="font-weight:700; background-color: #B1C634; width:10%" (click)="openWantListModal()" style="float: right;"> + </ion-button>
-  <ion-button size="small" style="font-weight:700;" (click)="openAddListingModal()" style="float: right;"> Edit </ion-button>
+  <!-- <ion-button size="small" style="font-weight:700;" (click)="openAddListingModal()" style="float: right;"> Edit </ion-button> -->
   <ion-list>
      <ion-item *ngFor="let want of wants">
         <ion-thumbnail slot="start">
@@ -66,7 +66,8 @@
             <b>Title:</b> {{want.title}}<br />
             <b>ISBN:</b> {{want.isbn}}
         </ion-label>
-        <ion-icon name="remove-circle-outline" (click)="deleteWant(want.id_want, 'want listing')"></ion-icon>
+        <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteWant(want.id_want, 'want listing')" style="float: right;">  -  </ion-button>
+        <!-- <ion-icon name="remove-circle-outline" (click)="deleteWant(want.id_want, 'want listing')"></ion-icon> -->
       </ion-item>
   </ion-list>
   <br />
@@ -74,7 +75,7 @@
   I'M OFFERING:
   </a>
   <ion-button size="small" style="font-weight:700; background-color: #B1C634; width:10%" (click)="openAddListingModal()" style="float: right;"> + </ion-button>
-  <ion-button size="small" style="font-weight:700;" (click)="openAddListingModal()" style="float: right;"> Edit </ion-button>
+  <!-- <ion-button size="small" style="font-weight:700;" (click)="openAddListingModal()" style="float: right;"> Edit </ion-button> -->
   <ion-list>
      <ion-item *ngFor="let listing of listings">
         <ion-thumbnail slot="start">
@@ -85,7 +86,8 @@
             <b>Condition:</b> {{listing.book.condition}}<br />
             <b>ISBN:</b> {{listing.book.isbn}}<br />
         </ion-label>
-        <ion-icon name="remove-circle-outline" (click)="deleteListing(listing.id_book, listing.id_listing, 'offer listing')"></ion-icon>
+        <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteListing(listing.id_book, listing.id_listing, 'offer listing')" style="float: right;">  -  </ion-button>
+        <!-- <ion-icon name="remove-circle-outline" (click)="deleteListing(listing.id_book, listing.id_listing, 'offer listing')" style="float: right;"></ion-icon> -->
         <!-- Value: {{listing.value}} -->
       </ion-item>
   </ion-list>
