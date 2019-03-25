@@ -56,7 +56,7 @@ app.get('/matches', (req, res) => {
         },
       });
       matchObj[`${user.user_name}_id`] = listing.id_user;
-      if (!Object.keys.includes(user.user_name)) {
+      if (!Object.keys(matchObj).includes(user.user_name)) {
       matchObj[user.user_name] = [book];
       matchObj[`${user.user_name}_id`] = listing.id_user;
       } else {
@@ -320,8 +320,8 @@ app.post('/offerlisting', (req, res) => {
     id_listing_recipient: req.body.params.bookWanted[0].id_listing,
     id_offer_prev: req.body.params.previousId || null,
     id_listing_sender: req.body.params.bookOffering,
-    money_exchange: req.body.money || null,
-    accepted: req.body.accepted || false,
+    money_exchange_cents: req.body.params.money || null,
+    // accepted: req.body.accepted || false,
   }).then(async () => {
     const newOffer = await db.Offer.findAll({
       limit: 1,
@@ -500,7 +500,7 @@ app.post('/contactUs', (req, res) => {
 app.get('/schools', (req, res) => {
   axios({
     method: 'GET',
-    url: `https://api.tomtom.com/search/2/search/${req.query.school}.json?countrySet=US&idxSet=POI&key=${process.env.KEY}`,
+    url: `https://api.tomtom.com/search/2/search/${req.query.school}.json?countrySet=US&idxSet=POI&key=${process.env.TOMTOMKEY}`,
   headers: {
     Referer: 'https://developer.tomtom.com/content/search-api-explorer',
     Accept: '*/*',

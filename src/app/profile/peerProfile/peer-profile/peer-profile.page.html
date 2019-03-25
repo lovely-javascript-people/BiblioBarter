@@ -43,7 +43,8 @@
                   {{want.title}}
               </ion-select-option>
             </ion-select>
-            <input #getPaid placeholder="Dolla dolla bills y'all" />
+            <br>
+            <ion-input #getPaid placeholder="$0.00" style="display: block" clear-input="true" [(ngModel)]="wantMoney" #ctrl="ngModel"></ion-input>
         </ion-item>
         <ion-item>
             <label color="primary" stacked>I'm offering: </label><br />
@@ -52,7 +53,7 @@
                   {{listing.book.title}}
               </ion-select-option>
             </ion-select>
-            <input #walletLoss placeholder="Pay Regretfully" />
+            <ion-input #walletLoss placeholder="$0.00" clear-input="true" [(ngModel)]="offeredMoney" #ctrl="ngModel"></ion-input>
         </ion-item>
         <ion-button (click)="makeOffer(want.value[0], offer.value[0])" size="small">Submit offer</ion-button>
       </ion-list>

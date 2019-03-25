@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { conditionallyCreateMapObjectLiteral } from '@angular/compiler/src/render3/view/util';
@@ -96,29 +95,29 @@ export class ProfilePage implements OnInit {
     const acceptedOffers: object[] = [];
     let i = 0;
     for (const offer of offers.slice(1)) {
-      if (offer.offer.status === 'pending') {
-        const offerObj: any = {};
-        offerObj.offeredTitle = offer.titleOffered.title;
-        offerObj.wantedTitle = offer.titleWanted.title;
-        offerObj.peer = offer.peer.user_name;
-        offerObj.status = offer.offer.status;
-        offerObj.email = offer.peer.email;
-        offerObj.offerId = offer.offer.id_offer;
-        // offerObj.index = i;
-        // console.log(offerObj, 'OFFER OBJECT');
-        offs.push(offerObj);
-        i++;
+    if (offer.offer.status === 'pending') {
+    const offerObj: any = {};
+    offerObj.offeredTitle = offer.titleOffered.title;
+    offerObj.wantedTitle = offer.titleWantd.title;
+    offerObj.peer = offer.peer.user_name;
+    offerObj.status = offer.offer.status;
+    offerObj.email = offer.peer.email;
+    offerObj.offerId = offer.offer.id_offer;
+    // offerObj.index = i;
+    // console.log(offerObj, 'OFFER OBJECT');
+    offs.push(offerObj);
+    i++;
       } else if (offer.offer.status === 'accepted') {
-        const offerObj: any = {};
-        offerObj.offeredTitle = offer.titleOffered.title;
-        offerObj.wantedTitle = offer.titleWanted.title;
-        offerObj.peer = offer.peer.user_name;
-        offerObj.status = offer.offer.status;
-        offerObj.email = offer.peer.email;
-        offerObj.offerId = offer.offer.id_offer;
-        // console.log(offerObj, 'OFFER OBJECT');
-        acceptedOffers.push(offerObj);
-        i++;
+    const offerObj: any = {};
+    offerObj.offeredTitle = offer.titleOffered.title;
+    offerObj.wantedTitle = offer.titleWantd.title;
+    offerObj.peer = offer.peer.user_name;
+    offerObj.status = offer.offer.status;
+    offerObj.email = offer.peer.email;
+    offerObj.offerId = offer.offer.id_offer;
+    // console.log(offerObj, 'OFFER OBJECT');
+    acceptedOffers.push(offerObj);
+    i++;
       }
     }
     this.offers = offs;
