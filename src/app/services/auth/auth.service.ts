@@ -51,10 +51,6 @@ export class AuthService {
     this.isLoggedIn$.next(loggedIn);
   }
 
-  /** 
-   * @function login
-   * logs user in via auth0 when login button clicked
-   */
   public login(): void {
     this.auth0.authorize();
   }
@@ -71,15 +67,15 @@ export class AuthService {
         this.router.navigate(['/Matches']);
         // console.log(localStorage);
         // http req here to /userinfo to grab user prof from Auth0
-        this.http.get('https://bibliobarter.auth0.com/userinfo', { 
+        this.http.get('https://bibliobarter.auth0.com/userinfo', {
           headers: {
             'Content-Type':  'application/json',
-            'Authorization': `Bearer ${localStorage.access_token}`,}, 
+            'Authorization': `Bearer ${localStorage.access_token}`, },
       }).subscribe((userInfo: any) => {
         console.log(userInfo, 'USER');
         localStorage.setItem('username', userInfo.nickname);
         this.apiService.userSignup(userInfo);
-      })
+      });
 
       } else if (err) {
 
@@ -99,11 +95,6 @@ export class AuthService {
     localStorage.setItem('expires_at', expiresAt);
   }
 
-  // need to connect to logout button
-    /** 
-   * @function logout
-   * logs user out via auth0 when login button clicked
-   */
   public logout(): void {
     // Remove tokens and expiry time from localStorage
     localStorage.removeItem('access_token');
@@ -116,7 +107,7 @@ export class AuthService {
     this.isLoggedIn$.next(loggedIn);
   }
 
-//  This method checks if the user is authenticated or not by checking the token expiration 
+//  This method checks if the user is authenticated or not by checking the token expiration
 //  date from local storage.
   public isAuthenticated(): boolean {
     // Check whether the current time is past the

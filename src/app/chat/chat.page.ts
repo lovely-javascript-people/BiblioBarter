@@ -42,7 +42,13 @@ export class ChatPage implements OnInit {
   createRoom() {
     const { newRoom: { name, isPrivate }, currentUser } = this;
 
+<<<<<<< HEAD
     if (name.trim() === '') {return;}
+=======
+    if (name.trim() === '') {
+      return;
+    }
+>>>>>>> d3d4d1b19f141bd8f49c013b44a64e654b5aa2b6
 
     currentUser.createRoom({
       name,
@@ -53,8 +59,12 @@ export class ChatPage implements OnInit {
         name: '',
         isPrivate: false,
       };
+<<<<<<< HEAD
     })
     .catch(err => {
+=======
+    }).catch(err => {
+>>>>>>> d3d4d1b19f141bd8f49c013b44a64e654b5aa2b6
       console.log(`Error creating room ${err}`);
     });
   }
@@ -64,8 +74,12 @@ export class ChatPage implements OnInit {
     currentUser.getJoinableRooms()
     .then(rooms => {
       this.joinableRooms = rooms;
+<<<<<<< HEAD
     })
     .catch(err => {
+=======
+    }).catch(err => {
+>>>>>>> d3d4d1b19f141bd8f49c013b44a64e654b5aa2b6
       console.log(`Error getting joinable rooms: ${err}`);
     });
   }
@@ -91,8 +105,9 @@ export class ChatPage implements OnInit {
             },
             onPresenceChanged: () => {
               this.roomUsers = this.currentRoom.users.sort((a) => {
-                if (a.presence.state === 'online') {return -1;}
-
+                if (a.presence.state === 'online') {
+                  return -1;
+                }
                 return 1;
               });
             },
@@ -108,8 +123,14 @@ export class ChatPage implements OnInit {
       sendMessage() {
         const { newMessage, currentUser, currentRoom } = this;
 
+<<<<<<< HEAD
         if (newMessage.trim() === '') {return;}
 
+=======
+        if (newMessage.trim() === '') {
+          return;
+        }
+>>>>>>> d3d4d1b19f141bd8f49c013b44a64e654b5aa2b6
         currentUser.sendMessage({
           text: newMessage,
           roomId: `${currentRoom.id}`,
@@ -143,8 +164,12 @@ export class ChatPage implements OnInit {
                 this.connectToRoom('19418038');
                 this.getJoinableRooms();
               });
+<<<<<<< HEAD
           })
             .catch(error => console.error(error));
+=======
+          }).catch(error => console.error(error));
+>>>>>>> d3d4d1b19f141bd8f49c013b44a64e654b5aa2b6
       }
 
   // title = 'app';
@@ -160,5 +185,8 @@ export class ChatPage implements OnInit {
   // sendMessage() {
   //   this.chat.sendMsg("Test Message");
   // }
+<<<<<<< HEAD
 
+=======
+>>>>>>> d3d4d1b19f141bd8f49c013b44a64e654b5aa2b6
 }

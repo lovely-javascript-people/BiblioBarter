@@ -4,6 +4,8 @@
   ],
   "rules": {
     "arrow-return-shorthand": true,
+    "javascript.validate.enable": false,
+    "tslint.jsEnable": false,
     "callable-types": true,
     "class-name": true,
     "comment-format": [

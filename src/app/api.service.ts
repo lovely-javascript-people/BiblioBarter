@@ -27,7 +27,15 @@ export class ApiService {
     console.log(userId, 'USER ID');
     console.log(firstName, 'first name');
     // patch req to server
-    this.http.patch(`${this.local}/user/settings`, {email: userEmail, userId: userId, radius: searchRadius, firstName: firstName, lastName: lastName, address: address, phoneNumber: phoneNumber})
+    this.http.patch(`${this.local}/user/settings`,
+    { email: userEmail,
+      userId: userId,
+      radius: searchRadius,
+      firstName: firstName,
+      lastName: lastName,
+      address: address,
+      phoneNumber: phoneNumber
+    })
       .subscribe((data) => {
         console.log(data);
       });
@@ -131,7 +139,8 @@ export class ApiService {
     }
 
     getMatches(callback): any {
-      // const DNS = process.env.DEVELOPMENT === 'development' ? '/matches' : 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/matches';
+      // const DNS = process.env.DEVELOPMENT === 'development' ?
+      // '/matches' : 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/matches';
       this.http.get(`${this.local}/matches`).subscribe((response) => {
       callback(response);
       });

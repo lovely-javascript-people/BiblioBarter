@@ -11,7 +11,7 @@ import { ApiService } from '../api.service';
 })
 
 export class SearchModal implements OnInit {
-  isbnQuery: string = '';
+  isbnQuery = '';
   listings: any = [];
 
   constructor(public modal: ModalController, private http: HttpClient, private apiService: ApiService) { }
@@ -36,7 +36,6 @@ export class SearchModal implements OnInit {
 
     this.closeModal();
   }
-
 
   ngOnInit() {
 

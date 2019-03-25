@@ -10,9 +10,9 @@ import { ApiService } from '../api.service';
 })
 
 export class WantListModal implements OnInit {
-  isbnVal: string = '';
+  isbnVal = '';
   userid: number = localStorage.userid;
-  title: string = '';
+  title = '';
   imageLink: string;
 
   constructor(public modal: ModalController, private http: HttpClient, private apiService: ApiService) { }
