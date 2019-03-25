@@ -320,8 +320,8 @@ app.post('/offerlisting', (req, res) => {
     id_listing_recipient: req.body.params.bookWanted[0].id_listing,
     id_offer_prev: req.body.params.previousId || null,
     id_listing_sender: req.body.params.bookOffering,
-    money_exchange: req.body.money || null,
-    accepted: req.body.accepted || false,
+    money_exchange_cents: req.body.params.money || null,
+    // accepted: req.body.accepted || false,
   }).then(async () => {
     const newOffer = await db.Offer.findAll({
       limit: 1,
