@@ -98,7 +98,7 @@ export class ProfilePage implements OnInit {
     if (offer.offer.status === 'pending') {
     const offerObj: any = {};
     offerObj.offeredTitle = offer.titleOffered.title;
-    offerObj.wantedTitle = offer.titleWanted.title;
+    offerObj.wantedTitle = offer.titleWantd.title;
     offerObj.peer = offer.peer.user_name;
     offerObj.status = offer.offer.status;
     offerObj.email = offer.peer.email;
@@ -110,7 +110,7 @@ export class ProfilePage implements OnInit {
       } else if (offer.offer.status === 'accepted') {
     const offerObj: any = {};
     offerObj.offeredTitle = offer.titleOffered.title;
-    offerObj.wantedTitle = offer.titleWanted.title;
+    offerObj.wantedTitle = offer.titleWantd.title;
     offerObj.peer = offer.peer.user_name;
     offerObj.status = offer.offer.status;
     offerObj.email = offer.peer.email;
