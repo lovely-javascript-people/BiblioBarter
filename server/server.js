@@ -56,7 +56,7 @@ app.get('/matches', (req, res) => {
         },
       });
       matchObj[`${user.user_name}_id`] = listing.id_user;
-      if (!Object.keys.includes(user.user_name)) {
+      if (!Object.keys(matchObj).includes(user.user_name)) {
       matchObj[user.user_name] = [book];
       matchObj[`${user.user_name}_id`] = listing.id_user;
       } else {
@@ -68,6 +68,7 @@ app.get('/matches', (req, res) => {
     res.status(200).send(matchObj);
     matches = [];
     matchObj = {};
+    return;
   });
 });
 
@@ -499,7 +500,7 @@ app.post('/contactUs', (req, res) => {
 app.get('/schools', (req, res) => {
   axios({
     method: 'GET',
-    url: `https://api.tomtom.com/search/2/search/${req.query.school}.json?countrySet=US&idxSet=POI&key=${process.env.KEY}`,
+    url: `https://api.tomtom.com/search/2/search/${req.query.school}.json?countrySet=US&idxSet=POI&key=${process.env.TOMTOMKEY}`,
   headers: {
     Referer: 'https://developer.tomtom.com/content/search-api-explorer',
     Accept: '*/*',
