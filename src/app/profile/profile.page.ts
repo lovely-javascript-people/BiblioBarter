@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { conditionallyCreateMapObjectLiteral } from '@angular/compiler/src/render3/view/util';
@@ -8,7 +9,7 @@ import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
-// import { Camera, CameraOptions } from '@ionic-native/camera/ngx'; 
+import { CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-profile',
@@ -28,21 +29,13 @@ export class ProfilePage implements OnInit {
   offerid: any; // need to grab correct offerid --> where do we get this
   open: boolean = false;
 
-<<<<<<< HEAD
-  constructor(private apiService: ApiService, public modal: ModalController, private router: Router, private http: HttpClient, public toastController: ToastController,) {}
-=======
-<<<<<<< HEAD
   constructor(
     private apiService: ApiService,
     public modal: ModalController,
     private router: Router,
     private http: HttpClient,
     public toastController: ToastController,
-    ) {}
-=======
-  constructor(private apiService: ApiService, public modal: ModalController, private router: Router, private http: HttpClient, public toastController: ToastController, private camera: Camera,) {}
->>>>>>> d3d4d1b19f141bd8f49c013b44a64e654b5aa2b6
->>>>>>> 9f2d31aeef1c0e2c56b4eb19eb4933aeb7a70fa5
+  ) { }
 
   setUser(data) {
     console.log(data, 'THIS DATA', data[0], 'length');
@@ -56,40 +49,40 @@ export class ProfilePage implements OnInit {
         this.school = data[1][0].name || null;
       }
       this.loaded = true;
-      } else {
+    } else {
       this.user = localStorage.username;
     }
   }
 
   async openWantListModal() {
-    var data = { message : 'hello world' };
+    var data = { message: 'hello world' };
     const modalPage = await this.modal.create({
       component: WantListModal,
-      componentProps: {values: data}
+      componentProps: { values: data }
     });
     return await modalPage.present();
   }
 
   async openAddListingModal() {
-    var data = { message : 'hello world' };
+    var data = { message: 'hello world' };
     const modalPage = await this.modal.create({
       component: AddListingModal,
-      componentProps: {values: data}
+      componentProps: { values: data }
     });
     return await modalPage.present();
   }
 
   acceptOffer(index) {
-  console.log(this.allOffers, 'ALL OFFERS');
-  console.log(this.offers[index], 'CLICKED ON OFFER');
+    console.log(this.allOffers, 'ALL OFFERS');
+    console.log(this.offers[index], 'CLICKED ON OFFER');
 
-  this.offerid = this.offers[index].offerId;
-  const id_offer = this.offerid;
+    this.offerid = this.offers[index].offerId;
+    const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
-  this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'accepted', offerId: id_offer} })
-    .subscribe((offerData) => {
-      console.log(offerData, 'OFFER DATA');
-    });
+    this.http.patch('http://localhost:3000/offerlisting', { params: { status: 'accepted', offerId: id_offer } })
+      .subscribe((offerData) => {
+        console.log(offerData, 'OFFER DATA');
+      });
   }
 
   counterOffer(index) {
@@ -103,52 +96,52 @@ export class ProfilePage implements OnInit {
     const acceptedOffers: object[] = [];
     let i = 0;
     for (const offer of offers.slice(1)) {
-    if (offer.offer.status === 'pending') {
-    const offerObj: any = {};
-    offerObj.offeredTitle = offer.titleOffered.title;
-    offerObj.wantedTitle = offer.titleWanted.title;
-    offerObj.peer = offer.peer.user_name;
-    offerObj.status = offer.offer.status;
-    offerObj.email = offer.peer.email;
-    offerObj.offerId = offer.offer.id_offer;
-    // offerObj.index = i;
-    // console.log(offerObj, 'OFFER OBJECT');
-    offs.push(offerObj);
-    i++;
+      if (offer.offer.status === 'pending') {
+        const offerObj: any = {};
+        offerObj.offeredTitle = offer.titleOffered.title;
+        offerObj.wantedTitle = offer.titleWanted.title;
+        offerObj.peer = offer.peer.user_name;
+        offerObj.status = offer.offer.status;
+        offerObj.email = offer.peer.email;
+        offerObj.offerId = offer.offer.id_offer;
+        // offerObj.index = i;
+        // console.log(offerObj, 'OFFER OBJECT');
+        offs.push(offerObj);
+        i++;
       } else if (offer.offer.status === 'accepted') {
-    const offerObj: any = {};
-    offerObj.offeredTitle = offer.titleOffered.title;
-    offerObj.wantedTitle = offer.titleWanted.title;
-    offerObj.peer = offer.peer.user_name;
-    offerObj.status = offer.offer.status;
-    offerObj.email = offer.peer.email;
-    offerObj.offerId = offer.offer.id_offer;
-    // console.log(offerObj, 'OFFER OBJECT');
-    acceptedOffers.push(offerObj);
-    i++;
+        const offerObj: any = {};
+        offerObj.offeredTitle = offer.titleOffered.title;
+        offerObj.wantedTitle = offer.titleWanted.title;
+        offerObj.peer = offer.peer.user_name;
+        offerObj.status = offer.offer.status;
+        offerObj.email = offer.peer.email;
+        offerObj.offerId = offer.offer.id_offer;
+        // console.log(offerObj, 'OFFER OBJECT');
+        acceptedOffers.push(offerObj);
+        i++;
       }
+    }
+    this.offers = offs;
+    this.acceptedOffs = acceptedOffers;
+    // console.log(this.offers, 'THIS DOT OFFERS');
   }
-  this.offers = offs;
-  this.acceptedOffs = acceptedOffers;
-  // console.log(this.offers, 'THIS DOT OFFERS');
-}
 
   rejectOffer(index) {
     this.offerid = this.offers[index].offerId;
     const id_offer = this.offerid;
-      // this.apiService.userAcceptOffer(); // for when we refactor
-    this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
+    // this.apiService.userAcceptOffer(); // for when we refactor
+    this.http.patch('http://localhost:3000/offerlisting', { params: { status: 'rejected', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
       });
 
-    }
+  }
 
   cancelAcceptedOffer(index) {
     console.log(this.acceptedOffs[index], 'OFFER TO BE CANCELED');
     this.offerid = this.acceptedOffs[index].offerId;
     const id_offer = this.offerid;
-    this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
+    this.http.patch('http://localhost:3000/offerlisting', { params: { status: 'rejected', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
       });
@@ -165,7 +158,7 @@ export class ProfilePage implements OnInit {
   deleteListing(bookId, listingId, listing) {
     console.log(listingId, 'delete listing clicked');
     this.presentToast(listing);
-    this.http.delete('http://localhost:3000/deleteListing', { params: { bookId, listingId }})
+    this.http.delete('http://localhost:3000/deleteListing', { params: { bookId, listingId } })
       .subscribe((data) => {
         console.log(data, 'delete listing');
       });
@@ -174,7 +167,7 @@ export class ProfilePage implements OnInit {
   deleteWant(wantId, want) {
     console.log('delete want', wantId);
     this.presentToast(want);
-    this.http.delete('http://localhost:3000/deleteWant', { params: { wantId }})
+    this.http.delete('http://localhost:3000/deleteWant', { params: { wantId } })
       .subscribe((data) => {
         console.log(data, 'delete want');
       });
