@@ -16,16 +16,16 @@ import { CameraOptions } from '@ionic-native/camera/ngx';
   styleUrls: ['profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  img: any;
-  user: any;
-  school: any;
-  offers: any = [];
-  wants: any = [];
-  listings: any = [];
-  allOffers: any = [];
+  img: string;
+  user: string;
+  school: string;
+  offers: any[] = [];
+  wants: object[] = [];
+  listings: object[] = [];
+  allOffers: object[] = [];
   loaded = false;
-  acceptedOffs: any = [];
-  offerid: any; // need to grab correct offerid --> where do we get this
+  acceptedOffs: any[] = [];
+  offerid: number; // need to grab correct offerid --> where do we get this
   open: boolean = false;
 
   constructor(
