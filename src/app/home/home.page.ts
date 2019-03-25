@@ -81,7 +81,7 @@ export class HomePage implements OnInit {
     const want = this.yourWants.map(want => want.title);
     const matches = [];
     let matchType;
-    for (let key of keys) {
+    for (const key of keys) {
       const matchObj: any = {};
       if (!key.includes('id')) {
       data[key] = data[key].filter(piece => want.includes(piece.title));
@@ -103,7 +103,7 @@ export class HomePage implements OnInit {
     }
     console.log(matches);
     this.matches = matches.sort((a, b) => b.num - a.num);
-    for (let match of this.matches) {
+    for (const match of this.matches) {
       this.apiService.getPeerProfile(match.id, this.setOthersWants);
     }
   }
