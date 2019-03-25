@@ -70,7 +70,11 @@ export class FooterComponent implements OnInit {
     this.router.navigate(['/Chat']);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (localStorage.loginMethod === 'signup') {
+      this.openSettingsModal();
+    }
+  }
 
 
 }

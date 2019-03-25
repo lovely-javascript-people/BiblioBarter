@@ -74,9 +74,9 @@ export class SettingsModal implements OnInit {
     this.settings.changeSchool(this.school);
   }
 
-  // searchRadius() {
-  //   this.settings.defineSearchRadius(this.radius)
-  // }
+  searchRadius() {
+    this.settings.defineSearchRadius(this.radius)
+  }
 
   async closeModal() {
     this.modal.dismiss();

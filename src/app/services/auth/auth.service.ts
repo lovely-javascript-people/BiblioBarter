@@ -3,7 +3,9 @@ import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { ModalController } from '@ionic/angular';
 import { ApiService } from '../../api.service';
+
 import * as auth0 from 'auth0-js';
 
 (window as any).global = window;
@@ -75,13 +77,14 @@ export class AuthService {
         console.log(userInfo, 'USER');
         localStorage.setItem('username', userInfo.nickname);
         this.apiService.userSignup(userInfo);
+        this.router.navigate(['/Settings']);
       });
-
       } else if (err) {
-
+        console.log(err);
         const loggedIn = this.isLoggedIn = false;
         this.isLoggedIn$.next(loggedIn);
         this.router.navigate(['/Greet']);
+
       }
       console.log(this.isLoggedIn);
     });

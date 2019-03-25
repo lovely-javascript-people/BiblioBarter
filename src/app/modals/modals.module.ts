@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SettingsModal } from './modals.component';
 import {IonicModule} from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 // import { ReactiveFormsModule, FormControl } from '@angular/forms';
 
 
@@ -12,6 +13,12 @@ import { FormsModule } from '@angular/forms';
     IonicModule,
     CommonModule,
     FormsModule,
+    RouterModule.forChild([
+      {
+        path: '',
+        component: SettingsModal
+      }
+    ])
     // ReactiveFormsModule,
     // FormControl,
   ],

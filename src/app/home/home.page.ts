@@ -78,6 +78,7 @@ export class HomePage implements OnInit {
   setMatches(data) {
     console.log(data);
     const keys = Object.keys(data);
+    if (this.yourWants.length) {
     const want = this.yourWants.map(want => want.title);
     const matches = [];
     let matchType;
@@ -106,6 +107,7 @@ export class HomePage implements OnInit {
     for (const match of this.matches) {
       this.apiService.getPeerProfile(match.id, this.setOthersWants);
     }
+  }
   }
 
   setYourWants(data) {
