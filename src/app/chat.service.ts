@@ -15,7 +15,7 @@ export class ChatService {
       .connect()
       .map((response: any): any => {
         return response;
-      })
+      });
   }
 
   // Our simplified interface for sending
