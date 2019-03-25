@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth/auth.service';
 })
 export class GreetPage implements OnInit {
 
-  bool: true
+  bool: true;
 
   constructor(private apiService: ApiService, public authService: AuthService) { }
 
