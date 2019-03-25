@@ -5,7 +5,7 @@ import { PopoverController } from '@ionic/angular';
 import { WantListModal } from '../want_list_modal/want_list_modal.component';
 import { AddListingModal } from '../add_listing_modal/add_listing_modal.component';
 import { ModalController } from '@ionic/angular';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 
@@ -14,7 +14,7 @@ import { ToastController } from '@ionic/angular';
   templateUrl: 'profile.page.html',
   styleUrls: ['profile.page.scss'],
 })
-export class ProfilePage implements OnInit{
+export class ProfilePage implements OnInit {
   img: any;
   user: any;
   school: any;
@@ -22,11 +22,17 @@ export class ProfilePage implements OnInit{
   wants: any = [];
   listings: any = [];
   allOffers: any = [];
-  loaded: boolean = false;
+  loaded = false;
   acceptedOffs: any = [];
   offerid: any; // need to grab correct offerid --> where do we get this
 
-  constructor(private apiService: ApiService, public modal: ModalController, private router: Router, private http: HttpClient, public toastController: ToastController,) {}
+  constructor( 
+    private apiService: ApiService, 
+    public modal: ModalController, 
+    private router: Router, 
+    private http: HttpClient, 
+    public toastController: ToastController,
+    ) {}
 
   setUser(data) {
     console.log(data, 'THIS DATA', data[0], 'length');
@@ -40,8 +46,7 @@ export class ProfilePage implements OnInit{
         this.school = data[1][0].name || null;
       }
       this.loaded = true;
-        
-    } else {
+      } else {
       this.user = localStorage.username;
     }
   }
@@ -50,7 +55,7 @@ export class ProfilePage implements OnInit{
   {
     var data = { message : 'hello world' };
     const modalPage = await this.modal.create({
-      component: WantListModal, 
+      component: WantListModal,
       componentProps:{values: data}
     });
     return await modalPage.present();
@@ -71,7 +76,6 @@ export class ProfilePage implements OnInit{
   console.log(this.offers[index], 'CLICKED ON OFFER');
 
   this.offerid = this.offers[index].offerId;
-  // console.log(index, 'INDEX');
   const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
   this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'accepted', offerId: id_offer} })
