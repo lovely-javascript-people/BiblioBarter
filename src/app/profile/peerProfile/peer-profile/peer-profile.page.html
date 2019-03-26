@@ -55,7 +55,7 @@
             </ion-select>
             <ion-input #walletLoss placeholder="$0.00" clear-input="true" [(ngModel)]="offeredMoney" #ctrl="ngModel"></ion-input>
         </ion-item>
-        <ion-button (click)="makeOffer(want.value[0], offer.value[0])" size="small">Submit offer</ion-button>
+        <ion-button (click)="makeOffer(want.value, offer.value)" size="small">Submit offer</ion-button>
       </ion-list>
   </div>
 </ion-content>
