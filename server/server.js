@@ -6,7 +6,7 @@ const axios = require('axios');
 const Chatkit = require('@pusher/chatkit-server');
 const db = require('../database/database.js');
 const _ = require('underscore');
-// const helpers = require('./apiHelpers.js');
+const helpers = require('./apiHelpers.js');
 
 const chatkit = new Chatkit.default({
   instanceLocator: process.env.CHATKIT_INSTANCE_LOCATOR,
@@ -376,69 +376,170 @@ app.patch('/offerlisting', (req, res) => {
   });
 });
 
-
+// GET /offers
+// grabs all the user's offers and gives the information back for display
+// build the object for return
+/**
+ * @param {number} req.query.id_user User id
+ * @returns {array} array and objects. In first index, array of user's listings.
+ * In following indexes, objects holding information of offer
+ * each object has property, offer, peer, titleoffered, titleWanted
+ * Offer is set to offer object.
+ * Peer is user object of peer.
+ * titleOffered is array hold all information on user's offered books in offer
+ * titleWanted is array holding all information on peer's offered books in offer
+ * offeredBooks holds books that you offered with offer, objects
+ * wantedBooks holds objects of the book you want in the offer
+ */
 app.get('/offers', (req, res) => {
+  let offeredBooks;
+  let wantedBooks;
   let offered;
   let titleOffered;
   let titleWantd;
   let peer;
+  let allOffersForIds = []; // all offer id related to user
+  let allPeers = []; // all peer id who has an offer connected to user
   db.Listing.findAll({
     where: {
       id_user: req.query.id_user,
     },
   }).then(async (data) => {
     const lists = [...data];
-    const resArr = [data];
-    for (const piece of lists) {
-    offered = await db.Offer.findAll({
-      where: {
-        id_listing_recipient: piece.dataValues.id_listing,
-      },
-    });
-    if (offered.length) {
-      for (const offer of offered) {
-    const offerer = await db.User.findOne({
-      where: {
-        id_user: await piece.dataValues.id_user,
-      },
-    });
-    titleWantd = await db.Book.findOne({
-      where: {
-        id_book: await piece.id_book,
-      },
-    });
-    const wanted = await db.Listing.findOne({
-      where: {
-        id_listing: offer.id_listing_sender,
-      },
-    });
-    titleOffered = await db.Book.findOne({
-      where: {
-        id_book: await wanted.id_book,
-      },
-    });
-    const peerListing = await db.Listing.findOne({
-      where: {
-        id_listing: offer.id_listing_sender,
-      },
-    });
-    peer = await db.User.findOne({
-      where: {
-        id_user: peerListing.id_user,
-      },
-    });
-    resArr.push({
-      offer,
-      titleOffered,
-      titleWantd,
-      peer,
-    });
-  }
-}
-  }
-    res.send(resArr);
+    const responseArr = [data];
+    for (let i = 0; i < lists.length; i++) {
+      yourListing = lists[i];
+      offersOnListing = await db.Offer_Listing.findAll({ // finds all offer_listing with listing
+        where: {
+          id_listing: lists[i].id_listing,
+        },
+      });
+      console.log(offersOnListing, 'OFFER LISTING');
+      for (let j = 0; j < offersOnListing.length; j++) { // on each offer_listing, grab id_offer
+        offerIdForListing = await db.Offer.findAll({
+          where: {
+            id_offer: offersOnListing[j].id_offer,
+          },
+        });
+        if (!allOffersForIds.includes(offerIdForListing[0].id_offer)) { // add offer id to array if not already in
+          allOffersForIds.push(offerIdForListing[0].id_offer); // 
+        }
+        if (!allPeers.includes(offerIdForListing[0].id_sender) && // checks to see if user is sender or recipient
+        offerIdForListing[0].id_sender !== req.query.id_user) {
+          allPeers.push(offerIdForListing[0].id_sender);
+        }
+        if (!allPeers.includes(offerIdForListing[0].id_recipient) && // then pushes the peer's id into array
+          offerIdForListing[0].id_recipient !== req.query.id_user) { // may currently add user id as well
+          allPeers.push(offerIdForListing[0].id_recipient);
+        }
+      }
+    }
+    // using the information from the offer id, grab all the listings, and grab the book details
+    // if book offering versus book want
+    console.log(lists, 'LISTS'); // array of objects, each holding data on listing
+    console.log(allPeers, 'ALL PEERS'); // user ids, may include user along with peers in transaction
+    console.log(allOffersForIds, 'OFFER IDS for USER'); // user ids, may include user along with peers in transaction
+    // start with offer id, then move to grabbing each listing, part of each offer
+    // for (let k = 0; k < allOffersForIds; k++) {
+    //   let oneCompleteOffer = {};
+    //   let offerForId = await db.Offer.findOne({
+    //     where: {
+    //       id_offer: allOffersForIds[k],
+    //     }
+    //   });
+    //   oneCompleteOffer.offer = offerForId;
+    //   let listingsForOffer = await db.Offer_Listing.findAll({
+    //     where: {
+    //       id_offer: allOffersForIds[k],
+    //     },
+    //   });
+    //   console.log(listingsForOffer, 'LISTINGS FOR OFFER');
+    // }
+    return allPeers;
+  }).then(async (allpeers) => {
+    for (let k = 0; k < allOffersForIds; k++) {
+      let oneCompleteOffer = {};
+      let offerForId = await db.Offer.findOne({
+        where: {
+          id_offer: allOffersForIds[k],
+        }
+      });
+      oneCompleteOffer.offer = offerForId;
+      let listingsForOffer = await db.Offer_Listing.findAll({
+        where: {
+          id_offer: allOffersForIds[k],
+        },
+      });
+      console.log(offerForId, 'ID OFFER');
+      console.log(listingsForOffer, 'LISTINGS FOR OFFER');
+    }
+  }).catch((err) => {
+    console.log(`Aw Man, you got an error: ${err}`);
   });
-});
+})
+// app.get('/offers', (req, res) => {
+//   console.log(req.query, 'GET OFFERS')
+//   let offered;
+//   let titleOffered;
+//   let titleWantd;
+//   let peer;
+//   db.Listing.findAll({
+//     where: {
+//       id_user: req.query.id_user,
+//     },
+//   }).then(async (data) => {
+//     const lists = [...data];
+//     const resArr = [data];
+//     for (const piece of lists) {
+//     offered = await db.Offer.findAll({
+//       where: {
+//         id_recipient: piece.dataValues.id_listing,
+//       },
+//     });
+//     if (offered.length) {
+//       for (const offer of offered) {
+//     const offerer = await db.User.findOne({
+//       where: {
+//         id_user: await piece.dataValues.id_user,
+//       },
+//     });
+//     titleWantd = await db.Book.findOne({
+//       where: {
+//         id_book: await piece.id_book,
+//       },
+//     });
+//     const wanted = await db.Listing.findOne({
+//       where: {
+//         id_listing: offer.id_listing_sender,
+//       },
+//     });
+//     titleOffered = await db.Book.findOne({
+//       where: {
+//         id_book: await wanted.id_book,
+//       },
+//     });
+//     const peerListing = await db.Listing.findOne({
+//       where: {
+//         id_listing: offer.id_listing_sender,
+//       },
+//     });
+//     peer = await db.User.findOne({
+//       where: {
+//         id_user: peerListing.id_user,
+//       },
+//     });
+//     resArr.push({
+//       offer,
+//       titleOffered,
+//       titleWantd,
+//       peer,
+//     });
+//   }
+// }
+//   }
+//     res.send(resArr);
+//   });
+// });
 
 // POST /offers
 // create an offer / counter an offer
@@ -453,12 +554,12 @@ app.get('/offers', (req, res) => {
  * @param {array} listings all listings associated with the offer as an object, at the least, need listing id 
  */
 app.post('/offers', (req, res) => {
-  console.log(req, 'REQ OFFERS');
+  console.log(req.body, 'REQ OFFERS');
   let offerId;
   db.Offer.create({
     id_recipient: req.body.params.idRecipient,
     id_offer_prev: req.body.params.idOfferPrev,
-    id_Sender: req.body.params.idSender,
+    id_sender: req.body.params.idSender,
     money_exchange_cents: req.body.params.money || null,
   }).then(async () => {
     const newOffer = await db.Offer.findAll({
@@ -478,16 +579,19 @@ app.post('/offers', (req, res) => {
         id_listing: listing.id_listing,
       });
     }
-  )}).then(() => {
-    db.Offer.findOne({
+  )}).then(async () => {
+    let newOfferMade = await db.Offer.findOne({
       where: {
         id_offer: offerId,
       },
     });
+    return newOfferMade;
   }).then((offerMade) => {
     res.status(200).send(offerMade);
   })
-  .catch((err) => { console.log(`error in offer creation: ${err}`)});
+  .catch((err) => {
+    res.status(401).send(JSON.stringify(`error in offer creation: ${err}`));
+  });
 });
 
 // patch /user/setting
