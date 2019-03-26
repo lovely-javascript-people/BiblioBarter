@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FooterModule } from './footer/footer.module';
+import { FooterComponent } from './footer/footer.component';
 
 @Injectable({
   providedIn: 'root'
@@ -134,7 +136,8 @@ export class ApiService {
         family_name,
         given_name,
         picture,
-      }}).subscribe((response) => {
+      }}).subscribe(async (response) => {
+
         console.log(response);
         });
     }
