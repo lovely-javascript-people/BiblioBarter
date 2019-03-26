@@ -69,7 +69,6 @@ export class PeerProfilePage implements OnInit {
   }
 
   makeOffer(bookWanted: any, myOffer: any) {
-    debugger;
     const allListings = [];
     const wantBooks = [];
     _.each(bookWanted, (bookTitle) => {

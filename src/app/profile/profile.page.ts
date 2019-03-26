@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 import { CameraOptions } from '@ionic-native/camera/ngx';
+import * as Stripe from "stripe";
 
 @Component({
   selector: 'app-profile',
@@ -162,6 +163,7 @@ export class ProfilePage implements OnInit {
       });
 
   }
+
 
   cancelAcceptedOffer(index) {
     console.log(this.acceptedOffs[index], 'OFFER TO BE CANCELED');
