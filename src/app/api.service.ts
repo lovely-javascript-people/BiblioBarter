@@ -152,8 +152,8 @@ export class ApiService {
         });
     }
 
-    counterOffer(id) { // this takes in the offerId of the offer that the user is countering
-      this.http.get(`${this.local}/counter`, { params: { id } }).subscribe((response) => {
+    counterOffer(id, sender_id, recipient_id, all_listings, money) { // this takes in the offerId of the offer that the user is countering
+      this.http.post(`${this.local}/counter`, { params: { id, sender_id, recipient_id, all_listings, money } }).subscribe((response) => {
         console.log(response);
         });
     }
