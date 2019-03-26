@@ -71,12 +71,41 @@ export class PeerProfilePage implements OnInit {
   makeOffer(bookWanted: any, myOffer: any) {
     debugger;
     const allListings = [];
-    bookWanted.forEach((listing) => {
-      allListings.push(_.filter(this.listings, list => list.title === listing));
+    const wantBooks = [];
+    _.each(bookWanted, (bookTitle) => {
+      _.each(this.listings, (listingObj) => {
+        const newBookTitle = bookTitle.split('');
+        newBookTitle[0] = '';
+        newBookTitle[newBookTitle.length - 1] = '';
+        const newTitle = newBookTitle.join('');
+        if (listingObj.title === newTitle) {
+          wantBooks.push(listingObj);
+        }
+      });
     });
-    myOffer.forEach((listing) => {
-      allListings.push(_.filter(this.listings, list => list.title === listing));
+
+    _.each(wantBooks, (eachBook) => {
+      _.each(this.entireListings, (aListing) => {
+        if (eachBook.id_book === aListing.id_book) {
+          allListings.push(aListing);
+        }
+      });
     });
+    
+    _.each(myOffer, (offerObj) => {
+      _.each(this.possibleBooks[0], (possibleBook) => {
+        const possibleTitle = offerObj.split('');
+        possibleTitle[0] = '';
+        possibleTitle[possibleTitle.length - 1] = '';
+        const newPossibleTitle = possibleTitle.join('');
+        if (possibleBook.book.title === newPossibleTitle) {
+          allListings.push(possibleBook);
+        }
+      });
+    });
+    
+    // const offered = this.possibleBooks[0].filter(book => newOff === book.book.title);
+    // const wanting = this.entireListings.filter(listin => listin.id_book === wanted[0].id_book);
     
     let moneyOffer = (this.offeredMoney * -100);
     let moneyWant = (this.wantMoney * 100);

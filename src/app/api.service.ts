@@ -103,7 +103,7 @@ export class ApiService {
   }
 
   sendOffer(options: any) {
-    this.http.post(`${this.local}/offer`, { params: options }).subscribe(resp => {
+    this.http.post(`${this.local}/offers`, { params: options }).subscribe(resp => {
       resp['bookWantedTitle'] = options.bookWantedTitle;
       console.log(resp);
     });
