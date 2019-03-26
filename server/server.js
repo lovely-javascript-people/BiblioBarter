@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const Chatkit = require('@pusher/chatkit-server');
 const db = require('../database/database.js');
+const _ = require('underscore');
 // const helpers = require('./apiHelpers.js');
 
 const chatkit = new Chatkit.default({
@@ -449,6 +450,56 @@ app.get('/offers', (req, res) => {
   }
     res.send(resArr);
   });
+});
+
+// POST /offers
+// create an offer / counter an offer
+// if id_offer provided, save to id_prev_offer column
+/**
+ * @param {number} idRecipient Id of user who is receiving offer
+ * @param {number} idOfferPrev Id of previous offer if counter offer
+ * @param {number} idSender Id of user who is sending offer
+ * @param {number} moneyExchangeCents Money exchange, if negative, sender is sending money,
+ * if positive, sender is requesting money. 
+ * Upon creation of offer, hold onto offer id and create offer listing for each listing
+ * @param {array} listings all listings associated with the offer as an object, at the least, need listing id 
+ */
+app.post('/offers', (req, res) => {
+  console.log(req, 'REQ OFFERS');
+  let offerId;
+  db.Offer.create({
+    id_recipient: req.body.params.idRecipient,
+    id_offer_prev: req.body.params.idOfferPrev,
+    id_Sender: req.body.params.idSender,
+    money_exchange_cents: req.body.params.money || null,
+  }).then(async () => {
+    const newOffer = await db.Offer.findAll({
+      limit: 1,
+      where: {
+        id_recipient: req.body.params.idRecipient,
+      },
+      order: [['id_offer', 'DESC']],
+    });
+    console.log(newOffer, 'NEW OFFER');
+    offerId = await newOffer[0].id_offer;
+    return newOffer;
+  }).then((newOfferArray) => {
+      _.each(req.body.params.listings, async listing => {
+      await db.Offer_Listing.create({
+        id_offer: offerId,
+        id_listing: listing.id_listing,
+      });
+    }
+  )}).then(() => {
+    db.Offer.findOne({
+      where: {
+        id_offer: offerId,
+      },
+    });
+  }).then((offerMade) => {
+    res.status(200).send(offerMade);
+  })
+  .catch((err) => { console.log(`error in offer creation: ${err}`)});
 });
 
 // patch /user/setting

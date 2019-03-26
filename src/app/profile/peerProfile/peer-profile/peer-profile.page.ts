@@ -69,24 +69,48 @@ export class PeerProfilePage implements OnInit {
   }
 
   makeOffer(bookWanted: any, myOffer: any) {
-    const want = bookWanted.split('');
-    want[0] = '';
-    want[want.length - 1] = '';
-    const newWant = want.join('');
-    const off = myOffer.split('');
-    off[0] = '';
-    off[off.length - 1] = '';
-    const newOff = off.join('');
-    // console.log(newOff);
-    const wanted = _.filter(this.listings, list => list.title === newWant);
-    const offered = this.possibleBooks[0].filter(book => newOff === book.book.title);
-    const wanting = this.entireListings.filter(listin => listin.id_book === wanted[0].id_book);
-    console.log(wanted, offered, 'WANTED, OFFERED');
+    debugger;
+    const allListings = [];
+    const wantBooks = [];
+    _.each(bookWanted, (bookTitle) => {
+      _.each(this.listings, (listingObj) => {
+        const newBookTitle = bookTitle.split('');
+        newBookTitle[0] = '';
+        newBookTitle[newBookTitle.length - 1] = '';
+        const newTitle = newBookTitle.join('');
+        if (listingObj.title === newTitle) {
+          wantBooks.push(listingObj);
+        }
+      });
+    });
 
+    _.each(wantBooks, (eachBook) => {
+      _.each(this.entireListings, (aListing) => {
+        if (eachBook.id_book === aListing.id_book) {
+          allListings.push(aListing);
+        }
+      });
+    });
+    
+    _.each(myOffer, (offerObj) => {
+      _.each(this.possibleBooks[0], (possibleBook) => {
+        const possibleTitle = offerObj.split('');
+        possibleTitle[0] = '';
+        possibleTitle[possibleTitle.length - 1] = '';
+        const newPossibleTitle = possibleTitle.join('');
+        if (possibleBook.book.title === newPossibleTitle) {
+          allListings.push(possibleBook);
+        }
+      });
+    });
+    
+    // const offered = this.possibleBooks[0].filter(book => newOff === book.book.title);
+    // const wanting = this.entireListings.filter(listin => listin.id_book === wanted[0].id_book);
+    
     let moneyOffer = (this.offeredMoney * -100);
     let moneyWant = (this.wantMoney * 100);
 
-    if(moneyOffer !== 0) {
+    if (moneyOffer !== 0) {
       this.money = moneyOffer;
     } else {
       this.money = moneyWant;
@@ -97,11 +121,47 @@ export class PeerProfilePage implements OnInit {
     // console.log(money, 'MONEY FOR EXCHANGE');
 
     this.apiService.sendOffer({
-      bookWanted: wanting,
-      bookOffering: offered[0].id_listing,
+      idRecipient: this.peer,
+      idSender: localStorage.userid,
       money: money,
+      listings: allListings,
     });
   }
+  // makeOffer(bookWanted: any, myOffer: any) {
+  //   debugger;
+  //   const want = bookWanted.split('');
+  //   want[0] = '';
+  //   want[want.length - 1] = '';
+  //   const newWant = want.join('');
+  //   const off = myOffer.split('');
+  //   off[0] = '';
+  //   off[off.length - 1] = '';
+  //   const newOff = off.join('');
+  //   // console.log(newOff);
+  //   const wanted = _.filter(this.listings, list => list.title === newWant);
+  //   const offered = this.possibleBooks[0].filter(book => newOff === book.book.title);
+  //   const wanting = this.entireListings.filter(listin => listin.id_book === wanted[0].id_book);
+  //   console.log(wanted, offered, 'WANTED, OFFERED');
+
+  //   let moneyOffer = (this.offeredMoney * -100);
+  //   let moneyWant = (this.wantMoney * 100);
+
+  //   if(moneyOffer !== 0) {
+  //     this.money = moneyOffer;
+  //   } else {
+  //     this.money = moneyWant;
+  //   }
+  //   // console.log(moneyOffer, 'MONEY OFFER');
+  //   // console.log(moneyWant, 'MONEY WANT');
+  //   let money = this.money;
+  //   // console.log(money, 'MONEY FOR EXCHANGE');
+
+  //   this.apiService.sendOffer({
+  //     bookWanted: wanting,
+  //     bookOffering: offered[0].id_listing,
+  //     money: money,
+  //   });
+  // }
 
   setUser(data) {
     const user: any = localStorage.selectedUser;
