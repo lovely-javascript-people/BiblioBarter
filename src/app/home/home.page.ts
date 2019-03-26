@@ -152,7 +152,7 @@ export class HomePage implements OnInit {
     this.apiService.renderListingsList(this.setYourListings);
     this.apiService.getMatches(this.setMatches);
     this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
-    this.apiService.getSchools('LSU', console.log);
+    this.apiService.getSchools(localStorage.userid, console.log);
   }
 
 }

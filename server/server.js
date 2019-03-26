@@ -561,9 +561,24 @@ app.post('/contactUs', (req, res) => {
 });
 
 app.get('/schools', (req, res) => {
+  let radiusInMeters;
+  db.User.findOne({
+    where: {
+      id_user: req.query.id_user
+    }
+  }).then(userInfo => {
+    radiusInMeters = userInfo.search_radius_miles * 1609.34;
+    return db.School.findOne({
+      where: {
+        id_school: userInfo.id_school
+      }
+  })
+}).then(schoolInfo => {
+  let lat = schoolInfo.geo_latitude;
+  let lon = schoolInfo.geo_longitude;
   axios({
     method: 'GET',
-    url: `https://api.tomtom.com/search/2/search/${req.query.school}.json?countrySet=US&idxSet=POI&key=${process.env.TOMTOMKEY}`,
+    url: `https://api.tomtom.com/search/2/poiSearch/university.json?key=${process.env.TOMTOMKEY}&typeahead=false&limit=10&ofs=1000&countrySet=US&lat=${lat}&lon=${lon}&radius=${radiusInMeters}&language=en-us&extendedPostalCodesFor=POI&view=Unified`,
   headers: {
     Referer: 'https://developer.tomtom.com/content/search-api-explorer',
     Accept: '*/*',
@@ -572,6 +587,8 @@ app.get('/schools', (req, res) => {
   res.send(colleges.data);
 });
 });
+})
+  
 
 app.get('/counter', (req, res) => {
   res.send(JSON.stringify("Please wait while you are redirected to your peer's profile"));
