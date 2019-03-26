@@ -17,11 +17,13 @@ export class GreetPage implements OnInit {
   onLoginClick(): void {
     console.log('log me in!');
     this.authService.login();
+    localStorage.setItem('loginMethod', 'login');
   }
 
   onSignUpClick(): void {
     console.log('sign me up!');
     this.authService.login();
+    localStorage.setItem('loginMethod', 'signup');
   }
 
   getMatches(): void {
