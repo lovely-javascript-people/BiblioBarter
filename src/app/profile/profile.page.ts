@@ -8,7 +8,7 @@ import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
-import { CameraOptions } from '@ionic-native/camera/ngx'; 
+import { CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-profile',
@@ -36,7 +36,7 @@ export class ProfilePage implements OnInit {
     private router: Router,
     private http: HttpClient,
     public toastController: ToastController,
-    ) {}
+  ) { }
 
   setUser(data) {
     console.log(data, 'THIS DATA', data[0], 'length');
@@ -50,40 +50,40 @@ export class ProfilePage implements OnInit {
         this.school = data[1][0].name || null;
       }
       this.loaded = true;
-      } else {
+    } else {
       this.user = localStorage.username;
     }
   }
 
   async openWantListModal() {
-    var data = { message : 'hello world' };
+    var data = { message: 'hello world' };
     const modalPage = await this.modal.create({
       component: WantListModal,
-      componentProps: {values: data}
+      componentProps: { values: data }
     });
     return await modalPage.present();
   }
 
   async openAddListingModal() {
-    var data = { message : 'hello world' };
+    var data = { message: 'hello world' };
     const modalPage = await this.modal.create({
       component: AddListingModal,
-      componentProps: {values: data}
+      componentProps: { values: data }
     });
     return await modalPage.present();
   }
 
   acceptOffer(index) {
-  console.log(this.allOffers, 'ALL OFFERS');
-  console.log(this.offers[index], 'CLICKED ON OFFER');
+    console.log(this.allOffers, 'ALL OFFERS');
+    console.log(this.offers[index], 'CLICKED ON OFFER');
 
-  this.offerid = this.offers[index].offerId;
-  const id_offer = this.offerid;
+    this.offerid = this.offers[index].offerId;
+    const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
-  this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'accepted', offerId: id_offer} })
-    .subscribe((offerData) => {
-      console.log(offerData, 'OFFER DATA');
-    });
+    this.http.patch('http://localhost:3000/offerlisting', { params: { status: 'accepted', offerId: id_offer } })
+      .subscribe((offerData) => {
+        console.log(offerData, 'OFFER DATA');
+      });
   }
 
   counterOffer(index) {
@@ -125,39 +125,39 @@ export class ProfilePage implements OnInit {
     offs.push(offerObj);
     i++;
       } else if (offer.offer.status === 'accepted') {
-    const offerObj: any = {};
-    offerObj.offeredTitle = offer.titleOffered.title;
-    offerObj.wantedTitle = offer.titleWantd.title;
-    offerObj.peer = offer.peer.user_name;
-    offerObj.status = offer.offer.status;
-    offerObj.email = offer.peer.email;
-    offerObj.offerId = offer.offer.id_offer;
-    // console.log(offerObj, 'OFFER OBJECT');
-    acceptedOffers.push(offerObj);
-    i++;
+        const offerObj: any = {};
+        offerObj.offeredTitle = offer.titleOffered.title;
+        offerObj.wantedTitle = offer.titleWantd.title;
+        offerObj.peer = offer.peer.user_name;
+        offerObj.status = offer.offer.status;
+        offerObj.email = offer.peer.email;
+        offerObj.offerId = offer.offer.id_offer;
+        // console.log(offerObj, 'OFFER OBJECT');
+        acceptedOffers.push(offerObj);
+        i++;
       }
+    }
+    this.offers = offs;
+    this.acceptedOffs = acceptedOffers;
+    // console.log(this.offers, 'THIS DOT OFFERS');
   }
-  this.offers = offs;
-  this.acceptedOffs = acceptedOffers;
-  // console.log(this.offers, 'THIS DOT OFFERS');
-}
 
   rejectOffer(index) {
     this.offerid = this.offers[index].offerId;
     const id_offer = this.offerid;
-      // this.apiService.userAcceptOffer(); // for when we refactor
-    this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
+    // this.apiService.userAcceptOffer(); // for when we refactor
+    this.http.patch('http://localhost:3000/offerlisting', { params: { status: 'rejected', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
       });
 
-    }
+  }
 
   cancelAcceptedOffer(index) {
     console.log(this.acceptedOffs[index], 'OFFER TO BE CANCELED');
     this.offerid = this.acceptedOffs[index].offerId;
     const id_offer = this.offerid;
-    this.http.patch('http://localhost:3000/offerlisting', { params: {status: 'rejected', offerId: id_offer} })
+    this.http.patch('http://localhost:3000/offerlisting', { params: { status: 'rejected', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
       });
@@ -174,7 +174,7 @@ export class ProfilePage implements OnInit {
   deleteListing(bookId, listingId, listing) {
     console.log(listingId, 'delete listing clicked');
     this.presentToast(listing);
-    this.http.delete('http://localhost:3000/deleteListing', { params: { bookId, listingId }})
+    this.http.delete('http://localhost:3000/deleteListing', { params: { bookId, listingId } })
       .subscribe((data) => {
         console.log(data, 'delete listing');
       });
@@ -183,7 +183,7 @@ export class ProfilePage implements OnInit {
   deleteWant(wantId, want) {
     console.log('delete want', wantId);
     this.presentToast(want);
-    this.http.delete('http://localhost:3000/deleteWant', { params: { wantId }})
+    this.http.delete('http://localhost:3000/deleteWant', { params: { wantId } })
       .subscribe((data) => {
         console.log(data, 'delete want');
       });
