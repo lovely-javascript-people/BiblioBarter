@@ -46,7 +46,7 @@
         {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}} 
         <ion-button (click)="acceptOffer(i)" size="small" style="float: right;">Accept</ion-button>
         <ion-button (click)="rejectOffer(i)" size="small" style="float: right;">Reject</ion-button>
-        <ion-button (click)="counterOffer(i)" size="small" style="float: right;">Counter</ion-button>
+        <ion-button (click)="openCounterOfferModal()" size="small" style="float: right;">Counter</ion-button>
         <!-- {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}  |  STATUS: {{offer.status}} <ion-button (click)="acceptOffer(i)" >Accept</ion-button><ion-button (click)="rejectOffer(i)" >Reject</ion-button> -->
       </ion-item>
   </ion-list>

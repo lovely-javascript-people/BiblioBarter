@@ -3,6 +3,7 @@ import { ApiService } from '../api.service';
 import { conditionallyCreateMapObjectLiteral } from '@angular/compiler/src/render3/view/util';
 import { PopoverController } from '@ionic/angular';
 import { WantListModal } from '../want_list_modal/want_list_modal.component';
+import { CounterOfferModal } from '../counter_offer_modal/counter_offer_modal.component';
 import { AddListingModal } from '../add_listing_modal/add_listing_modal.component';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -73,6 +74,15 @@ export class ProfilePage implements OnInit {
     return await modalPage.present();
   }
 
+  async openCounterOfferModal() {
+    var data = { message: 'hello world' };
+    const modalPage = await this.modal.create({
+      component: CounterOfferModal,
+      componentProps: { values: data }
+    });
+    return await modalPage.present();
+  }
+
   acceptOffer(index) {
     console.log(this.allOffers, 'ALL OFFERS');
     console.log(this.offers[index], 'CLICKED ON OFFER');
@@ -103,7 +113,7 @@ export class ProfilePage implements OnInit {
     let listings; // this should be an array of all of the listing ids involved.
                   // should get this back in offers after refactor
 
-    this.apiService.counterOffer(idOfferPrev, idRecipient, idSender, listings, money);
+    // this.apiService.counterOffer(idOfferPrev, idRecipient, idSender, listings, money);
   }
 
   renderOffers(offers) {
