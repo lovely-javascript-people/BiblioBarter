@@ -144,21 +144,33 @@ app.get('/profile', (req, res) => {
 });
 
 app.patch('/school', (req, res) => {
-  db.School.findOrCreate({
+  let uni = req.body.school;
+  axios({
+    method: 'GET',
+    url: `https://api.tomtom.com/search/2/search/${uni}.json?countrySet=US&idxSet=POI&key=${process.env.TOMTOMKEY}`,
+  headers: {
+    Referer: 'https://developer.tomtom.com/content/search-api-explorer',
+    Accept: '*/*',
+  },
+}).then((info) => 
+    db.School.findOrCreate({
     where: {
       name: req.body.school, // CHANGE WHEN DROP DATABASE
-      // geolocal needed
+      geo_latitude: info.data.results[0].position.lat,
+      geo_longitude: info.data.results[0].position.lon
     },
   })
-  .then((data) => {
-    db.User.update(
-      { id_school: data[0].dataValues.id_school },
-      { where: { id_user: req.body.userId } },
-    )
-      .then(result => res.send(result))
-      .catch(err => res.send(err));
-}).catch(err => res.status(500).send(err));
-});
+).then((data) => {
+  db.User.update(
+    { id_school: data[0].dataValues.id_school },
+    { where: { id_user: req.body.userId } },
+  )
+    .then(result => res.send(result))
+    .catch(err => res.send(err))
+.catch(err => res.status(500).send(err));
+})
+})
+  
 
 // POST /user/want
 // User add a want book, should also return all the user's want books
@@ -389,9 +401,9 @@ app.get('/offers', (req, res) => {
     const lists = [...data];
     const resArr = [data];
     for (const piece of lists) {
-    offered = await db.Offer.findAll({
+    offered = await db.Offer_Listing.findAll({
       where: {
-        id_listing_recipient: piece.dataValues.id_listing,
+        id_listing: piece.dataValues.id_listing,
       },
     });
     if (offered.length) {
@@ -408,7 +420,7 @@ app.get('/offers', (req, res) => {
     });
     const wanted = await db.Listing.findOne({
       where: {
-        id_listing: offer.id_listing_sender,
+        id_listing: offer.id_listing,
       },
     });
     titleOffered = await db.Book.findOne({
@@ -418,7 +430,7 @@ app.get('/offers', (req, res) => {
     });
     const peerListing = await db.Listing.findOne({
       where: {
-        id_listing: offer.id_listing_sender,
+        id_listing: offer.id_listing,
       },
     });
     peer = await db.User.findOne({

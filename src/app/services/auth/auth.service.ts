@@ -80,6 +80,7 @@ export class AuthService {
       });
       } else if (err) {
         console.log(err);
+        localStorage.loginMethod = 'login';
         const loggedIn = this.isLoggedIn = false;
         this.isLoggedIn$.next(loggedIn);
         this.router.navigate(['/Greet']);

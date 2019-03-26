@@ -41,7 +41,7 @@ export class FooterComponent implements OnInit {
     var data = { message : 'hello world' };
     const modalPage = await this.modal.create({
       component: SearchModal,
-      componentProps: {values: data}
+      componentProps: {values: data, backdropDismiss: false },
     });
     return modalPage.present();
   }
@@ -75,7 +75,6 @@ export class FooterComponent implements OnInit {
     if (localStorage.loginMethod === 'signup') {
       setTimeout(() => {
         this.openSettingsModal();
-        localStorage.loginMethod = 'login';
       }, 1000);
     }
   }
