@@ -31,6 +31,8 @@ export class ProfilePage implements OnInit {
   open: boolean = false;
   recipId: number;
   money_exchanged: number;
+  deleteId: number;
+  deleteString: string;
 
   constructor(
     private apiService: ApiService,
@@ -193,8 +195,14 @@ export class ProfilePage implements OnInit {
       });
   }
 
+  // deleteWant() {
   deleteWant(wantId, want) {
+
+    want = this.deleteString;
+    wantId = this.deleteWant;
+
     console.log('delete want', wantId);
+
     this.presentToast(want);
     this.http.delete('http://localhost:3000/deleteWant', { params: { wantId } })
       .subscribe((data) => {
@@ -202,11 +210,17 @@ export class ProfilePage implements OnInit {
       });
   }
 
-deleteBookAlert(callback) {
+// deleteBookAlert(callback) {
+//   this.presentAlertMultipleButtons(callback);
+// }
+
+deleteBookAlert(callback, id, string) {
+  // console.log(callback, 'CALLBACK', id, 'ID', string, 'STRING');
+  this.deleteId = id;
+  this.deleteString = string;
+  // this.presentAlertMultipleButtons(callback(id, string));
   this.presentAlertMultipleButtons(callback);
 }
-
-
 
   async presentToast(item) {
     const toast = await this.toastController.create({
@@ -223,7 +237,8 @@ deleteBookAlert(callback) {
       header: 'Wait!',
       // subHeader: 'Subtitle',
       message: 'Are you sure you want to delete this book?',
-      buttons: [{text: 'Cancel', handler: () => {console.log('CANCEL THIS PLEASE')}}, {text: 'Delete', handler: callback}]
+      buttons: [{text: 'Cancel', handler: () => {console.log('CANCEL THIS PLEASE')}}, {text: 'Delete', handler: () => {console.log('DELETE MY BOOK PLEASE')}}]
+      // buttons: [{text: 'Cancel', handler: () => {console.log('CANCEL THIS PLEASE')}}, {text: 'Delete', handler: () => {callback}}]
     });
     return await alert.present();
   }
