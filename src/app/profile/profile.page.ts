@@ -187,6 +187,16 @@ export class ProfilePage implements OnInit {
       }
     });
 
+    acceptedOffers.forEach((listing) => {
+      if(listing.myTitles.length > 1) {
+        listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
+      }
+
+      if(listing.peerTitles.length > 1) {
+        listing.peerTitles.splice(listing.peerTitles.length - 1, 0, ' and ');
+      }
+    });
+
     this.offers = offs;
     this.acceptedOffs = acceptedOffers;
 
