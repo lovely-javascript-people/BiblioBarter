@@ -101,9 +101,19 @@ const createWant = (userId, isbn, condition) => {
   });
 };
 
+const findOneOfferByIdOffer = (idOffer) => {
+  console.log('findOneOfferByIdOffer called from apiHelpers')
+  return db.Offer.findOne({
+    where: {
+      id_offer: idOffer,
+    },
+  });
+}
+
 module.exports = {
   findBookByIsbn,
   insertNewUser,
   newListing,
   createWant,
+  findOneOfferByIdOffer,
 };
