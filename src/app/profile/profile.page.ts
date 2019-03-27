@@ -122,11 +122,11 @@ export class ProfilePage implements OnInit {
 
   renderOffers(offers) {
     console.log(offers, 'OFFERS FROM RENDER OFFERS');
+
     this.allOffers = offers;
     const offs: object[] = [];
     const acceptedOffers: object[] = [];
     let i = 0;
-    // console.log(offers.slice(0, offers.length - 1), 'OFFERS SLICED OFF LAST');
 
     for (const offer of offers.slice(0, offers.length - 1)) {
     if (offer.offer.status === 'pending') {
@@ -148,6 +148,7 @@ export class ProfilePage implements OnInit {
     offerObj.status = offer.offer.status;
     offerObj.email = offer.peerInfo.email;
     offerObj.offerId = offer.offer.id_offer;
+    offerObj.money = offer.offer.money_exchange_cents / 100;
     
     offs.push(offerObj);
     i++;
@@ -175,8 +176,21 @@ export class ProfilePage implements OnInit {
         i++;
       }
     }
+
+    offs.forEach((listing) => {
+      if(listing.myTitles.length > 1) {
+        listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
+      }
+
+      if(listing.peerTitles.length > 1) {
+        listing.peerTitles.splice(listing.peerTitles.length - 1, 0, ' and ');
+      }
+    });
+
     this.offers = offs;
     this.acceptedOffs = acceptedOffers;
+
+    console.log(offs, 'OFFERS AFTER RENDER CALLED');
   }
 
   // renderOffers(offers) {
