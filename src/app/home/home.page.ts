@@ -24,7 +24,7 @@ export class HomePage implements OnInit {
   yourListings: any[];
   othersWants: any[] = [];
   matchedUsers: any[] = [];
-  inRadius: any[] = [];
+  inRadius: string;
 
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService, public navCtrl: NavController,
     private barcodeScanner: BarcodeScanner) { }
@@ -58,7 +58,7 @@ export class HomePage implements OnInit {
 
   setSchoolsInRadius(data) {
     let schoolNames = data.results.map(school => school.poi.name);
-    this.inRadius = schoolNames;
+    this.inRadius = schoolNames.join(' ');
     console.log(this.inRadius);
     this.apiService.getMatches(this.setMatches);
   }
@@ -96,7 +96,7 @@ export class HomePage implements OnInit {
       if (!key.includes('id') && !key.includes('school')) {
         if (data[`${key}_school`] !== null) {
           console.log(data[`${key}_school`].name);
-      data[key] = data[key].filter(piece => want.includes(piece.title) && this.inRadius.includes(data[`${key}_school`].name));
+          data[key] = data[key].filter(piece => want.includes(piece.title) && this.inRadius.includes(data[`${key}_school`].name) || this.inRadius.includes(data[`${key}_school`].name.split(' of ')[0]));
       if (!data[key].length || key === localStorage.username) {
         delete data[key];
       } else {
