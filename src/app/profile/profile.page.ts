@@ -102,8 +102,8 @@ export class ProfilePage implements OnInit {
     // for loop through allOffers to find senderId by matching the offerId
     for(let i = 1; i < this.allOffers.length - 1; i++) {
       if (this.allOffers[i].offer.id_offer === this.offers[index].offerId) {
-          this.recipId = this.allOffers[i].peer.id_user;
-          this.money_exchanged = this.allOffers[i].offer.money_exchange_cents;
+          // this.recipId = this.allOffers[i].peer.id_user;
+          // this.money_exchanged = this.allOffers[i].offer.money_exchange_cents;
       }
     }
 

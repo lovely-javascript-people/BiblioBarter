@@ -490,11 +490,30 @@ app.get('/offers', (req, res) => {
           id_offer: allOffersForIds[k],
         },
       });
+      let currentBook;
       for (let i = 0; i < listingsForOffer.length; i++) {
+        currentBookListing = await db.Listing.findOne({
+            where: {
+              id_listing: listingsForOffer[i].id_listing,
+              // includes: [db.Book],
+            },
+          });
+        currentBook = await db.Book.findOne({
+          where: {
+            id_book: currentBookListing.id_book,
+          },
+        });
+        let finalBook = {...currentBook.dataValues};
+        finalBook.listing = currentBookListing;
+        console.log(finalBook, 'Book final');
+          console.log(currentBook, 'my BOook');
+          // myListings.push(myBook);
         if (allYourListingIds.includes(listingsForOffer[i].id_listing)) {
-          myListings.push(listingsForOffer[i]);
+          myListings.push(finalBook);
+          // myListings.push(listingsForOffer[i]);
         } else {
-          peerListings.push(listingsForOffer[i]);
+          peerListings.push(finalBook);
+          // peerListings.push(listingsForOffer[i]);
         }
       }
       oneCompleteOffer.myListings = myListings;
