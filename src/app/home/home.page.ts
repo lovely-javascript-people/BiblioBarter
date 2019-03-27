@@ -84,7 +84,7 @@ export class HomePage implements OnInit {
     let matchType;
     for (const key of keys) {
       const matchObj: any = {};
-      if (!key.includes('id')) {
+      if (!key.includes('id') && !key.includes('school')) {
       data[key] = data[key].filter(piece => want.includes(piece.title));
       if (!data[key].length || key === localStorage.username) {
         delete data[key];
