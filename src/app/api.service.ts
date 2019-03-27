@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FooterModule } from './footer/footer.module';
+import { FooterComponent } from './footer/footer.component';
 
 @Injectable({
   providedIn: 'root'
@@ -133,7 +135,8 @@ export class ApiService {
         family_name,
         given_name,
         picture,
-      }}).subscribe((response) => {
+      }}).subscribe(async (response) => {
+
         console.log(response);
         });
     }
@@ -146,8 +149,8 @@ export class ApiService {
       });
     }
 
-    getSchools(school, callback) {
-      this.http.get(`${this.local}/schools`, { params: { school } }).subscribe((response) => {
+    getSchools(id_user, callback) {
+      this.http.get(`${this.local}/schools`, { params: { id_user } }).subscribe((response) => {
         callback(response);
         });
     }

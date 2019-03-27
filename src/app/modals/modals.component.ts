@@ -15,16 +15,19 @@ import { FormGroup, FormControl, Validators, } from '@angular/forms';
 
 export class SettingsModal implements OnInit {
 
-  school: string;
+  school: any;
   radius = 10;
   universities: any[] = [];
-  emailAddress: string;
-  nameFirst: string;
-  nameLast: string;
-  userEmail: string;
-  phoneNumber: string;
-  address: string;
+  emailAddress: string = '';
+  nameFirst: string = '';
+  nameLast: string = '';
+  userEmail: string = '';
+  phoneNumber: string = '';
+  address: string = '';
   registrationForm: FormGroup;
+  recentUnis: any;
+  schoolInput: boolean = true;
+  settingsFilled: boolean = false;
 
   constructor(
     public modal: ModalController,
@@ -39,24 +42,32 @@ export class SettingsModal implements OnInit {
       this.universities = data.collegeList;
     }
 
-    settingsUpdate(setting) {
+    settingsUpdate(first, last, email, radius, school) {
       const userId = localStorage.userid;
-      const searchRadius = this.radius;
-      const nameFirst = this.nameFirst;
-      const nameLast = this.nameLast;
-      const userEmail = this.emailAddress;
-      const address = this.address;
-      const phoneNumber = this.phoneNumber;
-      this.presentToast(setting);
-      this.apiService.updateSettings(nameFirst, nameLast, userEmail, userId, searchRadius, address, phoneNumber);
+      const searchRadius = radius;
+      const nameFirst = first;
+      const nameLast = last;
+      const address = '123 jeef st.';
+      const userEmail = email;
+      const phoneNumber = '7334887';
+      debugger;
+      if (userId && nameFirst && nameLast && address && phoneNumber && userEmail) {
+        this.presentToast('Thanks, your info has been successfully submitted. Please enter your university below.');
+        this.apiService.updateSettings(nameFirst, nameLast, userEmail, userId, searchRadius, address, phoneNumber);
+        this.settingsFilled = true;
+      } else {
+        this.presentToast('All fields must be fully and accurately completed');
+      }
     }
 
     selectUni(event) {
       this.school = event.target.textContent;
+      this.recentUnis = this.universities;
       this.universities = [];
     }
 
     onChange() {
+      console.log(this.school);
       this.auto.findUniversity(this.school, this.autoComplete);
     }
 
@@ -71,12 +82,19 @@ export class SettingsModal implements OnInit {
 
   setSchool(setting) {
     this.presentToast(setting);
-    this.settings.changeSchool(this.school);
+    if (this.recentUnis.map(uni => uni.name).includes(this.school)) {
+      this.recentUnis = [];
+      this.presentToast(`${this.school} is now set as your university`);
+      this.settings.changeSchool(this.school);
+      localStorage.loginMethod = 'login';
+    } else {
+      this.presentToast('You must choose a university from the list');
+    }
   }
 
-  // searchRadius() {
-  //   this.settings.defineSearchRadius(this.radius)
-  // }
+  searchRadius() {
+    this.settings.defineSearchRadius(this.radius)
+  }
 
   async closeModal() {
     this.modal.dismiss();
@@ -84,7 +102,7 @@ export class SettingsModal implements OnInit {
 
   async presentToast(setting) {
     const toast = await this.toastController.create({
-      message: `Your ${setting} has been saved.`,
+      message: setting,
       duration: 2000,
       color: 'primary',
       position: 'top', // or don't include to be bottom

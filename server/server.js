@@ -145,21 +145,33 @@ app.get('/profile', (req, res) => {
 });
 
 app.patch('/school', (req, res) => {
-  db.School.findOrCreate({
+  let uni = req.body.school;
+  axios({
+    method: 'GET',
+    url: `https://api.tomtom.com/search/2/search/${uni}.json?countrySet=US&idxSet=POI&key=${process.env.TOMTOMKEY}`,
+  headers: {
+    Referer: 'https://developer.tomtom.com/content/search-api-explorer',
+    Accept: '*/*',
+  },
+}).then((info) => 
+    db.School.findOrCreate({
     where: {
       name: req.body.school, // CHANGE WHEN DROP DATABASE
-      // geolocal needed
+      geo_latitude: info.data.results[0].position.lat,
+      geo_longitude: info.data.results[0].position.lon
     },
   })
-  .then((data) => {
-    db.User.update(
-      { id_school: data[0].dataValues.id_school },
-      { where: { id_user: req.body.userId } },
-    )
-      .then(result => res.send(result))
-      .catch(err => res.send(err));
-}).catch(err => res.status(500).send(err));
-});
+).then((data) => {
+  db.User.update(
+    { id_school: data[0].dataValues.id_school },
+    { where: { id_user: req.body.userId } },
+  )
+    .then(result => res.send(result))
+    .catch(err => res.send(err))
+.catch(err => res.status(500).send(err));
+})
+})
+  
 
 // POST /user/want
 // User add a want book, should also return all the user's want books
@@ -400,35 +412,55 @@ app.get('/offers', (req, res) => {
   let peer;
   let allOffersForIds = []; // all offer id related to user
   let allPeers = []; // all peer id who has an offer connected to user
-  db.Listing.findAll({
+  let allOffers = []; // array of all offers with information for each user
+  let allYourListingIds = []; // all id_listings for user
+  var allUserListings = [];
+  var allUsersBooks = [];
+  db.Listing.findAll({ // first find all listings for this user
     where: {
       id_user: req.query.id_user,
     },
   }).then(async (data) => {
+    console.log(data, 'ALL YOUR LISTINGS');
+    allUserListings = {allUserListings: [...data]};
+    let listingData = [...data];
+    for (let b = 0; b < listingData.length; b++) { // loop through the array of listings
+      allYourListingIds.push(listingData[b].id_listing); // push listing id into array for comparison later
+      let bookFound = await db.Book.findOne({ // find book information for listing
+        where: {
+          id_book: listingData[b].id_book,
+        },
+      });
+      allUsersBooks.push(bookFound); // push book into array for utilization
+    }
+    return listingData; // return all listings to find all offers tied to listing
+  }).then(async (data) => {
+    console.log(allUsersBooks);
     const lists = [...data];
-    const responseArr = [data];
-    for (let i = 0; i < lists.length; i++) {
-      yourListing = lists[i];
+    for (let i = 0; i < lists.length; i++) { // for each listing, find the offer id linked to listing
       offersOnListing = await db.Offer_Listing.findAll({ // finds all offer_listing with listing
         where: {
           id_listing: lists[i].id_listing,
         },
       });
       console.log(offersOnListing, 'OFFER LISTING');
+      for (let p = 0; p < offersOnListing.length; p++) {
+        allOffersForIds.push(offersOnListing[p].id_offer);
+      }
       for (let j = 0; j < offersOnListing.length; j++) { // on each offer_listing, grab id_offer
         offerIdForListing = await db.Offer.findAll({
           where: {
             id_offer: offersOnListing[j].id_offer,
           },
         });
-        if (!allOffersForIds.includes(offerIdForListing[0].id_offer)) { // add offer id to array if not already in
+        if (! await allOffersForIds.includes(offerIdForListing[0].id_offer)) { // add offer id to array if not already in
           allOffersForIds.push(offerIdForListing[0].id_offer); // 
         }
-        if (!allPeers.includes(offerIdForListing[0].id_sender) && // checks to see if user is sender or recipient
+        if (! await allPeers.includes(offerIdForListing[0].id_sender) && // checks to see if user is sender or recipient
         offerIdForListing[0].id_sender !== req.query.id_user) {
           allPeers.push(offerIdForListing[0].id_sender);
         }
-        if (!allPeers.includes(offerIdForListing[0].id_recipient) && // then pushes the peer's id into array
+        if (! await allPeers.includes(offerIdForListing[0].id_recipient) && // then pushes the peer's id into array
           offerIdForListing[0].id_recipient !== req.query.id_user) { // may currently add user id as well
           allPeers.push(offerIdForListing[0].id_recipient);
         }
@@ -440,41 +472,64 @@ app.get('/offers', (req, res) => {
     console.log(allPeers, 'ALL PEERS'); // user ids, may include user along with peers in transaction
     console.log(allOffersForIds, 'OFFER IDS for USER'); // user ids, may include user along with peers in transaction
     // start with offer id, then move to grabbing each listing, part of each offer
-    // for (let k = 0; k < allOffersForIds; k++) {
-    //   let oneCompleteOffer = {};
-    //   let offerForId = await db.Offer.findOne({
-    //     where: {
-    //       id_offer: allOffersForIds[k],
-    //     }
-    //   });
-    //   oneCompleteOffer.offer = offerForId;
-    //   let listingsForOffer = await db.Offer_Listing.findAll({
-    //     where: {
-    //       id_offer: allOffersForIds[k],
-    //     },
-    //   });
-    //   console.log(listingsForOffer, 'LISTINGS FOR OFFER');
-    // }
     return allPeers;
   }).then(async (allpeers) => {
-    for (let k = 0; k < allOffersForIds; k++) {
-      let oneCompleteOffer = {};
+    for (let k = 0; k < allOffersForIds.length; k++) {
+      console.log('enter async all offers');
+      var oneCompleteOffer = {};
       let offerForId = await db.Offer.findOne({
         where: {
           id_offer: allOffersForIds[k],
         }
       });
       oneCompleteOffer.offer = offerForId;
+      const myListings = [];
+      const peerListings = [];
       let listingsForOffer = await db.Offer_Listing.findAll({
         where: {
           id_offer: allOffersForIds[k],
         },
       });
+      for (let i = 0; i < listingsForOffer.length; i++) {
+        if (allYourListingIds.includes(listingsForOffer[i].id_listing)) {
+          myListings.push(listingsForOffer[i]);
+        } else {
+          peerListings.push(listingsForOffer[i]);
+        }
+      }
+      oneCompleteOffer.myListings = myListings;
+      oneCompleteOffer.peerListings = peerListings;
+      let peerInfo;
+      if (offerForId.id_recipient === req.query.id_user) {
+        peerId = await db.User.findOne({
+          where: {
+            id_user: offerForId.id_recipient,
+          },
+        });
+      } else {
+        peerInfo = await db.User.findOne({
+          where: {
+            id_user: offerForId.id_sender,
+          },
+        });
+      }
+      oneCompleteOffer.peerInfo = peerInfo;
       console.log(offerForId, 'ID OFFER');
       console.log(listingsForOffer, 'LISTINGS FOR OFFER');
+      // oneCompleteOffer.allUsersListings = allUserListings;
+      allOffers.push(oneCompleteOffer);
     }
+    // console.log(oneCompleteOffer, 'COMPLETE');
+    // allOffers.push(allUsersListings);
+    // console.log(oneCompleteOffer, 'COMPLETERRRRRRR');
+    allOffers.push(allUserListings);
+    return allOffers;
+  }).then((allOffers) => {
+    console.log(allOffers, 'END: ALL OFFERS');
+    res.status(200).send(allOffers);
   }).catch((err) => {
-    console.log(`Aw Man, you got an error: ${err}`);
+    // console.log(`Aw Man, you got an error: ${err}`);
+    res.status(500).send(JSON.stringify(`An error occured in retrieving all offers: ${err}`));
   });
 })
 // app.get('/offers', (req, res) => {
@@ -653,9 +708,24 @@ app.post('/contactUs', (req, res) => {
 });
 
 app.get('/schools', (req, res) => {
+  let radiusInMeters;
+  db.User.findOne({
+    where: {
+      id_user: req.query.id_user
+    }
+  }).then(userInfo => {
+    radiusInMeters = userInfo.search_radius_miles * 1609.34;
+    return db.School.findOne({
+      where: {
+        id_school: userInfo.id_school
+      }
+  })
+}).then(schoolInfo => {
+  let lat = schoolInfo.geo_latitude;
+  let lon = schoolInfo.geo_longitude;
   axios({
     method: 'GET',
-    url: `https://api.tomtom.com/search/2/search/${req.query.school}.json?countrySet=US&idxSet=POI&key=${process.env.TOMTOMKEY}`,
+    url: `https://api.tomtom.com/search/2/poiSearch/university.json?key=${process.env.TOMTOMKEY}&typeahead=false&limit=10&ofs=1000&countrySet=US&lat=${lat}&lon=${lon}&radius=${radiusInMeters}&language=en-us&extendedPostalCodesFor=POI&view=Unified`,
   headers: {
     Referer: 'https://developer.tomtom.com/content/search-api-explorer',
     Accept: '*/*',
@@ -664,6 +734,8 @@ app.get('/schools', (req, res) => {
   res.send(colleges.data);
 });
 });
+})
+  
 
 app.get('/counter', (req, res) => {
   res.send(JSON.stringify("Please wait while you are redirected to your peer's profile"));

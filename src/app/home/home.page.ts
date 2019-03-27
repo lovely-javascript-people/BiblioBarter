@@ -78,6 +78,7 @@ export class HomePage implements OnInit {
   setMatches(data) {
     console.log(data);
     const keys = Object.keys(data);
+    if (this.yourWants.length) {
     const want = this.yourWants.map(want => want.title);
     const matches = [];
     let matchType;
@@ -106,6 +107,7 @@ export class HomePage implements OnInit {
     for (const match of this.matches) {
       this.apiService.getPeerProfile(match.id, this.setOthersWants);
     }
+  }
   }
 
   setYourWants(data) {
@@ -150,7 +152,7 @@ export class HomePage implements OnInit {
     this.apiService.renderListingsList(this.setYourListings);
     this.apiService.getMatches(this.setMatches);
     this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
-    this.apiService.getSchools('LSU', console.log);
+    this.apiService.getSchools(localStorage.userid, console.log);
   }
 
 }

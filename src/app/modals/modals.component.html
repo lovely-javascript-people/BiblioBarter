@@ -18,11 +18,11 @@
           EDIT PROFILE
         </div>
         <div style="width:100%;Text-align:center;">
-          <ion-input position="stacked" required="true" clear-input="true" [(ngModel)]="nameFirst" #ctrl="ngModel" placeholder="First Name"></ion-input>
-          <ion-input position="stacked" clear-input="true" [(ngModel)]="nameLast" #ctrl="ngModel" placeholder="Last Name"></ion-input>
-          <ion-input clear-input="true" [(ngModel)]="emailAddress" #ctrl="ngModel" placeholder="Email Address"></ion-input>
-          <ion-input clear-input="true" [(ngModel)]="radius" #ctrl="ngModel" placeholder="Search Radius"></ion-input>
-          <ion-button (click)="settingsUpdate('settings')">Submit Info</ion-button>
+          <ion-input #first position="stacked" required="true" clear-input="true" placeholder="First Name"></ion-input>
+          <ion-input #last position="stacked" clear-input="true" placeholder="Last Name"></ion-input>
+          <ion-input #email clear-input="true" placeholder="Email Address"></ion-input>
+          <ion-input #radius clear-input="true" placeholder="Search Radius"></ion-input>
+          <ion-button (click)="settingsUpdate(first.value, last.value, email.value, radius.value)">Submit Info</ion-button>
           <div>
               <ion-input [(ngModel)]="school" #ctrl="ngModel" placeholder="New School" (ngModelChange)="onChange($event)"></ion-input>
               <ion-list>
