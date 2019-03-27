@@ -8,7 +8,7 @@ import { AddListingModal } from '../add_listing_modal/add_listing_modal.componen
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 import { CameraOptions } from '@ionic-native/camera/ngx';
 import * as Stripe from "stripe";
 
@@ -24,7 +24,7 @@ export class ProfilePage implements OnInit {
   offers: any[] = [];
   wants: object[] = [];
   listings: object[] = [];
-  allOffers: object[] = [];
+  allOffers: any[] = [];
   loaded = false;
   acceptedOffs: any[] = [];
   offerid: number; // need to grab correct offerid --> where do we get this
@@ -38,6 +38,7 @@ export class ProfilePage implements OnInit {
     private router: Router,
     private http: HttpClient,
     public toastController: ToastController,
+    public alertController: AlertController,
   ) { }
 
   setUser(data) {
@@ -201,6 +202,12 @@ export class ProfilePage implements OnInit {
       });
   }
 
+deleteWantAlert() {
+  this.presentAlertMultipleButtons(this.deleteWant);
+}
+
+
+
   async presentToast(item) {
     const toast = await this.toastController.create({
       message: `Your ${item} has been deleted.`,
@@ -209,6 +216,16 @@ export class ProfilePage implements OnInit {
       position: 'top', // or don't include to be bottom
     });
     toast.present();
+  }
+
+  async presentAlertMultipleButtons(callback) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      subHeader: 'Subtitle',
+      message: 'Are you sure you want to delete this book?',
+      buttons: [{text: 'Cancel', handler: () => {console.log('CANCEL THIS PLEASE')}}, {text: 'Delete', handler: callback}]
+    });
+    return await alert.present();
   }
 
   // openCamera() {
