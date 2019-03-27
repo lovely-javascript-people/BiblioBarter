@@ -202,8 +202,8 @@ export class ProfilePage implements OnInit {
       });
   }
 
-deleteWantAlert() {
-  this.presentAlertMultipleButtons(this.deleteWant);
+deleteWantAlert(callback) {
+  this.presentAlertMultipleButtons(callback);
 }
 
 

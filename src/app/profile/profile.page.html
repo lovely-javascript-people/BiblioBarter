@@ -66,7 +66,7 @@
             <b>Title:</b> {{want.title}}<br />
             <b>ISBN:</b> {{want.isbn}}
         </ion-label>
-        <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteWant(want.id_want, 'want listing')" style="float: right;">  -  </ion-button>
+        <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteWantAlert(deleteWant(want.id_want, 'want listing'))" style="float: right;">  -  </ion-button>
         <!-- <ion-icon name="remove-circle-outline" (click)="deleteWant(want.id_want, 'want listing')"></ion-icon> -->
       </ion-item>
   </ion-list>
