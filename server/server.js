@@ -471,12 +471,11 @@ app.get('/offers', (req, res) => {
  * @param {array} listings all listings associated with the offer as an object, at the least, need listing id 
  */
 app.post('/offers', (req, res) => {
-  console.log(req, 'REQ OFFERS');
   let offerId;
   db.Offer.create({
     id_recipient: req.body.params.idRecipient,
     id_offer_prev: req.body.params.idOfferPrev,
-    id_Sender: req.body.params.idSender,
+    id_sender: req.body.params.idSender,
     money_exchange_cents: req.body.params.money || null,
   }).then(async () => {
     const newOffer = await db.Offer.findAll({

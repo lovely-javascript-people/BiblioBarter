@@ -18,6 +18,7 @@ import { SearchModalsModule } from './search_modal/search_modal.module';
 import { AddListingModule } from './add_listing_modal/add_listing_modal.module';
 import { ContactModalModule } from './contact_modal/contact_modal.module';
 import { WantListModule } from './want_list_modal/want_list_modal.module';
+import { CounterOfferModule } from './counter_offer_modal/counter_offer_modal.module';
 import { SettingsService } from './services/settings/settings.service';
 import { AutoCompleteService } from './services/autoComplete/auto-complete.service';
 import { PeerProfilePageModule } from './profile/peerProfile/peer-profile/peer-profile.module';
@@ -30,6 +31,7 @@ import { WebSocketServiceService } from './web-socket-service.service';
 import { ChatService } from './chat.service';
 import Chatkit from '@pusher/chatkit-client';
 // import { ReactiveFormsModule, FormControl } from '@angular/forms';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -47,6 +49,7 @@ import Chatkit from '@pusher/chatkit-client';
     WantListModule,
     PeerProfilePageModule,
     PrivacyModule,
+    CounterOfferModule,
     // ReactiveFormsModule,
     // FormControl,
     ChatPageModule],
