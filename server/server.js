@@ -422,7 +422,7 @@ app.get('/offers', (req, res) => {
     },
   }).then(async (data) => {
     console.log(data, 'ALL YOUR LISTINGS');
-    allUserListings = {allUserListings: [...data]};
+    allUserListings = [...data];
     let listingData = [...data];
     for (let b = 0; b < listingData.length; b++) { // loop through the array of listings
       allYourListingIds.push(listingData[b].id_listing); // push listing id into array for comparison later
