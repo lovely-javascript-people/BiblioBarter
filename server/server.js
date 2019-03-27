@@ -394,22 +394,14 @@ app.patch('/offerlisting', (req, res) => {
 /**
  * @param {number} req.query.id_user User id
  * @returns {array} array and objects. In first index, array of user's listings.
- * In following indexes, objects holding information of offer
- * each object has property, offer, peer, titleoffered, titleWanted
- * Offer is set to offer object.
- * Peer is user object of peer.
- * titleOffered is array hold all information on user's offered books in offer
- * titleWanted is array holding all information on peer's offered books in offer
- * offeredBooks holds books that you offered with offer, objects
- * wantedBooks holds objects of the book you want in the offer
+ * In following indexes, objects holding information of offer.
+ * Each object contains myListings, offer, peerInfo, peerListings
+ * myListings contains a user's book information on the offer
+ * offer contains information on the current offer
+ * peerInfo gives information on the user
+ * peerListings contains information on peer's listings pertaining to the offer
  */
 app.get('/offers', (req, res) => {
-  let offeredBooks;
-  let wantedBooks;
-  let offered;
-  let titleOffered;
-  let titleWantd;
-  let peer;
   let allOffersForIds = []; // all offer id related to user
   let allPeers = []; // all peer id who has an offer connected to user
   let allOffers = []; // array of all offers with information for each user
@@ -505,15 +497,10 @@ app.get('/offers', (req, res) => {
         });
         let finalBook = {...currentBook.dataValues};
         finalBook.listing = currentBookListing;
-        console.log(finalBook, 'Book final');
-          console.log(currentBook, 'my BOook');
-          // myListings.push(myBook);
         if (allYourListingIds.includes(listingsForOffer[i].id_listing)) {
           myListings.push(finalBook);
-          // myListings.push(listingsForOffer[i]);
         } else {
           peerListings.push(finalBook);
-          // peerListings.push(listingsForOffer[i]);
         }
       }
       oneCompleteOffer.myListings = myListings;
@@ -535,12 +522,9 @@ app.get('/offers', (req, res) => {
       oneCompleteOffer.peerInfo = peerInfo;
       console.log(offerForId, 'ID OFFER');
       console.log(listingsForOffer, 'LISTINGS FOR OFFER');
-      // oneCompleteOffer.allUsersListings = allUserListings;
+      // oneCompleteOffer.allUsersListings = allUserListings; // uncomment if need all users listings, currently not needed
       allOffers.push(oneCompleteOffer);
     }
-    // console.log(oneCompleteOffer, 'COMPLETE');
-    // allOffers.push(allUsersListings);
-    // console.log(oneCompleteOffer, 'COMPLETERRRRRRR');
     allOffers.push(allUserListings);
     return allOffers;
   }).then((allOffers) => {
@@ -550,70 +534,7 @@ app.get('/offers', (req, res) => {
     // console.log(`Aw Man, you got an error: ${err}`);
     res.status(500).send(JSON.stringify(`An error occured in retrieving all offers: ${err}`));
   });
-})
-// app.get('/offers', (req, res) => {
-//   console.log(req.query, 'GET OFFERS')
-//   let offered;
-//   let titleOffered;
-//   let titleWantd;
-//   let peer;
-//   db.Listing.findAll({
-//     where: {
-//       id_user: req.query.id_user,
-//     },
-//   }).then(async (data) => {
-//     const lists = [...data];
-//     const resArr = [data];
-//     for (const piece of lists) {
-//     offered = await db.Offer.findAll({
-//       where: {
-//         id_recipient: piece.dataValues.id_listing,
-//       },
-//     });
-//     if (offered.length) {
-//       for (const offer of offered) {
-//     const offerer = await db.User.findOne({
-//       where: {
-//         id_user: await piece.dataValues.id_user,
-//       },
-//     });
-//     titleWantd = await db.Book.findOne({
-//       where: {
-//         id_book: await piece.id_book,
-//       },
-//     });
-//     const wanted = await db.Listing.findOne({
-//       where: {
-//         id_listing: offer.id_listing_sender,
-//       },
-//     });
-//     titleOffered = await db.Book.findOne({
-//       where: {
-//         id_book: await wanted.id_book,
-//       },
-//     });
-//     const peerListing = await db.Listing.findOne({
-//       where: {
-//         id_listing: offer.id_listing_sender,
-//       },
-//     });
-//     peer = await db.User.findOne({
-//       where: {
-//         id_user: peerListing.id_user,
-//       },
-//     });
-//     resArr.push({
-//       offer,
-//       titleOffered,
-//       titleWantd,
-//       peer,
-//     });
-//   }
-// }
-//   }
-//     res.send(resArr);
-//   });
-// });
+});
 
 // POST /offers
 // create an offer / counter an offer
