@@ -3,12 +3,14 @@ import { ApiService } from '../api.service';
 import { conditionallyCreateMapObjectLiteral } from '@angular/compiler/src/render3/view/util';
 import { PopoverController } from '@ionic/angular';
 import { WantListModal } from '../want_list_modal/want_list_modal.component';
+import { CounterOfferModal } from '../counter_offer_modal/counter_offer_modal.component';
 import { AddListingModal } from '../add_listing_modal/add_listing_modal.component';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 import { CameraOptions } from '@ionic-native/camera/ngx';
+import * as Stripe from "stripe";
 
 @Component({
   selector: 'app-profile',
@@ -27,6 +29,8 @@ export class ProfilePage implements OnInit {
   acceptedOffs: any[] = [];
   offerid: number; // need to grab correct offerid --> where do we get this
   open: boolean = false;
+  recipId: number;
+  money_exchanged: number;
 
   constructor(
     private apiService: ApiService,
@@ -71,6 +75,15 @@ export class ProfilePage implements OnInit {
     return await modalPage.present();
   }
 
+  async openCounterOfferModal() {
+    var data = { message: 'hello world' };
+    const modalPage = await this.modal.create({
+      component: CounterOfferModal,
+      componentProps: { values: data }
+    });
+    return await modalPage.present();
+  }
+
   acceptOffer(index) {
     console.log(this.allOffers, 'ALL OFFERS');
     console.log(this.offers[index], 'CLICKED ON OFFER');
@@ -85,7 +98,23 @@ export class ProfilePage implements OnInit {
   }
 
   counterOffer(index) {
-    this.apiService.counterOffer(index);
+
+    // for loop through allOffers to find senderId by matching the offerId
+    for(let i = 1; i < this.allOffers.length - 1; i++) {
+      if (this.allOffers[i].offer.id_offer === this.offers[index].offerId) {
+          this.recipId = this.allOffers[i].peer.id_user;
+          this.money_exchanged = this.allOffers[i].offer.money_exchange_cents;
+      }
+    }
+
+    let idOfferPrev = this.offers[index].offerId; // this is the offerId of the offer that the user is countering
+    let idRecipient = this.recipId;
+    let idSender = localStorage.userid;
+    let money = this.money_exchanged;
+    let listings; // this should be an array of all of the listing ids involved.
+                  // should get this back in offers after refactor
+
+    // this.apiService.counterOffer(idOfferPrev, idRecipient, idSender, listings, money);
   }
 
   renderOffers(offers) {
@@ -95,18 +124,17 @@ export class ProfilePage implements OnInit {
     const acceptedOffers: object[] = [];
     let i = 0;
     for (const offer of offers.slice(1)) {
-      if (offer.offer.status === 'pending') {
-        const offerObj: any = {};
-        offerObj.offeredTitle = offer.titleOffered.title;
-        offerObj.wantedTitle = offer.titleWantd.title;
-        offerObj.peer = offer.peer.user_name;
-        offerObj.status = offer.offer.status;
-        offerObj.email = offer.peer.email;
-        offerObj.offerId = offer.offer.id_offer;
-        // offerObj.index = i;
-        // console.log(offerObj, 'OFFER OBJECT');
-        offs.push(offerObj);
-        i++;
+    if (offer.offer.status === 'pending') {
+    const offerObj: any = {};
+    offerObj.offeredTitle = offer.titleOffered.title;
+    offerObj.wantedTitle = offer.titleWantd.title;
+    offerObj.peer = offer.peer.user_name;
+    offerObj.status = offer.offer.status;
+    offerObj.email = offer.peer.email;
+    offerObj.offerId = offer.offer.id_offer;
+    
+    offs.push(offerObj);
+    i++;
       } else if (offer.offer.status === 'accepted') {
         const offerObj: any = {};
         offerObj.offeredTitle = offer.titleOffered.title;
@@ -135,6 +163,7 @@ export class ProfilePage implements OnInit {
       });
 
   }
+
 
   cancelAcceptedOffer(index) {
     console.log(this.acceptedOffs[index], 'OFFER TO BE CANCELED');

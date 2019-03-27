@@ -66,7 +66,7 @@ export class ApiService {
 
   renderWantList(callback) {
     // console.log(localStorage.userid, 'USERID');
-    this.http.get(`http://localhost:3000/user/want?${localStorage.userid}`)
+    this.http.get(`${this.local}/user/want?${localStorage.userid}`)
     .subscribe((wantListArray) => {
       console.log(wantListArray, 'ARRAY OF WANT LIST');
       callback(wantListArray);
@@ -74,7 +74,7 @@ export class ApiService {
   }
 
   renderListingsList(callback) {
-    this.http.get(`http://localhost:3000/user/listing?${localStorage.userid}`)
+    this.http.get(`${this.local}/user/listing?${localStorage.userid}`)
     .subscribe((listingListArray) => {
       console.log(listingListArray, 'ARRAY OF OFFERING LIST');
       callback(listingListArray);
@@ -105,7 +105,7 @@ export class ApiService {
   }
 
   sendOffer(options: any) {
-    console.log('OFFER OBJECT', options);
+    // console.log(options, 'OPTIONS');
     this.http.post(`${this.local}/offers`, { params: options }).subscribe(resp => {
       console.log(resp, 'offer created success');
     });
@@ -155,8 +155,8 @@ export class ApiService {
         });
     }
 
-    counterOffer(id) {
-      this.http.get(`${this.local}/counter`, { params: { id } }).subscribe((response) => {
+    counterOffer(id, sender_id, recipient_id, all_listings, money) { // this takes in the offerId of the offer that the user is countering
+      this.http.post(`${this.local}/counter`, { params: { id, sender_id, recipient_id, all_listings, money } }).subscribe((response) => {
         console.log(response);
         });
     }

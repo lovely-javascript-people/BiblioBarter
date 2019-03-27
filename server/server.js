@@ -609,7 +609,6 @@ app.get('/offers', (req, res) => {
  * @param {array} listings all listings associated with the offer as an object, at the least, need listing id 
  */
 app.post('/offers', (req, res) => {
-  console.log(req.body, 'REQ OFFERS');
   let offerId;
   db.Offer.create({
     id_recipient: req.body.params.idRecipient,

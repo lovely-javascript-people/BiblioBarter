@@ -32,6 +32,7 @@
     "@pusher/chatkit-client": "^1.4.1",
     "@pusher/chatkit-server": "^1.1.0",
     "@types/socket.io-client": "^1.4.32",
+    "@types/stripe": "^6.25.6",
     "auth0-js": "^9.10.0",
     "auth0-lock": "^11.14.0",
     "axios": "^0.18.0",
@@ -64,6 +65,7 @@
     "rxjs-compat": "^6.3.3",
     "sequelize": "^4.43.0",
     "socket.io": "^2.2.0",
+    "stripe": "^6.28.0",
     "underscore": "^1.9.1",
     "zone.js": "~0.8.29"
   },
