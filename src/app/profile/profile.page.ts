@@ -121,40 +121,123 @@ export class ProfilePage implements OnInit {
   }
 
   renderOffers(offers) {
-    console.log(offers, 'OFFERS');
+    console.log(offers, 'OFFERS FROM RENDER OFFERS');
+
     this.allOffers = offers;
     const offs: object[] = [];
     const acceptedOffers: object[] = [];
     let i = 0;
-    for (const offer of offers.slice(1)) {
+
+    for (const offer of offers.slice(0, offers.length - 1)) {
     if (offer.offer.status === 'pending') {
     const offerObj: any = {};
-    offerObj.offeredTitle = offer.titleOffered.title;
-    offerObj.wantedTitle = offer.titleWantd.title;
-    offerObj.peer = offer.peer.user_name;
+    offerObj.myTitles = [];
+    offerObj.peerTitles = [];
+    
+    // get all user titles
+    offer.myListings.forEach((listing) => {
+      offerObj.myTitles.push(listing.title);
+    })
+
+    // get all peer titles
+    offer.peerListings.forEach((listing) => {
+      offerObj.peerTitles.push(listing.title);
+    })
+
+    offerObj.peer = offer.peerInfo.user_name;
     offerObj.status = offer.offer.status;
-    offerObj.email = offer.peer.email;
+    offerObj.email = offer.peerInfo.email;
     offerObj.offerId = offer.offer.id_offer;
+    offerObj.money = offer.offer.money_exchange_cents / 100;
     
     offs.push(offerObj);
     i++;
       } else if (offer.offer.status === 'accepted') {
         const offerObj: any = {};
-        offerObj.offeredTitle = offer.titleOffered.title;
-        offerObj.wantedTitle = offer.titleWantd.title;
-        offerObj.peer = offer.peer.user_name;
+        offerObj.myTitles = [];
+        offerObj.peerTitles = [];
+        
+        // get all user titles
+        offer.myListings.forEach((listing) => {
+          offerObj.myTitles.push(listing.title);
+        })
+    
+        // get all peer titles
+        offer.peerListings.forEach((listing) => {
+          offerObj.peerTitles.push(listing.title);
+        })
+    
+        offerObj.peer = offer.peerInfo.user_name;
         offerObj.status = offer.offer.status;
-        offerObj.email = offer.peer.email;
+        offerObj.email = offer.peerInfo.email;
         offerObj.offerId = offer.offer.id_offer;
-        // console.log(offerObj, 'OFFER OBJECT');
+        
         acceptedOffers.push(offerObj);
         i++;
       }
     }
+
+    offs.forEach((listing) => {
+      if(listing.myTitles.length > 1) {
+        listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
+      }
+
+      if(listing.peerTitles.length > 1) {
+        listing.peerTitles.splice(listing.peerTitles.length - 1, 0, ' and ');
+      }
+    });
+
+    acceptedOffers.forEach((listing) => {
+      if(listing.myTitles.length > 1) {
+        listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
+      }
+
+      if(listing.peerTitles.length > 1) {
+        listing.peerTitles.splice(listing.peerTitles.length - 1, 0, ' and ');
+      }
+    });
+
     this.offers = offs;
     this.acceptedOffs = acceptedOffers;
-    // console.log(this.offers, 'THIS DOT OFFERS');
+
+    console.log(offs, 'OFFERS AFTER RENDER CALLED');
   }
+
+  // renderOffers(offers) {
+  //   console.log(offers, 'OFFERS FROM RENDER OFFERS');
+  //   this.allOffers = offers;
+  //   const offs: object[] = [];
+  //   const acceptedOffers: object[] = [];
+  //   let i = 0;
+  //   for (const offer of offers.slice(1)) {
+  //   if (offer.offer.status === 'pending') {
+  //   const offerObj: any = {};
+  //   offerObj.offeredTitle = offer.titleOffered.title;
+  //   offerObj.wantedTitle = offer.titleWantd.title;
+  //   offerObj.peer = offer.peer.user_name;
+  //   offerObj.status = offer.offer.status;
+  //   offerObj.email = offer.peer.email;
+  //   offerObj.offerId = offer.offer.id_offer;
+    
+  //   offs.push(offerObj);
+  //   i++;
+  //     } else if (offer.offer.status === 'accepted') {
+  //       const offerObj: any = {};
+  //       offerObj.offeredTitle = offer.titleOffered.title;
+  //       offerObj.wantedTitle = offer.titleWantd.title;
+  //       offerObj.peer = offer.peer.user_name;
+  //       offerObj.status = offer.offer.status;
+  //       offerObj.email = offer.peer.email;
+  //       offerObj.offerId = offer.offer.id_offer;
+  //       // console.log(offerObj, 'OFFER OBJECT');
+  //       acceptedOffers.push(offerObj);
+  //       i++;
+  //     }
+  //   }
+  //   this.offers = offs;
+  //   this.acceptedOffs = acceptedOffers;
+  //   // console.log(this.offers, 'THIS DOT OFFERS');
+  // }
 
   rejectOffer(index) {
     this.offerid = this.offers[index].offerId;
