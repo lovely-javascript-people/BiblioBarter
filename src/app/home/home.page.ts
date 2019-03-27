@@ -24,6 +24,7 @@ export class HomePage implements OnInit {
   yourListings: any[];
   othersWants: any[] = [];
   matchedUsers: any[] = [];
+  inRadius: any[] = [];
 
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService, public navCtrl: NavController,
     private barcodeScanner: BarcodeScanner) { }
@@ -55,6 +56,13 @@ export class HomePage implements OnInit {
     this.apiService.getBooks(data, callback);
   }
 
+  setSchoolsInRadius(data) {
+    let schoolNames = data.results.map(school => school.poi.name);
+    this.inRadius = schoolNames;
+    console.log(this.inRadius);
+    this.apiService.getMatches(this.setMatches);
+  }
+
   setUser(data) {
     console.log(data);
     // add userid to local storage
@@ -82,10 +90,13 @@ export class HomePage implements OnInit {
     const want = this.yourWants.map(want => want.title);
     const matches = [];
     let matchType;
+    let schoo = '';
     for (const key of keys) {
       const matchObj: any = {};
-      if (!key.includes('id')) {
-      data[key] = data[key].filter(piece => want.includes(piece.title));
+      if (!key.includes('id') && !key.includes('school')) {
+        if (data[`${key}_school`] !== null) {
+          console.log(data[`${key}_school`].name);
+      data[key] = data[key].filter(piece => want.includes(piece.title) && this.inRadius.includes(data[`${key}_school`].name));
       if (!data[key].length || key === localStorage.username) {
         delete data[key];
       } else {
@@ -100,6 +111,7 @@ export class HomePage implements OnInit {
       matchObj.id = data[key + '_id'];
       matches.push(matchObj);
     }
+  }
     }
     }
     console.log(matches);
@@ -147,12 +159,12 @@ export class HomePage implements OnInit {
     this.setYourWants = this.setYourWants.bind(this);
     this.setYourListings = this.setYourListings.bind(this);
     this.setOthersWants = this.setOthersWants.bind(this);
+    this.setSchoolsInRadius = this.setSchoolsInRadius.bind(this);
     this.setMatches = this.setMatches.bind(this);
     this.apiService.renderWantList(this.setYourWants);
     this.apiService.renderListingsList(this.setYourListings);
-    this.apiService.getMatches(this.setMatches);
     this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
-    this.apiService.getSchools(localStorage.userid, console.log);
+    this.apiService.getSchools(localStorage.userid, this.setSchoolsInRadius);
   }
 
 }

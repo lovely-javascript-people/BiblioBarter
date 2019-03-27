@@ -56,8 +56,14 @@ app.get('/matches', (req, res) => {
           id_book: listing.id_book,
         },
       });
+      const school = await db.School.findOne({
+        where: {
+          id_school: user.id_school
+        }
+      })
       matchObj[`${user.user_name}_id`] = listing.id_user;
       if (!Object.keys(matchObj).includes(user.user_name)) {
+      matchObj[`${user.user_name}_school`] = school;
       matchObj[user.user_name] = [book];
       matchObj[`${user.user_name}_id`] = listing.id_user;
       } else {
