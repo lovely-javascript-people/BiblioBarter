@@ -101,12 +101,12 @@ export class ProfilePage implements OnInit {
   counterOffer(index) {
 
     // for loop through allOffers to find senderId by matching the offerId
-    for(let i = 1; i < this.allOffers.length - 1; i++) {
-      if (this.allOffers[i].offer.id_offer === this.offers[index].offerId) {
-          this.recipId = this.allOffers[i].peer.id_user;
-          this.money_exchanged = this.allOffers[i].offer.money_exchange_cents;
-      }
-    }
+    // for(let i = 1; i < this.allOffers.length - 1; i++) {
+    //   if (this.allOffers[i].offer.id_offer === this.offers[index].offerId) {
+    //       // this.recipId = this.allOffers[i].peer.id_user;
+    //       // this.money_exchanged = this.allOffers[i].offer.money_exchange_cents;
+    //   }
+    // }
 
     let idOfferPrev = this.offers[index].offerId; // this is the offerId of the offer that the user is countering
     let idRecipient = this.recipId;

@@ -24,7 +24,7 @@ export class HomePage implements OnInit {
   yourListings: any[];
   othersWants: any[] = [];
   matchedUsers: any[] = [];
-  inRadius: string[] = [];
+  inRadius: string;
 
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService, public navCtrl: NavController,
     private barcodeScanner: BarcodeScanner) { }
@@ -96,7 +96,8 @@ export class HomePage implements OnInit {
       if (!key.includes('id') && !key.includes('school')) {
         if (data[`${key}_school`] !== null) {
           console.log(data[`${key}_school`].name);
-          data[key] = data[key].filter(piece => want.includes(piece.title) && this.inRadius.includes(data[`${key}_school`].name) || this.inRadius.includes(data[`${key}_school`].name.split(' of ')[0]));      if (!data[key].length || key === localStorage.username) {
+          data[key] = data[key].filter(piece => want.includes(piece.title) && this.inRadius.includes(data[`${key}_school`].name) || this.inRadius.includes(data[`${key}_school`].name.split(' of ')[0]));
+      if (!data[key].length || key === localStorage.username) {
         delete data[key];
       } else {
       if (data[key].length > 1) {
