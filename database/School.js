@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      unique: true,
+      // unique: true,
     },
     name: {
       type: DataTypes.TEXT,
@@ -17,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
     geo_latitude: DataTypes.DECIMAL,
     geo_longitude: DataTypes.DECIMAL,
   });
-  School.associate = (models) => {
-    School.belongsToMany(models.User, { through: 'id_school' });
-  };
+  // School.associate = (models) => {
+  //   School.belongsToMany(models.User, { through: 'id_school' });
+  // };
 
   return School;
 };
