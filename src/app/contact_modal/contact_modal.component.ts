@@ -4,6 +4,8 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
 // import {NavController, ToastController} from '@ionic/angular';
 // import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ApiService } from '../api.service';
+import { ToastController } from '@ionic/angular';
+
 
 
 
@@ -24,7 +26,8 @@ export class ContactModal implements OnInit {
   constructor(
     public modal: ModalController,
     // private emailComposer: EmailComposer,
-    private apiService: ApiService
+    private apiService: ApiService,
+    public toastController: ToastController,
     ) {  }
 
     // send(){
@@ -44,11 +47,22 @@ export class ContactModal implements OnInit {
     const userEmail = this.emailAddress;
     const emailBody = this.emailBody;
     this.apiService.contactUs(userId, userEmail, emailBody);
+    this.presentToast('Your message has been sent!');
     this.closeModal();
   }
 
   async closeModal() {
     this.modal.dismiss();
+  }
+
+  async presentToast(message) {
+    const toast = await this.toastController.create({
+      message: `${message}`,
+      duration: 2000,
+      color: 'primary',
+      position: 'top', // or don't include to be bottom
+    });
+    toast.present();
   }
 
   ngOnInit() {

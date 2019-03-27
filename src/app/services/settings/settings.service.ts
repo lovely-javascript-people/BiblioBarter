@@ -26,7 +26,9 @@ export class SettingsService {
 
   changeSchool(school) {
     console.log(school);
-    this.http.patch(`${this.local}/school`, { 'school': school, 'userId': localStorage.userid }).subscribe(data => console.log(data));
+    // debugger;
+    this.http.patch(`${this.local}/school`, { 'school': school, 'userId': localStorage.userid })
+      .subscribe(data => console.log(data, 'DATA YOU GET BACK FROM PATCH TO /SCHOOL'));
   }
 
   deleteAccount(username) {

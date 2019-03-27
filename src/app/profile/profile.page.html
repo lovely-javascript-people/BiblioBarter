@@ -66,7 +66,8 @@
             <b>Title:</b> {{want.title}}<br />
             <b>ISBN:</b> {{want.isbn}}
         </ion-label>
-        <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteWant(want.id_want, 'want listing')" style="float: right;">  -  </ion-button>
+        <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteBookAlert(deleteWant, want.id_want, 'want listing')" style="float: right;">  -  </ion-button>
+        <!-- <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteBookAlert(deleteWant(want.id_want, 'want listing'))" style="float: right;">  -  </ion-button> -->
         <!-- <ion-icon name="remove-circle-outline" (click)="deleteWant(want.id_want, 'want listing')"></ion-icon> -->
       </ion-item>
   </ion-list>
@@ -86,7 +87,7 @@
             <b>Condition:</b> {{listing.book.condition}}<br />
             <b>ISBN:</b> {{listing.book.isbn}}<br />
         </ion-label>
-        <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteListing(listing.id_book, listing.id_listing, 'offer listing')" style="float: right;">  -  </ion-button>
+        <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteBookAlert(deleteListing(listing.id_book, listing.id_listing, 'offer listing'))" style="float: right;">  -  </ion-button>
         <!-- <ion-icon name="remove-circle-outline" (click)="deleteListing(listing.id_book, listing.id_listing, 'offer listing')" style="float: right;"></ion-icon> -->
         <!-- Value: {{listing.value}} -->
       </ion-item>
