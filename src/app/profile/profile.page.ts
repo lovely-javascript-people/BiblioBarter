@@ -202,7 +202,7 @@ export class ProfilePage implements OnInit {
       });
   }
 
-deleteWantAlert(callback) {
+deleteBookAlert(callback) {
   this.presentAlertMultipleButtons(callback);
 }
 
@@ -220,8 +220,8 @@ deleteWantAlert(callback) {
 
   async presentAlertMultipleButtons(callback) {
     const alert = await this.alertController.create({
-      header: 'Alert',
-      subHeader: 'Subtitle',
+      header: 'Wait!',
+      // subHeader: 'Subtitle',
       message: 'Are you sure you want to delete this book?',
       buttons: [{text: 'Cancel', handler: () => {console.log('CANCEL THIS PLEASE')}}, {text: 'Delete', handler: callback}]
     });
