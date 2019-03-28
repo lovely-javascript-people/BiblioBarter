@@ -118,36 +118,36 @@ export class ChatPage implements OnInit {
         this.newMessage = '';
       }
 
-  local = 'localhost:3000';
+  // local = 'localhost:3000';
   // local = 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-  // local = '18.188.132.186:3000';
+  local = '18.188.132.186:3000';
 
-      addUser() {
-        const { userId } = this;
-        axios.post(`http://${this.local}/users`, { userId })
-          .then(() => {
-            const tokenProvider = new Chatkit.TokenProvider({
-              url: `http://${this.local}/authenticate`
-            });
-            const chatManager = new Chatkit.ChatManager({
-              instanceLocator: 'v1:us1:1264d0d5-5678-4765-abf9-ec9e94daba1f',
-              userId,
-              tokenProvider
-            });
-            return chatManager
-              .connect({
-                onAddedToRoom: room => {
-                  this.userRooms.push(room);
-                  this.getJoinableRooms();
-                },
-              })
-              .then(currentUser => {
-                this.currentUser = currentUser;
-                this.connectToRoom('19418038');
-                this.getJoinableRooms();
-              });
-          }).catch(error => console.error(error));
-      }
+      // addUser() {
+      //   const { userId } = this;
+      //   axios.post(`http://${this.local}/users`, { userId })
+      //     .then(() => {
+      //       const tokenProvider = new Chatkit.TokenProvider({
+      //         url: `http://${this.local}/authenticate`
+      //       });
+      //       const chatManager = new Chatkit.ChatManager({
+      //         instanceLocator: 'v1:us1:1264d0d5-5678-4765-abf9-ec9e94daba1f',
+      //         userId,
+      //         tokenProvider
+      //       });
+      //       return chatManager
+      //         .connect({
+      //           onAddedToRoom: room => {
+      //             this.userRooms.push(room);
+      //             this.getJoinableRooms();
+      //           },
+      //         })
+      //         .then(currentUser => {
+      //           this.currentUser = currentUser;
+      //           this.connectToRoom('19418038');
+      //           this.getJoinableRooms();
+      //         });
+      //     }).catch(error => console.error(error));
+      // }
 
   // title = 'app';
 

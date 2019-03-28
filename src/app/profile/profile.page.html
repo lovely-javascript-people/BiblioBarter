@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
       <ion-title>
-        <a style="color: #B1C634; width:50%" routerLink="/Profile">Profile</a> <a style="width:50%" routerLink="/Matches">Matches</a> 
+        <a style="color: #B1C634; width:50%" href="/Profile">Profile</a> <a style="width:50%" href="/Matches">Matches</a> 
       </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -43,11 +43,12 @@
   </a>
   <ion-list>
      <ion-item *ngFor="let offer of offers; let i = index">
-        You have an offer from {{offer.peer}}
-        <!-- {{offer.peer}} is offering {{offer.peerTitles}} and would like {{offer.myTitles}} -->
+        {{offer.peer}} is offering {{offer.peerTitles}} and would like {{offer.myTitles}}
+        <div>
         <ion-button (click)="acceptOffer(i)" size="small" style="float: right;">Accept</ion-button>
         <ion-button (click)="rejectOffer(i)" size="small" style="float: right;">Reject</ion-button>
         <ion-button (click)="openCounterOfferModal(); counterOffer()" size="small" style="float: right;">Counter</ion-button>
+      </div>
       </ion-item>
   </ion-list>
   <br />

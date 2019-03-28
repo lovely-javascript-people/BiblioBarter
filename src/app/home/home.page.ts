@@ -96,7 +96,7 @@ export class HomePage implements OnInit {
       if (!key.includes('id') && !key.includes('school')) {
         if (data[`${key}_school`] !== null) {
           console.log(data[`${key}_school`].name);
-          data[key] = data[key].filter(piece => want.includes(piece.title) && this.inRadius.includes(data[`${key}_school`].name) || this.inRadius.includes(data[`${key}_school`].name.split(' of ')[0]));
+          data[key] = data[key].filter(piece => want.includes(piece.title) && (this.inRadius.includes(data[`${key}_school`].name)));
       if (!data[key].length || key === localStorage.username) {
         delete data[key];
       } else {
@@ -139,18 +139,18 @@ export class HomePage implements OnInit {
       console.log(searchedListings, 'BACK ON MATCHES PAGE');
       this.listings = searchedListings;
     }
-  // scan() {
-  //   this.barcodeScanner.scan().then(barcodeData => {
-  //     // this is called when a barcode is found
-  //     console.log(`barcode data: ${barcodeData}`);
-  //     console.log(("We got a barcode\n" +
-  //       "Result: " + barcodeData.text + "\n" +
-  //       "Format: " + barcodeData.format + "\n" +
-  //       "Cancelled: " + barcodeData.cancelled));
-  //     this.num = barcodeData.text
-  //   }).catch((err) => {
-  //   });
-  // }
+  scan() {
+    this.barcodeScanner.scan().then(barcodeData => {
+      // this is called when a barcode is found
+      console.log(`barcode data: ${barcodeData}`);
+      console.log(("We got a barcode\n" +
+        "Result: " + barcodeData.text + "\n" +
+        "Format: " + barcodeData.format + "\n" +
+        "Cancelled: " + barcodeData.cancelled));
+      this.num = barcodeData.text
+    }).catch((err) => {
+    });
+  }
 
   ngOnInit() {
     this.url = document.URL;
