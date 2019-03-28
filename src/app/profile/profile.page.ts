@@ -51,7 +51,7 @@ export class ProfilePage implements OnInit {
     console.log(data, 'THIS DATA', data[0], 'length');
     // add userid to local storage
     localStorage.setItem('userid', data[0].id_user);
-    console.log(data[1][0].name, 'SCHOOL NAME');
+    // console.log(data[1][0].name, 'SCHOOL NAME');
     if (data[0]) {
       this.img = data[0].image_link;
       this.user = data[0].user_name;

@@ -11,10 +11,23 @@ import { ApiService } from '../api.service';
 
 export class CounterOfferModal implements OnInit {
 
+  userBooks: any[] = [];
+  peerListings: any;
+  peerWants: any;
+
+
   constructor(public modal: ModalController, private http: HttpClient, private apiService: ApiService) { }
 
   async closeModal() {
     this.modal.dismiss();
+  }
+
+  setUserBooks(data) { 
+    this.userBooks.push(data);
+  }
+
+  setPeerBooks(data) {
+    console.log(data);
   }
 
   sendCounterOffer() {
@@ -23,6 +36,12 @@ export class CounterOfferModal implements OnInit {
     this.closeModal();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.setUserBooks = this.setUserBooks.bind(this);
+    this.setPeerBooks = this.setPeerBooks.bind(this);
+    this.apiService.renderListingsList(this.setUserBooks);
+    this.apiService.renderWantList(this.setUserBooks);
+    this.apiService.getPeerProfile(localStorage.peerid, this.setPeerBooks);
+  }
 
 }

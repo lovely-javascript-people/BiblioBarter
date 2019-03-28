@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { BrowserBarcodeReader } from '@zxing/library';
 import { ApiService } from '../api.service';
 
 @Component({
@@ -17,8 +19,10 @@ export class AddListingModal implements OnInit {
   userid: number = localStorage.userid;
   // animated: boolean = true;
   image: string;
+  open: boolean = false;
+  num: any;
 
-  constructor(public modal: ModalController, private http: HttpClient, private apiService: ApiService) { }
+  constructor(public modal: ModalController, private http: HttpClient, private apiService: ApiService, private barcodeScanner: BarcodeScanner) { }
 
   async closeModal() {
     this.modal.dismiss();
@@ -31,6 +35,14 @@ export class AddListingModal implements OnInit {
     setTimeout(function() { postBook(); }, 1000);
 
     this.closeModal();
+  }
+
+  camOpen() {
+    this.open = true;
+  }
+
+  camClose() {
+    this.open = false;
   }
 
   postBookToOfferingList() {
@@ -63,6 +75,6 @@ export class AddListingModal implements OnInit {
     this.getBookTitle = this.getBookTitle.bind(this);
     this.postBookToOfferingList = this.postBookToOfferingList.bind(this);
     this.closeModal = this.closeModal.bind(this);
-  }
+}
 
 }
