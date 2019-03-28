@@ -14,7 +14,7 @@ export class CounterOfferModal implements OnInit {
   userBooks: any[] = [];
   peerListings: any;
   peerWants: any;
-
+  ready: boolean = false;
 
   constructor(public modal: ModalController, private http: HttpClient, private apiService: ApiService) { }
 
@@ -22,12 +22,14 @@ export class CounterOfferModal implements OnInit {
     this.modal.dismiss();
   }
 
-  setUserBooks(data) { 
+  setUserBooks(data) {
+    console.log(data);
     this.userBooks.push(data);
   }
 
   setPeerBooks(data) {
     console.log(data);
+    this.ready = true;
   }
 
   sendCounterOffer() {
