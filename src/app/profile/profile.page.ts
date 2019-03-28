@@ -259,29 +259,27 @@ export class ProfilePage implements OnInit {
   deleteListing(bookId, listingId, listing) {
     this.presentToast(listing);
     console.log(listingId, 'delete listing clicked');
-    // this.http.delete(`http://${this.local}/deleteListing`, { params: { bookId, listingId } })
-    this.http.delete(`http://http://localhost:3000/deleteListing`, { params: { bookId, listingId } })
+    this.http.delete(`http://${this.local}/deleteListing`, { params: { bookId, listingId } })
       .subscribe((data) => {
         console.log(data, 'delete listing');
       });
   }
 
-  // deleteWant() {
+
   deleteWant(wantId, want) {
 
     this.presentToast(want);
     console.log('delete want', wantId);
-    // this.http.delete(`http://${this.local}/deleteWant`, { params: { wantId } })
-    this.http.delete(`http://localhost:3000/deleteWant`, { params: { wantId } })
+    this.http.delete(`http://${this.local}/deleteWant`, { params: { wantId } })
     .subscribe((data) => {
       console.log(data, 'delete want');
     });
 
   }
 
-  // async deleteWantAlert(wantId, want) {
-  //   this.presentAlertMultipleButtons(await this.deleteWant(wantId, want));
-  // }
+  deleteWantAlert(wantId, want) {
+    this.presentAlertMultipleButtons(this.deleteWant(wantId, want));
+  }
 
 
   async presentToast(item) {
