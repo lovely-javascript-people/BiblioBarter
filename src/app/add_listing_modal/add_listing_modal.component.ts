@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-import { BrowserBarcodeReader } from '@zxing/library';
+// import { BrowserBarcodeReader } from '@zxing/library';
 import { ApiService } from '../api.service';
 
 @Component({
