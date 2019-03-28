@@ -118,13 +118,16 @@ export class ChatPage implements OnInit {
         this.newMessage = '';
       }
 
+  // local = 'http://localhost:3000';
+  // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
+  local = 'http://18.188.132.186:3000';
 
       addUser() {
         const { userId } = this;
-        axios.post('http://localhost:3000/users', { userId })
+        axios.post(`http://${this.local}/users`, { userId })
           .then(() => {
             const tokenProvider = new Chatkit.TokenProvider({
-              url: 'http://localhost:3000/authenticate'
+              url: `http://${this.local}/authenticate`
             });
             const chatManager = new Chatkit.ChatManager({
               instanceLocator: 'v1:us1:1264d0d5-5678-4765-abf9-ec9e94daba1f',

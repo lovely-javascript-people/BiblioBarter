@@ -10,7 +10,8 @@ export class SettingsService {
 
   constructor(private auth: AuthService, private http: HttpClient) {}
   host = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-  local = 'http://localhost:3000';
+  // local = 'http://localhost:3000';
+  local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
 
   switchAccount() {
     const that = this;

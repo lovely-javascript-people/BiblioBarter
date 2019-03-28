@@ -14,8 +14,13 @@
   </a>
   <ion-list>
      <ion-item *ngFor="let want of wants">
-        Title: {{want.title}}<br />
-        ISBN: {{want.isbn}}
+        <ion-thumbnail slot="start">
+          <img [src]="want.image_link === null ? '../../../../assets/img/biblio-logo-noBG-small-07.png' : want.image_link " />
+        </ion-thumbnail>
+        <ion-label>
+          <b>Title:</b> {{want.title}}<br />
+          <b>ISBN:</b> {{want.isbn}}<br />
+        </ion-label>
       </ion-item>
   </ion-list>
   <br /><br />
@@ -24,9 +29,14 @@
   </a>
   <ion-list>
      <ion-item *ngFor="let listing of listings">
-        Title: {{listing.title}}<br />
-        Condition: {{listing.condition}}<br />
-        ISBN: {{listing.isbn}}<br />
+        <ion-thumbnail slot="start">
+          <img [src]="listing.image_link === null ? '../../../../assets/img/biblio-logo-noBG-small-07.png' : listing.image_link " />
+        </ion-thumbnail>
+        <ion-label>
+          <b>Title:</b> {{listing.title}}<br />
+          <b>ISBN:</b> {{listing.isbn}}<br />
+        </ion-label>
+        
         <!-- Value: {{listing.value}} -->
       </ion-item>
   </ion-list>

@@ -46,7 +46,7 @@
         {{offer.peer}} is offering {{offer.peerTitles}} and would like {{offer.myTitles}}
         <ion-button (click)="acceptOffer(i)" size="small" style="float: right;">Accept</ion-button>
         <ion-button (click)="rejectOffer(i)" size="small" style="float: right;">Reject</ion-button>
-        <ion-button (click)="openCounterOfferModal()" size="small" style="float: right;">Counter</ion-button>
+        <ion-button (click)="openCounterOfferModal(); counterOffer()" size="small" style="float: right;">Counter</ion-button>
       </ion-item>
   </ion-list>
   <br />
@@ -65,7 +65,7 @@
             <b>Title:</b> {{want.title}}<br />
             <b>ISBN:</b> {{want.isbn}}
         </ion-label>
-        <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteBookAlert(deleteWant, want.id_want, 'want listing')" style="float: right;">  -  </ion-button>
+        <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteWantAlert(want.id_want, 'want listing')" style="float: right;">  -  </ion-button>
         <!-- <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteBookAlert(deleteWant(want.id_want, 'want listing'))" style="float: right;">  -  </ion-button> -->
         <!-- <ion-icon name="remove-circle-outline" (click)="deleteWant(want.id_want, 'want listing')"></ion-icon> -->
       </ion-item>

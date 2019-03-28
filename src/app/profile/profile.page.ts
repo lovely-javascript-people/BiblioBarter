@@ -43,11 +43,15 @@ export class ProfilePage implements OnInit {
     public alertController: AlertController,
   ) { }
 
+    // local = 'http://localhost:3000';
+    // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
+    local = 'http://18.188.132.186:3000';
+
   setUser(data) {
     console.log(data, 'THIS DATA', data[0], 'length');
     // add userid to local storage
     localStorage.setItem('userid', data[0].id_user);
-    console.log(data[1][0].name, 'SCHOOL NAME');
+    // console.log(data[1][0].name, 'SCHOOL NAME');
     if (data[0]) {
       this.img = data[0].image_link;
       this.user = data[0].user_name;
@@ -86,6 +90,7 @@ export class ProfilePage implements OnInit {
     });
     return await modalPage.present();
   }
+  
 
   acceptOffer(index) {
     console.log(this.allOffers, 'ALL OFFERS');
@@ -94,7 +99,7 @@ export class ProfilePage implements OnInit {
     this.offerid = this.offers[index].offerId;
     const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
-    this.http.patch('http://localhost:3000/offerlisting', { params: { status: 'accepted', offerId: id_offer } })
+    this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'accepted', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
         this.presentOfferToast('Offer has been accepted');
@@ -103,23 +108,38 @@ export class ProfilePage implements OnInit {
 
   counterOffer(index) {
 
-    // for loop through allOffers to find senderId by matching the offerId
-    // for(let i = 1; i < this.allOffers.length - 1; i++) {
-    //   if (this.allOffers[i].offer.id_offer === this.offers[index].offerId) {
-    //       // this.recipId = this.allOffers[i].peer.id_user;
-    //       // this.money_exchanged = this.allOffers[i].offer.money_exchange_cents;
-    //   }
-    // }
+    console.log(this.offers, 'THIS DOT OFFERS OFFERS OFFERS');
 
-    let idOfferPrev = this.offers[index].offerId; // this is the offerId of the offer that the user is countering
-    let idRecipient = this.recipId;
-    let idSender = localStorage.userid;
-    let money = this.money_exchanged;
-    let listings; // this should be an array of all of the listing ids involved.
-                  // should get this back in offers after refactor
+    let idRecipient = this.offers[0].peerid;
+
+    localStorage.setItem('peerid', idRecipient.toString());
 
     // this.apiService.counterOffer(idOfferPrev, idRecipient, idSender, listings, money);
   }
+
+  // counterOffer(index) {
+
+  //   // for loop through allOffers to find senderId by matching the offerId
+  //   // for(let i = 1; i < this.allOffers.length - 1; i++) {
+  //   //   if (this.allOffers[i].offer.id_offer === this.offers[index].offerId) {
+  //   //       this.recipId = this.allOffers[i].peer.id_user;
+  //   //       this.money_exchanged = this.allOffers[i].offer.money_exchange_cents;
+  //   //   }
+  //   // }
+
+  //   console.log(this.offers, 'THIS DOT OFFERS OFFERS OFFERS');
+
+  //   let idOfferPrev = this.offers[index].offerId; // this is the offerId of the offer that the user is countering
+  //   let idRecipient = this.recipId;
+  //   let idSender = localStorage.userid;
+  //   let money = this.money_exchanged;
+  //   let listings; // this should be an array of all of the listing ids involved.
+  //                 // should get this back in offers after refactor
+  //   localStorage.setItem('peerid', idRecipient.toString());
+
+  //   // this.apiService.counterOffer(idOfferPrev, idRecipient, idSender, listings, money);
+  // }
+
 
   renderOffers(offers) {
     console.log(offers, 'OFFERS FROM RENDER OFFERS');
@@ -130,7 +150,7 @@ export class ProfilePage implements OnInit {
     let i = 0;
 
     for (const offer of offers.slice(0, offers.length - 1)) {
-    if (offer.offer.status === 'pending') {
+    if (offer.offer.status === 'pending' && offer.offer.id_sender !== Number(localStorage.userid)) {
     const offerObj: any = {};
     offerObj.myTitles = [];
     offerObj.peerTitles = [];
@@ -146,6 +166,7 @@ export class ProfilePage implements OnInit {
     })
 
     offerObj.peer = offer.peerInfo.user_name;
+    offerObj.peerid = offer.peerInfo.id_user;
     offerObj.status = offer.offer.status;
     offerObj.email = offer.peerInfo.email;
     offerObj.offerId = offer.offer.id_offer;
@@ -153,7 +174,7 @@ export class ProfilePage implements OnInit {
     
     offs.push(offerObj);
     i++;
-      } else if (offer.offer.status === 'accepted') {
+      } else if (offer.offer.status === 'accepted' && offer.offer.id_sender !== Number(localStorage.userid)) {
         const offerObj: any = {};
         offerObj.myTitles = [];
         offerObj.peerTitles = [];
@@ -178,7 +199,7 @@ export class ProfilePage implements OnInit {
       }
     }
 
-    offs.forEach((listing) => {
+    offs.forEach((listing: any) => {
       if(listing.myTitles.length > 1) {
         listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
       }
@@ -188,7 +209,7 @@ export class ProfilePage implements OnInit {
       }
     });
 
-    acceptedOffers.forEach((listing) => {
+    acceptedOffers.forEach((listing: any) => {
       if(listing.myTitles.length > 1) {
         listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
       }
@@ -204,47 +225,13 @@ export class ProfilePage implements OnInit {
     console.log(offs, 'OFFERS AFTER RENDER CALLED');
   }
 
-  // renderOffers(offers) {
-  //   console.log(offers, 'OFFERS FROM RENDER OFFERS');
-  //   this.allOffers = offers;
-  //   const offs: object[] = [];
-  //   const acceptedOffers: object[] = [];
-  //   let i = 0;
-  //   for (const offer of offers.slice(1)) {
-  //   if (offer.offer.status === 'pending') {
-  //   const offerObj: any = {};
-  //   offerObj.offeredTitle = offer.titleOffered.title;
-  //   offerObj.wantedTitle = offer.titleWantd.title;
-  //   offerObj.peer = offer.peer.user_name;
-  //   offerObj.status = offer.offer.status;
-  //   offerObj.email = offer.peer.email;
-  //   offerObj.offerId = offer.offer.id_offer;
-    
-  //   offs.push(offerObj);
-  //   i++;
-  //     } else if (offer.offer.status === 'accepted') {
-  //       const offerObj: any = {};
-  //       offerObj.offeredTitle = offer.titleOffered.title;
-  //       offerObj.wantedTitle = offer.titleWantd.title;
-  //       offerObj.peer = offer.peer.user_name;
-  //       offerObj.status = offer.offer.status;
-  //       offerObj.email = offer.peer.email;
-  //       offerObj.offerId = offer.offer.id_offer;
-  //       // console.log(offerObj, 'OFFER OBJECT');
-  //       acceptedOffers.push(offerObj);
-  //       i++;
-  //     }
-  //   }
-  //   this.offers = offs;
-  //   this.acceptedOffs = acceptedOffers;
-  //   // console.log(this.offers, 'THIS DOT OFFERS');
-  // }
+
 
   rejectOffer(index) {
     this.offerid = this.offers[index].offerId;
     const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
-    this.http.patch('http://localhost:3000/offerlisting', { params: { status: 'rejected', offerId: id_offer } })
+    this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
         this.presentOfferToast('Offer has been rejected.');
@@ -256,7 +243,7 @@ export class ProfilePage implements OnInit {
     console.log(this.acceptedOffs[index], 'OFFER TO BE CANCELED');
     this.offerid = this.acceptedOffs[index].offerId;
     const id_offer = this.offerid;
-    this.http.patch('http://localhost:3000/offerlisting', { params: { status: 'rejected', offerId: id_offer } })
+    this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
         this.presentOfferToast('Accepted offer has been cancelled.')
@@ -274,7 +261,7 @@ export class ProfilePage implements OnInit {
   deleteListing(bookId, listingId, listing) {
     console.log(listingId, 'delete listing clicked');
     this.presentToast(listing);
-    this.http.delete('http://localhost:3000/deleteListing', { params: { bookId, listingId } })
+    this.http.delete(`http://${this.local}/deleteListing`, { params: { bookId, listingId } })
       .subscribe((data) => {
         console.log(data, 'delete listing');
       });
@@ -283,29 +270,29 @@ export class ProfilePage implements OnInit {
   // deleteWant() {
   deleteWant(wantId, want) {
 
-    want = this.deleteString;
-    wantId = this.deleteWant;
-
     console.log('delete want', wantId);
 
     this.presentToast(want);
-    this.http.delete('http://localhost:3000/deleteWant', { params: { wantId } })
+    this.http.delete(`http://${this.local}/deleteWant`, { params: { wantId } })
       .subscribe((data) => {
         console.log(data, 'delete want');
       });
+  }
+
+  deleteWantAlert(wantId, want) {
+    this.presentAlertMultipleButtons(this.deleteWant(wantId, want));
   }
 
 // deleteBookAlert(callback) {
 //   this.presentAlertMultipleButtons(callback);
 // }
 
-deleteBookAlert(callback, id, string) {
-  // console.log(callback, 'CALLBACK', id, 'ID', string, 'STRING');
-  this.deleteId = id;
-  this.deleteString = string;
-  // this.presentAlertMultipleButtons(callback(id, string));
-  this.presentAlertMultipleButtons(callback);
-}
+// deleteBookAlert(callback, id, string) {
+//   this.deleteId = id;
+//   this.deleteString = string;
+//   // this.presentAlertMultipleButtons(callback(id, string));
+//   this.presentAlertMultipleButtons(callback);
+// }
 
   async presentToast(item) {
     const toast = await this.toastController.create({
@@ -331,8 +318,7 @@ deleteBookAlert(callback, id, string) {
       header: 'Wait!',
       // subHeader: 'Subtitle',
       message: 'Are you sure you want to delete this book?',
-      buttons: [{text: 'Cancel', handler: () => {console.log('CANCEL THIS PLEASE')}}, {text: 'Delete', handler: () => {console.log('DELETE MY BOOK PLEASE')}}]
-      // buttons: [{text: 'Cancel', handler: () => {console.log('CANCEL THIS PLEASE')}}, {text: 'Delete', handler: () => {callback}}]
+     buttons: [{text: 'Cancel', handler: () => {console.log('CANCEL THIS PLEASE')}}, {text: 'Delete', handler: () => {callback}}]
     });
     return await alert.present();
   }
