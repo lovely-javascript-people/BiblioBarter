@@ -19,6 +19,7 @@ export class CounterOfferModal implements OnInit {
 
   sendCounterOffer() {
     console.log('I ALMOST LIKE THIS OFFER BUT ITS NOT QUITE RIGHT YET!');
+    // this.http.patch('/offers', {})
     this.closeModal();
   }
 
