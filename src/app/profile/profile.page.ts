@@ -177,7 +177,7 @@ export class ProfilePage implements OnInit {
       }
     }
 
-    offs.forEach((listing) => {
+    offs.forEach((listing: any) => {
       if(listing.myTitles.length > 1) {
         listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
       }
@@ -187,7 +187,7 @@ export class ProfilePage implements OnInit {
       }
     });
 
-    acceptedOffers.forEach((listing) => {
+    acceptedOffers.forEach((listing: any) => {
       if(listing.myTitles.length > 1) {
         listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
       }
