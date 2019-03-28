@@ -50,7 +50,7 @@ export class SettingsModal implements OnInit {
       const address = '123 jeef st.';
       const userEmail = email;
       const phoneNumber = '7334887';
-      debugger;
+      // debugger;
       if (userId && nameFirst && nameLast && address && phoneNumber && userEmail) {
         this.presentToast('Thanks, your info has been successfully submitted. Please enter your university below.');
         this.apiService.updateSettings(nameFirst, nameLast, userEmail, userId, searchRadius, address, phoneNumber);

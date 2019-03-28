@@ -151,6 +151,7 @@ app.get('/profile', (req, res) => {
 });
 
 app.patch('/school', (req, res) => {
+  console.log('LAURA LAURA LAURA');
   let uni = req.body.school;
   axios({
     method: 'GET',

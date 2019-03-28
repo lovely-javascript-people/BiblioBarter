@@ -8,7 +8,7 @@ import { AddListingModal } from '../add_listing_modal/add_listing_modal.componen
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 import { CameraOptions } from '@ionic-native/camera/ngx';
 import * as Stripe from "stripe";
 
@@ -24,13 +24,15 @@ export class ProfilePage implements OnInit {
   offers: any[] = [];
   wants: object[] = [];
   listings: object[] = [];
-  allOffers: object[] = [];
+  allOffers: any[] = [];
   loaded = false;
   acceptedOffs: any[] = [];
   offerid: number; // need to grab correct offerid --> where do we get this
   open: boolean = false;
   recipId: number;
   money_exchanged: number;
+  deleteId: number;
+  deleteString: string;
 
   constructor(
     private apiService: ApiService,
@@ -38,6 +40,7 @@ export class ProfilePage implements OnInit {
     private router: Router,
     private http: HttpClient,
     public toastController: ToastController,
+    public alertController: AlertController,
   ) { }
 
   setUser(data) {
@@ -99,59 +102,158 @@ export class ProfilePage implements OnInit {
 
   counterOffer(index) {
 
-    // for loop through allOffers to find senderId by matching the offerId
-    // for(let i = 1; i < this.allOffers.length - 1; i++) {
-    //   if (this.allOffers[i].offer.id_offer === this.offers[index].offerId) {
-    //       // this.recipId = this.allOffers[i].peer.id_user;
-    //       // this.money_exchanged = this.allOffers[i].offer.money_exchange_cents;
-    //   }
-    // }
+    console.log(this.offers, 'THIS DOT OFFERS OFFERS OFFERS');
 
-    let idOfferPrev = this.offers[index].offerId; // this is the offerId of the offer that the user is countering
     let idRecipient = this.recipId;
-    let idSender = localStorage.userid;
-    let money = this.money_exchanged;
-    let listings; // this should be an array of all of the listing ids involved.
-                  // should get this back in offers after refactor
+
+    localStorage.setItem('peerid', idRecipient.toString());
 
     // this.apiService.counterOffer(idOfferPrev, idRecipient, idSender, listings, money);
   }
 
+  // counterOffer(index) {
+
+  //   // for loop through allOffers to find senderId by matching the offerId
+  //   // for(let i = 1; i < this.allOffers.length - 1; i++) {
+  //   //   if (this.allOffers[i].offer.id_offer === this.offers[index].offerId) {
+  //   //       this.recipId = this.allOffers[i].peer.id_user;
+  //   //       this.money_exchanged = this.allOffers[i].offer.money_exchange_cents;
+  //   //   }
+  //   // }
+
+  //   console.log(this.offers, 'THIS DOT OFFERS OFFERS OFFERS');
+
+  //   let idOfferPrev = this.offers[index].offerId; // this is the offerId of the offer that the user is countering
+  //   let idRecipient = this.recipId;
+  //   let idSender = localStorage.userid;
+  //   let money = this.money_exchanged;
+  //   let listings; // this should be an array of all of the listing ids involved.
+  //                 // should get this back in offers after refactor
+  //   localStorage.setItem('peerid', idRecipient.toString());
+
+  //   // this.apiService.counterOffer(idOfferPrev, idRecipient, idSender, listings, money);
+  // }
+
+
   renderOffers(offers) {
-    console.log(offers, 'OFFERS');
+    console.log(offers, 'OFFERS FROM RENDER OFFERS');
+
     this.allOffers = offers;
     const offs: object[] = [];
     const acceptedOffers: object[] = [];
     let i = 0;
+
     for (const offer of offers.slice(0, offers.length - 1)) {
-    if (offer.offer.status === 'pending') {
+    if (offer.offer.status === 'pending' && offer.offer.id_sender !== Number(localStorage.userid)) {
+      // console.log(offer.offer.id_sender, 'ID SENDER', localStorage.userid, 'USER ID LOCAL STORE')
     const offerObj: any = {};
-    offerObj.offeredTitle = offer.titleOffered.title;
-    offerObj.wantedTitle = offer.titleWantd.title;
-    offerObj.peer = offer.peer.user_name;
+    offerObj.myTitles = [];
+    offerObj.peerTitles = [];
+    
+    // get all user titles
+    offer.myListings.forEach((listing) => {
+      offerObj.myTitles.push(listing.title);
+    })
+
+    // get all peer titles
+    offer.peerListings.forEach((listing) => {
+      offerObj.peerTitles.push(listing.title);
+    })
+
+    offerObj.peer = offer.peerInfo.user_name;
     offerObj.status = offer.offer.status;
-    offerObj.email = offer.peer.email;
+    offerObj.email = offer.peerInfo.email;
     offerObj.offerId = offer.offer.id_offer;
+    offerObj.money = offer.offer.money_exchange_cents / 100;
     
     offs.push(offerObj);
     i++;
-      } else if (offer.offer.status === 'accepted') {
+      } else if (offer.offer.status === 'accepted' && offer.offer.id_sender !== Number(localStorage.userid)) {
         const offerObj: any = {};
-        offerObj.offeredTitle = offer.titleOffered.title;
-        offerObj.wantedTitle = offer.titleWantd.title;
-        offerObj.peer = offer.peer.user_name;
+        offerObj.myTitles = [];
+        offerObj.peerTitles = [];
+        
+        // get all user titles
+        offer.myListings.forEach((listing) => {
+          offerObj.myTitles.push(listing.title);
+        })
+    
+        // get all peer titles
+        offer.peerListings.forEach((listing) => {
+          offerObj.peerTitles.push(listing.title);
+        })
+    
+        offerObj.peer = offer.peerInfo.user_name;
         offerObj.status = offer.offer.status;
-        offerObj.email = offer.peer.email;
+        offerObj.email = offer.peerInfo.email;
         offerObj.offerId = offer.offer.id_offer;
-        // console.log(offerObj, 'OFFER OBJECT');
+        
         acceptedOffers.push(offerObj);
         i++;
       }
     }
+
+    offs.forEach((listing: any) => {
+      if(listing.myTitles.length > 1) {
+        listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
+      }
+
+      if(listing.peerTitles.length > 1) {
+        listing.peerTitles.splice(listing.peerTitles.length - 1, 0, ' and ');
+      }
+    });
+
+    acceptedOffers.forEach((listing: any) => {
+      if(listing.myTitles.length > 1) {
+        listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
+      }
+
+      if(listing.peerTitles.length > 1) {
+        listing.peerTitles.splice(listing.peerTitles.length - 1, 0, ' and ');
+      }
+    });
+
     this.offers = offs;
     this.acceptedOffs = acceptedOffers;
-    // console.log(this.offers, 'THIS DOT OFFERS');
+
+    console.log(offs, 'OFFERS AFTER RENDER CALLED');
   }
+
+  // renderOffers(offers) {
+  //   console.log(offers, 'OFFERS FROM RENDER OFFERS');
+  //   this.allOffers = offers;
+  //   const offs: object[] = [];
+  //   const acceptedOffers: object[] = [];
+  //   let i = 0;
+  //   for (const offer of offers.slice(1)) {
+  //   if (offer.offer.status === 'pending') {
+  //   const offerObj: any = {};
+  //   offerObj.offeredTitle = offer.titleOffered.title;
+  //   offerObj.wantedTitle = offer.titleWantd.title;
+  //   offerObj.peer = offer.peer.user_name;
+  //   offerObj.status = offer.offer.status;
+  //   offerObj.email = offer.peer.email;
+  //   offerObj.offerId = offer.offer.id_offer;
+    
+  //   offs.push(offerObj);
+  //   i++;
+  //     } else if (offer.offer.status === 'accepted') {
+  //       const offerObj: any = {};
+  //       offerObj.offeredTitle = offer.titleOffered.title;
+  //       offerObj.wantedTitle = offer.titleWantd.title;
+  //       offerObj.peer = offer.peer.user_name;
+  //       offerObj.status = offer.offer.status;
+  //       offerObj.email = offer.peer.email;
+  //       offerObj.offerId = offer.offer.id_offer;
+  //       // console.log(offerObj, 'OFFER OBJECT');
+  //       acceptedOffers.push(offerObj);
+  //       i++;
+  //     }
+  //   }
+  //   this.offers = offs;
+  //   this.acceptedOffs = acceptedOffers;
+  //   // console.log(this.offers, 'THIS DOT OFFERS');
+  // }
 
   rejectOffer(index) {
     this.offerid = this.offers[index].offerId;
@@ -192,14 +294,32 @@ export class ProfilePage implements OnInit {
       });
   }
 
+  // deleteWant() {
   deleteWant(wantId, want) {
+
+    want = this.deleteString;
+    wantId = this.deleteWant;
+
     console.log('delete want', wantId);
+
     this.presentToast(want);
     this.http.delete('http://localhost:3000/deleteWant', { params: { wantId } })
       .subscribe((data) => {
         console.log(data, 'delete want');
       });
   }
+
+// deleteBookAlert(callback) {
+//   this.presentAlertMultipleButtons(callback);
+// }
+
+deleteBookAlert(callback, id, string) {
+  // console.log(callback, 'CALLBACK', id, 'ID', string, 'STRING');
+  this.deleteId = id;
+  this.deleteString = string;
+  // this.presentAlertMultipleButtons(callback(id, string));
+  this.presentAlertMultipleButtons(callback);
+}
 
   async presentToast(item) {
     const toast = await this.toastController.create({
@@ -209,6 +329,17 @@ export class ProfilePage implements OnInit {
       position: 'top', // or don't include to be bottom
     });
     toast.present();
+  }
+
+  async presentAlertMultipleButtons(callback) {
+    const alert = await this.alertController.create({
+      header: 'Wait!',
+      // subHeader: 'Subtitle',
+      message: 'Are you sure you want to delete this book?',
+      buttons: [{text: 'Cancel', handler: () => {console.log('CANCEL THIS PLEASE')}}, {text: 'Delete', handler: () => {console.log('DELETE MY BOOK PLEASE')}}]
+      // buttons: [{text: 'Cancel', handler: () => {console.log('CANCEL THIS PLEASE')}}, {text: 'Delete', handler: () => {callback}}]
+    });
+    return await alert.present();
   }
 
   // openCamera() {

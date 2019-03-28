@@ -43,11 +43,10 @@
   </a>
   <ion-list>
      <ion-item *ngFor="let offer of offers; let i = index">
-        {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}} 
+        {{offer.peer}} is offering {{offer.peerTitles}} and would like {{offer.myTitles}}
         <ion-button (click)="acceptOffer(i)" size="small" style="float: right;">Accept</ion-button>
         <ion-button (click)="rejectOffer(i)" size="small" style="float: right;">Reject</ion-button>
-        <ion-button (click)="openCounterOfferModal()" size="small" style="float: right;">Counter</ion-button>
-        <!-- {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}  |  STATUS: {{offer.status}} <ion-button (click)="acceptOffer(i)" >Accept</ion-button><ion-button (click)="rejectOffer(i)" >Reject</ion-button> -->
+        <ion-button (click)="openCounterOfferModal(); counterOffer()" size="small" style="float: right;">Counter</ion-button>
       </ion-item>
   </ion-list>
   <br />
@@ -66,7 +65,8 @@
             <b>Title:</b> {{want.title}}<br />
             <b>ISBN:</b> {{want.isbn}}
         </ion-label>
-        <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteWant(want.id_want, 'want listing')" style="float: right;">  -  </ion-button>
+        <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteBookAlert(deleteWant, want.id_want, 'want listing')" style="float: right;">  -  </ion-button>
+        <!-- <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteBookAlert(deleteWant(want.id_want, 'want listing'))" style="float: right;">  -  </ion-button> -->
         <!-- <ion-icon name="remove-circle-outline" (click)="deleteWant(want.id_want, 'want listing')"></ion-icon> -->
       </ion-item>
   </ion-list>
@@ -86,7 +86,7 @@
             <b>Condition:</b> {{listing.book.condition}}<br />
             <b>ISBN:</b> {{listing.book.isbn}}<br />
         </ion-label>
-        <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteListing(listing.id_book, listing.id_listing, 'offer listing')" style="float: right;">  -  </ion-button>
+        <ion-button size="small" style="font-weight:700; background-color: rgb(173, 197, 35); width:10%" (click)="deleteBookAlert(deleteListing(listing.id_book, listing.id_listing, 'offer listing'))" style="float: right;">  -  </ion-button>
         <!-- <ion-icon name="remove-circle-outline" (click)="deleteListing(listing.id_book, listing.id_listing, 'offer listing')" style="float: right;"></ion-icon> -->
         <!-- Value: {{listing.value}} -->
       </ion-item>
@@ -97,7 +97,7 @@
   </a>
   <ion-list>
      <ion-item *ngFor="let offer of acceptedOffs; let i = index">
-        {{offer.peer}} is offering {{offer.offeredTitle}} and would like {{offer.wantedTitle}}
+        {{offer.peer}} is offering {{offer.peerTitles}} and would like {{offer.myTitles}}
         <ion-button (click)="cancelAcceptedOffer(i)" style="float: right;">Cancel</ion-button>
       </ion-item>
   </ion-list>
