@@ -346,10 +346,10 @@ deleteBookAlert(callback, id, string) {
     this.apiService.renderWantList(this.setWantList);
     this.setListings = this.setListings.bind(this);
     this.apiService.renderListingsList(this.setListings);
-    // this.renderOffers = this.renderOffers.bind(this);
+    this.renderOffers = this.renderOffers.bind(this);
     this.setUser = this.setUser.bind(this);
     this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
-    // this.apiService.getOffers(this.renderOffers);
+    this.apiService.getOffers(this.renderOffers);
   }
 
 }
