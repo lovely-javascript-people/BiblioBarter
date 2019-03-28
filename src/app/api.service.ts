@@ -44,7 +44,15 @@ export class ApiService {
       });
   }
 
+  // getBookInfoForOfferingList(isbn: string, callback) {
+  //   this.http.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json`) // book info from book api
+  //     .subscribe(((bookInfo: any) => {
+  //       callback(bookInfo); // gets title of book
+  //     }));
+  // }
+
   getBookInfoForOfferingList(isbn: string, callback) {
+    // https://www.googleapis.com/books/v1/volumes?q=isbn:9781573101370
     this.http.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json`) // book info from book api
       .subscribe(((bookInfo: any) => {
         callback(bookInfo); // gets title of book

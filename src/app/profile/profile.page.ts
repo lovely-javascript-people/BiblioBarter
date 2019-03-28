@@ -169,7 +169,12 @@ export class ProfilePage implements OnInit {
     offerObj.status = offer.offer.status;
     offerObj.email = offer.peerInfo.email;
     offerObj.offerId = offer.offer.id_offer;
-    offerObj.money = offer.offer.money_exchange_cents / 100;
+
+    if(offer.offer.money_exchange_cents > 0) {
+      offerObj.userMoney = `and $${offer.offer.money_exchange_cents / 100}`;
+    } else {
+       offerObj.peerMoney = `and $${((-1 * offer.offer.money_exchange_cents) / 100)}`;
+    }
     
     offs.push(offerObj);
     i++;
