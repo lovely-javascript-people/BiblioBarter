@@ -43,9 +43,9 @@ export class ProfilePage implements OnInit {
     public alertController: AlertController,
   ) { }
 
-    // local = 'http://localhost:3000';
+    local = 'http://localhost:3000';
     // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-    local = 'http://18.188.132.186:3000';
+    // local = 'http://18.188.132.186:3000';
 
   setUser(data) {
     console.log(data, 'THIS DATA', data[0], 'length');
@@ -270,27 +270,18 @@ export class ProfilePage implements OnInit {
 
     console.log('delete want', wantId);
 
-    this.presentToast(want);
     this.http.delete(`http://${this.local}/deleteWant`, { params: { wantId } })
-      .subscribe((data) => {
-        console.log(data, 'delete want');
-      });
+    .subscribe((data) => {
+      console.log(data, 'delete want');
+    });
+
+    this.presentToast(want);
   }
 
-  deleteWantAlert(wantId, want) {
-    this.presentAlertMultipleButtons(this.deleteWant(wantId, want));
+  async deleteWantAlert(wantId, want) {
+    this.presentAlertMultipleButtons(await this.deleteWant(wantId, want));
   }
 
-// deleteBookAlert(callback) {
-//   this.presentAlertMultipleButtons(callback);
-// }
-
-// deleteBookAlert(callback, id, string) {
-//   this.deleteId = id;
-//   this.deleteString = string;
-//   // this.presentAlertMultipleButtons(callback(id, string));
-//   this.presentAlertMultipleButtons(callback);
-// }
 
   async presentToast(item) {
     const toast = await this.toastController.create({
