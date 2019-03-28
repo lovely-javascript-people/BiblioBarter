@@ -43,9 +43,9 @@ export class ProfilePage implements OnInit {
     public alertController: AlertController,
   ) { }
 
-    local = 'http://localhost:3000';
-    // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-    // local = 'http://18.188.132.186:3000';
+    local = 'localhost:3000';
+    // local = 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
+    // local = '18.188.132.186:3000';
 
   setUser(data) {
     console.log(data, 'THIS DATA', data[0], 'length');
@@ -257,9 +257,10 @@ export class ProfilePage implements OnInit {
   }
 
   deleteListing(bookId, listingId, listing) {
-    console.log(listingId, 'delete listing clicked');
     this.presentToast(listing);
-    this.http.delete(`http://${this.local}/deleteListing`, { params: { bookId, listingId } })
+    console.log(listingId, 'delete listing clicked');
+    // this.http.delete(`http://${this.local}/deleteListing`, { params: { bookId, listingId } })
+    this.http.delete(`http://http://localhost:3000/deleteListing`, { params: { bookId, listingId } })
       .subscribe((data) => {
         console.log(data, 'delete listing');
       });
@@ -268,19 +269,19 @@ export class ProfilePage implements OnInit {
   // deleteWant() {
   deleteWant(wantId, want) {
 
+    this.presentToast(want);
     console.log('delete want', wantId);
-
-    this.http.delete(`http://${this.local}/deleteWant`, { params: { wantId } })
+    // this.http.delete(`http://${this.local}/deleteWant`, { params: { wantId } })
+    this.http.delete(`http://localhost:3000/deleteWant`, { params: { wantId } })
     .subscribe((data) => {
       console.log(data, 'delete want');
     });
 
-    this.presentToast(want);
   }
 
-  async deleteWantAlert(wantId, want) {
-    this.presentAlertMultipleButtons(await this.deleteWant(wantId, want));
-  }
+  // async deleteWantAlert(wantId, want) {
+  //   this.presentAlertMultipleButtons(await this.deleteWant(wantId, want));
+  // }
 
 
   async presentToast(item) {
