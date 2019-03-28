@@ -44,7 +44,8 @@ export class ProfilePage implements OnInit {
   ) { }
 
     // local = 'http://localhost:3000';
-    local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
+    // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
+    local = 'http://18.188.132.186:3000';
 
   setUser(data) {
     console.log(data, 'THIS DATA', data[0], 'length');
@@ -267,9 +268,6 @@ export class ProfilePage implements OnInit {
   // deleteWant() {
   deleteWant(wantId, want) {
 
-    want = this.deleteString;
-    wantId = this.deleteWant;
-
     console.log('delete want', wantId);
 
     this.presentToast(want);
@@ -279,17 +277,20 @@ export class ProfilePage implements OnInit {
       });
   }
 
+  deleteWantAlert(wantId, want) {
+    this.presentAlertMultipleButtons(this.deleteWant(wantId, want));
+  }
+
 // deleteBookAlert(callback) {
 //   this.presentAlertMultipleButtons(callback);
 // }
 
-deleteBookAlert(callback, id, string) {
-  // console.log(callback, 'CALLBACK', id, 'ID', string, 'STRING');
-  this.deleteId = id;
-  this.deleteString = string;
-  // this.presentAlertMultipleButtons(callback(id, string));
-  this.presentAlertMultipleButtons(callback);
-}
+// deleteBookAlert(callback, id, string) {
+//   this.deleteId = id;
+//   this.deleteString = string;
+//   // this.presentAlertMultipleButtons(callback(id, string));
+//   this.presentAlertMultipleButtons(callback);
+// }
 
   async presentToast(item) {
     const toast = await this.toastController.create({
@@ -306,8 +307,7 @@ deleteBookAlert(callback, id, string) {
       header: 'Wait!',
       // subHeader: 'Subtitle',
       message: 'Are you sure you want to delete this book?',
-      buttons: [{text: 'Cancel', handler: () => {console.log('CANCEL THIS PLEASE')}}, {text: 'Delete', handler: () => {console.log('DELETE MY BOOK PLEASE')}}]
-      // buttons: [{text: 'Cancel', handler: () => {console.log('CANCEL THIS PLEASE')}}, {text: 'Delete', handler: () => {callback}}]
+     buttons: [{text: 'Cancel', handler: () => {console.log('CANCEL THIS PLEASE')}}, {text: 'Delete', handler: () => {callback}}]
     });
     return await alert.present();
   }
