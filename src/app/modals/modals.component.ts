@@ -51,13 +51,13 @@ export class SettingsModal implements OnInit {
       const userEmail = email;
       const phoneNumber = '7334887';
       // debugger;
-      if (userId && nameFirst && nameLast && address && phoneNumber && userEmail) {
+      // if (userId && nameFirst && nameLast && address && phoneNumber && userEmail) {
         this.presentToast('Thanks, your info has been successfully submitted. Please enter your university below.');
         this.apiService.updateSettings(nameFirst, nameLast, userEmail, userId, searchRadius, address, phoneNumber);
         this.settingsFilled = true;
-      } else {
-        this.presentToast('All fields must be fully and accurately completed');
-      }
+      // } else {
+      //   this.presentToast('All fields must be fully and accurately completed');
+      // }
     }
 
     selectUni(event) {

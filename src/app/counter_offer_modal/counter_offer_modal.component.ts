@@ -22,7 +22,8 @@ export class CounterOfferModal implements OnInit {
     this.modal.dismiss();
   }
 
-  setUserBooks(data) { 
+  setUserBooks(data) {
+    console.log(data);
     this.userBooks.push(data);
   }
 
