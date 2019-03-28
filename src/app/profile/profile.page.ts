@@ -43,6 +43,9 @@ export class ProfilePage implements OnInit {
     public alertController: AlertController,
   ) { }
 
+    // local = 'http://localhost:3000';
+    local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
+
   setUser(data) {
     console.log(data, 'THIS DATA', data[0], 'length');
     // add userid to local storage
@@ -86,6 +89,7 @@ export class ProfilePage implements OnInit {
     });
     return await modalPage.present();
   }
+  
 
   acceptOffer(index) {
     console.log(this.allOffers, 'ALL OFFERS');
@@ -94,7 +98,7 @@ export class ProfilePage implements OnInit {
     this.offerid = this.offers[index].offerId;
     const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
-    this.http.patch('http://localhost:3000/offerlisting', { params: { status: 'accepted', offerId: id_offer } })
+    this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'accepted', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
       });
@@ -225,7 +229,7 @@ export class ProfilePage implements OnInit {
     this.offerid = this.offers[index].offerId;
     const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
-    this.http.patch('http://localhost:3000/offerlisting', { params: { status: 'rejected', offerId: id_offer } })
+    this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
       });
@@ -237,7 +241,7 @@ export class ProfilePage implements OnInit {
     console.log(this.acceptedOffs[index], 'OFFER TO BE CANCELED');
     this.offerid = this.acceptedOffs[index].offerId;
     const id_offer = this.offerid;
-    this.http.patch('http://localhost:3000/offerlisting', { params: { status: 'rejected', offerId: id_offer } })
+    this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
       });
@@ -254,7 +258,7 @@ export class ProfilePage implements OnInit {
   deleteListing(bookId, listingId, listing) {
     console.log(listingId, 'delete listing clicked');
     this.presentToast(listing);
-    this.http.delete('http://localhost:3000/deleteListing', { params: { bookId, listingId } })
+    this.http.delete(`http://${this.local}/deleteListing`, { params: { bookId, listingId } })
       .subscribe((data) => {
         console.log(data, 'delete listing');
       });
@@ -269,7 +273,7 @@ export class ProfilePage implements OnInit {
     console.log('delete want', wantId);
 
     this.presentToast(want);
-    this.http.delete('http://localhost:3000/deleteWant', { params: { wantId } })
+    this.http.delete(`http://${this.local}/deleteWant`, { params: { wantId } })
       .subscribe((data) => {
         console.log(data, 'delete want');
       });
