@@ -104,7 +104,7 @@ export class ProfilePage implements OnInit {
 
     console.log(this.offers, 'THIS DOT OFFERS OFFERS OFFERS');
 
-    let idRecipient = this.recipId;
+    let idRecipient = this.offers[0].peerid;
 
     localStorage.setItem('peerid', idRecipient.toString());
 
@@ -145,7 +145,6 @@ export class ProfilePage implements OnInit {
 
     for (const offer of offers.slice(0, offers.length - 1)) {
     if (offer.offer.status === 'pending' && offer.offer.id_sender !== Number(localStorage.userid)) {
-      // console.log(offer.offer.id_sender, 'ID SENDER', localStorage.userid, 'USER ID LOCAL STORE')
     const offerObj: any = {};
     offerObj.myTitles = [];
     offerObj.peerTitles = [];
@@ -161,6 +160,7 @@ export class ProfilePage implements OnInit {
     })
 
     offerObj.peer = offer.peerInfo.user_name;
+    offerObj.peerid = offer.peerInfo.id_user;
     offerObj.status = offer.offer.status;
     offerObj.email = offer.peerInfo.email;
     offerObj.offerId = offer.offer.id_offer;
@@ -219,41 +219,7 @@ export class ProfilePage implements OnInit {
     console.log(offs, 'OFFERS AFTER RENDER CALLED');
   }
 
-  // renderOffers(offers) {
-  //   console.log(offers, 'OFFERS FROM RENDER OFFERS');
-  //   this.allOffers = offers;
-  //   const offs: object[] = [];
-  //   const acceptedOffers: object[] = [];
-  //   let i = 0;
-  //   for (const offer of offers.slice(1)) {
-  //   if (offer.offer.status === 'pending') {
-  //   const offerObj: any = {};
-  //   offerObj.offeredTitle = offer.titleOffered.title;
-  //   offerObj.wantedTitle = offer.titleWantd.title;
-  //   offerObj.peer = offer.peer.user_name;
-  //   offerObj.status = offer.offer.status;
-  //   offerObj.email = offer.peer.email;
-  //   offerObj.offerId = offer.offer.id_offer;
-    
-  //   offs.push(offerObj);
-  //   i++;
-  //     } else if (offer.offer.status === 'accepted') {
-  //       const offerObj: any = {};
-  //       offerObj.offeredTitle = offer.titleOffered.title;
-  //       offerObj.wantedTitle = offer.titleWantd.title;
-  //       offerObj.peer = offer.peer.user_name;
-  //       offerObj.status = offer.offer.status;
-  //       offerObj.email = offer.peer.email;
-  //       offerObj.offerId = offer.offer.id_offer;
-  //       // console.log(offerObj, 'OFFER OBJECT');
-  //       acceptedOffers.push(offerObj);
-  //       i++;
-  //     }
-  //   }
-  //   this.offers = offs;
-  //   this.acceptedOffs = acceptedOffers;
-  //   // console.log(this.offers, 'THIS DOT OFFERS');
-  // }
+
 
   rejectOffer(index) {
     this.offerid = this.offers[index].offerId;
