@@ -44,7 +44,7 @@ export class ProfilePage implements OnInit {
     console.log(data, 'THIS DATA', data[0], 'length');
     // add userid to local storage
     localStorage.setItem('userid', data[0].id_user);
-    console.log(data[1][0].name, 'SCHOOL NAME');
+    // console.log(data[1][0].name, 'SCHOOL NAME');
     if (data[0]) {
       this.img = data[0].image_link;
       this.user = data[0].user_name;
@@ -123,7 +123,7 @@ export class ProfilePage implements OnInit {
     const offs: object[] = [];
     const acceptedOffers: object[] = [];
     let i = 0;
-    for (const offer of offers.slice(1)) {
+    for (const offer of offers.slice(0, offers.length - 1)) {
     if (offer.offer.status === 'pending') {
     const offerObj: any = {};
     offerObj.offeredTitle = offer.titleOffered.title;
@@ -245,10 +245,10 @@ export class ProfilePage implements OnInit {
     this.apiService.renderWantList(this.setWantList);
     this.setListings = this.setListings.bind(this);
     this.apiService.renderListingsList(this.setListings);
-    this.renderOffers = this.renderOffers.bind(this);
+    // this.renderOffers = this.renderOffers.bind(this);
     this.setUser = this.setUser.bind(this);
     this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
-    this.apiService.getOffers(this.renderOffers);
+    // this.apiService.getOffers(this.renderOffers);
   }
 
 }
