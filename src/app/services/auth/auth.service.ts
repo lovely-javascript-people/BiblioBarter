@@ -23,7 +23,8 @@ export class AuthService {
     responseType: 'token id_token',
     audience: 'https://bibliobarter.auth0.com/userinfo',
     // redirectUri: 'http://172.24.9.181:8100/callback',
-    redirectUri: 'http://18.188.132.186:8100/callback',
+    // redirectUri: 'http://18.188.132.186:8100/callback',
+    redirectUri: 'http://localhost:8100/callback',
     scope: 'openid profile',
   });
 
