@@ -97,6 +97,7 @@ export class ProfilePage implements OnInit {
     this.http.patch('http://localhost:3000/offerlisting', { params: { status: 'accepted', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
+        this.presentOfferToast('Offer has been accepted');
       });
   }
 
@@ -246,8 +247,8 @@ export class ProfilePage implements OnInit {
     this.http.patch('http://localhost:3000/offerlisting', { params: { status: 'rejected', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
+        this.presentOfferToast('Offer has been rejected.');
       });
-
   }
 
 
@@ -258,6 +259,7 @@ export class ProfilePage implements OnInit {
     this.http.patch('http://localhost:3000/offerlisting', { params: { status: 'rejected', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
+        this.presentOfferToast('Accepted offer has been cancelled.')
       });
   }
 
@@ -311,6 +313,15 @@ deleteBookAlert(callback, id, string) {
       duration: 2000,
       color: 'primary',
       position: 'top', // or don't include to be bottom
+    });
+    toast.present();
+  }
+  async presentOfferToast(message) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: 'primary',
+      position: 'top',
     });
     toast.present();
   }
