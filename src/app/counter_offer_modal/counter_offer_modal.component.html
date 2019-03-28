@@ -1,5 +1,29 @@
 <ion-icon style="width: 40px;height: 40px;" name="close" (click)="closeModal()"></ion-icon>
 <div>
     COUNTER OFFER
-    <ion-button (click)="sendCounterOffer()" size="small">Send Counter</ion-button>
+    <div *ngIf="ready">
+        <ion-list>
+          <ion-item>
+              <label color="primary" stacked>I want:     </label><br />
+              <ion-select #want multiple="true" placeholder="Book you want">
+                <ion-select-option *ngFor="let want of possibleBooks[1]" style="overflow: visible;">
+                    {{want.title}}
+                </ion-select-option>
+              </ion-select>
+              <br>
+              <ion-input #getPaid placeholder="$0.00" style="display: block" clear-input="true" [(ngModel)]="wantMoney" #ctrl="ngModel"></ion-input>
+          </ion-item>
+          <ion-item>
+              <label color="primary" stacked>I'm offering: </label><br />
+              <ion-select #offer multiple="true" placeholder="Book you are offering">
+                <ion-select-option *ngFor="let listing of possibleBooks[0]" style="overflow: visible;">
+                    {{listing.book.title}}
+                </ion-select-option>
+              </ion-select>
+              <ion-input #walletLoss placeholder="$0.00" clear-input="true" [(ngModel)]="offeredMoney" #ctrl="ngModel"></ion-input>
+          </ion-item>
+          <ion-button (click)="sendCounterOffer()" size="small">Send Counter</ion-button>
+        </ion-list>
+    </div>
+    
 </div>
