@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FooterModule } from './footer/footer.module';
 import { FooterComponent } from './footer/footer.component';
+import { callbackify } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,15 @@ export class ApiService {
       });
   }
 
+  // getBookInfoForOfferingList(isbn: string, callback) {
+  //   this.http.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json`) // book info from book api
+  //     .subscribe(((bookInfo: any) => {
+  //       callback(bookInfo); // gets title of book
+  //     }));
+  // }
+
   getBookInfoForOfferingList(isbn: string, callback) {
+    // https://www.googleapis.com/books/v1/volumes?q=isbn:9781573101370
     this.http.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json`) // book info from book api
       .subscribe(((bookInfo: any) => {
         callback(bookInfo); // gets title of book
@@ -94,6 +103,7 @@ export class ApiService {
   getPeerProfile(peerId, callback) {
     console.log(peerId, 'PEEER ID');
     this.http.get(`${this.local}/peer`, { params: {peerId} }).subscribe(data => {
+      console.log(data, 'HEREERERERERE');
       callback(data);
     });
   }
@@ -144,7 +154,7 @@ export class ApiService {
 
     getMatches(callback): any {
       // const DNS = process.env.DEVELOPMENT === 'development' ?
-      // '/matches' : 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/matches';
+      console.log('IN GET MATCHES ON API SERVICE RIGHT HERE');
       this.http.get(`${this.local}/matches`).subscribe((response) => {
       callback(response);
       });
@@ -159,6 +169,14 @@ export class ApiService {
     counterOffer(id, sender_id, recipient_id, all_listings, money) { // this takes in the offerId of the offer that the user is countering
       this.http.post(`${this.local}/counter`, { params: { id, sender_id, recipient_id, all_listings, money } }).subscribe((response) => {
         console.log(response);
+        });
+    }
+
+    getUserInfo(id, callback) {
+      this.http.get(`${this.local}/getUser`, { params: { id: id }})
+        .subscribe((data) => {
+          console.log(data, 'USER INFO');
+          callback(data);
         });
     }
 }
