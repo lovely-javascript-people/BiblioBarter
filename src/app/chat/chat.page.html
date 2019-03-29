@@ -1,20 +1,7 @@
 <div class="App">
   <aside class="sidebar left-sidebar">
-<<<<<<< HEAD
-    <a href="/Matches"><ion-button>Go Back</ion-button></a>
-    <section *ngIf="!currentUser.id" class="join-chat">
-      <h4>Join Chat</h4>
-      <form style="width:fit-content; position:relative" (ngSubmit)="addUser()">
-        <input placeholder="Enter your username" type="text" name="userid" [(ngModel)]="userId" />
-        <input style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
-                      background-color: #176ACC" type="submit" value="Submit">
-      </form>
-    </section>
-    <section *ngIf="currentUser.id" class="room-members">
-=======
     <a href="/Matches"><button>Go Back</button></a>
     <section class="room-members">
->>>>>>> dc2ec981733786cd6d7fc1071b4950e2196b8bf6
       <h4>Room Users</h4>
       <ul class="user-list">
         <li *ngFor="let user of roomUsers">

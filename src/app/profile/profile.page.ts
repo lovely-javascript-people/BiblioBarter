@@ -51,21 +51,10 @@ export class ProfilePage implements OnInit {
     public alertController: AlertController,
   ) { }
 
-<<<<<<< HEAD
     local = 'localhost:3000';
     // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
     // local = '18.188.132.186:3000';
-=======
-<<<<<<< HEAD
-    local = 'http://localhost:3000';
-    // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-    // local = 'http://18.188.132.186:3000';
-=======
-    // local = 'localhost:3000';
-    // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-    local = '18.188.132.186:3000';
->>>>>>> c391ee0fc456b1a86141c18f8e65f7abe293102d
->>>>>>> dc2ec981733786cd6d7fc1071b4950e2196b8bf6
+
 
   setUser(data) {
     console.log(data, 'THIS DATA', data[0], 'length');
