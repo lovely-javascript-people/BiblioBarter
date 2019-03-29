@@ -172,7 +172,7 @@ export class ProfilePage implements OnInit {
 
     if(offer.offer.money_exchange_cents > 0) {
       offerObj.userMoney = `and $${offer.offer.money_exchange_cents / 100}`;
-    } else {
+    } else if(offer.offer.money_exchange_cents < 0){
        offerObj.peerMoney = `and $${((-1 * offer.offer.money_exchange_cents) / 100)}`;
     }
     
@@ -200,7 +200,7 @@ export class ProfilePage implements OnInit {
 
         if(offer.offer.money_exchange_cents > 0) {
           offerObj.userMoney = `and $${offer.offer.money_exchange_cents / 100}`;
-        } else {
+        } else if(offer.offer.money_exchange_cents < 0){
            offerObj.peerMoney = `and $${((-1 * offer.offer.money_exchange_cents) / 100)}`;
         }
         
