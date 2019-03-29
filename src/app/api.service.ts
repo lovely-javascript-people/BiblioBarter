@@ -152,7 +152,7 @@ export class ApiService {
 
     getMatches(callback): any {
       // const DNS = process.env.DEVELOPMENT === 'development' ?
-      // '/matches' : 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/matches';
+      console.log('IN GET MATCHES ON API SERVICE RIGHT HERE');
       this.http.get(`${this.local}/matches`).subscribe((response) => {
       callback(response);
       });

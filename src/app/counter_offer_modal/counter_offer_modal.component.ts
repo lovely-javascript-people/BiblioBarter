@@ -15,6 +15,12 @@ export class CounterOfferModal implements OnInit {
   peerListings: any;
   peerWants: any;
   ready: boolean = false;
+  peerid: number;
+  peerMoney: string;
+  peerTitles: string[];
+  peer: string;
+  myTitles: string[];
+  offerId: number;
 
   constructor(public modal: ModalController, private http: HttpClient, private apiService: ApiService) { }
 
@@ -33,8 +39,7 @@ export class CounterOfferModal implements OnInit {
   }
 
   sendCounterOffer() {
-    console.log('I ALMOST LIKE THIS OFFER BUT ITS NOT QUITE RIGHT YET!');
-    // this.http.patch('/offers', {})
+    console.log(`${this.peerid} peer id, ${this.peerMoney} peer money, ${this.peerTitles} peer Titles ${this.peer} peer ${this.offerId} offer id ${this.myTitles} my titles`);    // this.http.patch('/offers', {})
     this.closeModal();
   }
 

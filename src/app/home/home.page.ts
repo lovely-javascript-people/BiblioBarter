@@ -84,7 +84,7 @@ export class HomePage implements OnInit {
   }
 
   setMatches(data) {
-    console.log(data);
+    console.log(data, 'SET MATCHES DATA');
     const keys = Object.keys(data);
     if (this.yourWants.length) {
     const want = this.yourWants.map(want => want.title);

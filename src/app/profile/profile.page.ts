@@ -33,6 +33,14 @@ export class ProfilePage implements OnInit {
   money_exchanged: number;
   deleteId: number;
   deleteString: string;
+  
+    // to send to counteroffer modal
+    peerid: number;
+    peerMoney: string;
+    peerTitles: string[];
+    peer: string;
+    myTitles: string[];
+    offerId: number;
 
   constructor(
     private apiService: ApiService,
@@ -68,7 +76,9 @@ export class ProfilePage implements OnInit {
     var data = { message: 'hello world' };
     const modalPage = await this.modal.create({
       component: WantListModal,
-      componentProps: { values: data }
+      componentProps: { 
+        user: data,
+      }
     });
     return await modalPage.present();
   }
@@ -83,10 +93,20 @@ export class ProfilePage implements OnInit {
   }
 
   async openCounterOfferModal() {
+    // let peerId = this.peerid;
+    // console.log(peerId, 'PEER ID TEST');
+
     var data = { message: 'hello world' };
     const modalPage = await this.modal.create({
       component: CounterOfferModal,
-      componentProps: { values: data }
+      componentProps: { 
+        peerid: this.peerid,
+        peerMoney: this.peerMoney,
+        peerTitles: this.peerTitles,
+        peer: this.peer,
+        myTitles: this.myTitles,
+        offerId: this.offerId,
+      }
     });
     return await modalPage.present();
   }
@@ -109,9 +129,15 @@ export class ProfilePage implements OnInit {
 
     console.log(this.offers, 'THIS DOT OFFERS OFFERS OFFERS');
 
-    let idRecipient = this.offers[0].peerid;
+    this.peerid = this.offers[0].peerid;
+    this.peerMoney = this.offers[0].peerMoney;
+    this.peerTitles = this.offers[0].peerTitles;
+    this.peer = this.offers[0].peer;
+    this.myTitles = this.offers[0].myTtitles;
+    this.offerId = this.offers[0].offerId;
+    // console.log(`${this.peerid} peer id, ${this.peerMoney} peer money, ${this.peerTitles} peer Titles ${this.peer} peer ${this.offerId} offer id ${this.myTitles} my titles`);
 
-    localStorage.setItem('peerid', idRecipient.toString());
+    // localStorage.setItem('peerid', idRecipient.toString());
 
     // this.apiService.counterOffer(idOfferPrev, idRecipient, idSender, listings, money);
   }
