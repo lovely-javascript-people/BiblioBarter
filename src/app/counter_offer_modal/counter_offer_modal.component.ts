@@ -13,6 +13,10 @@ export class CounterOfferModal implements OnInit {
 
   userBooks: any[] = [];
   peerListings: any;
+  possibleBooks: any[] = [];
+  wants: any;
+  listings: any;
+  entireListings: any;
   peerWants: any;
   ready: boolean = false;
 
@@ -22,14 +26,41 @@ export class CounterOfferModal implements OnInit {
     this.modal.dismiss();
   }
 
-  setUserBooks(data) {
-    console.log(data);
-    this.userBooks.push(data);
+  getPeerBooks(id, callback) {
+    this.apiService.getPeerProfile(id, callback);
   }
 
-  setPeerBooks(data) {
-    console.log(data);
+  getYourBooks() {
+    this.apiService.renderListingsList(this.setYourBooks);
+  }
+
+  getYourWants() {
+    this.apiService.renderWantList(this.setYourWants);
+  }
+
+  setYourBooks(data) {
+    // console.log(data);
+    const lists = this.wants.map(list => list.title);
+    const xRefer = data.filter(piece => lists.includes(piece.book.title));
+    this.possibleBooks.push(xRefer);
+  }
+
+  setYourWants(data) {
+    const wants = this.listings.map(want => want.title);
+    const xRefer = data.filter(piece => wants.includes(piece.title));
+    this.possibleBooks.push(xRefer);
     this.ready = true;
+  }
+
+  async setBooks(data) {
+    console.log(data, 'jeef');
+    const temp = data.slice(0, data.length - 2);
+    this.wants = temp;
+    this.listings = data[data.length - 2];
+    this.entireListings = data[data.length - 1];
+    console.log(this.entireListings);
+    this.getYourBooks();
+    this.getYourWants();
   }
 
   sendCounterOffer() {
@@ -39,11 +70,12 @@ export class CounterOfferModal implements OnInit {
   }
 
   ngOnInit() {
-    this.setUserBooks = this.setUserBooks.bind(this);
-    this.setPeerBooks = this.setPeerBooks.bind(this);
-    this.apiService.renderListingsList(this.setUserBooks);
-    this.apiService.renderWantList(this.setUserBooks);
-    this.apiService.getPeerProfile(localStorage.peerid, this.setPeerBooks);
+    this.setYourBooks = this.setYourBooks.bind(this);
+    this.setBooks = this.setBooks.bind(this);
+    this.setYourWants = this.setYourWants.bind(this);
+    this.apiService.renderListingsList(this.setYourBooks);
+    this.apiService.renderWantList(this.setYourWants);
+    this.apiService.getPeerProfile(localStorage.peerid, this.setBooks);
   }
 
 }
