@@ -51,10 +51,10 @@ export class ProfilePage implements OnInit {
     public alertController: AlertController,
   ) { }
 
-    local = 'localhost:3000';
+    // local = 'http://localhost:3000';
     // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-    // local = '18.188.132.186:3000';
-
+    // local = 'http://18.188.132.186:3000';
+    local = 'localhost:3000';
 
   setUser(data) {
     console.log(data, 'THIS DATA', data[0], 'length');
@@ -346,7 +346,7 @@ export class ProfilePage implements OnInit {
       header: 'Wait!',
       // subHeader: 'Subtitle',
       message: 'Are you sure you want to delete this book?',
-     buttons: [{text: 'Cancel', handler: () => {console.log('CANCEL THIS PLEASE')}}, {text: 'Delete', handler: () => {callback}}]
+    buttons: [{text: 'Cancel', handler: () => {console.log('CANCEL THIS PLEASE')}}, {text: 'Delete', handler: () => {callback}}]
     });
     return await alert.present();
   }
