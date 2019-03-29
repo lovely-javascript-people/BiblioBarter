@@ -23,6 +23,8 @@ export class AuthService {
     responseType: 'token id_token',
     audience: 'https://bibliobarter.auth0.com/userinfo',
     redirectUri: 'http://localhost:8100/callback',
+    // redirectUri: 'http://172.24.9.181:8100/callback',
+    // redirectUri: 'http://18.188.132.186:8100/callback',
     scope: 'openid profile',
   });
 
@@ -66,17 +68,17 @@ export class AuthService {
         this.setSession(authResult);
         const loggedIn = this.isLoggedIn = true;
         this.isLoggedIn$.next(loggedIn);
-        this.router.navigate(['/Matches']);
         // console.log(localStorage);
         // http req here to /userinfo to grab user prof from Auth0
         this.http.get('https://bibliobarter.auth0.com/userinfo', {
           headers: {
             'Content-Type':  'application/json',
             'Authorization': `Bearer ${localStorage.access_token}`, },
-      }).subscribe((userInfo: any) => {
-        console.log(userInfo, 'USER');
-        localStorage.setItem('username', userInfo.nickname);
-        this.apiService.userSignup(userInfo);
+          }).subscribe((userInfo: any) => {
+            console.log(userInfo, 'USER');
+            localStorage.setItem('username', userInfo.nickname);
+            this.router.navigate(['/Matches']);
+            this.apiService.userSignup(userInfo);
       });
       } else if (err) {
         console.log(err);

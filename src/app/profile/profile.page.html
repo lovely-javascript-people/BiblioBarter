@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
       <ion-title>
-        <a style="color: #B1C634; width:50%" routerLink="/Profile">Profile</a> <a style="width:50%" routerLink="/Matches">Matches</a> 
+        <a style="color: #B1C634; width:50%" href="/Profile">Profile</a> <a style="width:50%" href="/Matches">Matches</a> 
       </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -22,10 +22,10 @@
       </ion-fab-button>
     </ion-fab>
   </ion-content> -->
-  <a button icon-start ion-button full (click)="openCamera()">
+  <!-- <a button icon-start ion-button full (click)="openCamera()">
     <ion-icon name="camera"></ion-icon>
     <i class="icon ion-ios-telephone"></i>
-  </a>
+  </a> -->
   <div>
   <ion-button [hidden]='open' size="small" id="startButton" (click)="camOpen()">Take Photo</ion-button>
   <ion-button [hidden]='!open' size="small" id="resetButton" (click)="camClose()">Close</ion-button>
@@ -44,9 +44,11 @@
   <ion-list>
      <ion-item *ngFor="let offer of offers; let i = index">
         {{offer.peer}} is offering {{offer.peerTitles}} and would like {{offer.myTitles}}
+        <div>
         <ion-button (click)="acceptOffer(i)" size="small" style="float: right;">Accept</ion-button>
         <ion-button (click)="rejectOffer(i)" size="small" style="float: right;">Reject</ion-button>
         <ion-button (click)="openCounterOfferModal(); counterOffer()" size="small" style="float: right;">Counter</ion-button>
+      </div>
       </ion-item>
   </ion-list>
   <br />

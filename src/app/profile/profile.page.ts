@@ -43,9 +43,15 @@ export class ProfilePage implements OnInit {
     public alertController: AlertController,
   ) { }
 
+<<<<<<< HEAD
     local = 'http://localhost:3000';
     // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
     // local = 'http://18.188.132.186:3000';
+=======
+    // local = 'localhost:3000';
+    // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
+    local = '18.188.132.186:3000';
+>>>>>>> c391ee0fc456b1a86141c18f8e65f7abe293102d
 
   setUser(data) {
     console.log(data, 'THIS DATA', data[0], 'length');
@@ -102,6 +108,7 @@ export class ProfilePage implements OnInit {
     this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'accepted', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
+        this.presentOfferToast('Offer has been accepted');
       });
   }
 
@@ -233,8 +240,8 @@ export class ProfilePage implements OnInit {
     this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
+        this.presentOfferToast('Offer has been rejected.');
       });
-
   }
 
 
@@ -245,6 +252,7 @@ export class ProfilePage implements OnInit {
     this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
+        this.presentOfferToast('Accepted offer has been cancelled.')
       });
   }
 
@@ -298,6 +306,15 @@ export class ProfilePage implements OnInit {
       duration: 2000,
       color: 'primary',
       position: 'top', // or don't include to be bottom
+    });
+    toast.present();
+  }
+  async presentOfferToast(message) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: 'primary',
+      position: 'top',
     });
     toast.present();
   }

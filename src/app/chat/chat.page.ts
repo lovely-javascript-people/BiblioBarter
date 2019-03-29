@@ -40,6 +40,7 @@ export class ChatPage implements OnInit {
       }
 
   createRoom() {
+    this.addUser();
     const { newRoom: { name, isPrivate }, currentUser } = this;
 
     if (name.trim() === '') {return;}
@@ -121,6 +122,9 @@ export class ChatPage implements OnInit {
   local = 'http://localhost:3000';
   // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
   // local = 'http://18.188.132.186:3000';
+  // local = 'localhost:3000';
+  // local = 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
+  // local = '18.188.132.186:3000';
 
       addUser() {
         const { userId } = this;
@@ -131,7 +135,7 @@ export class ChatPage implements OnInit {
             });
             const chatManager = new Chatkit.ChatManager({
               instanceLocator: 'v1:us1:1264d0d5-5678-4765-abf9-ec9e94daba1f',
-              userId,
+              userId: localStorage.username,
               tokenProvider
             });
             return chatManager

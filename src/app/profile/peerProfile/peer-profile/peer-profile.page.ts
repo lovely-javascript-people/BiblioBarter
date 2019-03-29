@@ -7,6 +7,7 @@ import { AddListingModal } from '../../../add_listing_modal/add_listing_modal.co
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { _ } from 'underscore';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-peer-profile',
@@ -32,7 +33,7 @@ export class PeerProfilePage implements OnInit {
   image: string;
   peerSchool: string;
 
-  constructor(private apiService: ApiService, public modal: ModalController, private router: Router, ) {}
+  constructor(private apiService: ApiService, public modal: ModalController, private router: Router, public toastController: ToastController,) {}
 
   getPeerBooks(id, callback) {
     this.apiService.getPeerProfile(id, callback);
@@ -123,6 +124,17 @@ export class PeerProfilePage implements OnInit {
       money: money,
       listings: allListings,
     });
+    this.presentToast('Your offer has been sent.');
+  }
+
+  async presentToast(message) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: 'primary',
+      position: 'top',
+    });
+    toast.present();
   }
 
   setUser(data) {

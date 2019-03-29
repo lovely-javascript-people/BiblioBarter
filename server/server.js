@@ -56,6 +56,7 @@ app.get('/matches', (req, res) => {
           id_book: listing.id_book,
         },
       });
+      if (user.id_school) {
       const school = await db.School.findOne({
         where: {
           id_school: user.id_school
@@ -70,6 +71,7 @@ app.get('/matches', (req, res) => {
         matchObj[user.user_name].push(book);
       }
       matches.push([await user, await book]);
+    }
     }
   }).then(() => {
     res.status(200).send(matchObj);
