@@ -40,6 +40,7 @@ export class ChatPage implements OnInit {
       }
 
   createRoom() {
+    this.addUser();
     const { newRoom: { name, isPrivate }, currentUser } = this;
 
     if (name.trim() === '') {return;}
@@ -131,7 +132,7 @@ export class ChatPage implements OnInit {
             });
             const chatManager = new Chatkit.ChatManager({
               instanceLocator: 'v1:us1:1264d0d5-5678-4765-abf9-ec9e94daba1f',
-              userId,
+              userId: localStorage.username,
               tokenProvider
             });
             return chatManager
