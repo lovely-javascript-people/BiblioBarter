@@ -5,6 +5,7 @@ import { NavController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ApiService } from '../api.service';
 import { $ } from 'protractor';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,7 @@ export class HomePage implements OnInit {
   inRadius: string;
 
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService, public navCtrl: NavController,
-    private barcodeScanner: BarcodeScanner) { }
+    private barcodeScanner: BarcodeScanner, public loadingController: LoadingController) { }
 
   profileButtonClick(index) {
     console.log(this.listings[index]);
@@ -152,6 +153,17 @@ export class HomePage implements OnInit {
     });
   }
 
+  async presentLoadingWithOptions() {
+    const loading = await this.loadingController.create({
+      spinner: 'crescent',
+      duration: 2000,
+      message: 'Please wait...',
+      translucent: true,
+      cssClass: 'custom-class custom-loading'
+    });
+    return await loading.present();
+  }
+
   ngOnInit() {
     this.url = document.URL;
     this.setListing = this.setListing.bind(this);
@@ -165,6 +177,7 @@ export class HomePage implements OnInit {
     this.apiService.renderListingsList(this.setYourListings);
     this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
     this.apiService.getSchools(localStorage.userid, this.setSchoolsInRadius);
+    this.presentLoadingWithOptions();
   }
 
 }
