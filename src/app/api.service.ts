@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FooterModule } from './footer/footer.module';
 import { FooterComponent } from './footer/footer.component';
+import { callbackify } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,8 @@ export class ApiService {
   }
 
   host = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-  // local = 'http://localhost:3000';
-  local = 'http://18.188.132.186:3000';
+  local = 'http://localhost:3000';
+  // local = 'http://18.188.132.186:3000';
 
   contactUs(userId, userEmail, emailBody) {
     console.log(userId, userEmail, emailBody, 'USER AND MESSAGE INFO');
@@ -94,6 +95,7 @@ export class ApiService {
   getPeerProfile(peerId, callback) {
     console.log(peerId, 'PEEER ID');
     this.http.get(`${this.local}/peer`, { params: {peerId} }).subscribe(data => {
+      console.log(data, 'HEREERERERERE');
       callback(data);
     });
   }
@@ -159,6 +161,14 @@ export class ApiService {
     counterOffer(id, sender_id, recipient_id, all_listings, money) { // this takes in the offerId of the offer that the user is countering
       this.http.post(`${this.local}/counter`, { params: { id, sender_id, recipient_id, all_listings, money } }).subscribe((response) => {
         console.log(response);
+        });
+    }
+
+    getUserInfo(id, callback) {
+      this.http.get(`${this.local}/getUser`, { params: { id: id }})
+        .subscribe((data) => {
+          console.log(data, 'USER INFO');
+          callback(data);
         });
     }
 }

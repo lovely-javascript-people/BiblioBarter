@@ -43,9 +43,9 @@ export class ProfilePage implements OnInit {
     public alertController: AlertController,
   ) { }
 
-    // local = 'http://localhost:3000';
+    local = 'http://localhost:3000';
     // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-    local = 'http://18.188.132.186:3000';
+    // local = 'http://18.188.132.186:3000';
 
   setUser(data) {
     console.log(data, 'THIS DATA', data[0], 'length');
