@@ -7,8 +7,8 @@ export const environment = {
   auth0: {
     domain: 'bibliobarter.auth0.com',
     clientId: 'ivIuyoWYphC-Rxf2AWNO6cl9HRID0X9x',
-    // callbackURL: 'http://172.24.9.181:8100/callback'
-    callbackURL: 'http://18.188.132.186:8100/callback',
+    callbackURL: 'http://172.24.9.181:8100/callback'
+    // callbackURL: 'http://18.188.132.186:8100/callback',
   }
 };
 
