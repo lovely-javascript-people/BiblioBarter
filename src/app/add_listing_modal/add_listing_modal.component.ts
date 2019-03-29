@@ -27,7 +27,7 @@ export class AddListingModal implements OnInit {
     this.modal.dismiss();
   }
 
-  addBook(isbn) {
+  addBook(isbn, bookCondition, getBookTitle) {
     this.apiService.getBookInfoForOfferingList(isbn, this.getBookTitle);
 
     const postBook = this.postBookToOfferingList;
