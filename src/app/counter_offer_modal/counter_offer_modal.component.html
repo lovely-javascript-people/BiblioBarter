@@ -1,6 +1,27 @@
 <ion-icon style="width: 40px;height: 40px;" name="close" (click)="closeModal()"></ion-icon>
 <div>
+
+    <a style="color:176ACC; font-weight:700;">
+        CURRENT OFFER:
+        </a>
+        <ion-list>
+          <ion-item>
+            {{peer}} REQUESTS:<br>
+            {{myTitles}}<br>
+            {{userMoney}}<br>
+            IS OFFERING:<br>
+            {{peerTitles}}<br>
+            {{peerMoney}}
+              <!-- <div>
+              <ion-button (click)="acceptOffer(i)" size="small" style="float: right;">Accept</ion-button>
+              <ion-button (click)="rejectOffer(i)" size="small" style="float: right;">Reject</ion-button>
+              <ion-button (click)="counterOffer(); openCounterOfferModal()" size="small" style="float: right;">Counter</ion-button>
+            </div> -->
+            </ion-item>
+        </ion-list>
+        <a style="color:176ACC; font-weight:700;">
     COUNTER OFFER
+    </a>
     <div *ngIf="ready">
         <ion-list>
           <ion-item>

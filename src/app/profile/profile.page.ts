@@ -133,7 +133,7 @@ export class ProfilePage implements OnInit {
     this.peerMoney = this.offers[0].peerMoney;
     this.peerTitles = this.offers[0].peerTitles;
     this.peer = this.offers[0].peer;
-    this.myTitles = this.offers[0].myTtitles;
+    this.myTitles = this.offers[0].myTitles;
     this.offerId = this.offers[0].offerId;
     // console.log(`${this.peerid} peer id, ${this.peerMoney} peer money, ${this.peerTitles} peer Titles ${this.peer} peer ${this.offerId} offer id ${this.myTitles} my titles`);
 
