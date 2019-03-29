@@ -43,7 +43,7 @@
               </ion-select>
               <ion-input #walletLoss placeholder="$0.00" clear-input="true" [(ngModel)]="offeredMoney" #ctrl="ngModel"></ion-input>
           </ion-item>
-          <ion-button (click)="sendCounterOffer()" size="small">Send Counter</ion-button>
+          <ion-button (click)="sendCounterOffer(want.value, offer.value)" size="small">Send Counter</ion-button>
         </ion-list>
     </div>
     
