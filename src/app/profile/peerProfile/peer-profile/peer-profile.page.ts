@@ -29,6 +29,9 @@ export class PeerProfilePage implements OnInit {
   wantMoney = 0;
   offeredMoney = 0;
   money: number;
+  peerUsername: string;
+  image: string;
+  peerSchool: string;
 
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router, public toastController: ToastController,) {}
 
@@ -135,10 +138,24 @@ export class PeerProfilePage implements OnInit {
   }
 
   setUser(data) {
+    console.log(data, 'HEY HERE');
     const user: any = localStorage.selectedUser;
     // console.log(data);
     this.user = data || user.nickname;
   }
+
+  findPeer(userId) {
+    console.log(userId, 'User Id for set Peer');
+    this.apiService.getUserInfo(userId, this.setPeer);
+  }
+
+  setPeer(data) {
+    console.log(data, 'PEER DDATS SCHOOL');
+    this.peerUsername = data.user_name;
+    this.image = data.image_link;
+    this.peerSchool = data.school.name;
+  }
+
   ngOnInit() {
     this.me = JSON.parse(localStorage.userid);
     this.peer = localStorage.selectedUser;
@@ -155,7 +172,9 @@ export class PeerProfilePage implements OnInit {
       this.getPeerBooks(this.peer, this.setBooks);
     }
     this.setYourWants = this.setYourWants.bind(this);
-
+    this.setPeer = this.setPeer.bind(this);
+    this.findPeer = this.findPeer.bind(this);
+    this.findPeer(this.peer);
   }
 
 }
