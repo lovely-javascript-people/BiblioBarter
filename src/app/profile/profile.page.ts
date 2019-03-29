@@ -120,6 +120,7 @@ export class ProfilePage implements OnInit {
     this.offerid = this.offers[index].offerId;
     const id_offer = this.offerid;
     // this.apiService.userAcceptOffer(); // for when we refactor
+    // this.http.patch(`http://${this.local}/accept/offerlisting`, { params: { status: 'accepted', offerId: id_offer } })
     this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'accepted', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
