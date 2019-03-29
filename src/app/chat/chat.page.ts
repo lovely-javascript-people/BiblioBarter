@@ -119,16 +119,13 @@ export class ChatPage implements OnInit {
         this.newMessage = '';
       }
 
-  // local = 'http://localhost:3000';
-  // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-  // local = 'http://18.188.132.186:3000';
   local = 'localhost:3000';
   // local = 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
   // local = '18.188.132.186:3000';
 
       addUser() {
         const { userId } = this;
-        axios.post(`http://${this.local}/users`, { userId })
+        axios.post(`http://${this.local}/users`, { userId: localStorage.username })
           .then(() => {
             const tokenProvider = new Chatkit.TokenProvider({
               url: `http://${this.local}/authenticate`
@@ -141,11 +138,13 @@ export class ChatPage implements OnInit {
             return chatManager
               .connect({
                 onAddedToRoom: room => {
+                  console.log('I connected');
                   this.userRooms.push(room);
                   this.getJoinableRooms();
                 },
               })
               .then(currentUser => {
+                debugger;
                 this.currentUser = currentUser;
                 this.connectToRoom('19418038');
                 this.getJoinableRooms();
