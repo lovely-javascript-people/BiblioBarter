@@ -144,7 +144,7 @@ export class ChatPage implements OnInit {
                 },
               })
               .then(currentUser => {
-                debugger;
+                // debugger;
                 this.currentUser = currentUser;
                 this.connectToRoom('19418038');
                 this.getJoinableRooms();

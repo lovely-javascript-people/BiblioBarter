@@ -378,7 +378,7 @@ app.post('/offerlisting', (req, res) => {
 
 
 // PATCH / offerlisting
-// Final transaction made by two users boolean changed
+// offer transaction, status change from pending to rejected
 app.patch('/offerlisting', (req, res) => {
   db.Offer.update(
     {
@@ -396,6 +396,18 @@ app.patch('/offerlisting', (req, res) => {
     res.status(401).send(JSON.stringify(`patch error: ${err}`));
   });
 });
+
+// PATCH / accept/offerlisting
+/**
+ * Patch request sent for accepted offers. Db status on offers table changes to accepted.
+ * Listings available column changed to false.
+ * Wants fulfilled column changes to true.
+ * @param {number} offerId offer id of offer to change to accepted.
+ * Use 
+ */
+app.patch('/accept/offerlisting', (req, res) => {
+  
+})
 
 // GET /offers
 // grabs all the user's offers and gives the information back for display
