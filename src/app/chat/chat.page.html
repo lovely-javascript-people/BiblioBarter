@@ -1,5 +1,6 @@
 <div class="App">
   <aside class="sidebar left-sidebar">
+<<<<<<< HEAD
     <a href="/Matches"><ion-button>Go Back</ion-button></a>
     <section *ngIf="!currentUser.id" class="join-chat">
       <h4>Join Chat</h4>
@@ -10,6 +11,10 @@
       </form>
     </section>
     <section *ngIf="currentUser.id" class="room-members">
+=======
+    <a href="/Matches"><button>Go Back</button></a>
+    <section class="room-members">
+>>>>>>> dc2ec981733786cd6d7fc1071b4950e2196b8bf6
       <h4>Room Users</h4>
       <ul class="user-list">
         <li *ngFor="let user of roomUsers">
@@ -41,7 +46,7 @@
         </li>
       </ul>
     </section>
-    <footer *ngIf="currentUser.id" class="chat-footer">
+    <footer class="chat-footer">
       <form class="message-form" (ngSubmit)='sendMessage()'>
         <input class="message-input" placeholder="Type a message. Hit Enter to send" type="text" name="message"
           [(ngModel)]="newMessage" />
@@ -79,7 +84,7 @@
         </ul>
       </section>
     </section>
-    <section *ngIf="currentUser.id" class="create-room">
+    <section class="create-room">
       <form (ngSubmit)="createRoom()">
         <input type="text" style="width:auto" [(ngModel)]="newRoom.name" name="room-name" id="room-name"
           placeholder="Create a room"><br />

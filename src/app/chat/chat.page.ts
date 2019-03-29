@@ -40,6 +40,7 @@ export class ChatPage implements OnInit {
       }
 
   createRoom() {
+    this.addUser();
     const { newRoom: { name, isPrivate }, currentUser } = this;
 
     if (name.trim() === '') {return;}
@@ -118,7 +119,14 @@ export class ChatPage implements OnInit {
         this.newMessage = '';
       }
 
+<<<<<<< HEAD
   local = 'localhost:3000';
+=======
+  local = 'http://localhost:3000';
+  // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
+  // local = 'http://18.188.132.186:3000';
+  // local = 'localhost:3000';
+>>>>>>> dc2ec981733786cd6d7fc1071b4950e2196b8bf6
   // local = 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
   // local = '18.188.132.186:3000';
 
@@ -131,7 +139,11 @@ export class ChatPage implements OnInit {
             });
             const chatManager = new Chatkit.ChatManager({
               instanceLocator: 'v1:us1:1264d0d5-5678-4765-abf9-ec9e94daba1f',
+<<<<<<< HEAD
               userId,
+=======
+              userId: localStorage.username,
+>>>>>>> dc2ec981733786cd6d7fc1071b4950e2196b8bf6
               tokenProvider
             });
             return chatManager
@@ -149,9 +161,15 @@ export class ChatPage implements OnInit {
           }).catch(error => console.error(error));
       }
 
+<<<<<<< HEAD
   title = 'app';
 
   constructor(private chat: ChatService) { }
+=======
+  // title = 'app';
+
+  // constructor(private chat: ChatService) { }
+>>>>>>> dc2ec981733786cd6d7fc1071b4950e2196b8bf6
 
   ngOnInit() {
     this.chat.messages.subscribe(msg => {

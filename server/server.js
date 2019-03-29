@@ -56,6 +56,7 @@ app.get('/matches', (req, res) => {
           id_book: listing.id_book,
         },
       });
+      if (user.id_school) {
       const school = await db.School.findOne({
         where: {
           id_school: user.id_school
@@ -70,6 +71,7 @@ app.get('/matches', (req, res) => {
         matchObj[user.user_name].push(book);
       }
       matches.push([await user, await book]);
+    }
     }
   }).then(() => {
     res.status(200).send(matchObj);
@@ -722,3 +724,31 @@ app.delete('/deleteWant', (req, res) => {
     res.status(401).send(JSON.stringify(`Error in deleting want: ${err}`));
   });
 });
+
+
+// GET //getUser
+app.get('/getUser', (req, res) => {
+  console.log(req.query);
+  let allUserInfo;
+  db.User.findOne({
+    where: {
+      id_user: req.query.id,
+    },
+  }).then(async (userInfo) => {
+    console.log(userInfo, 'USER INFO IN GET USER');
+    allUserInfo = {...userInfo.dataValues};
+    let schoolInfo = await db.School.findOne({
+        where: {
+          id_school: userInfo.id_school
+        },
+      });
+      allUserInfo.school = await schoolInfo;
+    return allUserInfo;
+  }).then((userInfo) => {
+    console.log(userInfo, 'PART TWO OF USR INFO');
+    res.status(200).send(userInfo);
+  }).catch((err) => {
+    res.status(500).send(JSON.stringify(`Error in retreiving peer information: ${err}`));
+  })
+
+})
