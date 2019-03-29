@@ -40,7 +40,6 @@ export class ChatPage implements OnInit {
       }
 
   createRoom() {
-    this.addUser();
     const { newRoom: { name, isPrivate }, currentUser } = this;
 
     if (name.trim() === '') {return;}
@@ -89,12 +88,13 @@ export class ChatPage implements OnInit {
               this.messages.push(message);
             },
             onPresenceChanged: () => {
+              if (this.currentRoom.users) {
               this.roomUsers = this.currentRoom.users.sort((a) => {
                 if (a.presence.state === 'online') {
                   return -1;
                 }
                 return 1;
-              });
+              });}
             },
           },
         })
@@ -144,12 +144,34 @@ export class ChatPage implements OnInit {
                 },
               })
               .then(currentUser => {
-                // debugger;
                 this.currentUser = currentUser;
-                this.connectToRoom('19418038');
+                this.connectToRoom('19418647');
                 this.getJoinableRooms();
               });
-          }).catch(error => console.error(error));
+          }).catch(error => {
+            const tokenProvider = new Chatkit.TokenProvider({
+              url: `http://${this.local}/authenticate`
+            });
+            const chatManager = new Chatkit.ChatManager({
+              instanceLocator: 'v1:us1:1264d0d5-5678-4765-abf9-ec9e94daba1f',
+              userId: localStorage.username,
+              tokenProvider
+            });
+            return chatManager
+              .connect({
+                onAddedToRoom: room => {
+                  console.log('I connected');
+                  this.userRooms.push(room);
+                  this.getJoinableRooms();
+                },
+              })
+              .then(currentUser => {
+                this.currentUser = currentUser;
+                this.connectToRoom('19418647');
+                this.getJoinableRooms();
+              });
+
+          });
       }
 
   // title = 'app';
@@ -157,6 +179,7 @@ export class ChatPage implements OnInit {
   // constructor(private chat: ChatService) { }
 
   ngOnInit() {
+    this.addUser();
     // this.chat.messages.subscribe(msg => {
     //   console.log(msg);
     // });
