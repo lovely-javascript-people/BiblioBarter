@@ -33,6 +33,14 @@ export class ProfilePage implements OnInit {
   money_exchanged: number;
   deleteId: number;
   deleteString: string;
+  
+    // to send to counteroffer modal
+    peerid: number;
+    peerMoney: string;
+    peerTitles: string[];
+    peer: string;
+    myTitles: string[];
+    offerId: number;
 
   constructor(
     private apiService: ApiService,
@@ -43,10 +51,10 @@ export class ProfilePage implements OnInit {
     public alertController: AlertController,
   ) { }
 
-    local = 'http://localhost:3000';
+    // local = 'http://localhost:3000';
     // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
     // local = 'http://18.188.132.186:3000';
-    // local = 'localhost:3000';
+    local = 'localhost:3000';
 
   setUser(data) {
     console.log(data, 'THIS DATA', data[0], 'length');
@@ -69,7 +77,9 @@ export class ProfilePage implements OnInit {
     var data = { message: 'hello world' };
     const modalPage = await this.modal.create({
       component: WantListModal,
-      componentProps: { values: data }
+      componentProps: { 
+        user: data,
+      }
     });
     return await modalPage.present();
   }
@@ -84,10 +94,20 @@ export class ProfilePage implements OnInit {
   }
 
   async openCounterOfferModal() {
+    // let peerId = this.peerid;
+    // console.log(peerId, 'PEER ID TEST');
+
     var data = { message: 'hello world' };
     const modalPage = await this.modal.create({
       component: CounterOfferModal,
-      componentProps: { values: data }
+      componentProps: { 
+        peerid: this.peerid,
+        peerMoney: this.peerMoney,
+        peerTitles: this.peerTitles,
+        peer: this.peer,
+        myTitles: this.myTitles,
+        offerId: this.offerId,
+      }
     });
     return await modalPage.present();
   }
@@ -111,9 +131,15 @@ export class ProfilePage implements OnInit {
 
     console.log(this.offers, 'THIS DOT OFFERS OFFERS OFFERS');
 
-    let idRecipient = this.offers[0].peerid;
+    this.peerid = this.offers[0].peerid;
+    this.peerMoney = this.offers[0].peerMoney;
+    this.peerTitles = this.offers[0].peerTitles;
+    this.peer = this.offers[0].peer;
+    this.myTitles = this.offers[0].myTitles;
+    this.offerId = this.offers[0].offerId;
+    // console.log(`${this.peerid} peer id, ${this.peerMoney} peer money, ${this.peerTitles} peer Titles ${this.peer} peer ${this.offerId} offer id ${this.myTitles} my titles`);
 
-    localStorage.setItem('peerid', idRecipient.toString());
+    // localStorage.setItem('peerid', idRecipient.toString());
 
     // this.apiService.counterOffer(idOfferPrev, idRecipient, idSender, listings, money);
   }
@@ -171,7 +197,12 @@ export class ProfilePage implements OnInit {
     offerObj.status = offer.offer.status;
     offerObj.email = offer.peerInfo.email;
     offerObj.offerId = offer.offer.id_offer;
-    offerObj.money = offer.offer.money_exchange_cents / 100;
+
+    if(offer.offer.money_exchange_cents > 0) {
+      offerObj.userMoney = `and $${offer.offer.money_exchange_cents / 100}`;
+    } else if(offer.offer.money_exchange_cents < 0){
+       offerObj.peerMoney = `and $${((-1 * offer.offer.money_exchange_cents) / 100)}`;
+    }
     
     offs.push(offerObj);
     i++;
@@ -194,6 +225,12 @@ export class ProfilePage implements OnInit {
         offerObj.status = offer.offer.status;
         offerObj.email = offer.peerInfo.email;
         offerObj.offerId = offer.offer.id_offer;
+
+        if(offer.offer.money_exchange_cents > 0) {
+          offerObj.userMoney = `and $${offer.offer.money_exchange_cents / 100}`;
+        } else if(offer.offer.money_exchange_cents < 0){
+           offerObj.peerMoney = `and $${((-1 * offer.offer.money_exchange_cents) / 100)}`;
+        }
         
         acceptedOffers.push(offerObj);
         i++;
@@ -260,40 +297,30 @@ export class ProfilePage implements OnInit {
   }
 
   deleteListing(bookId, listingId, listing) {
-    console.log(listingId, 'delete listing clicked');
     this.presentToast(listing);
+    console.log(listingId, 'delete listing clicked');
     this.http.delete(`http://${this.local}/deleteListing`, { params: { bookId, listingId } })
       .subscribe((data) => {
         console.log(data, 'delete listing');
       });
   }
 
-  // deleteWant() {
+
   deleteWant(wantId, want) {
 
-    console.log('delete want', wantId);
-
     this.presentToast(want);
+    console.log('delete want', wantId);
     this.http.delete(`http://${this.local}/deleteWant`, { params: { wantId } })
-      .subscribe((data) => {
-        console.log(data, 'delete want');
-      });
+    .subscribe((data) => {
+      console.log(data, 'delete want');
+    });
+
   }
 
   deleteWantAlert(wantId, want) {
     this.presentAlertMultipleButtons(this.deleteWant(wantId, want));
   }
 
-// deleteBookAlert(callback) {
-//   this.presentAlertMultipleButtons(callback);
-// }
-
-// deleteBookAlert(callback, id, string) {
-//   this.deleteId = id;
-//   this.deleteString = string;
-//   // this.presentAlertMultipleButtons(callback(id, string));
-//   this.presentAlertMultipleButtons(callback);
-// }
 
   async presentToast(item) {
     const toast = await this.toastController.create({

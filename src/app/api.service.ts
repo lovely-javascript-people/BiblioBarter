@@ -12,7 +12,6 @@ export class ApiService {
   }
 
   host = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-  // host = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
   local = 'http://localhost:3000';
   // local = 'http://18.188.132.186:3000';
 
@@ -46,7 +45,15 @@ export class ApiService {
       });
   }
 
+  // getBookInfoForOfferingList(isbn: string, callback) {
+  //   this.http.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json`) // book info from book api
+  //     .subscribe(((bookInfo: any) => {
+  //       callback(bookInfo); // gets title of book
+  //     }));
+  // }
+
   getBookInfoForOfferingList(isbn: string, callback) {
+    // https://www.googleapis.com/books/v1/volumes?q=isbn:9781573101370
     this.http.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json`) // book info from book api
       .subscribe(((bookInfo: any) => {
         callback(bookInfo); // gets title of book
@@ -147,7 +154,7 @@ export class ApiService {
 
     getMatches(callback): any {
       // const DNS = process.env.DEVELOPMENT === 'development' ?
-      // '/matches' : 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000/matches';
+      console.log('IN GET MATCHES ON API SERVICE RIGHT HERE');
       this.http.get(`${this.local}/matches`).subscribe((response) => {
       callback(response);
       });
