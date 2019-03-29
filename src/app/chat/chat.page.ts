@@ -125,7 +125,7 @@ export class ChatPage implements OnInit {
 
       addUser() {
         const { userId } = this;
-        axios.post(`http://${this.local}/users`, { userId })
+        axios.post(`http://${this.local}/users`, { userId: localStorage.username })
           .then(() => {
             const tokenProvider = new Chatkit.TokenProvider({
               url: `http://${this.local}/authenticate`
@@ -138,11 +138,13 @@ export class ChatPage implements OnInit {
             return chatManager
               .connect({
                 onAddedToRoom: room => {
+                  console.log('I connected');
                   this.userRooms.push(room);
                   this.getJoinableRooms();
                 },
               })
               .then(currentUser => {
+                debugger;
                 this.currentUser = currentUser;
                 this.connectToRoom('19418038');
                 this.getJoinableRooms();

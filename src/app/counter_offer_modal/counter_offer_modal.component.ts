@@ -78,9 +78,9 @@ export class CounterOfferModal implements OnInit {
     this.setYourBooks = this.setYourBooks.bind(this);
     this.setBooks = this.setBooks.bind(this);
     this.setYourWants = this.setYourWants.bind(this);
+    this.apiService.getPeerProfile(this.peerid, this.setBooks);
     this.apiService.renderListingsList(this.setYourBooks);
     this.apiService.renderWantList(this.setYourWants);
-    this.apiService.getPeerProfile(localStorage.peerid, this.setBooks);
   }
 
 }
