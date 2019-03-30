@@ -403,11 +403,74 @@ app.patch('/offerlisting', (req, res) => {
  * Listings available column changed to false.
  * Wants fulfilled column changes to true.
  * @param {number} offerId offer id of offer to change to accepted.
- * Use 
+ * @param {number} peerid peer's id
+ * @param {number} userId user's id
+ * @param {array} myTitles array of titles 
+ * @param {array} peerTitles array of titles from peer
+ * Use offerId to change status to accepted.
+ * Change all status on Want and Listings tables so they no longer display on user's page.
  */
+
 app.patch('/accept/offerlisting', (req, res) => {
-  
-})
+  var allListingIdsOfOffer = [];
+  let { offerId, peerid, userId, peerTitles, myTitles } = req.body.params;
+  return db.Offer.update({
+    status: 'accepted',
+  },
+  {
+    returning: true,
+    where: {
+      id_offer: offerId,
+    },
+    }).then((booksGalore) => {
+    return db.Offer_Listing.findAll({
+      where: {
+        id_offer: offerId,
+      },
+    });
+  }).then((allAccList) => {
+    for (let i = 0; i < allAccList.length; i++) {
+      allListingIdsOfOffer.push(allAccList[i].id_listing);
+      db.Listing.update({
+        available: false,
+      }, {
+          where: {
+            id_listing: allAccList[i].id_listing,
+          },
+          returning: true,
+          plain: true,
+        });
+    }
+  }).then((steady) => {
+    myTitles = ['The diversity of fishes'];
+    for (let j = 0; j < myTitles.length; j++) {
+      db.Want.update({
+        fulfilled: true,
+      }, {
+        where: {
+          title: myTitles[j],
+          id_user: peerid,
+        },
+      }).catch((err) => console.log(err));
+    }
+  }).then(() => {
+    peerTitles = ['Technical drawing with engineering graphics', 'The AMA Guide to Management Development'];
+    for (let i = 0; i < peerTitles.length; i++) {
+      db.Want.update({
+        fulfilled: true,
+      }, {
+        where: {
+          title: peerTitles[i],
+          id_user: userId,
+        },
+      }).catch((err) => console.log(err));
+    }
+  }).then(() => {
+    res.status(200).send(JSON.stringify('Successful accept'));
+  }).catch((err) => {
+    res.status(500).send(JSON.stringify(`Unsuccessful accept, error: {err}`));
+  });
+});
 
 // GET /offers
 // grabs all the user's offers and gives the information back for display
@@ -508,7 +571,7 @@ app.get('/offers', (req, res) => {
         currentBookListing = await db.Listing.findOne({
             where: {
               id_listing: listingsForOffer[i].id_listing,
-              // includes: [db.Book],
+              // include: [db.Book],
             },
           });
         currentBook = await db.Book.findOne({
