@@ -222,6 +222,7 @@ export class ProfilePage implements OnInit {
        offerObj.peerMoney = `and $${((-1 * money_exchange_cents) / 100)}`;
     }
     
+    
     offs.push(offerObj);
     i++;
       } else if (status === 'accepted' && offer.id_sender !== Number(localStorage.userid)) {
