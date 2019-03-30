@@ -34,15 +34,15 @@ export class ChatService {
   }
 
   addUser(roomName, peerId) {
-    let name = localStorage.username
-    axios.post(`http://${this.local}/users`, { 'userId': name })
+    let userId = localStorage.username
+    axios.post(`http://${this.local}/users`, { userId })
       .then(() => {
         const tokenProvider = new Chatkit.TokenProvider({
           url: `http://${this.local}/authenticate`
         });
         const chatManager = new Chatkit.ChatManager({
           instanceLocator: 'v1:us1:1264d0d5-5678-4765-abf9-ec9e94daba1f',
-          userId: name,
+          userId,
           tokenProvider
         });
         return chatManager
@@ -61,7 +61,7 @@ export class ChatService {
         });
         const chatManager = new Chatkit.ChatManager({
           instanceLocator: 'v1:us1:1264d0d5-5678-4765-abf9-ec9e94daba1f',
-          userId: name,
+          userId,
           tokenProvider
         });
         return chatManager

@@ -380,14 +380,15 @@ app.post('/offerlisting', (req, res) => {
 // PATCH / offerlisting
 // Final transaction made by two users boolean changed
 app.patch('/offerlisting', (req, res) => {
+  const { body: { params: { status, offerId } } } = req;
   db.Offer.update(
     {
-      status: req.body.params.status,
+      status,
     },
     {
     returning: true,
     where: {
-      id_offer: req.body.params.offerId,
+      id_offer: offerId,
       },
   },
   ).then(([listingsUpdated, [updatedListing]]) => {

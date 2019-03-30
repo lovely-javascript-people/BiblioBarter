@@ -141,7 +141,7 @@ export class CounterOfferModal implements OnInit {
     // });
     // this.presentToast('Your offer has been sent.');
 
-    this.http.patch(`http://${this.local}/offerlisting`, {params: { status: 'rejected', offerId: prevId }})
+    this.http.patch(`http://${this.local}/offerlisting`, {params: { status: 'rejected', offerId: this.offerId }})
       .subscribe((data) => {
         console.log(data, 'OLD OFFER SHOULD BE REJECTED')
       })
