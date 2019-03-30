@@ -6,12 +6,12 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding fullscreen="true">
-  <ion-avatar>
+  <ion-avatar style="margin: 0 auto">
      <img src={{img}} *ngIf="loaded" /><br />
   </ion-avatar>
-  <div *ngIf="loaded" style="Text-align:center">{{school}}</div>
+  <div *ngIf="loaded" style="width:100%;Text-align:center; font-size: 20px; font-weight:700; font-size:120%">{{school}}</div>
   <div style="width:100%;Text-align:center; font-size: 20px; font-weight:700; font-size:120%">
-      <p>{{user | uppercase}}</p>
+      <p>Hello, {{user | uppercase}}</p>
   </div>
   <br />
   <!-- <ion-content>
