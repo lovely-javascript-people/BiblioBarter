@@ -32,7 +32,9 @@ export class PeerProfilePage implements OnInit {
   peerUsername: string;
   image: string;
   peerSchool: string;
+  money: number;
 
+  
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router, public toastController: ToastController,) {}
 
   getPeerBooks(id, callback) {
