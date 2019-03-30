@@ -212,6 +212,7 @@ export class ProfilePage implements OnInit {
        offerObj.peerMoney = `and $${((-1 * offer.offer.money_exchange_cents) / 100)}`;
     }
     
+    
     offs.push(offerObj);
     i++;
       } else if (offer.offer.status === 'accepted' && offer.offer.id_sender !== Number(localStorage.userid)) {
@@ -245,25 +246,25 @@ export class ProfilePage implements OnInit {
       }
     }
 
-    offs.forEach((listing: any) => {
-      if(listing.myTitles.length > 1) {
-        listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
-      }
+    // offs.forEach((listing: any) => {
+    //   if(listing.myTitles.length > 1) {
+    //     listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
+    //   }
 
-      if(listing.peerTitles.length > 1) {
-        listing.peerTitles.splice(listing.peerTitles.length - 1, 0, ' and ');
-      }
-    });
+    //   if(listing.peerTitles.length > 1) {
+    //     listing.peerTitles.splice(listing.peerTitles.length - 1, 0, ' and ');
+    //   }
+    // });
 
-    acceptedOffers.forEach((listing: any) => {
-      if(listing.myTitles.length > 1) {
-        listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
-      }
+    // acceptedOffers.forEach((listing: any) => {
+    //   if(listing.myTitles.length > 1) {
+    //     listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
+    //   }
 
-      if(listing.peerTitles.length > 1) {
-        listing.peerTitles.splice(listing.peerTitles.length - 1, 0, ' and ');
-      }
-    });
+    //   if(listing.peerTitles.length > 1) {
+    //     listing.peerTitles.splice(listing.peerTitles.length - 1, 0, ' and ');
+    //   }
+    // });
 
     this.offers = offs;
     this.acceptedOffs = acceptedOffers;
