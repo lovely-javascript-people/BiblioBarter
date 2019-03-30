@@ -115,6 +115,9 @@ export class ProfilePage implements OnInit {
         offerId: this.offerId,
       }
     });
+    modalPage.onDidDismiss().then(data => {
+      this.apiService.getOffers(this.renderOffers);
+    });
     return await modalPage.present();
   }
   
