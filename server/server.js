@@ -41,7 +41,11 @@ app.get('/callback', (req, res) => {
 let matches;
 let matchObj;
 app.get('/matches', (req, res) => {
-  db.Listing.findAll().then(async (data) => {
+  db.Listing.findAll({
+    where: {
+      available: true,
+    }
+  }).then(async (data) => {
   // give an array of object, each object is a user
     matches = [];
     matchObj = {};
@@ -212,6 +216,7 @@ app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new f
 app.get('/user/want', (req, res) => db.Want.findAll({
     where: {
       id_user: Object.keys(req.query)[0],
+      fulfilled: false,
     },
   })
   .then((allWantBooks) => {
@@ -265,6 +270,7 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
 app.get('/user/listing', (req, res) => db.Listing.findAll({
     where: {
       id_user: Object.keys(req.query)[0],
+      available: true,
     },
     include: [db.Book],
   }).then((allListingBooks) => {
@@ -281,7 +287,11 @@ app.get('/search/listing/isbn', (req, res) => {
     where: {
       isbn: isbnNum,
     },
-    include: [db.Listing],
+    include: [{
+      model: db.Listing, 
+      where: {
+      available: true,
+    }}],
   }).then((allBooksWithIsbn) => {
     const listingResults = [];
     allBooksWithIsbn.forEach((book) => {
@@ -301,6 +311,7 @@ app.get('/peer', (req, res) => {
   db.Want.findAll({
     where: {
       id_user: req.query.peerId,
+      fulfilled: false,
     },
   }).catch((err) => {
     res.status(401).send(JSON.stringify(`error in peer wants: ${err}`));
@@ -310,6 +321,7 @@ app.get('/peer', (req, res) => {
     db.Listing.findAll({
       where: {
         id_user: req.query.peerId,
+        available: true,
       },
     }).then((data) => {
       listings = data;
@@ -495,6 +507,7 @@ app.get('/offers', (req, res) => {
   db.Listing.findAll({ // first find all listings for this user
     where: {
       id_user: req.query.id_user,
+      available: true,
     },
   }).then(async (data) => {
     console.log(data, 'ALL YOUR LISTINGS');
