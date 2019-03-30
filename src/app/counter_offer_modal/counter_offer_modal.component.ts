@@ -32,7 +32,12 @@ export class CounterOfferModal implements OnInit {
   offeredMoney: number;
   wantMoney: number;
 
-  constructor(public modal: ModalController, private http: HttpClient, private apiService: ApiService) { }
+  constructor(
+    public modal: ModalController, 
+    private http: HttpClient, 
+    private apiService: ApiService,
+    private toastController: ToastController,
+    ) { }
 
   local = 'localhost:3000';
 
@@ -81,7 +86,7 @@ export class CounterOfferModal implements OnInit {
     // send up all listing ids to modal
 
     // patch to change last offer to rejected
-    let prevId = this.offerId;
+    // let prevId = this.offerId;
 
     // const allListings = [];
     // const wantBooks = [];
@@ -149,15 +154,15 @@ export class CounterOfferModal implements OnInit {
     this.closeModal();
   }
 
-  // async presentToast(message) {
-  //   const toast = await this.toastController.create({
-  //     message: message,
-  //     duration: 2000,
-  //     color: 'primary',
-  //     position: 'top',
-  //   });
-  //   toast.present();
-  // }
+  async presentToast(message) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: 'primary',
+      position: 'top',
+    });
+    toast.present();
+  }
 
   ngOnInit() {
     this.setYourBooks = this.setYourBooks.bind(this);

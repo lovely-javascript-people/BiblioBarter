@@ -24,6 +24,28 @@
         </li>
       </ul>
     </section>
+    <section *ngIf="joinableRooms.length > 0" class="joinable-rooms">
+      <h4>Joinable rooms</h4>
+      <ul class="room-list">
+        <li *ngFor="let room of joinableRooms">
+          <div class="room" (click)="joinRoom(room.id)">
+            <span class="room-status" *ngIf="room.isPrivate; else publicRoom">🔒</span>
+            <ng-template #publicRoom>
+              <span>🌐</span>
+            </ng-template>
+            <span class="room-name">{{ room.name }}</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+  <section class="create-room">
+    <form (ngSubmit)="createRoom()">
+      <input type="text" style="width:auto" [(ngModel)]="newRoom.name" name="room-name" id="room-name"
+        placeholder="Create a room"><br />
+      <label for="is-private">
+        <input type="checkbox" style="width:auto" [(ngModel)]="newRoom.isPrivate" name="is-private" id="is-private">
+        <span>
+          <-- click if room is private</span> </label> </form> </section>
     <form *ngIf="currentRoom.hasOwnProperty(isPrivate) && !currentRoom.isPrivate" (ngSubmit)="addUserToRoom()">
       <label for="user-name">Invite user to {{ currentRoom.name }}</label>
       <input type="text" class="newUser-input" [(ngModel)]="newUser" name="user-name" id="user-name"
@@ -54,32 +76,8 @@
       </form>
     </footer>
   </main>
-  <aside class="sidebar right-sidebar">
-    <section class="room-section">
       
-      <section *ngIf="joinableRooms.length > 0" class="joinable-rooms">
-        <h4>Joinable rooms</h4>
-        <ul class="room-list">
-          <li *ngFor="let room of joinableRooms">
-            <div class="room" (click)="joinRoom(room.id)">
-              <span class="room-status" *ngIf="room.isPrivate; else publicRoom">🔒</span>
-              <ng-template #publicRoom>
-                <span>🌐</span>
-              </ng-template>
-              <span class="room-name">{{ room.name }}</span>
-            </div>
-          </li>
-        </ul>
-      </section>
-    </section>
-    <section class="create-room">
-      <form (ngSubmit)="createRoom()">
-        <input type="text" style="width:auto" [(ngModel)]="newRoom.name" name="room-name" id="room-name"
-          placeholder="Create a room"><br />
-        <label for="is-private">
-          <input type="checkbox" style="width:auto" [(ngModel)]="newRoom.isPrivate" name="is-private" id="is-private">
-          <span>
-            <-- click if room is private</span> </label> </form> </section> </aside> </div> <!-- <ul id="messages">
+     <!-- <ul id="messages">
               </ul>
               <form action="">
                 <input id="m" autocomplete="off" /><button></button>
