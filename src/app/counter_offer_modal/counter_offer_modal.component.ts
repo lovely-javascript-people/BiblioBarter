@@ -86,7 +86,7 @@ export class CounterOfferModal implements OnInit {
     // send up all listing ids to modal
 
     // patch to change last offer to rejected
-    // let prevId = this.offerId;
+    let prevId = this.offerId;
 
     // const allListings = [];
     // const wantBooks = [];
@@ -141,7 +141,7 @@ export class CounterOfferModal implements OnInit {
     // });
     // this.presentToast('Your offer has been sent.');
 
-    this.http.patch(`http://${this.local}/offerlisting`, {params: { status: 'rejected', offerId: this.offerId }})
+    this.http.patch(`http://${this.local}/offerlisting`, {params: { status: 'rejected', offerId: prevId }})
       .subscribe((data) => {
         console.log(data, 'OLD OFFER SHOULD BE REJECTED')
       })

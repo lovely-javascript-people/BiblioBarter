@@ -129,7 +129,7 @@ export class ProfilePage implements OnInit {
     this.offerid = offerId;
     // this.apiService.userAcceptOffer(); // for when we refactor
     // this.http.patch(`http://${this.local}/accept/offerlisting`, { params: { status: 'accepted', offerId: id_offer } })
-    this.http.patch(`http://${this.local}/offerlisting`, { 
+    this.http.patch(`http://${this.local}/accept/offerlisting`, { 
       params: { 
         status: 'accepted', 
         offerId, 
