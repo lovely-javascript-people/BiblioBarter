@@ -25,14 +25,13 @@ export class PeerProfilePage implements OnInit {
   listings: any[];
   entireListings: any[];
   possibleBooks: any[] = [];
-  isReady: string;
+  isReady: number = 0;
   wantMoney = 0;
   offeredMoney = 0;
   money: number;
   peerUsername: string;
   image: string;
   peerSchool: string;
-  money: number;
 
   
   constructor(private apiService: ApiService, public modal: ModalController, private router: Router, public toastController: ToastController,) {}
@@ -54,13 +53,14 @@ export class PeerProfilePage implements OnInit {
     const lists = this.wants.map(list => list.title);
     const xRefer = data.filter(piece => lists.includes(piece.book.title));
     this.possibleBooks.push(xRefer);
+    this.isReady += 1;
   }
 
   setYourWants(data) {
     const wants = this.listings.map(want => want.title);
     const xRefer = data.filter(piece => wants.includes(piece.title));
     this.possibleBooks.push(xRefer);
-    this.isReady = 'Ready!';
+    this.isReady += 1;
   }
 
   async setBooks(data) {

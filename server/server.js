@@ -41,7 +41,11 @@ app.get('/callback', (req, res) => {
 let matches;
 let matchObj;
 app.get('/matches', (req, res) => {
-  db.Listing.findAll().then(async (data) => {
+  db.Listing.findAll({
+    where: {
+      available: true,
+    }
+  }).then(async (data) => {
   // give an array of object, each object is a user
     matches = [];
     matchObj = {};
@@ -212,6 +216,7 @@ app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new f
 app.get('/user/want', (req, res) => db.Want.findAll({
     where: {
       id_user: Object.keys(req.query)[0],
+      fulfilled: false,
     },
   })
   .then((allWantBooks) => {
@@ -265,6 +270,7 @@ app.post('/user/listing', (req, res) => { // JUST CHANGED TO POST, CHECK WITH ne
 app.get('/user/listing', (req, res) => db.Listing.findAll({
     where: {
       id_user: Object.keys(req.query)[0],
+      available: true,
     },
     include: [db.Book],
   }).then((allListingBooks) => {
@@ -281,7 +287,11 @@ app.get('/search/listing/isbn', (req, res) => {
     where: {
       isbn: isbnNum,
     },
-    include: [db.Listing],
+    include: [{
+      model: db.Listing, 
+      where: {
+      available: true,
+    }}],
   }).then((allBooksWithIsbn) => {
     const listingResults = [];
     allBooksWithIsbn.forEach((book) => {
@@ -301,6 +311,7 @@ app.get('/peer', (req, res) => {
   db.Want.findAll({
     where: {
       id_user: req.query.peerId,
+      fulfilled: false,
     },
   }).catch((err) => {
     res.status(401).send(JSON.stringify(`error in peer wants: ${err}`));
@@ -310,6 +321,7 @@ app.get('/peer', (req, res) => {
     db.Listing.findAll({
       where: {
         id_user: req.query.peerId,
+        available: true,
       },
     }).then((data) => {
       listings = data;
@@ -378,22 +390,98 @@ app.post('/offerlisting', (req, res) => {
 
 
 // PATCH / offerlisting
-// Final transaction made by two users boolean changed
+// offer transaction, status change from pending to rejected
 app.patch('/offerlisting', (req, res) => {
+  const { body: { params: { status, offerId } } } = req;
   db.Offer.update(
     {
-      status: req.body.params.status,
+      status,
     },
     {
     returning: true,
     where: {
-      id_offer: req.body.params.offerId,
+      id_offer: offerId,
       },
   },
   ).then(([listingsUpdated, [updatedListing]]) => {
     res.status(200).send(updatedListing);
   }).catch((err) => {
     res.status(401).send(JSON.stringify(`patch error: ${err}`));
+  });
+});
+
+// PATCH / accept/offerlisting
+/**
+ * Patch request sent for accepted offers. Db status on offers table changes to accepted.
+ * Listings available column changed to false.
+ * Wants fulfilled column changes to true.
+ * @param {number} offerId offer id of offer to change to accepted.
+ * @param {number} peerid peer's id
+ * @param {number} userId user's id
+ * @param {array} myTitles array of titles 
+ * @param {array} peerTitles array of titles from peer
+ * Use offerId to change status to accepted.
+ * Change all status on Want and Listings tables so they no longer display on user's page.
+ */
+
+app.patch('/accept/offerlisting', (req, res) => {
+  var allListingIdsOfOffer = [];
+  let { offerId, peerid, userId, peerTitles, myTitles } = req.body.params;
+  return db.Offer.update({
+    status: 'accepted',
+  },
+  {
+    returning: true,
+    where: {
+      id_offer: offerId,
+    },
+    }).then((booksGalore) => {
+    return db.Offer_Listing.findAll({
+      where: {
+        id_offer: offerId,
+      },
+    });
+  }).then((allAccList) => {
+    for (let i = 0; i < allAccList.length; i++) {
+      allListingIdsOfOffer.push(allAccList[i].id_listing);
+      db.Listing.update({
+        available: false,
+      }, {
+          where: {
+            id_listing: allAccList[i].id_listing,
+          },
+          returning: true,
+          plain: true,
+        });
+    }
+  }).then((steady) => {
+    myTitles = ['The diversity of fishes'];
+    for (let j = 0; j < myTitles.length; j++) {
+      db.Want.update({
+        fulfilled: true,
+      }, {
+        where: {
+          title: myTitles[j],
+          id_user: peerid,
+        },
+      }).catch((err) => console.log(err));
+    }
+  }).then(() => {
+    peerTitles = ['Technical drawing with engineering graphics', 'The AMA Guide to Management Development'];
+    for (let i = 0; i < peerTitles.length; i++) {
+      db.Want.update({
+        fulfilled: true,
+      }, {
+        where: {
+          title: peerTitles[i],
+          id_user: userId,
+        },
+      }).catch((err) => console.log(err));
+    }
+  }).then(() => {
+    res.status(200).send(JSON.stringify('Successful accept'));
+  }).catch((err) => {
+    res.status(500).send(JSON.stringify(`Unsuccessful accept, error: {err}`));
   });
 });
 
@@ -420,6 +508,7 @@ app.get('/offers', (req, res) => {
   db.Listing.findAll({ // first find all listings for this user
     where: {
       id_user: req.query.id_user,
+      available: true,
     },
   }).then(async (data) => {
     console.log(data, 'ALL YOUR LISTINGS');
@@ -447,21 +536,21 @@ app.get('/offers', (req, res) => {
       console.log(offersOnListing, 'OFFER LISTING');
       for (let p = 0; p < offersOnListing.length; p++) {
         allOffersForIds.push(offersOnListing[p].id_offer);
-      }
+      } // all is good at this point
       for (let j = 0; j < offersOnListing.length; j++) { // on each offer_listing, grab id_offer
         offerIdForListing = await db.Offer.findAll({
           where: {
             id_offer: offersOnListing[j].id_offer,
           },
         });
-        if (! await allOffersForIds.includes(offerIdForListing[0].id_offer)) { // add offer id to array if not already in
+        if (!await allOffersForIds.includes(offerIdForListing[0].id_offer)) { // add offer id to array if not already in
           allOffersForIds.push(offerIdForListing[0].id_offer); // 
         }
-        if (! await allPeers.includes(offerIdForListing[0].id_sender) && // checks to see if user is sender or recipient
+        if (!await allPeers.includes(offerIdForListing[0].id_sender) && // checks to see if user is sender or recipient
         offerIdForListing[0].id_sender !== req.query.id_user) {
           allPeers.push(offerIdForListing[0].id_sender);
         }
-        if (! await allPeers.includes(offerIdForListing[0].id_recipient) && // then pushes the peer's id into array
+        if (!await allPeers.includes(offerIdForListing[0].id_recipient) && // then pushes the peer's id into array
           offerIdForListing[0].id_recipient !== req.query.id_user) { // may currently add user id as well
           allPeers.push(offerIdForListing[0].id_recipient);
         }
@@ -475,7 +564,7 @@ app.get('/offers', (req, res) => {
     // start with offer id, then move to grabbing each listing, part of each offer
     return allPeers;
   }).then(async (allpeers) => {
-    for (let k = 0; k < allOffersForIds.length; k++) {
+    for (let k = 0; k < _.uniq(allOffersForIds).length; k++) {
       console.log('enter async all offers');
       var oneCompleteOffer = {};
       let offerForId = await db.Offer.findOne({
@@ -496,7 +585,7 @@ app.get('/offers', (req, res) => {
         currentBookListing = await db.Listing.findOne({
             where: {
               id_listing: listingsForOffer[i].id_listing,
-              // includes: [db.Book],
+              // include: [db.Book],
             },
           });
         currentBook = await db.Book.findOne({
