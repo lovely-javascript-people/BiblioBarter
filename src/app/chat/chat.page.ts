@@ -123,22 +123,21 @@ export class ChatPage implements OnInit {
   // local = 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
   // local = '18.188.132.186:3000';
 
-      addUser() {
-        const { userId } = this;
-        axios.post(`http://${this.local}/users`, { userId: localStorage.username })
+      addUser(userId) {
+        let name = userId || localStorage.username
+        axios.post(`http://${this.local}/users`, { 'userId': name })
           .then(() => {
             const tokenProvider = new Chatkit.TokenProvider({
               url: `http://${this.local}/authenticate`
             });
             const chatManager = new Chatkit.ChatManager({
               instanceLocator: 'v1:us1:1264d0d5-5678-4765-abf9-ec9e94daba1f',
-              userId: localStorage.username,
+              userId: name,
               tokenProvider
             });
             return chatManager
               .connect({
                 onAddedToRoom: room => {
-                  console.log('I connected');
                   this.userRooms.push(room);
                   this.getJoinableRooms();
                 },
@@ -154,7 +153,7 @@ export class ChatPage implements OnInit {
             });
             const chatManager = new Chatkit.ChatManager({
               instanceLocator: 'v1:us1:1264d0d5-5678-4765-abf9-ec9e94daba1f',
-              userId: localStorage.username,
+              userId: name,
               tokenProvider
             });
             return chatManager
@@ -179,7 +178,7 @@ export class ChatPage implements OnInit {
   // constructor(private chat: ChatService) { }
 
   ngOnInit() {
-    this.addUser();
+    this.addUser(undefined);
     // this.chat.messages.subscribe(msg => {
     //   console.log(msg);
     // });

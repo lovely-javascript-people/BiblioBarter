@@ -115,6 +115,9 @@ export class ProfilePage implements OnInit {
         offerId: this.offerId,
       }
     });
+    modalPage.onDidDismiss().then(data => {
+      this.apiService.getOffers(this.renderOffers);
+    });
     return await modalPage.present();
   }
   
@@ -122,12 +125,19 @@ export class ProfilePage implements OnInit {
   acceptOffer(index) {
     console.log(this.allOffers, 'ALL OFFERS');
     console.log(this.offers[index], 'CLICKED ON OFFER');
-
-    this.offerid = this.offers[index].offerId;
-    const id_offer = this.offerid;
+    const {offerId, myTitles, peerTitles, peerid} = this.offers[index];
+    this.offerid = offerId;
     // this.apiService.userAcceptOffer(); // for when we refactor
     // this.http.patch(`http://${this.local}/accept/offerlisting`, { params: { status: 'accepted', offerId: id_offer } })
-    this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'accepted', offerId: id_offer } })
+    this.http.patch(`http://${this.local}/accept/offerlisting`, { 
+      params: { 
+        status: 'accepted', 
+        offerId, 
+        myTitles: myTitles.filter(title => title !== " and "), 
+        peerTitles: peerTitles.filter(title => title !== " and "), 
+        peerid, 
+        userId: localStorage.userid 
+      }})
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
         this.presentOfferToast('Offer has been accepted');
@@ -138,13 +148,13 @@ export class ProfilePage implements OnInit {
   counterOffer(index) {
 
     console.log(this.offers, 'THIS DOT OFFERS OFFERS OFFERS');
-
-    this.peerid = this.offers[0].peerid;
-    this.peerMoney = this.offers[0].peerMoney;
-    this.peerTitles = this.offers[0].peerTitles;
-    this.peer = this.offers[0].peer;
-    this.myTitles = this.offers[0].myTitles;
-    this.offerId = this.offers[0].offerId;
+    const { peerid, peerMoney, peerTitles, peer, myTitles, offerId } = this.offers[0];
+    this.peerid = peerid;
+    this.peerMoney = peerMoney;
+    this.peerTitles = peerTitles;
+    this.peer = peer;
+    this.myTitles = myTitles;
+    this.offerId = offerId;
     // console.log(`${this.peerid} peer id, ${this.peerMoney} peer money, ${this.peerTitles} peer Titles ${this.peer} peer ${this.offerId} offer id ${this.myTitles} my titles`);
 
     // localStorage.setItem('peerid', idRecipient.toString());
@@ -189,9 +199,9 @@ export class ProfilePage implements OnInit {
     const offerObj: any = {};
     offerObj.myTitles = [];
     offerObj.peerTitles = [];
-    
+    const {offer: {status, id_offer, id_sender, money_exchange_cents}, peerInfo: {user_name, id_user, email}, myListings, peerListings} = offer;
     // get all user titles
-    offer.myListings.forEach((listing) => {
+    myListings.forEach((listing) => {
       offerObj.myTitles.push(listing.title);
     })
 
@@ -200,44 +210,51 @@ export class ProfilePage implements OnInit {
       offerObj.peerTitles.push(listing.title);
     })
 
-    offerObj.peer = offer.peerInfo.user_name;
-    offerObj.peerid = offer.peerInfo.id_user;
-    offerObj.status = offer.offer.status;
-    offerObj.email = offer.peerInfo.email;
-    offerObj.offerId = offer.offer.id_offer;
+    offerObj.peer = user_name;
+    offerObj.peerid = id_user;
+    offerObj.status = status;
+    offerObj.email = email;
+    offerObj.offerId = id_offer;
 
-    if(offer.offer.money_exchange_cents > 0) {
-      offerObj.userMoney = `and $${offer.offer.money_exchange_cents / 100}`;
-    } else if(offer.offer.money_exchange_cents < 0){
-       offerObj.peerMoney = `and $${((-1 * offer.offer.money_exchange_cents) / 100)}`;
+    if(money_exchange_cents > 0) {
+      offerObj.userMoney = `and $${money_exchange_cents / 100}`;
+    } else if(money_exchange_cents < 0){
+       offerObj.peerMoney = `and $${((-1 * money_exchange_cents) / 100)}`;
     }
     
     offs.push(offerObj);
     i++;
-      } else if (offer.offer.status === 'accepted' && offer.offer.id_sender !== Number(localStorage.userid)) {
+      } else if (status === 'accepted' && offer.id_sender !== Number(localStorage.userid)) {
+        const {
+          offer: {status, id_offer, id_sender, money_exchange_cents}, 
+          peerInfo: {user_name, id_user, email}, 
+          myListings, 
+          peerListings
+        } = offer;
+
         const offerObj: any = {};
         offerObj.myTitles = [];
         offerObj.peerTitles = [];
         
         // get all user titles
-        offer.myListings.forEach((listing) => {
+        myListings.forEach((listing) => {
           offerObj.myTitles.push(listing.title);
         })
     
         // get all peer titles
-        offer.peerListings.forEach((listing) => {
+        peerListings.forEach((listing) => {
           offerObj.peerTitles.push(listing.title);
         })
     
-        offerObj.peer = offer.peerInfo.user_name;
-        offerObj.status = offer.offer.status;
-        offerObj.email = offer.peerInfo.email;
-        offerObj.offerId = offer.offer.id_offer;
+        offerObj.peer = user_name;
+        offerObj.status = status;
+        offerObj.email = email;
+        offerObj.offerId = id_offer;
 
-        if(offer.offer.money_exchange_cents > 0) {
-          offerObj.userMoney = `and $${offer.offer.money_exchange_cents / 100}`;
+        if(money_exchange_cents > 0) {
+          offerObj.userMoney = `and $${money_exchange_cents / 100}`;
         } else if(offer.offer.money_exchange_cents < 0){
-           offerObj.peerMoney = `and $${((-1 * offer.offer.money_exchange_cents) / 100)}`;
+           offerObj.peerMoney = `and $${((-1 * money_exchange_cents) / 100)}`;
         }
         
         acceptedOffers.push(offerObj);
@@ -246,22 +263,23 @@ export class ProfilePage implements OnInit {
     }
 
     offs.forEach((listing: any) => {
-      if(listing.myTitles.length > 1) {
-        listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
+      let { myTitles, peerTitles } = listing;
+      if(myTitles.length > 1) {
+        myTitles.splice(myTitles.length - 1, 0, ' and ');
       }
 
-      if(listing.peerTitles.length > 1) {
-        listing.peerTitles.splice(listing.peerTitles.length - 1, 0, ' and ');
+      if(peerTitles.length > 1) {
+        peerTitles.splice(peerTitles.length - 1, 0, ' and ');
       }
     });
 
     acceptedOffers.forEach((listing: any) => {
-      if(listing.myTitles.length > 1) {
-        listing.myTitles.splice(listing.myTitles.length - 1, 0, ' and ');
+      let { myTitles, peerTitles } = listing;
+      if(myTitles.length > 1) {
+        myTitles.splice(myTitles.length - 1, 0, ' and ');
       }
-
-      if(listing.peerTitles.length > 1) {
-        listing.peerTitles.splice(listing.peerTitles.length - 1, 0, ' and ');
+      if(peerTitles.length > 1) {
+        peerTitles.splice(peerTitles.length - 1, 0, ' and ');
       }
     });
 
