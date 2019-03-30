@@ -6,7 +6,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding fullscreen="true">
-  <ion-avatar>
+  <ion-avatar style="margin: 0 auto">
      <img src={{img}} *ngIf="loaded" /><br />
   </ion-avatar>
   <div *ngIf="loaded" style="Text-align:center">{{school}}</div>
@@ -37,7 +37,7 @@
   <div *ngIf='open'>
     <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
   </div>
-
+  <div *ngIf="offers.length">
   <a style="color:176ACC; font-weight:700;">
   PENDING OFFERS:
   </a>
@@ -57,6 +57,7 @@
       </div>
       </ion-item>
   </ion-list>
+</div>
   <br />
   <a style="color:176ACC; font-weight:700;">
   I'M LOOKING FOR:
@@ -100,6 +101,7 @@
       </ion-item>
   </ion-list>
   <br/>
+  <div *ngIf="acceptedOffs.length">
   <a style="color:176ACC; font-weight:700;">
   ACCEPTED OFFERS:
   </a>
@@ -115,6 +117,7 @@
         <ion-button (click)="cancelAcceptedOffer(i)" style="float: right;">Cancel</ion-button>
       </ion-item>
   </ion-list>
+</div>
   <br />
   <div class="col-xs-12 buttons">
       <a href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_E5tfHJicmsEM7yImGKJv30DqYfd2koHB&scope=read_write"

@@ -81,6 +81,9 @@ export class ProfilePage implements OnInit {
         user: data,
       }
     });
+    modalPage.onDidDismiss().then(data => {
+      this.apiService.renderWantList(this.setWantList);
+    });
     return await modalPage.present();
   }
 
@@ -89,6 +92,9 @@ export class ProfilePage implements OnInit {
     const modalPage = await this.modal.create({
       component: AddListingModal,
       componentProps: { values: data }
+    });
+    modalPage.onDidDismiss().then(data => {
+      this.apiService.renderListingsList(this.setListings);
     });
     return await modalPage.present();
   }
@@ -125,6 +131,7 @@ export class ProfilePage implements OnInit {
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
         this.presentOfferToast('Offer has been accepted');
+        this.apiService.getOffers(this.renderOffers);
       });
   }
 
@@ -274,6 +281,7 @@ export class ProfilePage implements OnInit {
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
         this.presentOfferToast('Offer has been rejected.');
+        this.apiService.getOffers(this.renderOffers);
       });
   }
 
@@ -285,7 +293,8 @@ export class ProfilePage implements OnInit {
     this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
-        this.presentOfferToast('Accepted offer has been cancelled.')
+        this.presentOfferToast('Accepted offer has been cancelled.');
+        this.apiService.getOffers(this.renderOffers);
       });
   }
 
@@ -303,6 +312,7 @@ export class ProfilePage implements OnInit {
     this.http.delete(`http://${this.local}/deleteListing`, { params: { bookId, listingId } })
       .subscribe((data) => {
         console.log(data, 'delete listing');
+        this.apiService.renderListingsList(this.setListings);
       });
   }
 
@@ -314,6 +324,7 @@ export class ProfilePage implements OnInit {
     this.http.delete(`http://${this.local}/deleteWant`, { params: { wantId } })
     .subscribe((data) => {
       console.log(data, 'delete want');
+      this.apiService.renderWantList(this.setWantList);
     });
 
   }
