@@ -86,7 +86,7 @@ export class CounterOfferModal implements OnInit {
     // send up all listing ids to modal
 
     // patch to change last offer to rejected
-    // let prevId = this.offerId;
+    let prevId = this.offerId;
 
     // const allListings = [];
     // const wantBooks = [];
