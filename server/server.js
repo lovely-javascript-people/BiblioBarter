@@ -448,21 +448,21 @@ app.get('/offers', (req, res) => {
       console.log(offersOnListing, 'OFFER LISTING');
       for (let p = 0; p < offersOnListing.length; p++) {
         allOffersForIds.push(offersOnListing[p].id_offer);
-      }
+      } // all is good at this point
       for (let j = 0; j < offersOnListing.length; j++) { // on each offer_listing, grab id_offer
         offerIdForListing = await db.Offer.findAll({
           where: {
             id_offer: offersOnListing[j].id_offer,
           },
         });
-        if (! await allOffersForIds.includes(offerIdForListing[0].id_offer)) { // add offer id to array if not already in
+        if (!await allOffersForIds.includes(offerIdForListing[0].id_offer)) { // add offer id to array if not already in
           allOffersForIds.push(offerIdForListing[0].id_offer); // 
         }
-        if (! await allPeers.includes(offerIdForListing[0].id_sender) && // checks to see if user is sender or recipient
+        if (!await allPeers.includes(offerIdForListing[0].id_sender) && // checks to see if user is sender or recipient
         offerIdForListing[0].id_sender !== req.query.id_user) {
           allPeers.push(offerIdForListing[0].id_sender);
         }
-        if (! await allPeers.includes(offerIdForListing[0].id_recipient) && // then pushes the peer's id into array
+        if (!await allPeers.includes(offerIdForListing[0].id_recipient) && // then pushes the peer's id into array
           offerIdForListing[0].id_recipient !== req.query.id_user) { // may currently add user id as well
           allPeers.push(offerIdForListing[0].id_recipient);
         }
@@ -476,7 +476,7 @@ app.get('/offers', (req, res) => {
     // start with offer id, then move to grabbing each listing, part of each offer
     return allPeers;
   }).then(async (allpeers) => {
-    for (let k = 0; k < allOffersForIds.length; k++) {
+    for (let k = 0; k < _.uniq(allOffersForIds).length; k++) {
       console.log('enter async all offers');
       var oneCompleteOffer = {};
       let offerForId = await db.Offer.findOne({
