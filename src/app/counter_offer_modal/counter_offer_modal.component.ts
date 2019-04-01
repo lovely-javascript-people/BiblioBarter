@@ -39,7 +39,8 @@ export class CounterOfferModal implements OnInit {
     private toastController: ToastController,
     ) { }
 
-  local = 'localhost:3000';
+  // local = 'localhost:3000';
+  local = '18.188.132.186:3000';
 
   async closeModal() {
     this.modal.dismiss();
