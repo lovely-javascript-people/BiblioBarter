@@ -20,6 +20,7 @@ export class ChatPage implements OnInit {
     name: '',
     isPrivate: false
   };
+  isPrivate: boolean;
   joinableRooms = [];
   newUser = '';
 

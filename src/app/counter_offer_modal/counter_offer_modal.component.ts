@@ -27,7 +27,7 @@ export class CounterOfferModal implements OnInit {
   peer: string;
   myTitles: string[];
   offerId: number;
-
+  userMoney: number;
   // counter offer money
   offeredMoney: number;
   wantMoney: number;
