@@ -587,11 +587,7 @@ app.get('/offers', (req, res) => {
               // include: [db.Book],
             },
           });
-<<<<<<< HEAD
-          if(currentBookListing !== null) {
-=======
           if (currentBookListing !== null) {
->>>>>>> c0bd203dfb308fa2b1009177ae2cf0b2e2e40a07
         currentBook = await db.Book.findOne({
           where: {
             id_book: currentBookListing.id_book,
@@ -604,12 +600,8 @@ app.get('/offers', (req, res) => {
         } else {
           peerListings.push(finalBook);
         }
-<<<<<<< HEAD
-      }}
-=======
           }
       }
->>>>>>> c0bd203dfb308fa2b1009177ae2cf0b2e2e40a07
       oneCompleteOffer.myListings = myListings;
       oneCompleteOffer.peerListings = peerListings;
       let peerInfo;
