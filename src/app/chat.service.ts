@@ -20,9 +20,9 @@ export class ChatService {
   };
   joinableRooms = [];
   // newUser = '';
-  // local = 'localhost:3000';
+  local = 'localhost:3000';
   // local = 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-  local = '18.220.255.216:3000';
+  // local = '18.220.255.216:3000';
 
   // Our constructor calls our wsService connect method
   constructor(private wsService: WebSocketServiceService) {
