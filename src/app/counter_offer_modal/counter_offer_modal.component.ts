@@ -27,7 +27,7 @@ export class CounterOfferModal implements OnInit {
   peer: string;
   myTitles: string[];
   offerId: number;
-
+  userMoney: number;
   // counter offer money
   offeredMoney: number;
   wantMoney: number;
@@ -40,6 +40,7 @@ export class CounterOfferModal implements OnInit {
     ) { }
 
   local = 'localhost:3000';
+  // local = '18.220.255.216:3000';
 
   async closeModal() {
     this.modal.dismiss();

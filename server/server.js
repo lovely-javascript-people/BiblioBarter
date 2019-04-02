@@ -508,7 +508,6 @@ app.get('/offers', (req, res) => {
   db.Listing.findAll({ // first find all listings for this user
     where: {
       id_user: req.query.id_user,
-      available: true,
     },
   }).then(async (data) => {
     console.log(data, 'ALL YOUR LISTINGS');
@@ -588,7 +587,11 @@ app.get('/offers', (req, res) => {
               // include: [db.Book],
             },
           });
+<<<<<<< HEAD
           if(currentBookListing !== null) {
+=======
+          if (currentBookListing !== null) {
+>>>>>>> c0bd203dfb308fa2b1009177ae2cf0b2e2e40a07
         currentBook = await db.Book.findOne({
           where: {
             id_book: currentBookListing.id_book,
@@ -601,7 +604,12 @@ app.get('/offers', (req, res) => {
         } else {
           peerListings.push(finalBook);
         }
+<<<<<<< HEAD
       }}
+=======
+          }
+      }
+>>>>>>> c0bd203dfb308fa2b1009177ae2cf0b2e2e40a07
       oneCompleteOffer.myListings = myListings;
       oneCompleteOffer.peerListings = peerListings;
       let peerInfo;
@@ -649,16 +657,27 @@ app.get('/offers', (req, res) => {
  */
 app.post('/offers', (req, res) => {
   let offerId;
+  const { idRecipient, idOfferPrev, idSender, money, listings } = req.body.params;
+  if (idOfferPrev) {
+    db.Offer.update({
+      status: 'rejected',
+    },
+    {
+      where: {
+        id_offer: idOfferPrev,
+      },
+    }).catch((err) => console.log(`Error in offer rejection status changed: ${err}`));
+  }
   db.Offer.create({
-    id_recipient: req.body.params.idRecipient,
-    id_offer_prev: req.body.params.idOfferPrev,
-    id_sender: req.body.params.idSender,
-    money_exchange_cents: req.body.params.money || null,
+    id_recipient: idRecipient,
+    id_offer_prev: idOfferPrev,
+    id_sender: idSender,
+    money_exchange_cents: money || null,
   }).then(async () => {
     const newOffer = await db.Offer.findAll({
       limit: 1,
       where: {
-        id_recipient: req.body.params.idRecipient,
+        id_recipient: idRecipient,
       },
       order: [['id_offer', 'DESC']],
     });
@@ -666,7 +685,7 @@ app.post('/offers', (req, res) => {
     offerId = await newOffer[0].id_offer;
     return newOffer;
   }).then((newOfferArray) => {
-      _.each(req.body.params.listings, async listing => {
+      _.each(listings, async listing => {
       await db.Offer_Listing.create({
         id_offer: offerId,
         id_listing: listing.id_listing,
@@ -773,7 +792,7 @@ app.get('/schools', (req, res) => {
 });
 });
 })
-  
+
 
 app.get('/counter', (req, res) => {
   res.send(JSON.stringify("Please wait while you are redirected to your peer's profile"));
@@ -839,6 +858,5 @@ app.get('/getUser', (req, res) => {
     res.status(200).send(userInfo);
   }).catch((err) => {
     res.status(500).send(JSON.stringify(`Error in retreiving peer information: ${err}`));
-  })
-
-})
+  });
+});

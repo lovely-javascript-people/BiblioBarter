@@ -53,7 +53,7 @@ export class ProfilePage implements OnInit {
 
     // local = 'http://localhost:3000';
     // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-    // local = 'http://18.188.132.186:3000';
+    // local = '18.220.255.216:3000';
     local = 'localhost:3000';
 
   setUser(data) {
@@ -119,7 +119,7 @@ export class ProfilePage implements OnInit {
       this.apiService.getOffers(this.renderOffers);
     });
     return await modalPage.present();
-  }
+  };
   
 
   acceptOffer(index) {
@@ -199,9 +199,15 @@ export class ProfilePage implements OnInit {
     const offerObj: any = {};
     offerObj.myTitles = [];
     offerObj.peerTitles = [];
-    const {offer: {status, id_offer, id_sender, money_exchange_cents}, peerInfo: {user_name, id_user, email}, myListings, peerListings} = offer;
+    // const {
+    //   offer: {status, id_offer, id_sender, money_exchange_cents}, 
+    //   peerInfo: {user_name, id_user, email}, 
+    //   myListings, 
+    //   peerListings
+    // } = offer;
     // get all user titles
-    myListings.forEach((listing) => {
+
+    offer.myListings.forEach((listing) => {
       offerObj.myTitles.push(listing.title);
     })
 
@@ -210,23 +216,32 @@ export class ProfilePage implements OnInit {
       offerObj.peerTitles.push(listing.title);
     })
 
-    offerObj.peer = user_name;
-    offerObj.peerid = id_user;
-    offerObj.status = status;
-    offerObj.email = email;
-    offerObj.offerId = id_offer;
+    offerObj.peer = offer.peerInfo.user_name;
+    offerObj.peerid = offer.peerInfo.id_user;
+    offerObj.status = offer.offer.status;
+    offerObj.email = offer.peerInfo.email;
+    offerObj.offerId = offer.offer.id_offer;
+    // offerObj.peer = user_name;
+    // offerObj.peerid = id_user;
+    // offerObj.status = status;
+    // offerObj.email = email;
+    // offerObj.offerId = id_offer;
 
-    if(money_exchange_cents > 0) {
-      offerObj.userMoney = `and $${money_exchange_cents / 100}`;
-    } else if(money_exchange_cents < 0){
-       offerObj.peerMoney = `and $${((-1 * money_exchange_cents) / 100)}`;
+    if(offer.offer.money_exchange_cents > 0) {
+      offerObj.userMoney = `and $${offer.offer.money_exchange_cents / 100}`;
+    } else if(offer.offer.money_exchange_cents < 0){
+       offerObj.peerMoney = `and $${((-1 * offer.offer.money_exchange_cents) / 100)}`;
+    // if(money_exchange_cents > 0) {
+    //   offerObj.userMoney = `and $${money_exchange_cents / 100}`;
+    // } else if(money_exchange_cents < 0){
+    //    offerObj.peerMoney = `and $${((-1 * money_exchange_cents) / 100)}`;
     }
     
     
     offs.push(offerObj);
     i++;
-      } 
-      else if (status === 'accepted' && offer.id_sender !== Number(localStorage.userid)) {
+  } else if (offer.offer.status === 'accepted' && offer.offer.id_sender !== Number(localStorage.userid)) {
+      // } else if (status === 'accepted' && offer.id_sender !== Number(localStorage.userid)) {
         const {
           offer: {status, id_offer, id_sender, money_exchange_cents}, 
           peerInfo: {user_name, id_user, email}, 
@@ -258,7 +273,7 @@ export class ProfilePage implements OnInit {
         } else if(offer.offer.money_exchange_cents < 0){
            offerObj.peerMoney = `and $${((-1 * money_exchange_cents) / 100)}`;
         }
-        
+        debugger;
         acceptedOffers.push(offerObj);
         i++;
       }
