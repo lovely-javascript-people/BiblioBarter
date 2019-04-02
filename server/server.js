@@ -455,7 +455,6 @@ app.patch('/accept/offerlisting', (req, res) => {
         });
     }
   }).then((steady) => {
-    myTitles = ['The diversity of fishes'];
     for (let j = 0; j < myTitles.length; j++) {
       db.Want.update({
         fulfilled: true,
@@ -467,7 +466,6 @@ app.patch('/accept/offerlisting', (req, res) => {
       }).catch((err) => console.log(err));
     }
   }).then(() => {
-    peerTitles = ['Technical drawing with engineering graphics', 'The AMA Guide to Management Development'];
     for (let i = 0; i < peerTitles.length; i++) {
       db.Want.update({
         fulfilled: true,
