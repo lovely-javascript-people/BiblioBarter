@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WebSocketServiceService } from './web-socket-service.service';
+// import { WebSocketServiceService } from './web-socket-service.service';
 import Chatkit from '@pusher/chatkit-client';
 import axios from 'axios';
 import { Subject } from 'rxjs/Rx';
@@ -25,7 +25,7 @@ export class ChatService {
   // local = '18.220.255.216:3000';
 
   // Our constructor calls our wsService connect method
-  constructor(private wsService: WebSocketServiceService) {
+  constructor() {
     // this.messages = <Subject<any>>wsService
     //   .connect()
     //   .map((response: any): any => {

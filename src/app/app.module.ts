@@ -27,7 +27,6 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
 // import { EmailProvider } from '../providers/email/email';
 import { ChatPageModule } from './chat/chat.module';
 // import { ChatPage } from './chat/chat.page';
-import { WebSocketServiceService } from './web-socket-service.service';
 import { ChatService } from './chat.service';
 import Chatkit from '@pusher/chatkit-client';
 // import { ReactiveFormsModule, FormControl } from '@angular/forms';
@@ -62,7 +61,6 @@ import Chatkit from '@pusher/chatkit-client';
     EmailComposer,
     BarcodeScanner,
     ChatService,
-    WebSocketServiceService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   exports: [],
