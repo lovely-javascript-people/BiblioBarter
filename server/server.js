@@ -506,7 +506,6 @@ app.get('/offers', (req, res) => {
   db.Listing.findAll({ // first find all listings for this user
     where: {
       id_user: req.query.id_user,
-      available: true,
     },
   }).then(async (data) => {
     console.log(data, 'ALL YOUR LISTINGS');
@@ -599,6 +598,7 @@ app.get('/offers', (req, res) => {
         } else {
           peerListings.push(finalBook);
         }
+          }
       }
     }
       oneCompleteOffer.myListings = myListings;
