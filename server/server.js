@@ -588,6 +588,7 @@ app.get('/offers', (req, res) => {
               // include: [db.Book],
             },
           });
+          if(currentBookListing !== null) {
         currentBook = await db.Book.findOne({
           where: {
             id_book: currentBookListing.id_book,
@@ -600,7 +601,7 @@ app.get('/offers', (req, res) => {
         } else {
           peerListings.push(finalBook);
         }
-      }
+      }}
       oneCompleteOffer.myListings = myListings;
       oneCompleteOffer.peerListings = peerListings;
       let peerInfo;
