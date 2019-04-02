@@ -225,7 +225,8 @@ export class ProfilePage implements OnInit {
     
     offs.push(offerObj);
     i++;
-      } else if (status === 'accepted' && offer.id_sender !== Number(localStorage.userid)) {
+      } 
+      else if (status === 'accepted' && offer.id_sender !== Number(localStorage.userid)) {
         const {
           offer: {status, id_offer, id_sender, money_exchange_cents}, 
           peerInfo: {user_name, id_user, email}, 
