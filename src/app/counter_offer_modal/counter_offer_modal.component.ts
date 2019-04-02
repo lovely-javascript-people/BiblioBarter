@@ -40,7 +40,7 @@ export class CounterOfferModal implements OnInit {
     ) { }
 
   // local = 'localhost:3000';
-  local = '18.188.132.186:3000';
+  local = '18.220.255.216:3000';
 
   async closeModal() {
     this.modal.dismiss();
