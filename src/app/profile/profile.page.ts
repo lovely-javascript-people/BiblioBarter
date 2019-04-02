@@ -273,7 +273,6 @@ export class ProfilePage implements OnInit {
         } else if(offer.offer.money_exchange_cents < 0){
            offerObj.peerMoney = `and $${((-1 * money_exchange_cents) / 100)}`;
         }
-        debugger;
         acceptedOffers.push(offerObj);
         i++;
       }
