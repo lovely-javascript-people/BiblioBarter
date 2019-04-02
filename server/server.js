@@ -455,7 +455,6 @@ app.patch('/accept/offerlisting', (req, res) => {
         });
     }
   }).then((steady) => {
-    myTitles = ['The diversity of fishes'];
     for (let j = 0; j < myTitles.length; j++) {
       db.Want.update({
         fulfilled: true,
@@ -467,7 +466,6 @@ app.patch('/accept/offerlisting', (req, res) => {
       }).catch((err) => console.log(err));
     }
   }).then(() => {
-    peerTitles = ['Technical drawing with engineering graphics', 'The AMA Guide to Management Development'];
     for (let i = 0; i < peerTitles.length; i++) {
       db.Want.update({
         fulfilled: true,
@@ -588,6 +586,7 @@ app.get('/offers', (req, res) => {
               // include: [db.Book],
             },
           });
+          if (currentBookListing !== null) {
         currentBook = await db.Book.findOne({
           where: {
             id_book: currentBookListing.id_book,
@@ -601,6 +600,7 @@ app.get('/offers', (req, res) => {
           peerListings.push(finalBook);
         }
       }
+    }
       oneCompleteOffer.myListings = myListings;
       oneCompleteOffer.peerListings = peerListings;
       let peerInfo;
@@ -851,3 +851,40 @@ app.get('/getUser', (req, res) => {
     res.status(500).send(JSON.stringify(`Error in retreiving peer information: ${err}`));
   });
 });
+
+// // GET /acceptedoffers
+// // grabs all offers accepted by user id
+// /**
+//  * @param {number} userId user's id
+//  * Queries database for any offers accepted, associated with this user as
+//  * the sender or the receiver. Sends back 
+//  */
+// app.get('/accepted', (req, res) => {
+//   const { userId } = req.query;
+//   db.Offer.findAll({
+//     where: {
+//       status: 'accepted',
+//       $or: [
+//         {
+//           idSender: userId,
+//         },
+//         {
+//           idRecipient: userId,
+//         },
+//       ],
+//     },
+//   }).then(async (allOffersForUser) => {
+//     for (let i = 0; i < allOffersForUser.length; i++) {
+//       let offerListings = await db.Offer_Listing.findAll({
+//         where: {
+//           id_offer: allOffersForUser.id_offer,
+//         },
+//       }); 
+//       let allListingsForOffer = await db.Listing.findAll({
+//         where: {
+//           id_listing: offerListings.id_listing,
+//         }
+//       })
+//     }
+//   })
+// });
