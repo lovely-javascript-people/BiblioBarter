@@ -53,8 +53,8 @@ export class ProfilePage implements OnInit {
 
     // local = 'http://localhost:3000';
     // local = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-    // local = 'http://18.188.132.186:3000';
-    local = 'localhost:3000';
+    local = '18.220.255.216:3000';
+    // local = 'localhost:3000';
 
   setUser(data) {
     console.log(data, 'THIS DATA', data[0], 'length');

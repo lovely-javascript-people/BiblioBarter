@@ -20,6 +20,7 @@ export class ChatPage implements OnInit {
     name: '',
     isPrivate: false
   };
+  isPrivate: boolean;
   joinableRooms = [];
   newUser = '';
 
@@ -119,9 +120,9 @@ export class ChatPage implements OnInit {
         this.newMessage = '';
       }
 
-  local = 'localhost:3000';
+  // local = 'localhost:3000';
   // local = 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-  // local = '18.188.132.186:3000';
+  local = '18.220.255.216:3000';
 
       addUser(userId) {
         let name = userId || localStorage.username
