@@ -9,6 +9,7 @@ import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ToastController, AlertController } from '@ionic/angular';
+import { ChatService } from '../chat.service';
 import { CameraOptions } from '@ionic-native/camera/ngx';
 import * as Stripe from "stripe";
 
@@ -33,6 +34,7 @@ export class ProfilePage implements OnInit {
   money_exchanged: number;
   deleteId: number;
   deleteString: string;
+  peerName: string;
   
     // to send to counteroffer modal
     peerid: number;
@@ -49,6 +51,7 @@ export class ProfilePage implements OnInit {
     private http: HttpClient,
     public toastController: ToastController,
     public alertController: AlertController,
+    public chat: ChatService,
   ) { }
 
     // local = 'http://localhost:3000';
@@ -136,7 +139,7 @@ export class ProfilePage implements OnInit {
         myTitles: myTitles.filter(title => title !== " and "), 
         peerTitles: peerTitles.filter(title => title !== " and "), 
         peerid, 
-        userId: localStorage.userid 
+        userId: localStorage.userid
       }})
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
@@ -196,7 +199,33 @@ export class ProfilePage implements OnInit {
     let i = 0;
 
     for (const offer of offers.slice(0, offers.length - 1)) {
+      if (offer.offer.status === 'pending' && offer.offer.id_sender === Number(localStorage.userid)) {
+        const myList = offer.myListings.map(listing => [listing.listing.available, offer]);
+        const peerList = offer.peerListings.map(listing => [listing.listing.available, offer]);
+        const lists = myList.concat(peerList).filter(list => list[0] === false);
+        for (let list of lists) {
+          this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: list[1].offer.id_offer } })
+        .subscribe((offerData) => {
+          console.log(offerData, 'OFFER DATA');
+          this.presentOfferToast('Offer has been rejected.'); 
+        });
+        } 
+      }
+    }
+
+    for (const offer of offers.slice(0, offers.length - 1)) {
     if (offer.offer.status === 'pending' && offer.offer.id_sender !== Number(localStorage.userid)) {
+      const myList = offer.myListings.map(listing => [listing.listing.available, offer]);
+      const peerList = offer.peerListings.map(listing => [listing.listing.available, offer]);
+      const lists = myList.concat(peerList).filter(list => list[0] === false);
+      for (let list of lists) {
+        this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: list[1].offer.id_offer } })
+      .subscribe((offerData) => {
+        console.log(offerData, 'OFFER DATA');
+        this.presentOfferToast('Offer has been rejected.'); 
+      });
+      } 
+
     const offerObj: any = {};
     offerObj.myTitles = [];
     offerObj.peerTitles = [];
@@ -249,6 +278,7 @@ export class ProfilePage implements OnInit {
           myListings, 
           peerListings
         } = offer;
+
 
         const offerObj: any = {};
         offerObj.myTitles = [];
