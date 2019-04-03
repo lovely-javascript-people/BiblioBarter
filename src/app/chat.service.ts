@@ -32,8 +32,13 @@ export class ChatService {
     //     return response;
     //   });
   }
-
-  addUser(roomName, peerId) {
+  /**
+   * Called once an offer is accepted, creates a chat for the parties involved
+   * @param roomName A roomname that is a combination of the two users involved in an offer
+   * @param peerId Your peer's username
+   * @param callback should be chat.addPeerToChat
+   */
+  offerChat(roomName, peerId, callback) {
     let userId = localStorage.username
     axios.post(`http://${this.local}/users`, { userId })
       .then(() => {
@@ -52,7 +57,7 @@ export class ChatService {
               name: roomName,
               private: true,
             }).then(room => {
-              this.addPeerUser(peerId, room.id);
+              callback(peerId, room.id);
             }) 
           });
       }).catch(error => {
@@ -71,13 +76,13 @@ export class ChatService {
             name: roomName,
             private: true,
           }).then(room => {
-            this.addPeerUser(peerId, room.id);
+            callback(peerId, room.id);
           }) 
         });
       });
   }
 
-  addPeerUser(userId, roomId) {
+  addPeerToChat(userId, roomId) {
     axios.post(`http://${this.local}/users`, { userId })
       .then(() => {
         const tokenProvider = new Chatkit.TokenProvider({
