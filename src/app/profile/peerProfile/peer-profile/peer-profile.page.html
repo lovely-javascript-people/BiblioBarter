@@ -27,7 +27,7 @@
   <ion-list>
      <ion-item *ngFor="let want of wants">
         <ion-thumbnail slot="start">
-          <img [src]="want.image_link === null ? '../../../../assets/img/biblio-logo-noBG-small-07.png' : want.image_link " />
+          <img style="padding-right: 6px;" [src]="want.image_link === null ? '../../../../assets/img/biblio-logo-noBG-small-07.png' : want.image_link " />
         </ion-thumbnail>
         <ion-label>
           <b>Title:</b> {{want.title}}<br />
@@ -42,7 +42,7 @@
   <ion-list>
      <ion-item *ngFor="let listing of listings">
         <ion-thumbnail slot="start">
-          <img [src]="listing.image_link === null ? '../../../../assets/img/biblio-logo-noBG-small-07.png' : listing.image_link " />
+          <img style="padding-right: 6px;" [src]="listing.image_link === null ? '../../../../assets/img/biblio-logo-noBG-small-07.png' : listing.image_link " />
         </ion-thumbnail>
         <ion-label>
           <b>Title:</b> {{listing.title}}<br />
