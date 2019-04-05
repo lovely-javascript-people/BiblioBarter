@@ -1,14 +1,13 @@
 <!-- <ion-tabs> -->
-  <ion-footer mode="ios" style="background-color: #176ACC">
+  <ion-footer mode="ios" >
     <!-- <div style="background-color: #176ACC"> -->
-    <ion-toolbar style="display: inline-table; max-height: 40px; background-color: #176ACC;">
+    <ion-toolbar style="display: inline-table; max-height: 60px;" color="primary">
         <ion-title style="font-size: 40px;">
           <div style="display: inline-flex; text-align: center">
               <img style="width: 40px; height: 40px; margin-top: 10px;" src="../../assets/img/biblio-logo-notext-whiteBG-06.png" (click)="openContactModal()" />
-              <!-- <ion-icon name="search" (click)="openSearchModal()"></ion-icon> -->
               <ion-icon name="search" (click)="redirectOnClick()"></ion-icon>
               <a href="/Chat">
-                <ion-icon name="ios-chatbubbles"></ion-icon>
+                <ion-icon name="ios-chatbubbles" style="color: white;"></ion-icon>
               </a>
               <ion-icon (click)="openSettingsModal()" name="settings"></ion-icon>
               <ion-icon (click)="logoutButton()" name="log-out"></ion-icon>
