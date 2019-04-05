@@ -96,7 +96,7 @@ export class ProfilePage implements OnInit {
       component: AddListingModal,
       componentProps: { values: data }
     });
-    modalPage.onDidDismiss().then(data => {
+    modalPage.onDidDismiss().then(() => {
       this.apiService.renderListingsList(this.setListings);
     });
     return await modalPage.present();
@@ -128,24 +128,26 @@ export class ProfilePage implements OnInit {
   acceptOffer(index) {
     console.log(this.allOffers, 'ALL OFFERS');
     console.log(this.offers[index], 'CLICKED ON OFFER');
-    const {offerId, myTitles, peerTitles, peerid} = this.offers[index];
+    const {offerId, myTitles, peerTitles, peerid, peer} = this.offers[index];
     this.offerid = offerId;
     // this.apiService.userAcceptOffer(); // for when we refactor
     // this.http.patch(`http://${this.local}/accept/offerlisting`, { params: { status: 'accepted', offerId: id_offer } })
-    this.http.patch(`http://${this.local}/accept/offerlisting`, { 
-      params: { 
-        status: 'accepted', 
-        offerId, 
-        myTitles: myTitles.filter(title => title !== " and "), 
-        peerTitles: peerTitles.filter(title => title !== " and "), 
-        peerid, 
-        userId: localStorage.userid
-      }})
-      .subscribe((offerData) => {
-        console.log(offerData, 'OFFER DATA');
-        this.presentOfferToast('Offer has been accepted');
-        this.apiService.getOffers(this.renderOffers);
-      });
+    // this.http.patch(`http://${this.local}/accept/offerlisting`, { 
+    //   params: { 
+    //     status: 'accepted', 
+    //     offerId, 
+    //     myTitles: myTitles.filter(title => title !== " and "), 
+    //     peerTitles: peerTitles.filter(title => title !== " and "), 
+    //     peerid, 
+    //     userId: localStorage.userid
+    //   }})
+    //   .subscribe((offerData) => {
+    //     console.log(offerData, 'OFFER DATA');
+    //     this.presentOfferToast('Offer has been accepted');
+    //     this.apiService.getOffers(this.renderOffers);
+    //   });
+    this.chat.offerChat(`${peer} + ${localStorage.username}`, peer, this.chat.addPeerToChat);
+      // debugger;
   }
 
   counterOffer(index) {

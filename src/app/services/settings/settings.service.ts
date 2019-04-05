@@ -26,7 +26,10 @@ export class SettingsService {
     // this.http.post('http://localhost:3000/search', { 'radius': radius })
     console.log(radius);
   }
-
+  /**
+   * Updates a users university
+   * @param school The university you are transferring / going to
+   */
   changeSchool(school) {
     console.log(school);
     // debugger;
