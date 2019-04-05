@@ -4,12 +4,14 @@
     <ion-toolbar style="display: inline-table; max-height: 60px;" color="primary">
         <ion-title style="font-size: 40px;">
           <div style="display: inline-flex; text-align: center">
-              <img style="width: 40px; height: 40px; margin-top: 10px;" src="../../assets/img/biblio-logo-04-white-square.png" (click)="openContactModal()" />
-              <ion-icon name="search" (click)="redirectOnClick()"></ion-icon>
+              <img style="width: 40px; height: 36px; margin-top: 10px; margin-top: 12px;" 
+                    src="../../assets/img/biblio-logo-04-white-square.png" 
+                    (click)="openContactModal()" />
+              <ion-icon name="search" (click)="redirectOnClick()" style="padding-right: 20px; padding-left: 20px;"></ion-icon>
               <a href="/Chat">
-                <ion-icon name="ios-chatbubbles" style="color: white;"></ion-icon>
+                <ion-icon name="ios-chatbubbles" style="color: white; padding-right: 20px;"></ion-icon>
               </a>
-              <ion-icon (click)="openSettingsModal()" name="settings"></ion-icon>
+              <ion-icon (click)="openSettingsModal()" name="settings" style="padding-right: 20px;"></ion-icon>
               <ion-icon (click)="logoutButton()" name="log-out"></ion-icon>
           </div>
         </ion-title>
