@@ -40,18 +40,24 @@
   <div *ngIf='open'>
     <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
   </div>
+  <!-- <div *ngIf="listings.length"> -->
   <div style="color:#176ACC; font-weight:700;">
     <br>
-  </div>
-  <div *ngIf="listings.length">
-    <p>SEARCH RESULTS:</p>
+      <p>SEARCH RESULTS:</p>
+    </div>
     <ion-list>
       <ion-item #list class={{listing.id_user}} *ngFor="let listing of listings; let i = index" [type]="listing">
-        <div><img src={{listing.image_link}} /></div>TITLE: {{listing.title}} | #ISBN: {{listing.isbn}} | CONDITION:
-        {{listing.condition}} <ion-button (click)="profileButtonClick(i)" style="float: right;" >PROFILE</ion-button>
+        <div><img 
+          style="padding-right: 6px; max-height: 100px;"
+          src={{listing.image_link}} /></div>
+        <ion-label>
+          Title: {{listing.title}} <br>
+          Condition: {{listing.condition}} 
+        </ion-label>
+        <ion-button (click)="profileButtonClick(i)" style="float: right;" >PROFILE</ion-button>
       </ion-item>
     </ion-list>
-  </div>
+  <!-- </div> -->
   <div style="color:#176ACC; font-weight:700;">
     <br>
     <p>YOUR MATCHES:</p>
