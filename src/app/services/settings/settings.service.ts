@@ -22,10 +22,6 @@ export class SettingsService {
     setTimeout(() => that.auth.login(), 1500);
   }
 
-  defineSearchRadius(radius: any) {
-    // this.http.post('http://localhost:3000/search', { 'radius': radius })
-    console.log(radius);
-  }
   /**
    * Updates a users university
    * @param school The university you are transferring / going to
@@ -37,6 +33,7 @@ export class SettingsService {
       .subscribe(data => console.log(data, 'DATA YOU GET BACK FROM PATCH TO /SCHOOL'));
   }
 
+  
   deleteAccount(username) {
     // this.http.delete('http://localhost:3000/delete', { params: { 'user': username } })
     console.log(`Why you do this, ${username}?`);

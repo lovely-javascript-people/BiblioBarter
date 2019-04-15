@@ -124,14 +124,17 @@ export class ProfilePage implements OnInit {
     return await modalPage.present();
   };
   
-
+  /**
+   * Sends offer, user, and peer info to server
+   * @param index The index of the accepted offer in the this.offers array
+   */
   acceptOffer(index) {
     console.log(this.allOffers, 'ALL OFFERS');
     console.log(this.offers[index], 'CLICKED ON OFFER');
     const {offerId, myTitles, peerTitles, peerid, peer} = this.offers[index];
     this.offerid = offerId;
-    this.apiService.userAcceptOffer(); // for when we refactor
-    this.http.patch(`http://${this.local}/accept/offerlisting`, { params: { status: 'accepted', offerId: id_offer } })
+    //this.apiService.userAcceptOffer(); // for when we refactor
+    // this.http.patch(`http://${this.local}/accept/offerlisting`, { params: { status: 'accepted', offerId: id_offer } })
     this.http.patch(`http://${this.local}/accept/offerlisting`, { 
       params: { 
         status: 'accepted', 
@@ -150,47 +153,12 @@ export class ProfilePage implements OnInit {
       // debugger;
   }
 
-  counterOffer(index) {
-
-    console.log(this.offers, 'THIS DOT OFFERS OFFERS OFFERS');
-    const { peerid, peerMoney, peerTitles, peer, myTitles, offerId } = this.offers[0];
-    this.peerid = peerid;
-    this.peerMoney = peerMoney;
-    this.peerTitles = peerTitles;
-    this.peer = peer;
-    this.myTitles = myTitles;
-    this.offerId = offerId;
-    // console.log(`${this.peerid} peer id, ${this.peerMoney} peer money, ${this.peerTitles} peer Titles ${this.peer} peer ${this.offerId} offer id ${this.myTitles} my titles`);
-
-    // localStorage.setItem('peerid', idRecipient.toString());
-
-    // this.apiService.counterOffer(idOfferPrev, idRecipient, idSender, listings, money);
-  }
-
-  // counterOffer(index) {
-
-  //   // for loop through allOffers to find senderId by matching the offerId
-  //   // for(let i = 1; i < this.allOffers.length - 1; i++) {
-  //   //   if (this.allOffers[i].offer.id_offer === this.offers[index].offerId) {
-  //   //       this.recipId = this.allOffers[i].peer.id_user;
-  //   //       this.money_exchanged = this.allOffers[i].offer.money_exchange_cents;
-  //   //   }
-  //   // }
-
-  //   console.log(this.offers, 'THIS DOT OFFERS OFFERS OFFERS');
-
-  //   let idOfferPrev = this.offers[index].offerId; // this is the offerId of the offer that the user is countering
-  //   let idRecipient = this.recipId;
-  //   let idSender = localStorage.userid;
-  //   let money = this.money_exchanged;
-  //   let listings; // this should be an array of all of the listing ids involved.
-  //                 // should get this back in offers after refactor
-  //   localStorage.setItem('peerid', idRecipient.toString());
-
-  //   // this.apiService.counterOffer(idOfferPrev, idRecipient, idSender, listings, money);
-  // }
-
-
+  /**
+   * Takes in all offers involving any listings made by the user, 
+   * breaks them down into accepted, pending, and rejected offers, 
+   * and sends offers to be rendered
+   * @param offers Array containing all offer information involving user's listed books.
+   */
   renderOffers(offers) {
     console.log(offers, 'OFFERS FROM RENDER OFFERS');
 
@@ -226,60 +194,37 @@ export class ProfilePage implements OnInit {
         this.presentOfferToast('Offer has been rejected.'); 
       });
       } 
-
     const offerObj: any = {};
     offerObj.myTitles = [];
     offerObj.peerTitles = [];
-    // const {
-    //   offer: {status, id_offer, id_sender, money_exchange_cents}, 
-    //   peerInfo: {user_name, id_user, email}, 
-    //   myListings, 
-    //   peerListings
-    // } = offer;
-    // get all user titles
 
     offer.myListings.forEach((listing) => {
       offerObj.myTitles.push(listing.title);
     })
 
-    // get all peer titles
     offer.peerListings.forEach((listing) => {
       offerObj.peerTitles.push(listing.title);
     })
-
     offerObj.peer = offer.peerInfo.user_name;
     offerObj.peerid = offer.peerInfo.id_user;
     offerObj.status = offer.offer.status;
     offerObj.email = offer.peerInfo.email;
     offerObj.offerId = offer.offer.id_offer;
-    // offerObj.peer = user_name;
-    // offerObj.peerid = id_user;
-    // offerObj.status = status;
-    // offerObj.email = email;
-    // offerObj.offerId = id_offer;
 
     if(offer.offer.money_exchange_cents > 0) {
       offerObj.userMoney = `and $${offer.offer.money_exchange_cents / 100}`;
     } else if(offer.offer.money_exchange_cents < 0){
        offerObj.peerMoney = `and $${((-1 * offer.offer.money_exchange_cents) / 100)}`;
-    // if(money_exchange_cents > 0) {
-    //   offerObj.userMoney = `and $${money_exchange_cents / 100}`;
-    // } else if(money_exchange_cents < 0){
-    //    offerObj.peerMoney = `and $${((-1 * money_exchange_cents) / 100)}`;
     }
-    
-    
     offs.push(offerObj);
     i++;
   } else if (offer.offer.status === 'accepted' && offer.offer.id_sender !== Number(localStorage.userid)) {
-      // } else if (status === 'accepted' && offer.id_sender !== Number(localStorage.userid)) {
         const {
           offer: {status, id_offer, id_sender, money_exchange_cents}, 
           peerInfo: {user_name, id_user, email}, 
           myListings, 
           peerListings
         } = offer;
-
 
         const offerObj: any = {};
         offerObj.myTitles = [];
@@ -294,7 +239,6 @@ export class ProfilePage implements OnInit {
         peerListings.forEach((listing) => {
           offerObj.peerTitles.push(listing.title);
         })
-    
         offerObj.peer = user_name;
         offerObj.status = status;
         offerObj.email = email;
@@ -309,18 +253,15 @@ export class ProfilePage implements OnInit {
         i++;
       }
     }
-
     offs.forEach((listing: any) => {
       let { myTitles, peerTitles } = listing;
       if(myTitles.length > 1) {
         myTitles.splice(myTitles.length - 1, 0, ' and ');
       }
-
       if(peerTitles.length > 1) {
         peerTitles.splice(peerTitles.length - 1, 0, ' and ');
       }
     });
-
     acceptedOffers.forEach((listing: any) => {
       let { myTitles, peerTitles } = listing;
       if(myTitles.length > 1) {
@@ -330,15 +271,15 @@ export class ProfilePage implements OnInit {
         peerTitles.splice(peerTitles.length - 1, 0, ' and ');
       }
     });
-
     this.offers = offs;
     this.acceptedOffs = acceptedOffers;
-
     console.log(offs, 'OFFERS AFTER RENDER CALLED');
   }
 
-
-
+  /**
+   * Called when a user clicks reject on an offer, removes it from their offers
+   * @param index The index of the rejected offer in the this.offers array
+   */
   rejectOffer(index) {
     this.offerid = this.offers[index].offerId;
     const id_offer = this.offerid;
