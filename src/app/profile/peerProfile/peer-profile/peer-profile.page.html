@@ -1,52 +1,59 @@
-<ion-header>
-  <ion-toolbar>
-      <ion-title>
-        <a style="color: #B1C634" routerLink="/Profile">Profile</a> <a style="width:50%" routerLink="/Matches">Matches</a> 
-      </ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content padding fullscreen="true">
-  <!-- <img src='{{img}}' /><br /> -->
-    <ion-avatar style="margin: 0 auto">
-      <img src={{image}} style="text-align: center;" /><br />
-    </ion-avatar>
-    <div style="width:100%;Text-align:center; font-size: 20px; font-weight:700; font-size:120%">
-      {{peerSchool}} <br />
-      <p>Welcome to {{peerUsername| uppercase}}'s profile!</p>
-    </div>
-  <a style="color:176ACC; font-weight:700;">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>
+              <a style="text-decoration: none; " href="/Profile" >PROFILE</a>
+              <a style="color: lightgrey; padding-left: 40px;; padding-right: 40px;"> | </a>
+              <a href="/Matches" style="text-decoration: none; color: #B1C634;" >MATCHES</a> 
+            </ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content padding fullscreen="true">
+          <ion-avatar style="margin: 0 auto">
+            <img src={{image}} style="text-align: center;" /><br />
+          </ion-avatar>
+
+              <div style="margin-top: 10px; margin-left: auto; margin-right: auto; width:100%; Text-align:center; font-size: 20px; font-size:120%">
+                {{peerSchool}} <br />
+              </div>
+                <div style="width:100%;Text-align:center; font-size: 20px; font-weight:700; font-size:120%; ">
+                <p>{{peerUsername| uppercase}}</p>
+              </div>
+              <br />
+
+
+  <a style="color:176ACC; font-weight:900; font-size: 16px; margin-left: 15px; margin-bottom: 6px;">
   LOOKING FOR:
   </a>
   <ion-list>
      <ion-item *ngFor="let want of wants">
         <ion-thumbnail slot="start">
-          <img [src]="want.image_link === null ? '../../../../assets/img/biblio-logo-noBG-small-07.png' : want.image_link " />
+          <img style="padding-right: 6px; margin-top: 6px;" [src]="want.image_link === null ? '../../../../assets/img/biblio-logo-noBG-small-07.png' : want.image_link " />
         </ion-thumbnail>
         <ion-label>
           <b>Title:</b> {{want.title}}<br />
-          <b>ISBN:</b> {{want.isbn}}<br />
+          <!-- <b>ISBN:</b> {{want.isbn}}<br /> -->
         </ion-label>
       </ion-item>
   </ion-list>
-  <br /><br />
-  <a style="color:176ACC; font-weight:700;">
+
+  <a style="color:176ACC; font-weight:900; font-size: 16px; margin-left: 15px; margin-bottom: 6px;">
   OFFERING:
   </a>
   <ion-list>
      <ion-item *ngFor="let listing of listings">
         <ion-thumbnail slot="start">
-          <img [src]="listing.image_link === null ? '../../../../assets/img/biblio-logo-noBG-small-07.png' : listing.image_link " />
+          <img style="padding-right: 6px; margin-top: 6px;" [src]="listing.image_link === null ? '../../../../assets/img/biblio-logo-noBG-small-07.png' : listing.image_link " />
         </ion-thumbnail>
         <ion-label>
           <b>Title:</b> {{listing.title}}<br />
-          <b>ISBN:</b> {{listing.isbn}}<br />
+          <!-- <b>ISBN:</b> {{listing.isbn}}<br /> -->
         </ion-label>
         
         <!-- Value: {{listing.value}} -->
       </ion-item>
   </ion-list>
-  <br /><br />
-  <a style="color:176ACC; font-weight:700; Text-align:center;">
+
+  <a style="color:#B1C634; font-weight:900; font-size: 16px; margin-left: 15px; margin-bottom: 6px;">
   MAKE AN OFFER
   </a>
   <div *ngIf="isReady === 2">
@@ -58,19 +65,19 @@
                   {{want.title}}
               </ion-select-option>
             </ion-select>
-            <br>
-            <ion-input #getPaid placeholder="$0.00" style="display: block" clear-input="true" [(ngModel)]="wantMoney" #ctrl="ngModel"></ion-input>
-        </ion-item>
-        <ion-item>
+          </ion-item>
+          <ion-input #getPaid style="margin-left: 15px; margin-right: 15px;" placeholder="$0.00" clear-input="true" clearOnEdit="true" [(ngModel)]="wantMoney" #ctrl="ngModel"></ion-input>
+        
+          <ion-item>
             <label color="primary" stacked>I'm offering: </label><br />
             <ion-select #offer multiple="true" placeholder="Book you are offering">
               <ion-select-option *ngFor="let listing of possibleBooks[0]" style="overflow: visible;">
                   {{listing.book.title}}
               </ion-select-option>
             </ion-select>
-            <ion-input #walletLoss placeholder="$0.00" clear-input="true" [(ngModel)]="offeredMoney" #ctrl="ngModel"></ion-input>
-        </ion-item>
-        <ion-button (click)="makeOffer(want.value, offer.value)" size="small">Submit offer</ion-button>
+          </ion-item>
+          <ion-input #walletLoss style="margin-left: 15px" placeholder="$0.00" clear-input="true" clearOnEdit="true" [(ngModel)]="offeredMoney" #ctrl="ngModel"></ion-input>
+        <ion-button style="margin-left: default; margin-right: default; display: block;" (click)="makeOffer(want.value, offer.value)" size="small">Submit offer</ion-button>
       </ion-list>
   </div>
 </ion-content>

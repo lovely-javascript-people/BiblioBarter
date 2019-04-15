@@ -26,8 +26,8 @@ export class PeerProfilePage implements OnInit {
   entireListings: any[];
   possibleBooks: any[] = [];
   isReady: number = 0;
-  wantMoney = 0;
-  offeredMoney = 0;
+  wantMoney: number;
+  offeredMoney: number;
   money: number;
   peerUsername: string;
   image: string;

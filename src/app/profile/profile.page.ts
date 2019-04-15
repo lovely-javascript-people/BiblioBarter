@@ -133,8 +133,8 @@ export class ProfilePage implements OnInit {
     console.log(this.offers[index], 'CLICKED ON OFFER');
     const {offerId, myTitles, peerTitles, peerid, peer} = this.offers[index];
     this.offerid = offerId;
-    //this.apiService.userAcceptOffer(); // for when we refactor
-    // this.http.patch(`http://${this.local}/accept/offerlisting`, { params: { status: 'accepted', offerId: id_offer } })
+    // this.apiService.userAcceptOffer(); // for when we refactor
+  
     this.http.patch(`http://${this.local}/accept/offerlisting`, { 
       params: { 
         status: 'accepted', 
