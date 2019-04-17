@@ -1,5 +1,5 @@
 /* eslint-disable */
-const db = require('../database/database.js');
+// import { db } from './server';
 
 /**
  * @todo File is currently depracated. Was started out in the beginning of project.
@@ -10,15 +10,13 @@ const db = require('../database/database.js');
  * @param {string} : isbnVal of book title, need to change to number for query
  * @returns {array} array of objects containing each listing information
  */
-const findBookByIsbn = (isbnVal) => {
+const findBookByIsbn = (db, isbnVal) => {
   // const isbnNum = Number(isbnVal);
-  console.log('in api helpers', isbnVal);
   return db.Book.findAll({
     where: {
       isbn: isbnVal,
     },
-  })
-  .then((allBooks)=> console.log(allBooks, 'API HELPERS'));
+  }).then(data => console.log(data, 'I am data'));
 };
 
 /**

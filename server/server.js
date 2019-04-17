@@ -28,6 +28,9 @@ app.use((req, res, next) => {
   next();
 });
 
+/**
+ * Just for testing purposes
+ */
 app.get('/callback', (req, res) => {
   res.send(JSON.stringify('hello'));
 });
@@ -113,6 +116,9 @@ app.post('/signup', (req, res) => {
   });
 });
 
+/**
+ * Endpoint for creating new users for chatkit
+ */
 app.post('/users', (req, res) => {
   const { userId } = req.body;
 
@@ -133,6 +139,9 @@ app.post('/users', (req, res) => {
     });
 });
 
+/**
+ * Endpoint for chatkit authentication
+ */
 app.post('/authenticate', (req, res) => {
   const authData = chatkit.authenticate({
     userId: req.query.user_id,
@@ -140,6 +149,9 @@ app.post('/authenticate', (req, res) => {
   res.status(authData.status).send(authData.body);
 });
 
+/**
+ * Endpoint for retrieving all data pertaining to current user
+ */
 app.get('/profile', (req, res) => {
   let data;
   db.User.findAll({
@@ -156,6 +168,9 @@ app.get('/profile', (req, res) => {
   .then(() => res.send(data));
 });
 
+/**
+ * Endpoint for setting or changing university
+ */
 app.patch('/school', (req, res) => {
   console.log('LAURA LAURA LAURA');
   let uni = req.body.school;
@@ -189,7 +204,7 @@ app.patch('/school', (req, res) => {
 // POST /user/want
 // User add a want book, should also return all the user's want books
 app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new for functionality
-  helpers.findBookByIsbn(req.body.params);
+  helpers.findBookByIsbn(db, req.body.params);
   db.Want.create({
     isbn: req.body.params,
     condition: null, // set to NULL for now
@@ -462,7 +477,7 @@ app.patch('/accept/offerlisting', (req, res) => {
       }, {
         where: {
           title: myTitles[j],
-          id_user: peerid,
+          id_user: userId,
         },
       }).catch((err) => console.log(err));
     }
@@ -473,7 +488,7 @@ app.patch('/accept/offerlisting', (req, res) => {
       }, {
         where: {
           title: peerTitles[i],
-          id_user: userId,
+          id_user: peerid,
         },
       }).catch((err) => console.log(err));
     }
@@ -827,6 +842,7 @@ app.delete('/deleteWant', (req, res) => {
 
 
 // GET //getUser
+//gets user info only, no books
 app.get('/getUser', (req, res) => {
   console.log(req.query);
   let allUserInfo;
@@ -888,3 +904,4 @@ app.get('/getUser', (req, res) => {
 //     }
 //   })
 // });
+module.exports.db = db;
