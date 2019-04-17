@@ -74,6 +74,14 @@ export class ApiService {
     });
   }
 
+  getAcceptedOffers(callback) {
+    this.http.get(`${this.local}/accept/offerlisting`, { params: { id_user: localStorage.userid }})
+    .subscribe((accepted) => {
+      console.log(accepted, 'Accepted offers');
+      callback(accepted);
+    });
+  }
+
   renderWantList(callback) {
     // console.log(localStorage.userid, 'USERID');
     this.http.get(`${this.local}/user/want?${localStorage.userid}`)

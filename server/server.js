@@ -7,6 +7,8 @@ const Chatkit = require('@pusher/chatkit-server');
 const db = require('../database/database.js');
 const _ = require('underscore');
 const helpers = require('./apiHelpers.js');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 const chatkit = new Chatkit.default({
   instanceLocator: process.env.CHATKIT_INSTANCE_LOCATOR,
@@ -426,6 +428,13 @@ app.patch('/offerlisting', (req, res) => {
   });
 });
 
+app.get('/accept/offerlisting', (req, res) => {
+  helpers.getAccepted(req.query.id_user, db).then(acceptedOffers => {
+    res.send(acceptedOffers);
+  });
+})
+
+
 // PATCH / accept/offerlisting
 /**
  * Patch request sent for accepted offers. Db status on offers table changes to accepted.
@@ -522,6 +531,7 @@ app.get('/offers', (req, res) => {
   db.Listing.findAll({ // first find all listings for this user
     where: {
       id_user: req.query.id_user,
+      available: true,
     },
   }).then(async (data) => {
     console.log(data, 'ALL YOUR LISTINGS');
@@ -569,20 +579,13 @@ app.get('/offers', (req, res) => {
         }
       }
     }
-    // using the information from the offer id, grab all the listings, and grab the book details
-    // if book offering versus book want
-    console.log(lists, 'LISTS'); // array of objects, each holding data on listing
-    console.log(allPeers, 'ALL PEERS'); // user ids, may include user along with peers in transaction
-    console.log(allOffersForIds, 'OFFER IDS for USER'); // user ids, may include user along with peers in transaction
-    // start with offer id, then move to grabbing each listing, part of each offer
-    return allPeers;
-  }).then(async (allpeers) => {
     for (let k = 0; k < _.uniq(allOffersForIds).length; k++) {
       console.log('enter async all offers');
       var oneCompleteOffer = {};
       let offerForId = await db.Offer.findOne({
         where: {
           id_offer: allOffersForIds[k],
+          status: 'pending'
         }
       });
       oneCompleteOffer.offer = offerForId;
@@ -619,6 +622,7 @@ app.get('/offers', (req, res) => {
       oneCompleteOffer.myListings = myListings;
       oneCompleteOffer.peerListings = peerListings;
       let peerInfo;
+      if(offerForId) {
       if (offerForId.id_recipient === req.query.id_user) {
         peerId = await db.User.findOne({
           where: {
@@ -638,15 +642,18 @@ app.get('/offers', (req, res) => {
       // oneCompleteOffer.allUsersListings = allUserListings; // uncomment if need all users listings, currently not needed
       allOffers.push(oneCompleteOffer);
     }
+    }
     allOffers.push(allUserListings);
-    return allOffers;
-  }).then((allOffers) => {
-    console.log(allOffers, 'END: ALL OFFERS');
-    res.status(200).send(allOffers);
-  }).catch((err) => {
-    // console.log(`Aw Man, you got an error: ${err}`);
-    res.status(500).send(JSON.stringify(`An error occured in retrieving all offers: ${err}`));
-  });
+    res.send(allOffers);
+  })
+  // .then((allOffers) => {
+  //   console.log(allOffers, 'END: ALL OFFERS');
+  //   res.status(200).send(allOffers);
+  //   return;
+  // }).catch((err) => {
+  //   // console.log(`Aw Man, you got an error: ${err}`);
+  //   res.status(500).send(JSON.stringify(`An error occured in retrieving all offers: ${err}`));
+  // });
 });
 
 // POST /offers
