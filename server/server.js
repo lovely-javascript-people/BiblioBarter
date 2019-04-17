@@ -189,6 +189,7 @@ app.patch('/school', (req, res) => {
 // POST /user/want
 // User add a want book, should also return all the user's want books
 app.post('/user/want', (req, res) => { // JUST CHANGED TO POST, CHECK WITH new for functionality
+  helpers.findBookByIsbn(req.body.params);
   db.Want.create({
     isbn: req.body.params,
     condition: null, // set to NULL for now
@@ -598,7 +599,6 @@ app.get('/offers', (req, res) => {
         } else {
           peerListings.push(finalBook);
         }
-          }
       }
     }
       oneCompleteOffer.myListings = myListings;

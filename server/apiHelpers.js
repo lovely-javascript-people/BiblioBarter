@@ -11,13 +11,14 @@ const db = require('../database/database.js');
  * @returns {array} array of objects containing each listing information
  */
 const findBookByIsbn = (isbnVal) => {
-  const isbnNum = Number(isbnVal);
-  // db.Book.findAll({
-  //   where: {
-  //     isbn = isbnNum,
-  //   },
-  // });
-  // .then((allBooks))
+  // const isbnNum = Number(isbnVal);
+  console.log('in api helpers', isbnVal);
+  return db.Book.findAll({
+    where: {
+      isbn: isbnVal,
+    },
+  })
+  .then((allBooks)=> console.log(allBooks, 'API HELPERS'));
 };
 
 /**
