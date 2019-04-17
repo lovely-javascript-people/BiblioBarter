@@ -21,9 +21,12 @@ export class WantListModal implements OnInit {
     this.modal.dismiss();
   }
 
-  // function that takes in isbn number from input field
-  // and sends get req to api server /search/listing/isbn
-    // returns all listings of book
+  /**
+   * addBookToWant takes in an isbn number and adds book to users want list.
+   * @param {string} isbnVal ISBN number of book from input field
+   * Sends a GET request is made to openlibrary.org to grab information on book.
+   * Request returns information on title and image link.
+   */
   addBookToWant() {
     const isbnVal = this.isbnVal;
 

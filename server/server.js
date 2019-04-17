@@ -583,7 +583,7 @@ app.get('/offers', (req, res) => {
       let offerForId = await db.Offer.findOne({
         where: {
           id_offer: allOffersForIds[k],
-        }
+        },
       });
       oneCompleteOffer.offer = offerForId;
       const myListings = [];
@@ -614,8 +614,8 @@ app.get('/offers', (req, res) => {
         } else {
           peerListings.push(finalBook);
         }
-          }
       }
+    }
       oneCompleteOffer.myListings = myListings;
       oneCompleteOffer.peerListings = peerListings;
       let peerInfo;
@@ -867,5 +867,6 @@ app.get('/getUser', (req, res) => {
     res.status(500).send(JSON.stringify(`Error in retreiving peer information: ${err}`));
   });
 });
+
 
 module.exports.db = db;
