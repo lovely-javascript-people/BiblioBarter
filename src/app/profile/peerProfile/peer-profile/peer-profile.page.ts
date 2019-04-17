@@ -40,36 +40,38 @@ export class PeerProfilePage implements OnInit {
     this.apiService.getPeerProfile(id, callback);
   }
 
+  /**
+   * Gets all listings made by current user
+   */
   getYourBooks() {
     this.apiService.renderListingsList(this.setYourBooks);
   }
 
+  /**
+   * Gets all books in the current users Want list
+   */
   getYourWants() {
     this.apiService.renderWantList(this.setYourWants);
   }
 
-  setYourBooks(data) {
-    // console.log(data);
-    const lists = this.wants.map(list => list.title);
-    const xRefer = data.filter(piece => lists.includes(piece.book.title));
+  setYourBooks(listings: any[]) {
+    const lists: string[] = this.wants.map(list => list.title);
+    const xRefer: object[] = listings.filter(listing => lists.includes(listing.book.title));
     this.possibleBooks.push(xRefer);
     this.isReady += 1;
   }
 
-  setYourWants(data) {
-    const wants = this.listings.map(want => want.title);
-    const xRefer = data.filter(piece => wants.includes(piece.title));
+  setYourWants(wantList: any[]) {
+    const wants: string[] = this.listings.map(want => want.title);
+    const xRefer: object[] = wantList.filter(want => wants.includes(want.title));
     this.possibleBooks.push(xRefer);
     this.isReady += 1;
   }
 
-  async setBooks(data) {
-    console.log(data, 'jeef');
-    const temp = data.slice(0, data.length - 2);
-    this.wants = temp;
-    this.listings = data[data.length - 2];
-    this.entireListings = data[data.length - 1];
-    console.log(this.entireListings);
+  setBooks(peerBooks: []) {
+    this.wants = peerBooks.slice(0, peerBooks.length - 2);
+    this.listings = peerBooks[peerBooks.length - 2];
+    this.entireListings = peerBooks[peerBooks.length - 1];
     this.getYourBooks();
     this.getYourWants();
   }
@@ -108,18 +110,14 @@ export class PeerProfilePage implements OnInit {
         }
       });
     });
-
     let moneyOffer = (this.offeredMoney * -100);
     let moneyWant = (this.wantMoney * 100);
-
     if (moneyOffer !== 0) {
       this.money = moneyOffer;
     } else {
       this.money = moneyWant;
     }
-
     let money = this.money;
-
     this.apiService.sendOffer({
       idRecipient: this.peer,
       idSender: localStorage.userid,
