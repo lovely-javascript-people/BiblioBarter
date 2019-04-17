@@ -583,7 +583,7 @@ app.get('/offers', (req, res) => {
       let offerForId = await db.Offer.findOne({
         where: {
           id_offer: allOffersForIds[k],
-        }
+        },
       });
       oneCompleteOffer.offer = offerForId;
       const myListings = [];
@@ -868,40 +868,5 @@ app.get('/getUser', (req, res) => {
   });
 });
 
-// // GET /acceptedoffers
-// // grabs all offers accepted by user id
-// /**
-//  * @param {number} userId user's id
-//  * Queries database for any offers accepted, associated with this user as
-//  * the sender or the receiver. Sends back 
-//  */
-// app.get('/accepted', (req, res) => {
-//   const { userId } = req.query;
-//   db.Offer.findAll({
-//     where: {
-//       status: 'accepted',
-//       $or: [
-//         {
-//           idSender: userId,
-//         },
-//         {
-//           idRecipient: userId,
-//         },
-//       ],
-//     },
-//   }).then(async (allOffersForUser) => {
-//     for (let i = 0; i < allOffersForUser.length; i++) {
-//       let offerListings = await db.Offer_Listing.findAll({
-//         where: {
-//           id_offer: allOffersForUser.id_offer,
-//         },
-//       }); 
-//       let allListingsForOffer = await db.Listing.findAll({
-//         where: {
-//           id_listing: offerListings.id_listing,
-//         }
-//       })
-//     }
-//   })
-// });
+
 module.exports.db = db;
