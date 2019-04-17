@@ -40,6 +40,7 @@ export class ChatService {
    */
   offerChat(roomName, peerId, callback) {
     let userId = localStorage.username
+    let user;
     axios.post(`http://${this.local}/users`, { userId })
       .then(() => {
         const tokenProvider = new Chatkit.TokenProvider({
@@ -53,14 +54,15 @@ export class ChatService {
         return chatManager
           .connect({})
           .then(currentUser => {
+            user = currentUser;
             currentUser.createRoom({
               name: roomName,
               private: true,
             }).then(room => {
-              callback(peerId, room.id);
+              callback(peerId, room.id, user);
             }) 
           });
-      }).catch(error => {
+      }).catch(() => {
         const tokenProvider = new Chatkit.TokenProvider({
           url: `http://${this.local}/authenticate`
         });
@@ -72,53 +74,59 @@ export class ChatService {
         return chatManager
         .connect({})
         .then(currentUser => {
+          user = currentUser;
           currentUser.createRoom({
             name: roomName,
             private: true,
           }).then(room => {
-            callback(peerId, room.id);
+            callback(peerId, room.id, user);
           }) 
         });
       });
   }
 
-  addPeerToChat(userId, roomId) {
-    axios.post(`http://${this.local}/users`, { userId })
+  /**
+   * Upon successful room creation, creates peer account and adds them to that room.
+   * @param peerId Your peer's username
+   * @param roomId Id of the room created in the previous step
+   * @param user Your user object with attached chatkit methods
+   */
+  addPeerToChat(peerId, roomId, user) {
+    axios.post(`http://localhost:3000/users`, { peerId })
       .then(() => {
         const tokenProvider = new Chatkit.TokenProvider({
-          url: `http://${this.local}/authenticate`
+          url: `http://localhost:3000/authenticate`
         });
         const chatManager = new Chatkit.ChatManager({
           instanceLocator: 'v1:us1:1264d0d5-5678-4765-abf9-ec9e94daba1f',
-          userId,
+          peerId,
           tokenProvider
         });
         return chatManager
           .connect({})
-          .then(currentUser => {
-            currentUser.addUserToRoom({
-              userId,
+          .then(() => {
+            user.addUserToRoom({
+              peerId,
               roomId,
             })
           });
-      }).catch(error => {
+      }).catch(() => {
         const tokenProvider = new Chatkit.TokenProvider({
-          url: `http://${this.local}/authenticate`
+          url: `http://localhost:3000/authenticate`
         });
         const chatManager = new Chatkit.ChatManager({
           instanceLocator: 'v1:us1:1264d0d5-5678-4765-abf9-ec9e94daba1f',
-          userId,
+          peerId,
           tokenProvider
         });
         return chatManager
         .connect({})
-        .then(currentUser => {
-          currentUser.addUserToRoom({
-            userId,
+        .then(() => {
+          user.addUserToRoom({
+            peerId,
             roomId,
           })
         });
-
       });
   }
 

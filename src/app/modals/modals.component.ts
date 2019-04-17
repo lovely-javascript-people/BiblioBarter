@@ -92,10 +92,6 @@ export class SettingsModal implements OnInit {
     }
   }
 
-  searchRadius() {
-    this.settings.defineSearchRadius(this.radius)
-  }
-
   async closeModal() {
     this.modal.dismiss();
   }
