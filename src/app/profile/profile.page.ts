@@ -34,6 +34,7 @@ export class ProfilePage implements OnInit {
   money_exchanged: number;
   deleteId: number;
   deleteString: string;
+  peerName: string;
   
     // to send to counteroffer modal
     peerid: number;
@@ -130,7 +131,7 @@ export class ProfilePage implements OnInit {
     const {offerId, myTitles, peerTitles, peerid} = this.offers[index];
     this.offerid = offerId;
     // this.apiService.userAcceptOffer(); // for when we refactor
-    // this.http.patch(`http://${this.local}/accept/offerlisting`, { params: { status: 'accepted', offerId: id_offer } })
+  
     this.http.patch(`http://${this.local}/accept/offerlisting`, { 
       params: { 
         status: 'accepted', 
@@ -145,6 +146,7 @@ export class ProfilePage implements OnInit {
         this.presentOfferToast('Offer has been accepted');
         this.apiService.getOffers(this.renderOffers);
       });
+
   }
 
   counterOffer(index) {
@@ -197,6 +199,21 @@ export class ProfilePage implements OnInit {
     let i = 0;
 
     for (const offer of offers.slice(0, offers.length - 1)) {
+      if (offer.offer.status === 'pending' && offer.offer.id_sender === Number(localStorage.userid)) {
+        const myList = offer.myListings.map(listing => [listing.listing.available, offer]);
+        const peerList = offer.peerListings.map(listing => [listing.listing.available, offer]);
+        const lists = myList.concat(peerList).filter(list => list[0] === false);
+        for (let list of lists) {
+          this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: list[1].offer.id_offer } })
+        .subscribe((offerData) => {
+          console.log(offerData, 'OFFER DATA');
+          this.presentOfferToast('Offer has been rejected.'); 
+        });
+        } 
+      }
+    }
+
+    for (const offer of offers.slice(0, offers.length - 1)) {
     if (offer.offer.status === 'pending' && offer.offer.id_sender !== Number(localStorage.userid)) {
       const myList = offer.myListings.map(listing => [listing.listing.available, offer]);
       const peerList = offer.peerListings.map(listing => [listing.listing.available, offer]);
@@ -205,9 +222,9 @@ export class ProfilePage implements OnInit {
         this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: list[1].offer.id_offer } })
       .subscribe((offerData) => {
         console.log(offerData, 'OFFER DATA');
-        this.presentOfferToast('Offer has been rejected.');
+        this.presentOfferToast('Offer has been rejected.'); 
       });
-      }
+      } 
 
     const offerObj: any = {};
     offerObj.myTitles = [];
