@@ -12,26 +12,26 @@
     <ion-button (click)="closeModal()">Submit Info</ion-button>
     <div style="color: crimson">DANGER ZONE!!!<br />Delete Your Account <ion-button (click)="deleteProfile()">Please don't press me!!!<ion-icon name="sad"></ion-icon></ion-button></div> -->
     <ion-content padding>
-    <ion-icon style="width: 40px;height: 40px;" name="close" (click)="closeModal()"></ion-icon>
-    <div style="margin-bottom:15px; text-align:center">
-        <div style="width:100%;Text-align:center; font-size: 20px; font-weight:700;font-size:120%">
-          EDIT PROFILE
-        </div>
-        <div style="width:100%;Text-align:center;">
+    <ion-icon style="height: 40px; text-align:center;" name="close" (click)="closeModal()"></ion-icon>
+    <div style="margin-bottom:15px; width:100%; text-align:center;">
+        <div style="width:100%;">
+            <div style="font-weight:900; font-size: 16px; margin-left: 15px; margin-bottom: 6px; color: #176ACC;">
+              EDIT PROFILE
+            </div>
           <ion-input #first position="stacked" required="true" clear-input="true" placeholder="First Name"></ion-input>
           <ion-input #last position="stacked" clear-input="true" placeholder="Last Name"></ion-input>
           <ion-input #email clear-input="true" placeholder="Email Address"></ion-input>
           <ion-input #radius clear-input="true" placeholder="Search Radius"></ion-input>
-          <ion-button (click)="settingsUpdate(first.value, last.value, email.value, radius.value, 'school')">Submit Info</ion-button>
-          <div>
+          <ion-button (click)="settingsUpdate(first.value, last.value, email.value, radius.value, 'school')" size="small">Submit Info</ion-button>
+          <br>
+          <br>
               <ion-input [(ngModel)]="school" #ctrl="ngModel" placeholder="New School" (ngModelChange)="onChange()"></ion-input>
               <ion-list>
                 <ion-item *ngFor="let uni of universities">
                     <div (click)="selectUni($event)">{{uni.name}}</div>
                 </ion-item>
+                <ion-button (click)="setSchool('school')" size="small">Update School</ion-button>
               </ion-list>
-              <ion-button (click)="setSchool('school')">Update School</ion-button>
-          </div>
         </div>
     </div>
   </ion-content>
