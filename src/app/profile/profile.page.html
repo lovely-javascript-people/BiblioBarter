@@ -49,8 +49,7 @@
   </div>
   <div *ngIf="offers.length">
   <a style="color:#B1C634; font-weight:900; font-size: 16px; margin-left: 15px; margin-bottom: 6px;">
-  PENDING OFFERS:
-  </a>
+  PENDING OFFERS:</a>
   <ion-item *ngFor="let offer of offers; let i = index">
     <ion-label>
       <b>{{offer.peer}} Is Looking For:</b> <br />
@@ -86,7 +85,7 @@
      <ion-item *ngFor="let want of wants">
         <ion-thumbnail slot="start">
             <img 
-              style="padding-right: 6px; "
+              style="padding-right: 6px; margin-top: 6px;"
               [src]="want.image_link === null ? '../../assets/img/biblio-logo-noBG-small-07.png' : want.image_link " />
         </ion-thumbnail>
         <ion-label>
@@ -137,7 +136,7 @@
           <ion-button (click)="cancelAcceptedOffer(i)" style="margin-top: 10px; margin-left: auto; margin-right: auto; float: right">Cancel</ion-button>
       </ion-item>
 </div>
-  <br />
+  
   <div class="col-xs-12 buttons">
       <a href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_E5tfHJicmsEM7yImGKJv30DqYfd2koHB&scope=read_write"
         class="stripe-connect light-blue dark"><span>Connect with Stripe</span></a>
