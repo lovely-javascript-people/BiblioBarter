@@ -53,9 +53,9 @@
   <ion-item *ngFor="let offer of offers; let i = index">
     <ion-label>
       <b>{{offer.peer}} Is Looking For:</b> <br />
-      <div *ngFor="let title of offer.myTitles; let i = index">
+      <ion-label *ngFor="let title of offer.myTitles; let i = index">
         {{title}}<br>
-      </div>
+      </ion-label>
       {{offer.userMoney}}
       <b>Is Offering:</b> <br />
       <div *ngFor="let title of offer.peerTitles; let i = index">
@@ -77,11 +77,11 @@
   <a style="color:176ACC; font-weight:900; font-size: 16px; margin-left: 15px; margin-bottom: 6px;">
   I'M LOOKING FOR:
 </a>
-<ion-button size="small" style="margin-top: 6px; font-weight:700; margin-right: 15px; background-color: #B1C634; width:10%" (click)="openWantListModal()" style="float: right; padding-right: 5px; padding-left: 5 px;">+</ion-button>
-<!-- <ion-icon name="add-circle" (click)="openWantListModal()" style="float: right;" color="default"></ion-icon> -->
+<!-- <ion-button size="small" style="margin-top: 6px; font-weight:700; margin-right: 15px; width:10%; width:30px; float: right; padding-right: 5px; padding-left: 5 px;" (click)="openWantListModal()"> + </ion-button> -->
+<ion-button size="small" style="font-weight:700; background-color: #B1C634; width:10%" (click)="openWantListModal()" style="width:30px; float: right;"> + </ion-button>
+
 
 <br>
-  <!-- <ion-button size="small" style="font-weight:700;" (click)="openAddListingModal()" style="float: right;"> Edit </ion-button> -->
      <ion-item *ngFor="let want of wants">
         <ion-thumbnail slot="start">
             <img 
@@ -92,14 +92,14 @@
             <b>Title:</b> {{want.title}}<br />
             <!-- <b>ISBN:</b> {{want.isbn}} -->
         </ion-label>
-        <ion-button size="small" style="font-weight:700; width:10%"  (click)="deleteWant(want.id_want, 'want listing')" style="width:20px; float: right;"> - </ion-button>
+        <ion-button size="small" style="font-weight:700; width:10%"  (click)="deleteWant(want.id_want, 'want listing')" style="width:30px; float: right;"> - </ion-button>
         <!-- <ion-icon name="remove-circle-outline" (click)="deleteWant(want.id_want, 'want listing')"></ion-icon> -->
       </ion-item>
   <br />
   <a style="color:176ACC; font-weight:900; font-size: 16px; margin-left: 15px; margin-bottom: 6px;">
   I'M OFFERING:
 </a>
-<ion-button size="small" style="font-weight:700; background-color: #B1C634; width:10%" (click)="openAddListingModal()" style="width:20px; float: right;"> + </ion-button>
+<ion-button size="small" style="font-weight:700; background-color: #B1C634; width:10%" (click)="openAddListingModal()" style="width:30px; float: right;"> + </ion-button>
 <br>
      <ion-item *ngFor="let listing of listings">
         <ion-thumbnail slot="start">
@@ -112,7 +112,7 @@
             <b>Condition:</b> {{listing.book.condition}}<br />
             <!-- <b>ISBN:</b> {{listing.book.isbn}}<br /> -->
         </ion-label>
-        <ion-button size="small" style="font-weight:700; width:10%"  (click)="deleteListing(listing.id_book, listing.id_listing, 'offer listing')" style="float: right;">  -  </ion-button>
+        <ion-button size="small" style="font-weight:700; width:10%"  (click)="deleteListing(listing.id_book, listing.id_listing, 'offer listing')" style="width:30px; float: right;">  -  </ion-button>
         <!-- Value: {{listing.value}} -->
       </ion-item>
   <br/>
