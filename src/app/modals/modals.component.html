@@ -18,14 +18,14 @@
             <div style="font-weight:900; font-size: 16px; margin-left: 15px; margin-bottom: 6px; color: #176ACC;">
               EDIT PROFILE
             </div>
-          <ion-input #first position="stacked" required="true" clear-input="true" placeholder="First Name"></ion-input>
-          <ion-input #last position="stacked" clear-input="true" placeholder="Last Name"></ion-input>
-          <ion-input #email clear-input="true" placeholder="Email Address"></ion-input>
-          <ion-input #radius clear-input="true" placeholder="Search Radius"></ion-input>
+          <ion-input #first position="stacked" style="text-align:center; margin-left: 23px;" required="true" clear-input="true" placeholder="First Name"></ion-input>
+          <ion-input #last position="stacked" style="text-align:center; margin-left: 23px;" clear-input="true" placeholder="Last Name"></ion-input>
+          <ion-input #email clear-input="true" style="text-align:center; margin-left: 23px;" placeholder="Email Address"></ion-input>
+          <ion-input #radius clear-input="true" style="text-align:center; margin-left: 23px;" placeholder="Search Radius"></ion-input>
           <ion-button (click)="settingsUpdate(first.value, last.value, email.value, radius.value, 'school')" size="small">Submit Info</ion-button>
           <br>
           <br>
-              <ion-input [(ngModel)]="school" #ctrl="ngModel" placeholder="New School" (ngModelChange)="onChange()"></ion-input>
+              <ion-input [(ngModel)]="school" #ctrl="ngModel" style="text-align:center; margin-left: 4px;" placeholder="New School" (ngModelChange)="onChange()"></ion-input>
               <ion-list>
                 <ion-item *ngFor="let uni of universities">
                     <div (click)="selectUni($event)">{{uni.name}}</div>
