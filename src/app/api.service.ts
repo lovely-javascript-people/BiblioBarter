@@ -100,6 +100,14 @@ export class ApiService {
     });
   }
 
+  getAcceptedOffers(callback) {
+    this.http.get(`${this.local}/accept/offerlisting`, { params: { id_user: localStorage.userid }})
+    .subscribe((accepted) => {
+      console.log(accepted, 'Accepted offers');
+      callback(accepted);
+    });
+  }
+
   /**
    * 
    * @param {function} callback takes the values and set the want books

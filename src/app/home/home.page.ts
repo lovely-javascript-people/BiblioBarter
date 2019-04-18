@@ -17,10 +17,10 @@ export class HomePage implements OnInit {
   url: any;
   isbnQuery = '';
   isbn = '';
-  listings: any = [];
+  listings: any[] = [];
   yourWants: any[];
   num: string; // stores the scanned result
-  matches: any[];
+  matches: any[] = [];
   open = false;
   yourListings: any[];
   othersWants: any[] = [];

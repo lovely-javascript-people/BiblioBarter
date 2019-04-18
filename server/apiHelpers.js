@@ -109,10 +109,25 @@ const findOneOfferByIdOffer = (idOffer) => {
   });
 }
 
+const getAccepted = async (id_user, db) => {
+  // const acceptedOffers = [];
+  return await db.Offer.findAll({
+    where: {
+      id_recipient: id_user,
+      status: 'accepted',
+    }
+  // }).then((accepted) => {
+  //   for (const offer of accepted) {
+  //     acceptedOffers.push(offer);
+  //   }
+  })
+}
+
 module.exports = {
   findBookByIsbn,
   insertNewUser,
   newListing,
   createWant,
   findOneOfferByIdOffer,
+  getAccepted,
 };

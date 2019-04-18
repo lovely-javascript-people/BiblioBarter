@@ -325,7 +325,6 @@ export class ProfilePage implements OnInit {
 
 
   deleteWant(wantId, want) {
-
     this.presentToast(want);
     console.log('delete want', wantId);
     this.http.delete(`http://${this.local}/deleteWant`, { params: { wantId } })
@@ -408,6 +407,7 @@ export class ProfilePage implements OnInit {
     this.setUser = this.setUser.bind(this);
     this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
     this.apiService.getOffers(this.renderOffers);
+    this.apiService.getAcceptedOffers(console.log);
   }
 
 }
