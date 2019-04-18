@@ -6,8 +6,8 @@
         <br>
       </div>
       <div style="width:100%;Text-align:center;">
-        <ion-input clear-input="true" [(ngModel)]="emailAddress" #ctrl="ngModel" placeholder="Email"></ion-input>
-        <ion-textarea maxlength="400" [(ngModel)]="emailBody" #ctrl="ngModel" placeholder="Message Us"></ion-textarea>
+        <ion-input clear-input="true" [(ngModel)]="emailAddress" #ctrl="ngModel" style="text-align:center; margin-left: 19px;" placeholder="Email"></ion-input>
+        <ion-textarea maxlength="400" [(ngModel)]="emailBody" #ctrl="ngModel" style="text-align:center; margin-left: 6px;" placeholder="Message Us"></ion-textarea>
       </div>
       <ion-button (click)="submitEmail()" size="small" >Submit</ion-button>
   </div>
