@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../chat.service';
 import Chatkit from '@pusher/chatkit-client';
 import axios from 'axios';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-chat',
@@ -118,6 +119,7 @@ export class ChatPage implements OnInit {
         });
 
         this.newMessage = '';
+        $('.chat-session').focus();
       }
 
   local = 'localhost:3000';
