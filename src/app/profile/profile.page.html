@@ -58,9 +58,9 @@
       </ion-label>
       {{offer.userMoney}}
       <b>Is Offering:</b> <br />
-      <div *ngFor="let title of offer.peerTitles; let i = index">
+      <ion-label *ngFor="let title of offer.peerTitles; let i = index">
           {{title}}<br>
-      </div>
+      </ion-label>
       {{offer.peerMoney}}
     </ion-label>
           <div>
