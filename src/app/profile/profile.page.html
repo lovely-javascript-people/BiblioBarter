@@ -64,11 +64,11 @@
       {{offer.peerMoney}}
     </ion-label>
           <div>
-              <ion-button (click)="acceptOffer(i)" size="small" style="margin-top: 10px; margin-left: auto; margin-right: auto; float: right">Accept</ion-button>
+              <ion-button (click)="acceptOffer(i)" size="small" style="width:60px; margin-top: 10px; margin-left: auto; margin-right: auto; float: right">Accept</ion-button>
               <br />
-              <ion-button (click)="rejectOffer(i)" size="small" style="margin-top: 10px; margin-left: auto; margin-right: auto; float: right">Reject</ion-button>
+              <ion-button (click)="rejectOffer(i)" size="small" style="width:60px; margin-top: 10px; margin-left: auto; margin-right: auto; float: right">Reject</ion-button>
               <br />
-              <ion-button (click)="counterOffer(); openCounterOfferModal()" size="small" style="margin-bottom: 10px; margin-top: 10px; margin-left: auto; margin-right: auto; float: right">Counter</ion-button>
+              <ion-button (click)="counterOffer(); openCounterOfferModal()" size="small" style="width:60px; margin-bottom: 10px; margin-top: 10px; margin-left: auto; margin-right: auto; float: right">Counter</ion-button>
           </div>
       </ion-item>
 </div>
@@ -92,14 +92,14 @@
             <b>Title:</b> {{want.title}}<br />
             <!-- <b>ISBN:</b> {{want.isbn}} -->
         </ion-label>
-        <ion-button size="small" style="font-weight:700; width:10%"  (click)="deleteWant(want.id_want, 'want listing')" style="float: right;"> - </ion-button>
+        <ion-button size="small" style="font-weight:700; width:10%"  (click)="deleteWant(want.id_want, 'want listing')" style="width:20px; float: right;"> - </ion-button>
         <!-- <ion-icon name="remove-circle-outline" (click)="deleteWant(want.id_want, 'want listing')"></ion-icon> -->
       </ion-item>
   <br />
   <a style="color:176ACC; font-weight:900; font-size: 16px; margin-left: 15px; margin-bottom: 6px;">
   I'M OFFERING:
 </a>
-<ion-button size="small" style="font-weight:700; background-color: #B1C634; width:10%" (click)="openAddListingModal()" style="float: right;"> + </ion-button>
+<ion-button size="small" style="font-weight:700; background-color: #B1C634; width:10%" (click)="openAddListingModal()" style="width:20px; float: right;"> + </ion-button>
 <br>
      <ion-item *ngFor="let listing of listings">
         <ion-thumbnail slot="start">
@@ -137,9 +137,9 @@
       </ion-item>
 </div>
   
-  <div class="col-xs-12 buttons">
+  <!-- <div class="col-xs-12 buttons">
       <a href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_E5tfHJicmsEM7yImGKJv30DqYfd2koHB&scope=read_write"
         class="stripe-connect light-blue dark"><span>Connect with Stripe</span></a>
-    </div>
+    </div> -->
 </ion-content>
 <app-footer></app-footer>
