@@ -428,10 +428,10 @@ app.patch('/offerlisting', (req, res) => {
   });
 });
 
-app.get('/accept/offerlisting', (req, res) => {
-  helpers.getAccepted(req.query.id_user, db).then(acceptedOffers => {
-    res.send(acceptedOffers);
-  });
+app.get('/accept/offerlisting', async (req, res) => {
+  helpers.getAccepted(req, res, db).then(accepted => {
+    res.send(accepted);
+  })
 })
 
 
@@ -521,131 +521,134 @@ app.patch('/accept/offerlisting', (req, res) => {
  * peerInfo gives information on the user
  * peerListings contains information on peer's listings pertaining to the offer
  */
-app.get('/offers', (req, res) => {
-  let allOffersForIds = []; // all offer id related to user
-  let allPeers = []; // all peer id who has an offer connected to user
-  let allOffers = []; // array of all offers with information for each user
-  let allYourListingIds = []; // all id_listings for user
-  var allUserListings = [];
-  var allUsersBooks = [];
-  db.Listing.findAll({ // first find all listings for this user
-    where: {
-      id_user: req.query.id_user,
-      available: true,
-    },
-  }).then(async (data) => {
-    console.log(data, 'ALL YOUR LISTINGS');
-    allUserListings = [...data];
-    let listingData = [...data];
-    for (let b = 0; b < listingData.length; b++) { // loop through the array of listings
-      allYourListingIds.push(listingData[b].id_listing); // push listing id into array for comparison later
-      let bookFound = await db.Book.findOne({ // find book information for listing
-        where: {
-          id_book: listingData[b].id_book,
-        },
-      });
-      allUsersBooks.push(bookFound); // push book into array for utilization
-    }
-    return listingData; // return all listings to find all offers tied to listing
-  }).then(async (data) => {
-    console.log(allUsersBooks);
-    const lists = [...data];
-    for (let i = 0; i < lists.length; i++) { // for each listing, find the offer id linked to listing
-      offersOnListing = await db.Offer_Listing.findAll({ // finds all offer_listing with listing
-        where: {
-          id_listing: lists[i].id_listing,
-        },
-      });
-      console.log(offersOnListing, 'OFFER LISTING');
-      for (let p = 0; p < offersOnListing.length; p++) {
-        allOffersForIds.push(offersOnListing[p].id_offer);
-      } // all is good at this point
-      for (let j = 0; j < offersOnListing.length; j++) { // on each offer_listing, grab id_offer
-        offerIdForListing = await db.Offer.findAll({
-          where: {
-            id_offer: offersOnListing[j].id_offer,
-          },
-        });
-        if (!await allOffersForIds.includes(offerIdForListing[0].id_offer)) { // add offer id to array if not already in
-          allOffersForIds.push(offerIdForListing[0].id_offer); // 
-        }
-        if (!await allPeers.includes(offerIdForListing[0].id_sender) && // checks to see if user is sender or recipient
-        offerIdForListing[0].id_sender !== req.query.id_user) {
-          allPeers.push(offerIdForListing[0].id_sender);
-        }
-        if (!await allPeers.includes(offerIdForListing[0].id_recipient) && // then pushes the peer's id into array
-          offerIdForListing[0].id_recipient !== req.query.id_user) { // may currently add user id as well
-          allPeers.push(offerIdForListing[0].id_recipient);
-        }
-      }
-    }
-    for (let k = 0; k < _.uniq(allOffersForIds).length; k++) {
-      console.log('enter async all offers');
-      var oneCompleteOffer = {};
-      let offerForId = await db.Offer.findOne({
-        where: {
-          id_offer: allOffersForIds[k],
-          status: 'pending'
-        }
-      });
-      oneCompleteOffer.offer = offerForId;
-      const myListings = [];
-      const peerListings = [];
-      let listingsForOffer = await db.Offer_Listing.findAll({
-        where: {
-          id_offer: allOffersForIds[k],
-        },
-      });
-      let currentBook;
-      for (let i = 0; i < listingsForOffer.length; i++) {
-        currentBookListing = await db.Listing.findOne({
-            where: {
-              id_listing: listingsForOffer[i].id_listing,
-              // include: [db.Book],
-            },
-          });
-          if (currentBookListing !== null) {
-        currentBook = await db.Book.findOne({
-          where: {
-            id_book: currentBookListing.id_book,
-          },
-        });
-        let finalBook = {...currentBook.dataValues};
-        finalBook.listing = currentBookListing;
-        if (allYourListingIds.includes(listingsForOffer[i].id_listing)) {
-          myListings.push(finalBook);
-        } else {
-          peerListings.push(finalBook);
-        }
-      }
-    }
-      oneCompleteOffer.myListings = myListings;
-      oneCompleteOffer.peerListings = peerListings;
-      let peerInfo;
-      if(offerForId) {
-      if (offerForId.id_recipient === req.query.id_user) {
-        peerId = await db.User.findOne({
-          where: {
-            id_user: offerForId.id_recipient,
-          },
-        });
-      } else {
-        peerInfo = await db.User.findOne({
-          where: {
-            id_user: offerForId.id_sender,
-          },
-        });
-      }
-      oneCompleteOffer.peerInfo = peerInfo;
-      console.log(offerForId, 'ID OFFER');
-      console.log(listingsForOffer, 'LISTINGS FOR OFFER');
-      // oneCompleteOffer.allUsersListings = allUserListings; // uncomment if need all users listings, currently not needed
-      allOffers.push(oneCompleteOffer);
-    }
-    }
-    allOffers.push(allUserListings);
-    res.send(allOffers);
+app.get('/offers', async (req, res) => {
+  helpers.getPending(req, res, db).then(pending => {
+    res.send(pending);
   })
+  // let allOffersForIds = []; // all offer id related to user
+  // let allPeers = []; // all peer id who has an offer connected to user
+  // let allOffers = []; // array of all offers with information for each user
+  // let allYourListingIds = []; // all id_listings for user
+  // var allUserListings = [];
+  // var allUsersBooks = [];
+  // db.Listing.findAll({ // first find all listings for this user
+  //   where: {
+  //     id_user: req.query.id_user,
+  //     available: true,
+  //   },
+  // }).then(async (data) => {
+  //   console.log(data, 'ALL YOUR LISTINGS');
+  //   allUserListings = [...data];
+  //   let listingData = [...data];
+  //   for (let b = 0; b < listingData.length; b++) { // loop through the array of listings
+  //     allYourListingIds.push(listingData[b].id_listing); // push listing id into array for comparison later
+  //     let bookFound = await db.Book.findOne({ // find book information for listing
+  //       where: {
+  //         id_book: listingData[b].id_book,
+  //       },
+  //     });
+  //     allUsersBooks.push(bookFound); // push book into array for utilization
+  //   }
+  //   return listingData; // return all listings to find all offers tied to listing
+  // }).then(async (data) => {
+  //   console.log(allUsersBooks);
+  //   const lists = [...data];
+  //   for (let i = 0; i < lists.length; i++) { // for each listing, find the offer id linked to listing
+  //     offersOnListing = await db.Offer_Listing.findAll({ // finds all offer_listing with listing
+  //       where: {
+  //         id_listing: lists[i].id_listing,
+  //       },
+  //     });
+  //     console.log(offersOnListing, 'OFFER LISTING');
+  //     for (let p = 0; p < offersOnListing.length; p++) {
+  //       allOffersForIds.push(offersOnListing[p].id_offer);
+  //     } // all is good at this point
+  //     for (let j = 0; j < offersOnListing.length; j++) { // on each offer_listing, grab id_offer
+  //       offerIdForListing = await db.Offer.findAll({
+  //         where: {
+  //           id_offer: offersOnListing[j].id_offer,
+  //         },
+  //       });
+  //       if (!await allOffersForIds.includes(offerIdForListing[0].id_offer)) { // add offer id to array if not already in
+  //         allOffersForIds.push(offerIdForListing[0].id_offer); // 
+  //       }
+  //       if (!await allPeers.includes(offerIdForListing[0].id_sender) && // checks to see if user is sender or recipient
+  //       offerIdForListing[0].id_sender !== req.query.id_user) {
+  //         allPeers.push(offerIdForListing[0].id_sender);
+  //       }
+  //       if (!await allPeers.includes(offerIdForListing[0].id_recipient) && // then pushes the peer's id into array
+  //         offerIdForListing[0].id_recipient !== req.query.id_user) { // may currently add user id as well
+  //         allPeers.push(offerIdForListing[0].id_recipient);
+  //       }
+  //     }
+  //   }
+  //   for (let k = 0; k < _.uniq(allOffersForIds).length; k++) {
+  //     console.log('enter async all offers');
+  //     var oneCompleteOffer = {};
+  //     let offerForId = await db.Offer.findOne({
+  //       where: {
+  //         id_offer: allOffersForIds[k],
+  //         status: 'pending'
+  //       }
+  //     });
+  //     oneCompleteOffer.offer = offerForId;
+  //     const myListings = [];
+  //     const peerListings = [];
+  //     let listingsForOffer = await db.Offer_Listing.findAll({
+  //       where: {
+  //         id_offer: allOffersForIds[k],
+  //       },
+  //     });
+  //     let currentBook;
+  //     for (let i = 0; i < listingsForOffer.length; i++) {
+  //       currentBookListing = await db.Listing.findOne({
+  //           where: {
+  //             id_listing: listingsForOffer[i].id_listing,
+  //             // include: [db.Book],
+  //           },
+  //         });
+  //         if (currentBookListing !== null) {
+  //       currentBook = await db.Book.findOne({
+  //         where: {
+  //           id_book: currentBookListing.id_book,
+  //         },
+  //       });
+  //       let finalBook = {...currentBook.dataValues};
+  //       finalBook.listing = currentBookListing;
+  //       if (allYourListingIds.includes(listingsForOffer[i].id_listing)) {
+  //         myListings.push(finalBook);
+  //       } else {
+  //         peerListings.push(finalBook);
+  //       }
+  //     }
+  //   }
+  //     oneCompleteOffer.myListings = myListings;
+  //     oneCompleteOffer.peerListings = peerListings;
+  //     let peerInfo;
+  //     if(offerForId) {
+  //     if (offerForId.id_recipient === req.query.id_user) {
+  //       peerId = await db.User.findOne({
+  //         where: {
+  //           id_user: offerForId.id_recipient,
+  //         },
+  //       });
+  //     } else {
+  //       peerInfo = await db.User.findOne({
+  //         where: {
+  //           id_user: offerForId.id_sender,
+  //         },
+  //       });
+  //     }
+  //     oneCompleteOffer.peerInfo = peerInfo;
+  //     console.log(offerForId, 'ID OFFER');
+  //     console.log(listingsForOffer, 'LISTINGS FOR OFFER');
+  //     // oneCompleteOffer.allUsersListings = allUserListings; // uncomment if need all users listings, currently not needed
+  //     allOffers.push(oneCompleteOffer);
+  //   }
+  //   }
+  //   allOffers.push(allUserListings);
+  //   res.send(allOffers);
+  // })
   // .then((allOffers) => {
   //   console.log(allOffers, 'END: ALL OFFERS');
   //   res.status(200).send(allOffers);

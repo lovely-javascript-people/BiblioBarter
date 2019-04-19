@@ -109,17 +109,95 @@ const findOneOfferByIdOffer = (idOffer) => {
   });
 }
 
-const getAccepted = async (id_user, db) => {
-  // const acceptedOffers = [];
-  return await db.Offer.findAll({
+const getAccepted = async (req, res, db) => {
+  const acceptedOffers = [];
+  let offerDetail = [];
+  return db.Offer.findAll({
     where: {
-      id_recipient: id_user,
+      id_recipient: req.query.id_user,
       status: 'accepted',
     }
-  // }).then((accepted) => {
-  //   for (const offer of accepted) {
-  //     acceptedOffers.push(offer);
-  //   }
+  }).then((accepted) => {
+    for (const offer of accepted) {
+      acceptedOffers.push(offer);
+    }
+  }).then(async () => {
+    offerDetail = acceptedOffers.map(async offer => {
+      let offered = [offer];
+      let users = await db.User.findOne({
+        where: {
+          id_user: offer.id_sender
+        }
+      })
+      offered.push(await users);
+      let books = await db.Offer_Listing.findAll({
+        where: {
+          id_offer: offer.id_offer
+        }
+      })
+      for(const book of books) {
+        let listing = await db.Listing.findOne({
+          where: {
+            id_listing: book.id_listing
+          }
+        })
+        let text = await db.Book.findOne({
+          where: {
+            id_book: await listing.id_book
+          }
+        })
+        const textBook = await text;
+        offered.push({book: textBook, listing: listing});
+      }
+      return offered;
+    })
+    return await Promise.all(offerDetail);
+  })
+}
+
+const getPending = async (req, res, db) => {
+  const pendingOffers = [];
+  let offerDetail = [];
+  return db.Offer.findAll({
+    where: {
+      id_recipient: req.query.id_user,
+      status: 'pending',
+    }
+  }).then((pending) => {
+    for (const offer of pending) {
+      pendingOffers.push(offer);
+    }
+  }).then(async () => {
+    offerDetail = pendingOffers.map(async offer => {
+      let offered = [offer];
+      let users = await db.User.findOne({
+        where: {
+          id_user: offer.id_sender
+        }
+      })
+      offered.push(await users);
+      let books = await db.Offer_Listing.findAll({
+        where: {
+          id_offer: offer.id_offer
+        }
+      })
+      for(const book of books) {
+        let listing = await db.Listing.findOne({
+          where: {
+            id_listing: book.id_listing
+          }
+        })
+        let text = await db.Book.findOne({
+          where: {
+            id_book: await listing.id_book
+          }
+        })
+        const textBook = await text;
+        offered.push({book: textBook, listing: listing});
+      }
+      return offered;
+    })
+    return await Promise.all(offerDetail);
   })
 }
 
@@ -130,4 +208,5 @@ module.exports = {
   createWant,
   findOneOfferByIdOffer,
   getAccepted,
+  getPending,
 };

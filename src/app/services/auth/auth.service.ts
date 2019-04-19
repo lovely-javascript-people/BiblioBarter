@@ -88,7 +88,6 @@ export class AuthService {
         this.router.navigate(['/Greet']);
 
       }
-      console.log(this.isLoggedIn);
     });
   }
 

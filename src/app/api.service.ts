@@ -96,15 +96,13 @@ export class ApiService {
   addBookToUserWantList(isbnVal, userid, title, imageLink) {
     this.http.post(`${this.local}/user/want`, { params: isbnVal, userid, title, imageLink })
       .subscribe((allWants: any) => {
-      console.log(allWants, 'ALL WANTS FROM API SERVICE');
     });
   }
 
   getAcceptedOffers(callback) {
     this.http.get(`${this.local}/accept/offerlisting`, { params: { id_user: localStorage.userid }})
     .subscribe((accepted) => {
-      console.log(accepted, 'Accepted offers');
-      callback(accepted);
+      callback(accepted, 'accepted');
     });
   }
 
@@ -116,7 +114,6 @@ export class ApiService {
     // console.log(localStorage.userid, 'USERID');
     this.http.get(`${this.local}/user/want?${localStorage.userid}`)
     .subscribe((wantListArray) => {
-      console.log(wantListArray, 'ARRAY OF WANT LIST');
       callback(wantListArray);
     });
   }
@@ -128,7 +125,6 @@ export class ApiService {
   renderListingsList(callback) {
     this.http.get(`${this.local}/user/listing?${localStorage.userid}`)
     .subscribe((listingListArray) => {
-      console.log(listingListArray, 'ARRAY OF OFFERING LIST');
       callback(listingListArray);
     });
   }
@@ -153,9 +149,7 @@ export class ApiService {
    * @param {number} callback takes peer's information and set book information
    */
   getPeerProfile(peerId, callback) {
-    console.log(peerId, 'PEEER ID');
     this.http.get(`${this.local}/peer`, { params: {peerId} }).subscribe(data => {
-      console.log(data, 'HEREERERERERE');
       callback(data);
     });
   }
@@ -168,7 +162,6 @@ export class ApiService {
   }
 
   sendOffer(options: any) {
-    // console.log(options, 'OPTIONS');
     this.http.post(`${this.local}/offers`, { params: options }).subscribe(resp => {
       console.log(resp, 'offer created success');
     });
@@ -179,9 +172,7 @@ export class ApiService {
    * @param {function} callback renders the offers for user
    */
   getOffers(callback) {
-    console.log('TRYING TO GET OFFERS BUT STILL NOT WORKING');
     this.http.get(`${this.local}/offers`, { params: { id_user: localStorage.userid }}).subscribe(data => {
-      console.log(data, 'DATA IN FROM GETOFFERS API CALL');
       callback(data);
     });
   }
@@ -258,7 +249,6 @@ export class ApiService {
     getUserInfo(id, callback) {
       this.http.get(`${this.local}/getUser`, { params: { id: id }})
         .subscribe((data) => {
-          console.log(data, 'USER INFO');
           callback(data);
         });
     }
