@@ -138,6 +138,7 @@ export class ProfilePage implements OnInit {
       .subscribe((offerData) => {
         this.presentOfferToast('Offer has been accepted');
         this.apiService.getOffers(this.renderOffers);
+        this.apiService.getAcceptedOffers(this.renderOffers);
       });
     this.chat.offerChat(`${peer} + ${localStorage.username}`, peer, this.chat.addPeerToChat);
   }
