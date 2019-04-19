@@ -60,10 +60,8 @@ export class ProfilePage implements OnInit {
     local = 'localhost:3000';
 
   setUser(data) {
-    console.log(data, 'THIS DATA', data[0], 'length');
     // add userid to local storage
     localStorage.setItem('userid', data[0].id_user);
-    // console.log(data[1][0].name, 'SCHOOL NAME');
     if (data[0]) {
       this.img = data[0].image_link;
       this.user = data[0].user_name;
@@ -103,9 +101,6 @@ export class ProfilePage implements OnInit {
   }
 
   async openCounterOfferModal() {
-    // let peerId = this.peerid;
-    // console.log(peerId, 'PEER ID TEST');
-
     var data = { message: 'hello world' };
     const modalPage = await this.modal.create({
       component: CounterOfferModal,
@@ -129,12 +124,8 @@ export class ProfilePage implements OnInit {
    * @param index The index of the accepted offer in the this.offers array
    */
   acceptOffer(index) {
-    console.log(this.allOffers, 'ALL OFFERS');
-    console.log(this.offers[index], 'CLICKED ON OFFER');
     const {offerId, myTitles, peerTitles, peerid, peer} = this.offers[index];
     this.offerid = offerId;
-    // this.apiService.userAcceptOffer(); // for when we refactor
-  
     this.http.patch(`http://${this.local}/accept/offerlisting`, { 
       params: { 
         status: 'accepted', 
@@ -145,12 +136,10 @@ export class ProfilePage implements OnInit {
         userId: localStorage.userid
       }})
       .subscribe((offerData) => {
-        console.log(offerData, 'OFFER DATA');
         this.presentOfferToast('Offer has been accepted');
         this.apiService.getOffers(this.renderOffers);
       });
     this.chat.offerChat(`${peer} + ${localStorage.username}`, peer, this.chat.addPeerToChat);
-      // debugger;
   }
 
   /**
@@ -158,86 +147,72 @@ export class ProfilePage implements OnInit {
    * breaks them down into accepted, pending, and rejected offers, 
    * and sends offers to be rendered
    * @param offers Array containing all offer information involving user's listed books.
+   * @param type Tells the function if it is receiving accepted or pending offers
    */
-  renderOffers(offers) {
-    console.log(offers, 'OFFERS FROM RENDER OFFERS');
-
+  renderOffers(offers, type) {
     this.allOffers = offers;
     const offs: object[] = [];
     const acceptedOffers: object[] = [];
     let i = 0;
 
-    for (const offer of offers.slice(0, offers.length - 1)) {
-      if (offer.offer.status === 'pending' && offer.offer.id_sender === Number(localStorage.userid)) {
-        const myList = offer.myListings.map(listing => [listing.listing.available, offer]);
-        const peerList = offer.peerListings.map(listing => [listing.listing.available, offer]);
-        const lists = myList.concat(peerList).filter(list => list[0] === false);
-        for (let list of lists) {
-          this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: list[1].offer.id_offer } })
-        .subscribe((offerData) => {
-          console.log(offerData, 'OFFER DATA');
-          this.presentOfferToast('Offer has been rejected.'); 
-        });
-        } 
-      }
-    }
-
-    for (const offer of offers.slice(0, offers.length - 1)) {
-    if (offer.offer.status === 'pending' && offer.offer.id_sender !== Number(localStorage.userid)) {
-      const myList = offer.myListings.map(listing => [listing.listing.available, offer]);
-      const peerList = offer.peerListings.map(listing => [listing.listing.available, offer]);
-      const lists = myList.concat(peerList).filter(list => list[0] === false);
+    for (const offer of offers) {
+    if (offer[0].status === 'pending') {
+      const lists = offer.slice(2)
+        .map(listing => [listing.listing.available, offer])
+        .filter(list => list[0] === false);
       for (let list of lists) {
-        this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: list[1].offer.id_offer } })
+        this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: list[1][0].id_offer } })
       .subscribe((offerData) => {
-        console.log(offerData, 'OFFER DATA');
         this.presentOfferToast('Offer has been rejected.'); 
       });
       } 
+      if (offer[0].id_sender !== localStorage.userid) {
     const offerObj: any = {};
     offerObj.myTitles = [];
     offerObj.peerTitles = [];
 
-    offer.myListings.forEach((listing) => {
-      offerObj.myTitles.push(listing.title);
+    offer.slice(2).forEach((listing) => {
+      if (listing.listing.id_user === offer[1].id_user) {
+        offerObj.peerTitles.push(listing.book.title);
+      } else {
+        offerObj.myTitles.push(listing.book.title);
+      }
+      
     })
+    offerObj.peer = offer[1].user_name;
+    offerObj.peerid = offer[1].id_user;
+    offerObj.status = offer[0].status;
+    offerObj.email = offer[1].email;
+    offerObj.offerId = offer[0].id_offer;
 
-    offer.peerListings.forEach((listing) => {
-      offerObj.peerTitles.push(listing.title);
-    })
-    offerObj.peer = offer.peerInfo.user_name;
-    offerObj.peerid = offer.peerInfo.id_user;
-    offerObj.status = offer.offer.status;
-    offerObj.email = offer.peerInfo.email;
-    offerObj.offerId = offer.offer.id_offer;
-
-    if(offer.offer.money_exchange_cents > 0) {
-      offerObj.userMoney = `and $${offer.offer.money_exchange_cents / 100}`;
-    } else if(offer.offer.money_exchange_cents < 0){
-       offerObj.peerMoney = `and $${((-1 * offer.offer.money_exchange_cents) / 100)}`;
+    if(offer[0].money_exchange_cents > 0) {
+      offerObj.userMoney = `and $${offer[0].money_exchange_cents / 100}`;
+    } else if(offer[0].money_exchange_cents < 0){
+       offerObj.peerMoney = `and $${((-1 * offer[0].money_exchange_cents) / 100)}`;
     }
     offs.push(offerObj);
     i++;
-  } else if (offer.offer.status === 'accepted' && offer.offer.id_sender !== Number(localStorage.userid)) {
-        const {
-          offer: {status, id_offer, id_sender, money_exchange_cents}, 
-          peerInfo: {user_name, id_user, email}, 
-          myListings, 
-          peerListings
-        } = offer;
+  }
+  } else if (offer[0].status === 'accepted' && offer[0].id_sender !== Number(localStorage.userid)) {
+        const [
+          offered,
+          peer,
+        ] = offer;
+        const {id_user, email, user_name} = peer, {status, id_offer, money_exchange_cents, id_sender} = offered;
+
 
         const offerObj: any = {};
         offerObj.myTitles = [];
         offerObj.peerTitles = [];
         
         // get all user titles
-        myListings.forEach((listing) => {
-          offerObj.myTitles.push(listing.title);
-        })
-    
-        // get all peer titles
-        peerListings.forEach((listing) => {
-          offerObj.peerTitles.push(listing.title);
+        offer.slice(2).forEach((listing) => {
+          const {listing: { id_user }, book: { title } } = listing
+          if (id_user === peer.id_user) {
+            offerObj.peerTitles.push(title);
+          } else {
+            offerObj.myTitles.push(title);
+          }
         })
         offerObj.peer = user_name;
         offerObj.status = status;
@@ -246,7 +221,7 @@ export class ProfilePage implements OnInit {
 
         if(money_exchange_cents > 0) {
           offerObj.userMoney = `and $${money_exchange_cents / 100}`;
-        } else if(offer.offer.money_exchange_cents < 0){
+        } else if(money_exchange_cents < 0){
            offerObj.peerMoney = `and $${((-1 * money_exchange_cents) / 100)}`;
         }
         acceptedOffers.push(offerObj);
@@ -271,9 +246,11 @@ export class ProfilePage implements OnInit {
         peerTitles.splice(peerTitles.length - 1, 0, ' and ');
       }
     });
-    this.offers = offs;
-    this.acceptedOffs = acceptedOffers;
-    console.log(offs, 'OFFERS AFTER RENDER CALLED');
+    if (type === 'accepted') {
+      this.acceptedOffs = acceptedOffers;
+    } else {
+      this.offers = offs;
+    }
   }
 
   /**
@@ -286,7 +263,6 @@ export class ProfilePage implements OnInit {
     // this.apiService.userAcceptOffer(); // for when we refactor
     this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: id_offer } })
       .subscribe((offerData) => {
-        console.log(offerData, 'OFFER DATA');
         this.presentOfferToast('Offer has been rejected.');
         this.apiService.getOffers(this.renderOffers);
       });
@@ -294,14 +270,12 @@ export class ProfilePage implements OnInit {
 
 
   cancelAcceptedOffer(index) {
-    console.log(this.acceptedOffs[index], 'OFFER TO BE CANCELED');
     this.offerid = this.acceptedOffs[index].offerId;
     const id_offer = this.offerid;
     this.http.patch(`http://${this.local}/offerlisting`, { params: { status: 'rejected', offerId: id_offer } })
       .subscribe((offerData) => {
-        console.log(offerData, 'OFFER DATA');
         this.presentOfferToast('Accepted offer has been cancelled.');
-        this.apiService.getOffers(this.renderOffers);
+        this.apiService.getAcceptedOffers(this.renderOffers);
       });
   }
 
@@ -315,10 +289,8 @@ export class ProfilePage implements OnInit {
 
   deleteListing(bookId, listingId, listing) {
     this.presentToast(listing);
-    console.log(listingId, 'delete listing clicked');
     this.http.delete(`http://${this.local}/deleteListing`, { params: { bookId, listingId } })
       .subscribe((data) => {
-        console.log(data, 'delete listing');
         this.apiService.renderListingsList(this.setListings);
       });
   }
@@ -326,10 +298,8 @@ export class ProfilePage implements OnInit {
 
   deleteWant(wantId, want) {
     this.presentToast(want);
-    console.log('delete want', wantId);
     this.http.delete(`http://${this.local}/deleteWant`, { params: { wantId } })
     .subscribe((data) => {
-      console.log(data, 'delete want');
       this.apiService.renderWantList(this.setWantList);
     });
 
@@ -369,23 +339,6 @@ export class ProfilePage implements OnInit {
     return await alert.present();
   }
 
-  // openCamera() {
-  //   const options: CameraOptions = {
-  //     quality: 100,
-  //     destinationType: this.camera.DestinationType.FILE_URI,
-  //     encodingType: this.camera.EncodingType.JPEG,
-  //     mediaType: this.camera.MediaType.PICTURE
-  //   }
-
-  //   this.camera.getPicture(options).then((imageData) => {
-  //     // imageData is either a base64 encoded string or a file URI
-  //     // If it's base64 (DATA_URL):
-  //     let base64Image = 'data:image/jpeg;base64,' + imageData;
-  //   }, (err) => {
-  //     // Handle error
-  //   });
-  // } 
-
   camOpen() {
     if (!this.open) {
       this.open = true;
@@ -407,7 +360,7 @@ export class ProfilePage implements OnInit {
     this.setUser = this.setUser.bind(this);
     this.apiService.getProfile(localStorage.getItem('username'), this.setUser);
     this.apiService.getOffers(this.renderOffers);
-    this.apiService.getAcceptedOffers(console.log);
+    this.apiService.getAcceptedOffers(this.renderOffers);
   }
 
 }
