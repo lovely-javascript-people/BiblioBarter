@@ -122,17 +122,18 @@
      <ion-item *ngFor="let offer of acceptedOffs; let i = index">
         <ion-label>
             <b>{{offer.peer}} Recieved:</b> <br />
-            <div *ngFor="let title of offer.myTitles; let i = index">
+            <ion-label *ngFor="let title of offer.myTitles; let i = index">
               {{title}}<br>
-            </div>
+            </ion-label>
             {{offer.userMoney}}<br />
             <b>You Recieved:</b> <br />
-            <div *ngFor="let title of offer.peerTitles; let i = index">
-                {{title}}<br>
-            </div>
+            <ion-label *ngFor="let title of offer.peerTitles; let i = index">
+                {{title}}
+                <br>
+            </ion-label>
             {{offer.peerMoney}}
           </ion-label>
-          <ion-button (click)="cancelAcceptedOffer(i)" style="margin-top: 10px; margin-left: auto; margin-right: auto; float: right">Cancel</ion-button>
+          <ion-button (click)="cancelAcceptedOffer(i)" size="small" style="width:60px; height:30px; margin-left: auto; margin-right: auto; float: right">Cancel</ion-button>
       </ion-item>
 </div>
   
