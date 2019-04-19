@@ -41,11 +41,12 @@
     <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
   </div>
   <!-- <div *ngIf="listings.length"> -->
+    <div>
   <div style="color:#176ACC; font-weight:700;">
     <br>
       <p>SEARCH RESULTS:</p>
     </div>
-    <ion-list>
+    <!-- <ion-list> -->
       <ion-item #list class={{listing.id_user}} *ngFor="let listing of listings; let i = index" [type]="listing">
         <div><img 
           style="padding-right: 6px; max-height: 100px;"
@@ -54,21 +55,25 @@
           Title: {{listing.title}} <br>
           Condition: {{listing.condition}} 
         </ion-label>
-        <ion-button (click)="profileButtonClick(i)" style="float: right;" >PROFILE</ion-button>
+        <!-- <a href="/peer-profile"> -->
+          <ion-button (click)="profileButtonClick(i)" style="float: right;" >PROFILE</ion-button>
+        <!-- </a> -->
       </ion-item>
-    </ion-list>
-  <!-- </div> -->
+    <!-- </ion-list> -->
+  </div>
   <div style="color:#176ACC; font-weight:700;">
     <br>
     <p>YOUR MATCHES:</p>
   </div>
   <div *ngIf="matches.length">
-  <ion-list>
+  <!-- <ion-list> -->
     <ion-item #matched style="font-size: 16px" *ngFor="let match of matches; let i = index" [type]="match">
+        <ion-label>
       {{match.name}} has {{match.num}} {{match.type}} you want 
+        </ion-label>
       <ion-button (click)="profileButtonClick(match.id)" style="float: right;">PROFILE</ion-button>
     </ion-item>
-  </ion-list>
+  <!-- </ion-list> -->
 </div>
 </ion-content>
 
