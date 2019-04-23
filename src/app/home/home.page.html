@@ -21,7 +21,7 @@
     <!-- <ion-button size="small" (click)="searchBooks(isbnQuery, setListing)" routerLink="/Matches">Search</ion-button> -->
     <div class="input-group mb-3">
       <input type="text" class="form-control" [(ngModel)]="isbnQuery" #ctrl="ngModel" [(ngModel)]="num"
-        placeholder="isbn" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        placeholder="isbn" aria-label="Recipient's username" aria-describedby="basic-addon2" id="searchInput">
       <div class="input-group-append">
         <span (click)="searchBooks(isbnQuery, setListing)" routerLink="/Matches" class="input-group-text"
           style="background-color: #488aff; color: white" id="basic-addon2">Search</span>
