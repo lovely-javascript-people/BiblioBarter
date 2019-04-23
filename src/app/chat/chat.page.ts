@@ -122,9 +122,9 @@ export class ChatPage implements OnInit {
         $('.chat-session').focus();
       }
 
-  local = 'localhost:3000';
+  // local = 'localhost:3000';
   // local = 'ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-  // local = '18.220.255.216:3000';
+  local = '18.216.108.229:3000';
 
       addUser(userId) {
         let name = userId || localStorage.username

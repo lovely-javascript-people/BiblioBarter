@@ -42,7 +42,7 @@
   </div>
   <!-- <div *ngIf="listings.length"> -->
     <div>
-  <div style="color:#176ACC; font-weight:700;">
+  <div [hidden]="!searched" style="color:#176ACC; font-weight:700;">
     <br>
       <p>SEARCH RESULTS:</p>
     </div>
@@ -61,7 +61,7 @@
       </ion-item>
     <!-- </ion-list> -->
   </div>
-  <div style="color:#176ACC; font-weight:700;">
+  <div [hidden]='!matched' style="color:#176ACC; font-weight:700;">
     <br>
     <p>YOUR MATCHES:</p>
   </div>
