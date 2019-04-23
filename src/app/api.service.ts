@@ -12,8 +12,8 @@ export class ApiService {
   }
 
   host = 'http://ec2-18-188-132-186.us-east-2.compute.amazonaws.com:3000';
-  local = 'http://localhost:3000';
-  // local = 'http://18.220.255.216:3000';
+  // local = 'http://localhost:3000';
+  local = 'http://18.216.108.229:3000';
 
   /**
    * Input fields for user to send message to API server and saved to DB.

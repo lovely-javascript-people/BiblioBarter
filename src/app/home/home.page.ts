@@ -26,6 +26,8 @@ export class HomePage implements OnInit {
   othersWants: any[] = [];
   matchedUsers: any[] = [];
   inRadius: string;
+  matched: boolean = false;
+  searched: boolean = false;
 
   constructor(private http: HttpClient, private router: Router, private apiService: ApiService, public navCtrl: NavController,
     private barcodeScanner: BarcodeScanner, public loadingController: LoadingController) { }
@@ -120,6 +122,9 @@ export class HomePage implements OnInit {
     for (const match of this.matches) {
       this.apiService.getPeerProfile(match.id, this.setOthersWants);
     }
+    if(matches.length) {
+      this.matched = true;
+    }
   }
   }
 
@@ -139,6 +144,7 @@ export class HomePage implements OnInit {
     setListing(searchedListings) {
       console.log(searchedListings, 'BACK ON MATCHES PAGE');
       this.listings = searchedListings;
+      this.searched = true;
     }
   scan() {
     this.barcodeScanner.scan().then(barcodeData => {
@@ -167,7 +173,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.url = document.URL;
     this.setListing = this.setListing.bind(this);
-    this.searchBooks(this.isbnQuery, this.setListing);
+    // this.searchBooks(this.isbnQuery, this.setListing);
     this.setYourWants = this.setYourWants.bind(this);
     this.setYourListings = this.setYourListings.bind(this);
     this.setOthersWants = this.setOthersWants.bind(this);

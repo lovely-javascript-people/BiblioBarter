@@ -75,10 +75,9 @@ export class AuthService {
             'Content-Type':  'application/json',
             'Authorization': `Bearer ${localStorage.access_token}`, },
           }).subscribe((userInfo: any) => {
-            console.log(userInfo, 'USER');
             localStorage.setItem('username', userInfo.nickname);
-            this.router.navigate(['/Matches']);
             this.apiService.userSignup(userInfo);
+            this.router.navigate(['/Matches']);
       });
       } else if (err) {
         console.log(err);
